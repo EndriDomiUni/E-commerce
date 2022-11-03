@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Nov 03, 2022 alle 17:28
+-- Creato il: Nov 03, 2022 alle 17:37
 -- Versione del server: 10.4.21-MariaDB
 -- Versione PHP: 8.0.11
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `e-commerce`
 --
+CREATE DATABASE IF NOT EXISTS `e-commerce` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `e-commerce`;
 
 -- --------------------------------------------------------
 
@@ -58,6 +60,13 @@ CREATE TABLE `Venditore` (
 --
 -- Indici per le tabelle scaricate
 --
+
+--
+-- Indici per le tabelle `Cliente`
+--
+ALTER TABLE `Cliente`
+  ADD PRIMARY KEY (`Id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
