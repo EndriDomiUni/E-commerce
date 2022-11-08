@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Nov 03, 2022 alle 17:37
+-- Creato il: Nov 08, 2022 alle 16:37
 -- Versione del server: 10.4.21-MariaDB
 -- Versione PHP: 8.0.11
 
@@ -29,14 +29,32 @@ USE `e-commerce`;
 -- Struttura della tabella `Cliente`
 --
 
-CREATE TABLE `Cliente` (
+DROP TABLE IF EXISTS `Cliente`;
+CREATE TABLE IF NOT EXISTS `Cliente` (
   `Id` int(11) NOT NULL,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
   `Email` varchar(35) NOT NULL,
   `Password` varchar(35) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Prodotto`
+--
+
+DROP TABLE IF EXISTS `Prodotto`;
+CREATE TABLE IF NOT EXISTS `Prodotto` (
+  `Id` int(11) NOT NULL,
+  `Nome` varchar(50) NOT NULL,
+  `Descrizione` varchar(100) NOT NULL,
+  `Prezzo` double NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -45,7 +63,8 @@ CREATE TABLE `Cliente` (
 -- Struttura della tabella `Venditore`
 --
 
-CREATE TABLE `Venditore` (
+DROP TABLE IF EXISTS `Venditore`;
+CREATE TABLE IF NOT EXISTS `Venditore` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
@@ -56,16 +75,6 @@ CREATE TABLE `Venditore` (
   `Status` tinyint(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Indici per le tabelle scaricate
---
-
---
--- Indici per le tabelle `Cliente`
---
-ALTER TABLE `Cliente`
-  ADD PRIMARY KEY (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
