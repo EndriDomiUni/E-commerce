@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   `Nome` varchar(50) NOT NULL,
   `Descrizione` varchar(100) NOT NULL,
   `Prezzo` double NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
