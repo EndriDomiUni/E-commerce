@@ -8,15 +8,15 @@ body {
 
 .avatar {
     vertical-align: middle;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     padding-left: 2px;
 }
 
 .shop-cart {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     padding-left: 7px;
     padding-top: 7px;
@@ -42,9 +42,16 @@ body {
     text-align: center;
 }
 
-.nav-item-icon {
+.nav-item {
+    background-color: red;
+}
+
+.internal-link {
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
     background-color: #8D9EFF; 
+}
+
+.internal-link > svg {
+    width: 35px;
+    height: 35px;
 }

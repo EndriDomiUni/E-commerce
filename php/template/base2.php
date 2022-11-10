@@ -20,30 +20,33 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <div class="nav-item-icon">
+
+                <li class="nav-item">
+                        <button class="btn" class="internal-link">
                             <a class="nav-link active" aria-current="page" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg">
+                            <svg xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 39h7.5V26.5h11V39H37V19.5L24 9.75 11 19.5Zm-3 3V18L24 6l16 12v24H26.5V29.5h-5V42Zm16-17.65Z" />
                                 </svg>
                             </a>
-                        </div>
-                        <div class="nav-item-caption">
-                            Home
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <div class="nav-item-icon">
-                            <a class="nav-link active" aria-current="page" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg">
-                                    <path d="m19.25 27.4 1.8-5.75-4.75-3.7h5.8L24 12l1.85 5.95h5.85l-4.75 3.7 1.75 5.75-4.7-3.55ZM12.2 46V30.8q-2.25-2.35-3.225-5.15Q8 22.85 8 20q0-6.8 4.6-11.4Q17.2 4 24 4q6.8 0 11.4 4.6Q40 13.2 40 20q0 2.85-.975 5.65-.975 2.8-3.225 5.15V46L24 42.05ZM24 33q5.45 0 9.225-3.775Q37 25.45 37 20q0-5.45-3.775-9.225Q29.45 7 24 7q-5.45 0-9.225 3.775Q11 14.55 11 20q0 5.45 3.775 9.225Q18.55 33 24 33Zm-8.8 8.8 8.8-2.75 8.8 2.75v-8.55q-2 1.45-4.3 2.1-2.3.65-4.5.65t-4.5-.65q-2.3-.65-4.3-2.1Zm8.8-4.3Z" />
-                                </svg></a>
-                        </div>
+                        </button>
                         <div class="nav-item-caption">
                             Premium
                         </div>
                     </li>
+
+                    <li class="nav-item">
+                        <button class="btn" class="internal-link">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m19.25 27.4 1.8-5.75-4.75-3.7h5.8L24 12l1.85 5.95h5.85l-4.75 3.7 1.75 5.75-4.7-3.55ZM12.2 46V30.8q-2.25-2.35-3.225-5.15Q8 22.85 8 20q0-6.8 4.6-11.4Q17.2 4 24 4q6.8 0 11.4 4.6Q40 13.2 40 20q0 2.85-.975 5.65-.975 2.8-3.225 5.15V46L24 42.05ZM24 33q5.45 0 9.225-3.775Q37 25.45 37 20q0-5.45-3.775-9.225Q29.45 7 24 7q-5.45 0-9.225 3.775Q11 14.55 11 20q0 5.45 3.775 9.225Q18.55 33 24 33Zm-8.8 8.8 8.8-2.75 8.8 2.75v-8.55q-2 1.45-4.3 2.1-2.3.65-4.5.65t-4.5-.65q-2.3-.65-4.3-2.1Zm8.8-4.3Z" />
+                                </svg>
+                            </a>
+                        </button>
+                        <div class="nav-item-caption">
+                            Premium
+                        </div>
+                    </li>
+                    <!-- 
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>
@@ -62,7 +65,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
-                    </li>
+                    </li> 
+                    -->
                 </ul>
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -79,8 +83,9 @@
                 </ul>
 
 
+                <!--
                 <ul class="navbar-nav">
-                    <!-- user -->
+                   
                     <li class="nav-item-right">
                         <div class="avatar">
                             <a class="dropdown-item" href="login-view.php">
@@ -92,7 +97,7 @@
                         </div>
                     </li>
 
-                    <!-- shop -->
+                    
                     <li class="nav-item-right">
                         <div class="nav-item-icon">
                             <a class="dropdown-item" href="shop-cart-view.php">
@@ -106,6 +111,7 @@
                         </div>
                     </li>
                 </ul>
+                -->
             </div>
         </div>
     </nav>
