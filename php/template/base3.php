@@ -36,7 +36,7 @@
 	
 
 	<!-- Theme CSS -->
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 
 <style></style><style></style><style>@font-face {
               font-family: 'Open Sans Regular';
