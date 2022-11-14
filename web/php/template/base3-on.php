@@ -19,7 +19,7 @@
 	</script>
 
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="assets/images/favicon.ico">
+	<link rel="shortcut icon" href="../web/assets/images/favicon.ico">
 
 	<!-- Google Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,17 +38,25 @@
 	<!-- Theme CSS -->
 	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 
-<style></style><style></style><style>@font-face {
-              font-family: 'Open Sans Regular';
-              font-style: normal;
-              font-weight: 400;
-              src: url('chrome-extension://gkkdmjjodidppndkbkhhknakbeflbomf/fonts/open_sans/open-sans-v18-latin-regular.woff');
-          }</style><style>@font-face {
-              font-family: 'Open Sans Bold';
-              font-style: normal;
-              font-weight: 800;
-              src: url('chrome-extension://gkkdmjjodidppndkbkhhknakbeflbomf/fonts/open_sans/open-sans-v18-latin-800.woff');
-          }</style></head>
+<style></style>
+<style></style>
+<style>
+        @font-face {
+            font-family: 'Open Sans Regular';
+            font-style: normal;
+            font-weight: 400;
+            src: url('chrome-extension://gkkdmjjodidppndkbkhhknakbeflbomf/fonts/open_sans/open-sans-v18-latin-regular.woff');
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: 'Open Sans Bold';
+            font-style: normal;
+            font-weight: 800;
+            src: url('chrome-extension://gkkdmjjodidppndkbkhhknakbeflbomf/fonts/open_sans/open-sans-v18-latin-800.woff');
+        }
+    </style>
+</head>
 
 <body class="has-navbar-mobile" cz-shortcut-listen="true">
 
@@ -414,7 +422,7 @@
 			<!-- Profile and Notification START -->
 
 		</div>
-	</nav>
+	</nav> 
 	<!-- Logo Nav END -->
 </header><div id="sticky-space"></div>
 <!-- Header END -->
