@@ -2,5 +2,5 @@
 
 require_once("bootstrap.php");
 
-require("template/base3.php");
+require("template/base4.php");
 ?>
