@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         //const navItemCaption = document.querySelectorAll(".nav-caption-item");
         const navItemCaption = document.querySelectorAll("p");
 
-        
         // DARK
         if (btnDarkModeStatus === false) {
             navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
