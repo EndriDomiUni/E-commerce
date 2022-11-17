@@ -124,9 +124,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="../assets/js/base.js"></script>
   </main>
-  <!-- =======================
-Footer START -->
-	<footer class="bg-dark pt-5">
+  <!-- Footer START -->
+	<footer class="bg-light pt-5">
 		<div class="container">
 			<!-- Row START -->
 			<div class="row g-4">
@@ -148,12 +147,12 @@ Footer START -->
 					<div class="row g-4">
 						<!-- Link block -->
 						<div class="col-6 col-md-3">
-							<h5 class="text-white mb-2 mb-md-4">Page</h5>
+							<h5 class="mb-2 mb-md-4">Page</h5>
 							<ul class="nav flex-column text-primary-hover">
-								<li class="nav-item"><a class="nav-link text-muted" href="#">About us</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Contact us</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">News and Blog</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Meet a Team</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" fill="" href="#">About us</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="#">Contact us</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="#">News and Blog</a></li>
+								<li class="nav-item"><a class="nav-link tnav-footer-link" href="#">Meet a Team</a></li>
 							</ul>
 						</div>
 
@@ -161,12 +160,12 @@ Footer START -->
 						<div class="col-6 col-md-3">
 							<h5 class="text-white mb-2 mb-md-4">Link</h5>
 							<ul class="nav flex-column text-primary-hover">
-								<li class="nav-item"><a class="nav-link text-muted" href="signup-view.php">Sign up</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="login-view.php">Sign in</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Privacy Policy</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Terms</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Cookie</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Support</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="signup-view.php">Sign up</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="login-view.php">Sign in</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="#">Privacy Policy</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="#">Terms</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="#">Cookie</a></li>
+								<li class="nav-item"><a class="nav-link nav-footer-link" href="#">Support</a></li>
 							</ul>
 						</div>
 					</div>
@@ -242,9 +241,9 @@ Footer START -->
 						<!-- copyright links-->
 						<div class="nav mt-2 mt-lg-0">
 							<ul class="list-inline text-primary-hover mx-auto mb-0">
-								<li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Privacy policy</a></li>
-								<li class="list-inline-item me-0"><a class="nav-link py-1 text-muted" href="#">Terms and conditions</a></li>
-								<li class="list-inline-item me-0"><a class="nav-link py-1 text-muted pe-0" href="#">Refund policy</a></li>
+								<li class="list-inline-item me-0"><a class="nav-link py-1 nav-footer-link" href="#">Privacy policy</a></li>
+								<li class="list-inline-item me-0"><a class="nav-link py-1 nav-footer-link" href="#">Terms and conditions</a></li>
+								<li class="list-inline-item me-0"><a class="nav-link py-1 nav-footer-link pe-0" href="#">Refund policy</a></li>
 							</ul>
 						</div>
 					</div>
