@@ -125,7 +125,7 @@
     <script src="../assets/js/base.js"></script>
   </main>
   <!-- Footer START -->
-	<footer class="bg-light pt-5">
+	<footer class="bg-light pt-5 footer-section">
 		<div class="container">
 			<!-- Row START -->
 			<div class="row g-4">

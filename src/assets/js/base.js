@@ -8,7 +8,7 @@ const navbar = document.getElementById("navbar-main"); // navbar
 const navIconItem = document.querySelectorAll(".nav-icon-item");
 const navItemCaption = document.querySelectorAll("p"); // caption of nav link : TO CHANGE
 const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
-const footer = document.getElementsByTagName("footer"); // footer
+const footer = document.querySelector("footer-section"); // footer
 const navFooterLink = document.querySelectorAll(".nav-footer-link");
 // const btnToogleNavbar = document.querySelector("#tn-toogle-navbar"); // toogle btn
 
@@ -39,9 +39,9 @@ function checkForDarkMode(event)
         navFooterLink.forEach((link) =>
         {
             link.setAttribute("class", "nav-footer-link dark-mode");
-        });
+        }); 
 
-        footer.setAttribute("class", "bg-dark pt-5");
+        footer.setAttribute("class", "bg-dark pt-5 footer-section");
 
         isDarkMode = false;
     } else
@@ -63,7 +63,7 @@ function checkForDarkMode(event)
             link.setAttribute("class", "nav-footer-link");
         });
 
-        footer.setAttribute("class", "bg-light pt-5");
+        footer.setAttribute("class", "bg-light pt-5 footer-section");
 
         isDarkMode = true;
     }
