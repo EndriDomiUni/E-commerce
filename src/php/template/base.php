@@ -147,8 +147,8 @@ Footer START -->
 						<div class="col-6 col-md-3">
 							<h5 class="text-white mb-2 mb-md-4">Link</h5>
 							<ul class="nav flex-column text-primary-hover">
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Sign up</a></li>
-								<li class="nav-item"><a class="nav-link text-muted" href="#">Sign in</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="signup-view.php">Sign up</a></li>
+								<li class="nav-item"><a class="nav-link text-muted" href="login-view.php">Sign in</a></li>
 								<li class="nav-item"><a class="nav-link text-muted" href="#">Privacy Policy</a></li>
 								<li class="nav-item"><a class="nav-link text-muted" href="#">Terms</a></li>
 								<li class="nav-item"><a class="nav-link text-muted" href="#">Cookie</a></li>
