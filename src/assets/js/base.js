@@ -41,7 +41,7 @@ function checkForDarkMode(event)
             link.setAttribute("class", "nav-footer-link dark-mode");
         });
 
-        footer.setAttribute("class", "b-dark pt-5");
+        footer.setAttribute("class", "bg-dark pt-5");
 
         isDarkMode = false;
     } else

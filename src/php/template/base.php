@@ -158,7 +158,7 @@
 
 						<!-- Link block -->
 						<div class="col-6 col-md-3">
-							<h5 class="text-white mb-2 mb-md-4">Link</h5>
+							<h5 class="mb-2 mb-md-4">Link</h5>
 							<ul class="nav flex-column text-primary-hover">
 								<li class="nav-item"><a class="nav-link nav-footer-link" href="signup-view.php">Sign up</a></li>
 								<li class="nav-item"><a class="nav-link nav-footer-link" href="login-view.php">Sign in</a></li>

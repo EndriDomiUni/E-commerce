@@ -163,10 +163,12 @@ select:disabled {
     display: none !important;
 }
 
-.nav-caption-item .dark-mode, .nav-footer-link .dark-mode {
+.nav-caption-item .dark-mode,
+.nav-footer-link .dark-mode {
     color: #fff;
 }
 
-.nav-caption-item, .nav-footer-link {
+.nav-caption-item, 
+.nav-footer-link {
     color: currentColor;
 }
