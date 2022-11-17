@@ -11,14 +11,15 @@ const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
 // const btnToogleNavbar = document.querySelector("#tn-toogle-navbar"); // toogle btn
 
 
+// Codice che va precompilato 
 document.addEventListener("DOMContentLoaded", (event) =>
 {
 });
 
+
 // enable, disable dark mode
 function checkForDarkMode(event)
 {
-    console.log(event);
     if (event.target.checked)
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
@@ -55,8 +56,6 @@ function checkForDarkMode(event)
 // display "User" & "shop" correctly
 function justifyRightMenuItem()
 {
-
-
     if (isBtnToogleNavbarPressed)
     {
         btnToogleNavbar.remove("justify-content-between");
