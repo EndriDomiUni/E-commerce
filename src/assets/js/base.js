@@ -8,7 +8,7 @@ const navbar = document.getElementById("navbar-main"); // navbar
 const navIconItem = document.querySelectorAll(".nav-icon-item");
 const navItemCaption = document.querySelectorAll("p"); // caption of nav link : TO CHANGE
 const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
-const footer = document.querySelector("footer"); // footer
+const footer = document.getElementsByTagName("footer"); // footer
 const navFooterLink = document.querySelectorAll(".nav-footer-link");
 // const btnToogleNavbar = document.querySelector("#tn-toogle-navbar"); // toogle btn
 
