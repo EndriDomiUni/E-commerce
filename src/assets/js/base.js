@@ -1,49 +1,69 @@
-
 // check if btn dark mode is pressed or not
-let btnDarkModeStatus = false;
+let isDarkMode = false;
+// check if btn dark mode is pressed or not
+let isBtnToogleNavbarPressed = false;
 
-document.addEventListener("DOMContentLoaded", (event) => {
+// navbar dark mode
+const navbar = document.getElementById("navbar-main"); // navbar
+const navIconItem = document.querySelectorAll(".nav-icon-item");
+const navItemCaption = document.querySelectorAll("p"); // caption of nav link : TO CHANGE
+const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
+// const btnToogleNavbar = document.querySelector("#tn-toogle-navbar"); // toogle btn
 
-    // navbar dark mode
-    const btnDarkMode = document.querySelector("#btn-dark-mode");
-    btnDarkMode.addEventListener("click", () => {
 
-        const navbar = document.querySelector("#navbar-main");
-        const navIconItem = document.querySelectorAll(".nav-icon-item");
-        //const navItemCaption = document.querySelectorAll(".nav-caption-item");
-        const navItemCaption = document.querySelectorAll("p");
-
-        // DARK
-        if (btnDarkModeStatus === false) {
-            navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
-
-            // icon svg right
-            navIconItem.forEach((icon) => {
-                icon.setAttribute("fill", "#fff");
-            });
-
-            // caption right
-            navItemCaption.forEach((caption) => {
-                caption.setAttribute("class", "nav-caption-item dark-mode");
-            });
-
-            btnDarkModeStatus = true;
-        
-        // Light
-        } else if (btnDarkModeStatus === true) {
-            navbar.setAttribute("class", "navbar navbar-expand-lg bg-light");
-
-            // icon svg light
-            navIconItem.forEach((icon) => {
-                icon.setAttribute("fill", "#000");
-            });
-
-            // caption right
-            navItemCaption.forEach((caption) => {
-                caption.setAttribute("class", "nav-caption-item");
-            });
-
-            btnDarkModeStatus = false;
-        }
-    });
+document.addEventListener("DOMContentLoaded", (event) =>
+{
 });
+
+// enable, disable dark mode
+function checkForDarkMode(event)
+{
+    console.log(event);
+    if (event.target.checked)
+    {
+        navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
+
+        navIconItem.forEach((icon) =>
+        {  // icon svg right
+            icon.setAttribute("fill", "#fff");
+        });
+
+        navItemCaption.forEach((caption) =>
+        {  // caption right
+            caption.setAttribute("class", "nav-caption-item dark-mode");
+        });
+
+        isDarkMode = false;
+    } else
+    {
+        navbar.setAttribute("class", "navbar navbar-expand-lg bg-light");
+
+        navIconItem.forEach((icon) =>
+        { // icon svg light
+            icon.setAttribute("fill", "#000");
+        });
+
+        navItemCaption.forEach((caption) =>
+        { // caption right
+            caption.setAttribute("class", "nav-caption-item");
+        });
+
+        isDarkMode = true;
+    }
+}
+
+// display "User" & "shop" correctly
+function justifyRightMenuItem()
+{
+
+
+    if (isBtnToogleNavbarPressed)
+    {
+        btnToogleNavbar.remove("justify-content-between");
+        isBtnToogleNavbarPressed = false;
+    } else
+    {
+        btnToogleNavbar.addAttribute("class", "justify-content-between");
+        isBtnToogleNavbarPressed = true;
+    }
+}
