@@ -50,7 +50,7 @@ function checkForDarkMode(event)
 
         navIconItem.forEach((icon) =>
         { // icon svg light
-            icon.setAttribute("fill", "#000");
+            icon.setAttribute("fill", "currentColor");
         });
 
         navItemCaption.forEach((caption) =>
