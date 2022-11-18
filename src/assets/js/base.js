@@ -1,22 +1,17 @@
-// check if btn dark mode is pressed or not
-let isDarkMode = false;
-// check if btn dark mode is pressed or not
-let isBtnToogleNavbarPressed = false;
 
-// navbar dark mode
+
+// navbar
 const navbar = document.getElementById("navbar-main"); // navbar
 const navIconItem = document.querySelectorAll(".nav-icon-item");
 const navItemCaption = document.querySelectorAll("p"); // caption of nav link : TO CHANGE
+
+// dark mode toogle
 const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
-const footer = document.querySelector("footer-section"); // footer
+
+// footer
+const footer = document.getElementsByTagName("footer");
 const navFooterLink = document.querySelectorAll(".nav-footer-link");
-// const btnToogleNavbar = document.querySelector("#tn-toogle-navbar"); // toogle btn
-
-
-// Codice che va precompilato 
-document.addEventListener("DOMContentLoaded", (event) =>
-{
-});
+const footerHr = document.querySelectorAll("hr-footer");
 
 
 // enable, disable dark mode
@@ -39,11 +34,14 @@ function checkForDarkMode(event)
         navFooterLink.forEach((link) =>
         {
             link.setAttribute("class", "nav-footer-link dark-mode");
-        }); 
+        });
 
         footer.setAttribute("class", "bg-dark pt-5 footer-section");
 
-        isDarkMode = false;
+        footerHr.forEach((hr) =>
+        {
+            hr.setAttribute("class", "text-light mb-2 mb-md-4 hr-footer");
+        });
     } else
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg bg-light");
@@ -58,6 +56,7 @@ function checkForDarkMode(event)
             caption.setAttribute("class", "nav-caption-item");
         });
 
+
         navFooterLink.forEach((link) =>
         {
             link.setAttribute("class", "nav-footer-link");
@@ -65,20 +64,10 @@ function checkForDarkMode(event)
 
         footer.setAttribute("class", "bg-light pt-5 footer-section");
 
-        isDarkMode = true;
+        footerHr.forEach((hr) =>
+        {
+            hr.setAttribute("class", "text-dark mb-2 mb-md-4 hr-footer");
+        });
     }
 }
 
-// display "User" & "shop" correctly
-function justifyRightMenuItem()
-{
-    if (isBtnToogleNavbarPressed)
-    {
-        btnToogleNavbar.remove("justify-content-between");
-        isBtnToogleNavbarPressed = false;
-    } else
-    {
-        btnToogleNavbar.addAttribute("class", "justify-content-between");
-        isBtnToogleNavbarPressed = true;
-    }
-}
