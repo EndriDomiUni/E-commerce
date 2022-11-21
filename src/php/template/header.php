@@ -181,7 +181,14 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end ">
-                            <li><a class="dropdown-item" href="./view/LoginView.php">Login in</a></li>
+                            <li><a class="dropdown-item" href='<?php 
+
+                                if ($title == 'base'){
+                                    echo '../view/LoginView.php';
+                                } else {
+                                    echo './view/LoginView.php';
+                                }
+                            ?>'>Login in</a></li>
                             <li><a class="dropdown-item" href="./view/SignUpView.php">Sign up</a></li>
                             <li><a class="dropdown-item" href="./view/Inbox.php">Inbox</a></li>
                             <li>

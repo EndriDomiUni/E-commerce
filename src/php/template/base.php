@@ -1,3 +1,7 @@
+<?php
+$title = 'base';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
