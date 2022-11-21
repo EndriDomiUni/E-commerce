@@ -169,10 +169,10 @@ select:disabled {
 }
 
 .nav-caption-item, 
-.nav-footer-link {
+.nav-footer-link,
+footer-section {
     color: currentColor;
 }
 
-footer {
-    color: currentColor;
-}
+
+
