@@ -18,7 +18,7 @@ $title = 'base';
 <body>
   <main>
     <?php include("header.php"); ?>
-    <?php include("../view/HomeView.php"); ?>
+    <?php include("./view/HomeView.php"); ?>
   </main>
 
   <?php include("footer.php"); ?>
