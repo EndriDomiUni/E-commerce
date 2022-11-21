@@ -13,7 +13,7 @@
 
 <body style="background-color: hsla(0, 0%, 94%);">
 
-  <?php include("header.php"); ?>
+  <?php include("../template/header.php"); ?>
 
   <div class="container my-5">
     <div class="card">
@@ -157,7 +157,7 @@
           </div>
         </div>
 
-        <?php include("footer.php"); ?>
+        <?php include("../template/footer.php"); ?>
     </div>
   </div>
 
