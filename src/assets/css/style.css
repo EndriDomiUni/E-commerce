@@ -172,3 +172,7 @@ select:disabled {
 .nav-footer-link {
     color: currentColor;
 }
+
+footer {
+    color: currentColor;
+}
