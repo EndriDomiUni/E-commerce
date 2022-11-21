@@ -183,7 +183,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="<?php 
                                 if ($title == 'base'){
-                                    echo '../view/LoginView.php';
+                                    echo './view/LoginView.php';
                                 } else {
                                     echo './view/LoginView.php';
                                 }
