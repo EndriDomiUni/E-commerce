@@ -1,4 +1,4 @@
-<footer class="bg-dark pt-5">
+<footer class="bg-light pt-5 footer-section">
     <div class="container">
         <!-- Row START -->
         <div class="row g-4">
@@ -20,7 +20,7 @@
                 <div class="row g-4">
                     <!-- Link block -->
                     <div class="col-6 col-md-3">
-                        <h5 class="text-white mb-2 mb-md-4">Page</h5>
+                        <h5 class="text-dark mb-2 mb-md-4 hr-footer">Page</h5>
                         <ul class="nav flex-column text-primary-hover">
                             <li class="nav-item"><a class="nav-link text-muted" href="#">About us</a></li>
                             <li class="nav-item"><a class="nav-link text-muted" href="#">Contact us</a></li>
@@ -31,7 +31,7 @@
 
                     <!-- Link block -->
                     <div class="col-6 col-md-3">
-                        <h5 class="text-white mb-2 mb-md-4">Link</h5>
+                        <h5 class="text-dark mb-2 mb-md-4 hr-footer">Link</h5>
                         <ul class="nav flex-column text-primary-hover">
                             <li class="nav-item"><a class="nav-link text-muted" href="signup-view.php">Sign up</a></li>
                             <li class="nav-item"><a class="nav-link text-muted" href="login-view.php">Sign in</a></li>
