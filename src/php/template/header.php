@@ -185,7 +185,7 @@
                                 if ($title == 'base'){
                                     echo './view/LoginView.php';
                                 } else {
-                                    echo './view/LoginView.php';
+                                    echo '../view/LoginView.php';
                                 }
                             ?>">Login in</a></li>
                             <li><a class="dropdown-item" href="./view/SignUpView.php">Sign up</a></li>
