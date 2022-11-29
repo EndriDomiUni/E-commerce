@@ -7,7 +7,7 @@ define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVE
 // ASSETS
 define("CSS", ROOT . "/assets/css");
 define("JS", ROOT . "/assets/js");
-define("IMAGES", ROOT . "/assets/images");
+define("IMG", ROOT . "/assets/img");
 
 // VIEWS
 define('VIEW_ROOT', URL_ROOT . '/templates/views');
