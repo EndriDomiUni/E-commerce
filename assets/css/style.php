@@ -3,8 +3,7 @@
 $stylesheets = [
     ROOT . '/index.php' => [
         CSS . '/productStyle.css',
-        CSS . '/prodottiStyle.css',
-        "./plugins/owl_carousel/owl.carousel.css"
+        CSS . '/prodottiStyle.css'
     ],
     ROOT . '/account.php' => [
         CSS . '/loginStyle.css'

@@ -1,13 +1,13 @@
 <?php
 
 // ROOT 
-define("ROOT", "");
+define("ROOT", "/app");
 define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
 // ASSETS
 define("CSS", ROOT . "/assets/css");
 define("JS", ROOT . "/assets/js");
-define("IMG", ROOT . "/assets/img");
+define("IMAGES", ROOT . "/assets/images");
 
 // VIEWS
 define('VIEW_ROOT', URL_ROOT . '/templates/views');

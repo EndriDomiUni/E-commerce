@@ -2,8 +2,7 @@
 
 $scripts = [
     ROOT . '/index.php' => [
-        JS . '/productSlider.js',
-        'plugins/owl_carousel/owl.carousel.js'
+        JS . '/productSlider.js'
     ],
     ROOT . '/account.php' => [
         JS . '/loginSlide.js',
