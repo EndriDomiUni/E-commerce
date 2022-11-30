@@ -5,7 +5,7 @@ define("ROOT", getcwd());
 define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
 // INDEX 
-define("INDEX", ROOT . "/index.php");
+define("INDEX", ROOT . "\index.php");
 
 
 // ASSETS
