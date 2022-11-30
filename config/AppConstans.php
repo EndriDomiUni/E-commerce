@@ -9,9 +9,9 @@ define("INDEX", ROOT . "\index.php");
 
 
 // ASSETS
-define("CSS", ROOT . "/assets/css");
-define("JS", ROOT . "/assets/js");
-define("IMG", ROOT . "/assets/img");
+define("CSS", ROOT . "\assets\css");
+define("JS", ROOT . "\assets\js");
+define("IMG", ROOT . "\assets\img");
 
 // VIEWS
 define('VIEW_ROOT', URL_ROOT . '/templates/views');
