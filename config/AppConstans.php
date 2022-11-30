@@ -4,6 +4,10 @@
 define("ROOT", "/app");
 define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
+// INDEX 
+define("INDEX", "/");
+
+
 // ASSETS
 define("CSS", ROOT . "/assets/css");
 define("JS", ROOT . "/assets/js");
