@@ -1,11 +1,11 @@
 <?php
 
 // ROOT 
-define("ROOT", "/E-commerce");
+define("ROOT", "/E-commerce5");
 define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
 // INDEX 
-define("INDEX", "/E-commerce/index.php");
+define("INDEX", "/E-commerce5/index.php");
 
 
 // ASSETS
