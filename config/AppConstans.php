@@ -1,11 +1,11 @@
 <?php
 
 // ROOT 
-define("ROOT", "/E-commerce");
+define("ROOT", getcwd());
 define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
 // INDEX 
-define("INDEX", "/E-commerce/index.php");
+define("INDEX", ROOT . "/index.php");
 
 
 // ASSETS
@@ -17,6 +17,10 @@ define("IMG", ROOT . "/assets/img");
 define('VIEW_ROOT', URL_ROOT . '/templates/views');
 define("VIEW_USER", VIEW_ROOT . "/user");
 define("VIEW_SELLER", VIEW_ROOT . "/seller");
+define("SIGN-IN", VIEW-USER . "/sign-in.php");
+define("SIGN-UP", VIEW-USER . "/sign-up.php");
+define("INBOX", VIEW-USER . "/inbox.php");
+define("SETTINGS", VIEW-USER . "/settings.php");
 
 // DATABASE
 define("SERVER", "localhost");
