@@ -1,7 +1,7 @@
 <?php
 
 // ROOT 
-define("ROOT", basename(dirname("/"));
+define("ROOT", basename(dirname("/")));
 define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
 // INDEX 
