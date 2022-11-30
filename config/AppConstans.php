@@ -17,10 +17,10 @@ define("IMG", ROOT . "/assets/img");
 define('VIEW_ROOT', URL_ROOT . '/templates/views');
 define("VIEW_USER", VIEW_ROOT . "/user");
 define("VIEW_SELLER", VIEW_ROOT . "/seller");
-define("SIGN-IN", VIEW-USER . "/sign-in.php");
-define("SIGN-UP", VIEW-USER . "/sign-up.php");
-define("INBOX", VIEW-USER . "/inbox.php");
-define("SETTINGS", VIEW-USER . "/settings.php");
+define("SIGN-IN", VIEW_USER . "/sign-in.php");
+define("SIGN-UP", VIEW_USER . "/sign-up.php");
+define("INBOX", VIEW_USER . "/inbox.php");
+define("SETTINGS", VIEW_USER . "/settings.php");
 
 // DATABASE
 define("SERVER", "localhost");
