@@ -39,8 +39,8 @@ function checkForDarkMode(event)
         });
 
         
-        // footer.setAttribute("class", "bg-dark pt-5 footer-section");
-        footer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        footer.setAttribute("class", "bg-dark pt-5 footer-section");
+        //footer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
 
         footerHr.forEach((hr) =>
         {
