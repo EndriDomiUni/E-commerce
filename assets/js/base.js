@@ -9,7 +9,7 @@ const navItemCaption = document.querySelectorAll("p"); // caption of nav link : 
 const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
 
 // footer
-const footer = document.getElementsByTagName("footer");
+const footer = document.getElementById("footer");
 const navFooterLink = document.querySelectorAll(".nav-footer-link");
 const footerHr = document.querySelectorAll("hr-footer");
 

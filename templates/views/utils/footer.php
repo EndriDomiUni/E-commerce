@@ -1,4 +1,4 @@
-<footer class="bg-light pt-5 footer-section">
+<footer class="bg-light pt-5 footer-section" id="footer">
     <div class="container">
         <!-- Row START -->
         <div class="row g-4">
