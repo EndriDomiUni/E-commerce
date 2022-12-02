@@ -19,8 +19,8 @@ function checkForDarkMode(event)
 {
     if (event.target.checked)
     {
-        navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
-        //this.navbar.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        navbar.setAttribute("class", "navbar navbar-expand-lg");
+        navbar.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
 
 
         navIconItem.forEach((icon) =>
@@ -39,8 +39,8 @@ function checkForDarkMode(event)
         });
 
         
-        footer.setAttribute("class", "bg-dark pt-5 footer-section");
-        //footer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        footer.setAttribute("class", "pt-5 footer-section");
+        footer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
 
         footerHr.forEach((hr) =>
         {
@@ -48,7 +48,7 @@ function checkForDarkMode(event)
         });
     } else
     {
-        navbar.setAttribute("class", "navbar navbar-expand-lg bg-light");
+        navbar.setAttribute("class", "navbar navbar-expand-lg");
         navbar.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
 
         navIconItem.forEach((icon) =>
@@ -67,7 +67,7 @@ function checkForDarkMode(event)
             link.setAttribute("class", "nav-footer-link");
         });
 
-        footer.setAttribute("class", "bg-light pt-5 footer-section");
+        footer.setAttribute("class", "pt-5 footer-section");
         footer.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
 
         footerHr.forEach((hr) =>
