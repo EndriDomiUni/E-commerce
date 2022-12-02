@@ -1,11 +1,11 @@
-<?php 
+<?php
 require("./config/AppConstans.php");
 ?>
 
 <nav class="navbar navbar-expand-lg bg-light" id="navbar-main">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?php echo ROOT; ?>">
-            <?php echo IMG . "/logo.svg"; ?>
+            <img src="<?php echo IMG; ?>/logo.svg" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="toogle-hamburger">
             <span class="navbar-toggler-icon"></span>

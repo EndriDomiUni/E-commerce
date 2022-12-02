@@ -17,5 +17,5 @@
         <link rel="stylesheet" href="<?php echo CSS; ?>/sidebarAdmin.css">
     <?php } ?>
 
-    <script src="<?php echo JS; ?>/base.js"></script>
+    <script src="<?php echo JS; ?>/base.js" defer></script>
 </head>

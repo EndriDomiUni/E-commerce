@@ -34,7 +34,7 @@ class Database
      * 
      * @param sql the SQL query to execute
      * 
-     * @return array|string result of the query.
+     * @return int|string the id of new entry, otherwise msg on failure
      */
     public function execute($sql, ...$params)
     {
