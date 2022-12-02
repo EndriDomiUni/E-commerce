@@ -20,7 +20,7 @@ function checkForDarkMode(event)
     if (event.target.checked)
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
-        this.navbar.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        //this.navbar.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
 
 
         navIconItem.forEach((icon) =>
@@ -49,6 +49,7 @@ function checkForDarkMode(event)
     } else
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg bg-light");
+        navbar.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
 
         navIconItem.forEach((icon) =>
         { // icon svg light
@@ -67,6 +68,7 @@ function checkForDarkMode(event)
         });
 
         footer.setAttribute("class", "bg-light pt-5 footer-section");
+        footer.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
 
         footerHr.forEach((hr) =>
         {
