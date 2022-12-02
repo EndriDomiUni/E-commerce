@@ -22,5 +22,8 @@ define("DBNAME", "e-commerce");
 define("PORT", "3306");
 define("CHARSET", "utf8");
 
+// FOLDERS
+define("CONFIG", ROOT . "/config");
+
 // SPECIAL CHARACTERS
 define("EURO", "€");

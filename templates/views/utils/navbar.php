@@ -1,7 +1,3 @@
-<?php
-require("./config/AppConstans.php");
-?>
-
 <nav class="navbar navbar-expand-lg bg-light" id="navbar-main">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?php echo ROOT; ?>">
