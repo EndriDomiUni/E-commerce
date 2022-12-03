@@ -14,7 +14,7 @@ const navFooterLink = document.querySelectorAll(".nav-footer-link");
 const footerHr = footer.querySelectorAll("hr-footer");
 
 // main
-const body = document.getElementsById("body");
+const body = document.getElementById("body");
 
 
 // enable, disable dark mode
