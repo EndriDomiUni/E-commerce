@@ -9,7 +9,7 @@ require_once("./assets/js/script.php");
 <?php require_once("./templates/views/utils/head.php"); ?>
 
 
-<body>
+<body id="body">
 
     <!-- ======================= Header START -->
     <header class="">
