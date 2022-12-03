@@ -49,10 +49,9 @@ function checkForDarkMode(event)
         {
             hr.setAttribute("class", "mb-2 mb-md-4 hr-footer");
             hr.style.color = "rgba(255, 255, 255, 0.7)";
-
         });
 
-        main.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        main.backgroundColor = "rgba(0, 0, 0, 0.5)";
     } else
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg");
@@ -83,7 +82,7 @@ function checkForDarkMode(event)
             hr.style.color = "rgba(0, 0, 0, 0.9)";
         });
 
-        main.style.backgroundColor = "rgba(255, 255, 255, 0.8";
+        main.backgroundColor = "rgba(255, 255, 255, 0.8"
 
     }
 }
