@@ -11,7 +11,10 @@ const btnDarkMode = document.getElementById("btn-dark-mode"); // btn dark mode
 // footer
 const footer = document.getElementById("footer");
 const navFooterLink = document.querySelectorAll(".nav-footer-link");
-const footerHr = document.querySelectorAll("hr-footer");
+const footerHr = footer.querySelectorAll("hr-footer");
+
+// main
+const main = document.getElementsByTagName("main");
 
 
 // enable, disable dark mode
@@ -44,8 +47,12 @@ function checkForDarkMode(event)
 
         footerHr.forEach((hr) =>
         {
-            hr.setAttribute("class", "text-light mb-2 mb-md-4 hr-footer");
+            hr.setAttribute("class", "mb-2 mb-md-4 hr-footer");
+            hr.style.color = "rgba(255, 255, 255, 0.7)";
+
         });
+
+        main.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
     } else
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg");
@@ -72,8 +79,12 @@ function checkForDarkMode(event)
 
         footerHr.forEach((hr) =>
         {
-            hr.setAttribute("class", "text-dark mb-2 mb-md-4 hr-footer");
+            hr.setAttribute("class", "mb-2 mb-md-4 hr-footer");
+            hr.style.color = "rgba(0, 0, 0, 0.9)";
         });
+
+        main.style.backgroundColor = "rgba(255, 255, 255, 0.8";
+
     }
 }
 

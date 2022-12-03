@@ -19,7 +19,9 @@ require_once("./assets/js/script.php");
 
 
     <!-- ======================= Main content START -->
-    <?php echo $mainContent; ?>
+    <main>
+        <?php echo $mainContent; ?>
+    </main>
     <!-- ======================= Main content END -->
 
 
