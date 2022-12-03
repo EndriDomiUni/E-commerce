@@ -14,7 +14,7 @@ const navFooterLink = document.querySelectorAll(".nav-footer-link");
 const footerHr = footer.querySelectorAll("hr-footer");
 
 // main
-const main = document.getElementsByTagName("main");
+const body = document.getElementsByTagName("body");
 
 
 // enable, disable dark mode
@@ -51,7 +51,7 @@ function checkForDarkMode(event)
             hr.style.color = "rgba(255, 255, 255, 0.7)";
         });
 
-        main.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        body.backgroundColor = "rgba(0, 0, 0, 0.5)";
     } else
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg");
@@ -82,7 +82,7 @@ function checkForDarkMode(event)
             hr.style.color = "rgba(0, 0, 0, 0.9)";
         });
 
-        main.backgroundColor = "rgba(255, 255, 255, 0.8"
+        body.backgroundColor = "rgba(255, 255, 255, 0.8"
 
     }
 }
