@@ -164,7 +164,7 @@ select:disabled {
 }
 
 nav {
-    max-height: 70px;
+    height: 70px;
 }
 
 .nav-caption-item .dark-mode,
