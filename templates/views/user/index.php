@@ -1,4 +1,6 @@
-<section class="">
+
+<!--
+    <section class="">
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="col-md-5 p-lg-5 mx-auto my-5">
             <h1 class="display-4 fw-normal">Demo</h1>
@@ -9,7 +11,48 @@
         <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
     </div>
 </section>
-
+-->
+<div class="hero-block">
+    <div class="hero-block__background">
+        <div class="web_ui__Image__image web_ui__Image__cover web_ui__Image__scaled">
+            <img src="https://static.vinted.com/assets/seller-promotion/other/banner-tablets-up-afe3d19776592a72f165c1bb93fd02c5528250a8c670ecc1656654323f9d4856.jpg" alt="" class="web_ui__Image__content">
+        </div>
+        <div class="hero-block__overlay">
+        </div>
+    </div>
+    <div class="container">
+        <div class="hero-block__wrapper">
+            <div class="web_ui__Card__card">
+                <div class="u-ui-padding-x2-large">
+                    <h1 class="seller-promotion__content-title">È arrivato il momento di liberare l’armadio!</h1>
+                    <div class="web_ui__Spacer__x2-large web_ui__Spacer__horizontal">
+                    </div>
+                    <a role="button" href="/member/signup/start?ref_url=%2Fitems%2Fnew" class="web_ui__Button__button web_ui__Button__filled web_ui__Button__primary web_ui__Button__truncated">
+                        <span class="web_ui__Button__content">
+                            <span class="web_ui__Button__label">Vendi subito</span>
+                        </span>
+                    </a>
+                    <div class="web_ui__Spacer__medium web_ui__Spacer__horizontal">
+                    </div>
+                    <a href="/how_it_works">
+                        <h3 class="web_ui__Text__text web_ui__T<div class="hero-block">
+                            <div class="hero-block__background"><div class="web_ui__Image__image web_ui__Image__cover web_ui__Image__scaled">
+                                <img src="https://static.vinted.com/assets/seller-promotion/other/banner-tablets-up-afe3d19776592a72f165c1bb93fd02c5528250a8c670ecc1656654323f9d4856.jpg" alt="" class="web_ui__Image__content">
+                            </div>
+                            <div class="hero-block__overlay">
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="hero-block__wrapper">
+                                <div class="web_ui__Card__card">
+                                    <div class="u-ui-padding-x2-large">
+                                            <h1 class="seller-promotion__content-title">È arrivato il momento di liberare l’armadio!</h1>
+                                            <div class="web_ui__Spacer__x2-large web_ui__Spacer__horizontal">
+                                            </div>
+                                            <a role="button" href="/member/signup/start?ref_url=%2Fitems%2Fnew" class="web_ui__Button__button web_ui__Button__filled web_ui__Button__primary web_ui__Button__truncated">
+                                                <span class="web_ui__Button__content">
+                                                    <span class="web_ui__Button__label">Vendi subito</span>
+                                                </span></a><div class="web_ui__Spacer__medium web_ui__Spacer__horizontal"></div><a href="/how_it_works"><h3 class="web_ui__Text__text web_ui__Text__subtitle web_ui__Text__left web_ui__Text__clickable" role="link" tabindex="0">Scopri come funziona</h3></a></div></div></div></div></div>ext__subtitle web_ui__Text__left web_ui__Text__clickable" role="link" tabindex="0">Scopri come funziona</h3></a></div></div></div></div></div>
 <section class="">
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
