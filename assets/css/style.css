@@ -163,6 +163,10 @@ select:disabled {
     display: none !important;
 }
 
+nav {
+    max-height: 70px;
+}
+
 .nav-caption-item .dark-mode,
 .nav-footer-link .dark-mode {
     color: #fff;
