@@ -10,7 +10,7 @@ class Costumer
     private $password;
     private $status;
 
-    public function __construct($id, $name, $surname, $mail, $password, $status)
+    public function __construct($id)
     {
         $this->CostumerHelper = new CostumerHelper();
         $res = $this->CostumerHelper->getCostumerById($id);

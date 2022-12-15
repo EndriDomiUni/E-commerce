@@ -77,8 +77,9 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end ">
-                        <li><a class="dropdown-item" href="./view/LoginView.php">Login in</a></li>
-                        <li><a class="dropdown-item" href="./account.php">Sign up</a></li>
+                        <li><a class="dropdown-item" href="./login.php">Login in</a></li>
+                        <li><a class="dropdown-item" href="./register.php">Sign up</a></li>
+                        <li><a class="dropdown-item" href="./account.php">Account</a></li>
                         <li><a class="dropdown-item" href="">Inbox</a></li>
                         <li>
                             <hr class="dropdown-divider">
