@@ -2,7 +2,7 @@
 require_once("database.php");
 
 
-class DatabaseHelper
+abstract class DatabaseHelper
 {
 
     protected $database;
@@ -12,5 +12,38 @@ class DatabaseHelper
         $this->database = new Database(SERVER, USERNAME, PASSWORD, DBNAME, PORT, CHARSET);
     }
 
-    // here generic query
+    /**
+     * return all record
+     */
+    abstract function getAll();
+
+    /**
+     * It gets a costumer by its id
+     * 
+     * @param id The id of the costumer you want to get.
+     * 
+     * @return int costumer with the id that is passed as a parameter.
+     */
+    public function getCostumerById($id)
+    {
+        $sql = "SELECT * FROM cliente WHERE Id = ?";
+        $paramsList = [$id];
+        $queryRes = $this->db->execute($sql, ...$paramsList)[0];
+        return $queryRes;
+    }
+
+    /**
+     * It gets a seller by id
+     * 
+     * @param id the id of the seller
+     * 
+     * @return int seller with the given id.
+     */
+    public function getSellerById($id)
+    {
+        $sql = "SELECT * FROM venditore WHERE Id = ?";
+        $paramsList = [$id];
+        $queryRes = $this->db->execute($sql, ...$paramsList)[0];
+        return $queryRes;
+    }
 }
