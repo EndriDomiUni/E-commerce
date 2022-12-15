@@ -1,8 +1,8 @@
 <?php
 
-class Costumer
+class Custumer
 {
-    private $CostumerHelper;
+    private $CustumerHelper;
     private $id;
     private $name;
     private $surname;
@@ -12,8 +12,8 @@ class Costumer
 
     public function __construct($id, $name, $surname, $mail, $password, $status)
     {
-        $this->CostumerHelper = new CostumerHelper();
-        $res = $this->CostumerHelper->getCostumerById($id);
+        $this->CustumerHelper = new CustumerHelper();
+        $res = $this->CustumerHelper->getCustumerById($id);
         $this->id = $res['Id'];
         $this->name = $res['Nome'];
         $this->surname = $res['Cognome'];
