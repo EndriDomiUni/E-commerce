@@ -1,6 +1,14 @@
 
 <!--
-    <section class="">
+     Questa sarà la pagina home del user / guest
+
+Funzionalità richieste:
+    .1 : cose varie 
+    .2 : (se sei guest in invito a registrarti oppure loggare) -> (che poi scompare)
+    .3 : Abbonati a premium
+    .4 : query varie 
+
+<section class="">
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="col-md-5 p-lg-5 mx-auto my-5">
             <h1 class="display-4 fw-normal">Demo</h1>

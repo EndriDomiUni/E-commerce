@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg bg-light" id="navbar-main">
+<nav class="navbar navbar-expand-lg bg-light bd-navbar sticky-top" id="navbar-main">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?php echo ROOT; ?>">
-            <img src="<?php echo IMG; ?>/logo.svg" alt="Logo" />
+            <img src="<?php echo IMG; ?>/logo.svg" width="64" height="64" alt="Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="toogle-hamburger">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- start menu left -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row justify-content-between">
                 <!-- start home -->
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="<?php echo ROOT; ?>">
