@@ -1,3 +1,13 @@
+<!-- Questa sarà la pagina account del user 
+
+Funzionalità richieste:
+    .1 : visualizza dati utente attualmente loggato
+    .2 : modifica dati 
+    .3 : elimina account 
+    .4 : storico ordini (da strudiarsela)
+    .5 : edit ordine (che porta in una nuova pagina)
+ -->
+
 <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
