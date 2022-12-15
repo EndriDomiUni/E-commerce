@@ -168,8 +168,16 @@ select:disabled {
     color: #fff;
 }
 
+.nav-icon-item {
+    margin-top: 20px;
+}
+
 .nav-caption-item,
 .nav-footer-link {
     color: currentColor;
 }
 
+nav {
+    height: 50px;
+    background-color: red;
+}

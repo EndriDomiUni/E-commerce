@@ -12,7 +12,7 @@ class Seller
     private $pIVA;
     private $status;
 
-    public function __construct($id, $name, $surname, $businessName, $mail, $password, $pIVA, $status)
+    public function __construct($id)
     {
         $this->SellerHelper = new SellerHelper();
         $res = $this->SellerHelper->getSellerById($id);
