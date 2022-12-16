@@ -163,12 +163,12 @@ select:disabled {
     display: none !important;
 }
 
-.header-main{
+.header-base{
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-nav {
+#navbar-main {
     padding-left: 20px;
     padding-right: 20px;
     height: 100% !important;
@@ -186,9 +186,4 @@ nav {
 .nav-caption-item,
 .nav-footer-link {
     color: currentColor;
-}
-
-nav {
-    height: 50px;
-    background-color: red;
 }
