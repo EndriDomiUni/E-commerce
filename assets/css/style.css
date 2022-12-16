@@ -168,7 +168,7 @@ select:disabled {
     padding-bottom: 20px;
 }
 
-#navbar-main {
+.navbar {
     padding-left: 20px;
     padding-right: 20px;
     height: 100% !important;
