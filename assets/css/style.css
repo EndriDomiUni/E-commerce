@@ -163,11 +163,6 @@ select:disabled {
     display: none !important;
 }
 
-.header-base{
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
 .navbar {
     padding-left: 20px;
     padding-right: 20px;
