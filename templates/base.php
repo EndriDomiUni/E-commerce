@@ -12,7 +12,7 @@ require_once("./assets/js/script.php");
 <body id="body">
 
     <!-- ======================= Header START -->
-    <header class="">
+    <header class="header-base">
         <?php require("./templates/views/utils/navbar.php"); ?>
     </header>
     <!-- ======================= Header END -->
