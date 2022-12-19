@@ -46,4 +46,37 @@ abstract class DatabaseHelper
         $queryRes = $this->db->execute($sql, ...$paramsList)[0];
         return $queryRes;
     }
+
+    public function signin($params)
+    {
+        if (validateParams($params)) {
+        }
+    }
+
+    /**
+     * It returns true if all the values in the array are not empty, otherwise it returns false
+     * 
+     * @param params An array of parameters to validate.
+     * 
+     * @return a boolean value.
+     */
+    function validateParams($params): bool
+    {
+        foreach ($params as $value) {
+            if (empty($value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns:
+     *      0 if doesnt exists
+     *      another number if exists
+     */
+    private function checkEmail($userType, $email)
+    {
+        return count($this->db->execute("SELECT * FROM `?` WHERE Email = ? ", $userType, $email)) == 0;
+    }
 }

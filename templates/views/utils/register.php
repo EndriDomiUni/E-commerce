@@ -9,7 +9,7 @@
                 <img src="<?php echo IMG; ?>/logo.svg" width="100" height="100" alt="Logo">
                 <div class="signin-intro">
                     <h1 id="greeting-msg" class="heading">Take-it</h1>
-                    <span id="signin-reg-msg" tabindex="-1" class="sub-heading">Registrati o <a href="./register.php" id="create-account-link">Accedi</a>
+                    <span id="signin-reg-msg" tabindex="-1" class="sub-heading">Registrati o <a href="./login.php" id="create-account-link">Accedi</a>
                     </span>
                 </div>
 
@@ -63,6 +63,8 @@
                 </div>
 
                 <script>
+                    // get the current "value" [personalaccount, businessaccount] from radiobotton 
+                    // and show/hide the appropriate value 
                     $(document).ready(function() {
                         $('input[type="radio"]').click(function() {
                             let inputValue = $(this).attr("value");
@@ -75,21 +77,35 @@
 
                 <div class="personalaccount box">
                     <section class="form-signin w-100 m-auto show">
-                        <form>
-                            <div class="form-floating">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="mario.rossi@example.com">
-                                <label for="floatingInput">Email address</label>
+                        <form method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="personal-name-register" placeholder="Mario">
+                                        <label for="personal-name-register">Nome</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="personal-surname-register" placeholder="Rossi">
+                                        <label for="personal-surname-register">Cognome</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                <label for="floatingPassword">Password</label>
+                                <input type="email" class="form-control" id="personal-mail-register" placeholder="mario.rossi@example.com">
+                                <label for="personal-mail-register">Indirizzo email</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="personal-password-register" placeholder="Password">
+                                <label for="personal-password-register">Password</label>
                             </div>
                             <div class="checkbox mb-3">
                                 <label>
                                     <input type="checkbox" value="remember-me"> Remember me
                                 </label>
                             </div>
-                            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                            <button class="w-100 btn btn-lg btn-primary" type="submit" name="personal-btn-register">Registrati</button>
                             <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                         </form>
                     </section>
@@ -97,39 +113,43 @@
 
                 <div class="businessaccount box" style="display: none">
                     <section class="form-signin w-100 m-auto">
-                        <form>
+                        <form method="post">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Mario">
-                                        <label for="floatingInput">Nome</label>
+                                        <input type="text" class="form-control" id="business-name-register" placeholder="Mario">
+                                        <label for="business-name-register">Nome</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="Rossi">
-                                        <label for="floatingInput">Cognome</label>
+                                        <input type="text" class="form-control" id="business-surname-register" placeholder="Rossi">
+                                        <label for="business-surname-register">Cognome</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Ragione sociale">
-                                <label for="floatingInput">Ragione Sociale</label>
+                                <input type="text" class="form-control" id="business-businessname-register" placeholder="Ragione sociale">
+                                <label for="business-businessname-register">Ragione Sociale</label>
                             </div>
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="mario.rossi@example.com">
-                                <label for="floatingInput">Indirizzo email</label>
+                                <input type="text" class="form-control" id="business-pIva-register" placeholder="00000000">
+                                <label for="business-pIva-register">Partita IVA</label>
                             </div>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="00000000">
-                                <label for="floatingInput">Partita IVA</label>
+                                <input type="email" class="form-control" id="business-mail-register" placeholder="mario.rossi@example.com">
+                                <label for="business-mail-register">Indirizzo email</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="business-password-register" placeholder="Password">
+                                <label for="business-password-register">Password</label>
                             </div>
                             <div class="checkbox mb-3">
                                 <label>
                                     <input type="checkbox" value="remember-me"> Remember me
                                 </label>
                             </div>
-                            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                            <button class="w-100 btn btn-lg btn-primary" type="submit" name="business-btn-register">Registrati</button>
                             <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                         </form>
                     </section>
