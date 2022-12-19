@@ -17,11 +17,9 @@ require_once("./assets/js/script.php");
     </header>
     <!-- ======================= Header END -->
 
-
     <!-- ======================= Main content START -->
     <?php echo $mainContent; ?>
     <!-- ======================= Main content END -->
-
 
     <!-- ======================= Footer START -->
     <?php require("./templates/views/utils/footer.php"); ?>

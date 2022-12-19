@@ -47,20 +47,84 @@ abstract class DatabaseHelper
         return $queryRes;
     }
 
-    public function signin($params)
+    /**
+     * It inserts a new user in the database
+     * 
+     * @param userType the type of user that is signing in.
+     * @param params array of parameters
+     */
+    public function signin($userType, $params)
     {
-        if (validateParams($params)) {
+        $allcorrect = true;
+        $response_array = [];
+
+        if (!$this->validateParams($params)) {
+            $msg = 'Inserire tutti i campi';
         }
+
+        if ($userType == COSTUMER) {
+            if (!$this->checkEmail(COSTUMER, $params['Email'])) {
+                $allcorrect = false;
+                $msg = 'Esiste un altro account con la stessa email.';
+            } else {
+                $response = $this->database->execute(
+                    "INSERT INTO cliente (Nome, Cognome, Email, Password, Status) 
+                    VALUES (?, ?, ?, ?, ?)",
+                    $params['Nome'],
+                    $params['Cognome'],
+                    $params['Email'],
+                    $params['Password'],
+                    ACTIVE
+                );
+
+                if (is_int($response)) {
+                    $msg = "Iscrizione correttamente effettuata.";
+                } else {
+                    $allcorrect = false;
+                    $msg = $response;
+                }
+            }
+        }
+
+        if ($userType == SELLER) {
+            if (!$this->checkEmail(SELLER, $params['Email'])) {
+                $allcorrect = false;
+                $msg = 'Esiste un altro account venditore con la stessa email.';
+            } else {
+                $response = $this->database->execute(
+                    "INSERT INTO venditore (Nome, Cognome, Ragione Sociale, Email, Password, P. IVA, Status) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    $params['Nome'],
+                    $params['Cognome'],
+                    $params['Ragione Sociale'],
+                    $params['Email'],
+                    $params['P. IVA'],
+                    ACTIVE
+                );
+
+                if (is_int($response)) {
+                    $msg = "Iscrizione correttamente effettuata.";
+                } else {
+                    $allcorrect = false;
+                    $msg = $response;
+                }
+            }
+        }
+
+        $response_array["Status"] = $allcorrect ? OK : ERROR;
+        $response_array["msg"] = $msg;
+        return $response_array;
     }
 
+
     /**
-     * It returns true if all the values in the array are not empty, otherwise it returns false
+     * It takes an array of parameters and returns true if all of them are not empty
      * 
      * @param params An array of parameters to validate.
      * 
      * @return a boolean value.
      */
-    function validateParams($params): bool
+    private function validateParams($params)
     {
         foreach ($params as $value) {
             if (empty($value)) {

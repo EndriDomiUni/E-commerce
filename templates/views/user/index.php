@@ -6,6 +6,7 @@ Funzionalità richieste:
     .3 : Abbonati a premium
     .4 : query varie 
  -->
+<?php phpinfo(); ?>
 
 <section class="">
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">

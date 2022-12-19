@@ -81,23 +81,23 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="personal-name-register" placeholder="Mario">
+                                        <input type="text" class="form-control" id="personal-name-register" placeholder="Mario" required name="personal-name-register">
                                         <label for="personal-name-register">Nome</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="personal-surname-register" placeholder="Rossi">
+                                        <input type="text" class="form-control" id="personal-surname-register" placeholder="Rossi" required name="personal-surname-register">
                                         <label for="personal-surname-register">Cognome</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="personal-mail-register" placeholder="mario.rossi@example.com">
+                                <input type="email" class="form-control" id="personal-mail-register" placeholder="mario.rossi@example.com" required name="personal-mail-register">
                                 <label for="personal-mail-register">Indirizzo email</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="personal-password-register" placeholder="Password">
+                                <input type="password" class="form-control" id="personal-password-register" placeholder="Password" required name="personal-password-register">
                                 <label for="personal-password-register">Password</label>
                             </div>
                             <div class="checkbox mb-3">
@@ -105,7 +105,7 @@
                                     <input type="checkbox" value="remember-me"> Remember me
                                 </label>
                             </div>
-                            <button class="w-100 btn btn-lg btn-primary" type="submit" name="personal-btn-register">Registrati</button>
+                            <button class="w-100 btn btn-lg btn-primary" type="submit" name="personal-btn-register">Registrati</button required>
                             <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                         </form>
                     </section>
@@ -117,31 +117,31 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="business-name-register" placeholder="Mario">
+                                        <input type="text" class="form-control" id="business-name-register" placeholder="Mario" required name="business-name-register">
                                         <label for="business-name-register">Nome</label>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="business-surname-register" placeholder="Rossi">
+                                        <input type="text" class="form-control" id="business-name-register" placeholder="Rossi" required name="business-surname-register">
                                         <label for="business-surname-register">Cognome</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="business-businessname-register" placeholder="Ragione sociale">
+                                <input type="text" class="form-control" id="business-businessname-register" placeholder="Ragione sociale" required name="business-businessname-register">
                                 <label for="business-businessname-register">Ragione Sociale</label>
                             </div>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="business-pIva-register" placeholder="00000000">
+                                <input type="text" class="form-control" id="business-pIva-register" placeholder="00000000" required name="business-pIva-register">
                                 <label for="business-pIva-register">Partita IVA</label>
                             </div>
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="business-mail-register" placeholder="mario.rossi@example.com">
+                                <input type="email" class="form-control" id="business-mail-register" placeholder="mario.rossi@example.com" required name="business-mail-register">
                                 <label for="business-mail-register">Indirizzo email</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="business-password-register" placeholder="Password">
+                                <input type="password" class="form-control" id="business-password-register" placeholder="Password" required name="business-password-register">
                                 <label for="business-password-register">Password</label>
                             </div>
                             <div class="checkbox mb-3">

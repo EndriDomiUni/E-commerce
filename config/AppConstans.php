@@ -1,14 +1,17 @@
 <?php
 
-// ROOT 
+// ROOT ------------------------------------------------------------------
 
 /**
  * /app
  */
 define("ROOT", "/app");
-define("URL_ROOT", isset($_SERVER['HTTPS']) ? "https" : "http" . "://" . $_SERVER['SERVER_NAME'] . ROOT);
+define("URL_ROOT", isset($_SERVER['HTTPS'])
+    ? "https"
+    : "http"
+    . "://" . $_SERVER['SERVER_NAME'] . ROOT);
 
-// ASSETS
+// ASSETS ----------------------------------------------------------------
 
 /**
  * /app/assets/css
@@ -25,12 +28,12 @@ define("JS", ROOT . "/assets/js");
  */
 define("IMG", ROOT . "/assets/img");
 
-// VIEWS
+// VIEWS ----------------------------------------------------------------
 define('VIEW_ROOT', URL_ROOT . '/templates/views');
 define("VIEW_USER", VIEW_ROOT . "/user");
 define("VIEW_SELLER", VIEW_ROOT . "/seller");
 
-// DATABASE
+// DATABASE -------------------------------------------------------------
 define("SERVER", "localhost");
 define("USERNAME", "root");
 define("PASSWORD", "");
@@ -38,9 +41,27 @@ define("DBNAME", "e-commerce");
 define("PORT", "3306");
 define("CHARSET", "utf8");
 
-// FOLDERS
+// FOLDERS -------------------------------------------------------------
 define("CONFIG", ROOT . "/config");
 define("TEMPLATES", ROOT . "/templates");
 
-// SPECIAL CHARACTERS
+// SPECIAL CHARACTERS --------------------------------------------------
 define("EURO", "€");
+
+// INTERNAL USE --------------------------------------------------------
+
+/**
+ * OK value = 0;
+ */
+define("OK", 0);
+
+/**
+ * ERROR value = 1;
+ */
+define("ERROR", 1);
+
+define("COSTUMER", "Cliente");
+define("SELLER", "Venditore");
+
+define("INACTIVE", 0);
+define("ACTIVE", 1);
