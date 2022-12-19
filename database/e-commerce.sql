@@ -31,7 +31,7 @@ USE `e-commerce`;
 -- Creazione: Nov 28, 2022 alle 15:21
 --
 
-CREATE TABLE `carrello` (
+CREATE TABLE IF NOT EXISTS `carrello` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Ammontare` int(20) UNSIGNED NOT NULL,
   `Quantità` int(20) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE `carrello` (
 -- Creazione: Nov 28, 2022 alle 17:14
 --
 
-CREATE TABLE `catalogo` (
+CREATE TABLE IF NOT EXISTS `catalogo` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Descrizione` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -69,7 +69,7 @@ CREATE TABLE `catalogo` (
 -- Ultimo aggiornamento: Nov 29, 2022 alle 15:08
 --
 
-CREATE TABLE `categoria` (
+CREATE TABLE IF NOT EXISTS `categoria` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Nome` varchar(30) NOT NULL,
   `Descrizione` varchar(30) NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE `categoria` (
 -- Creazione: Nov 03, 2022 alle 16:39
 --
 
-CREATE TABLE `cliente` (
+CREATE TABLE IF NOT EXISTS `cliente` (
   `Id` int(11) NOT NULL,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE `cliente` (
 -- Creazione: Nov 29, 2022 alle 15:33
 --
 
-CREATE TABLE `corriere` (
+CREATE TABLE IF NOT EXISTS `corriere` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Descrizione` varchar(30) NOT NULL,
   `Status` tinyint(5) NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `corriere` (
 -- Creazione: Nov 28, 2022 alle 16:30
 --
 
-CREATE TABLE `galleria immagini` (
+CREATE TABLE IF NOT EXISTS `galleria immagini` (
   `Id` int(10) UNSIGNED NOT NULL,
   `IdProdotto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -149,7 +149,7 @@ CREATE TABLE `galleria immagini` (
 -- Creazione: Nov 29, 2022 alle 14:53
 --
 
-CREATE TABLE `immagine` (
+CREATE TABLE IF NOT EXISTS `immagine` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Risorsa` varchar(30) NOT NULL,
   `IdGalleriaImmagini` int(10) UNSIGNED NOT NULL
@@ -175,7 +175,7 @@ CREATE TABLE `immagine` (
 -- Creazione: Nov 28, 2022 alle 16:14
 --
 
-CREATE TABLE `ordine` (
+CREATE TABLE IF NOT EXISTS `ordine` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Carrello` int(10) UNSIGNED NOT NULL,
   `IdStatusOrdine` int(10) UNSIGNED NOT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE `ordine` (
 -- Creazione: Nov 29, 2022 alle 15:22
 --
 
-CREATE TABLE `pagamento` (
+CREATE TABLE IF NOT EXISTS `pagamento` (
   `Id` int(10) UNSIGNED NOT NULL,
   `IdOrdine` int(10) UNSIGNED NOT NULL,
   `Data` date NOT NULL,
@@ -223,7 +223,7 @@ CREATE TABLE `pagamento` (
 -- Creazione: Nov 18, 2022 alle 15:13
 --
 
-CREATE TABLE `prodotto` (
+CREATE TABLE IF NOT EXISTS `prodotto` (
   `Id` int(11) NOT NULL,
   `Nome` varchar(50) NOT NULL,
   `Descrizione` varchar(100) NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE `prodotto` (
 -- Creazione: Nov 29, 2022 alle 15:27
 --
 
-CREATE TABLE `spedizione` (
+CREATE TABLE IF NOT EXISTS `spedizione` (
   `Id` int(10) UNSIGNED NOT NULL,
   `IdOrdine` int(10) UNSIGNED NOT NULL,
   `DataSpedizione` date NOT NULL,
@@ -266,7 +266,7 @@ CREATE TABLE `spedizione` (
 -- Creazione: Nov 28, 2022 alle 16:25
 --
 
-CREATE TABLE `status ordine` (
+CREATE TABLE IF NOT EXISTS `status ordine` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Descrizione` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -283,7 +283,7 @@ CREATE TABLE `status ordine` (
 -- Creazione: Nov 03, 2022 alle 16:39
 --
 
-CREATE TABLE `venditore` (
+CREATE TABLE IF NOT EXISTS `venditore` (
   `Id` int(10) UNSIGNED NOT NULL,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
