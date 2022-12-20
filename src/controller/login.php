@@ -9,11 +9,11 @@ if ((isset($_POST['submit']))) {
     $parameters = array($_POST['email'], $_POST['password'])
     $customerHelper = new CustomerHelper();
     $sellertHelper = new SellerHelper();
-    if($customerHelper->checkemail($clientNameTable), $_POST['email'])
+    if($customerHelper->checkemail(CUSTOMER), $_POST['email'])
     {
         $user = $customerHelper->signin($parameters)
     }
-    elseif ($sellertHelper->checkemail($sellerNameTable), $_POST['email'])
+    elseif ($sellertHelper->checkemail(SELLER), $_POST['email'])
     {
         $parameters = $sellertHelper->signin($parameters);
     }
