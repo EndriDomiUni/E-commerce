@@ -6,13 +6,15 @@ if ((isset($_POST['submit']))) {
     // Queste sono da mettere come constante globale
     $sellerNameTable = "venditore";
     $clientNameTable = "cliente";
+    $parameters = array($_POST['email'], $_POST['password'])
     $customerHelper = new CustomerHelper();
     $sellertHelper = new SellerHelper();
-    if($this->dbHelper->checkemail($clientNameTable), $_POST['email'])
+    if($customerHelper->checkemail($clientNameTable), $_POST['email'])
     {
-        $parameters = array($_POST['email'], $_POST['password'])
-        $user = $this->dbHelper->signin()
+        $user = $customerHelper->signin($parameters)
     }
-    $user = new 
-    if ($target)
+    elseif ($sellertHelper->checkemail($sellerNameTable), $_POST['email'])
+    {
+        $parameters = $sellertHelper->signin($parameters);
+    }
 }
