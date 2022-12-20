@@ -182,3 +182,11 @@ select:disabled {
 .nav-footer-link {
     color: currentColor;
 }
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
