@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once("./config/AppConstans.php");
+include("Dbh.php");
+
 ob_start();
 require("./templates/views/user/index.php");
 $mainContent = ob_get_clean();

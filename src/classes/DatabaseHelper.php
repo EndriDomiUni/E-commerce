@@ -1,5 +1,6 @@
 <?php
-require_once("database.php");
+require("./config/AppConstants.php");
+require("database.php");
 
 
 abstract class DatabaseHelper
@@ -9,7 +10,7 @@ abstract class DatabaseHelper
 
     public function __construct()
     {
-        $this->database = new Database(SERVER, USERNAME, PASSWORD, DBNAME, PORT, CHARSET);
+        $this->database = new Database();
     }
 
     /**

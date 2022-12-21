@@ -77,7 +77,7 @@
 
                 <div class="personalaccount box">
                     <section class="form-signin w-100 m-auto show">
-                        <form method="post">
+                        <form method="post" action="register.script.php">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating">
@@ -106,7 +106,7 @@
                                 </label>
                             </div>
                             <button class="w-100 btn btn-lg btn-primary" type="submit" name="personal-btn-register">Registrati</button required>
-                            <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
+                            <p class="mt-5 mb-3 text-muted">© 2022-2023</p>
                         </form>
                     </section>
                 </div>
@@ -150,7 +150,7 @@
                                 </label>
                             </div>
                             <button class="w-100 btn btn-lg btn-primary" type="submit" name="business-btn-register">Registrati</button>
-                            <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
+                            <p class="mt-5 mb-3 text-muted">© 2022-2023</p>
                         </form>
                     </section>
                 </div>

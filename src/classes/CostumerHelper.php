@@ -8,6 +8,11 @@ class CostumerHelper extends DatabaseHelper
         parent::__construct();
     }
 
+    /**
+     * It returns all the rows from the costumer table
+     * 
+     * @return the result of the query.
+     */
     public function getAll()
     {
         $sql = "SELECT * FROM costumer";

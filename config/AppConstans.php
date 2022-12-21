@@ -34,7 +34,7 @@ define("VIEW_USER", VIEW_ROOT . "/user");
 define("VIEW_SELLER", VIEW_ROOT . "/seller");
 
 // DATABASE -------------------------------------------------------------
-define("SERVER", "localhost");
+define("SERVER", "127.0.0.1");
 define("USERNAME", "root");
 define("PASSWORD", "");
 define("DBNAME", "e-commerce");

@@ -6,11 +6,16 @@ class Database
     protected $queryString;
 
     // Set up db 
-    public function __construct($servername, $username, $password, $dbname, $port, $charset)
+    public function __construct()
     {
-        $this->connection = new mysqli($servername, $username, $password, $dbname, $port, $charset);
-        if ($this->connection->connect_error) {
-            die("Connection failed: " . $this->connection->connect_error);
+        try {
+            $this->connection = new mysqli("127.0.0.1", "root", "", "e-commerce", 3306, "utf8");
+
+            if ($this->connection->connect_error) {
+                die("Connection failed: " . $this->connection->connect_error);
+            }
+        } catch (Exception $e) {
+            die("Connection failed: " . $e->getMessage());
         }
     }
 
