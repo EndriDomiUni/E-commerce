@@ -120,14 +120,14 @@ class Dbh
                 $msg = 'Esiste un altro account venditore con la stessa email.';
             } else {
                 $response = $this->execute(
-                    "INSERT INTO venditore (Nome, Cognome, Ragione_Sociale, Email, Password, P._IVA, Status) 
+                    "INSERT INTO venditore (Nome, Cognome, Ragione_Sociale, Email, Password, P_IVA, Status) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)",
                     $params['Nome'],
                     $params['Cognome'],
                     $params['Ragione_Sociale'],
                     $params['Email'],
                     $params['Password'],
-                    $params['P._IVA'],
+                    $params['P_IVA'],
                     ACTIVE
                 );
                 if (is_int($response)) {

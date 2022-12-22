@@ -312,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `Venditore` (
   `Ragione_Sociale` varchar(25) NOT NULL,
   `Email` varchar(35) NOT NULL,
   `Password` varchar(35) NOT NULL,
-  `P._IVA` int(20) NOT NULL,
+  `P_IVA` int(20) NOT NULL,
   `Status` tinyint(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
