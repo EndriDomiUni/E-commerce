@@ -1,7 +1,9 @@
 <?php
 
+
 require_once("./config/AppConstans.php");
 include("Dbh.php");
+
 
 $dbh = null;
 if (isset($_POST['personal-btn-register'])) {
