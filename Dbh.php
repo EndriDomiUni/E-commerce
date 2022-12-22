@@ -78,7 +78,7 @@ class Dbh
      */
     private function checkEmail($userType, $email): bool
     {
-        return count($this->db->execute("SELECT * FROM `$userType` WHERE Email = '$email' ")) == 0;
+        return count($this->execute("SELECT * FROM `$userType` WHERE Email = '$email' ")) == 0;
     }
 
     public function signIn($userType, $params): array
