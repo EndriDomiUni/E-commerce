@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `IdCatalogo` int(10) UNSIGNED NOT NULL,
   `IdCategoriaPadre` int(10) UNSIGNED NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `TImestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -309,10 +309,10 @@ CREATE TABLE IF NOT EXISTS `Venditore` (
   `Id` int(10) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
-  `Ragione Sociale` varchar(25) NOT NULL,
+  `Ragione_Sociale` varchar(25) NOT NULL,
   `Email` varchar(35) NOT NULL,
   `Password` varchar(35) NOT NULL,
-  `P. IVA` int(20) NOT NULL,
+  `P._IVA` int(20) NOT NULL,
   `Status` tinyint(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
