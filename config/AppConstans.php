@@ -5,7 +5,7 @@
 /**
  * /app
  */
-define("ROOT", "/app");
+const ROOT = "/app";
 define("URL_ROOT", isset($_SERVER['HTTPS'])
     ? "https"
     : "http"
@@ -16,52 +16,59 @@ define("URL_ROOT", isset($_SERVER['HTTPS'])
 /**
  * /app/assets/css
  */
-define("CSS", ROOT . "/assets/css");
+const CSS = ROOT . "/assets/css";
 
 /**
  * /app/assets/js
  */
-define("JS", ROOT . "/assets/js");
+const JS = ROOT . "/assets/js";
 
 /**
  * /app/assets/img
  */
-define("IMG", ROOT . "/assets/img");
+const IMG = ROOT . "/assets/img";
 
 // VIEWS ----------------------------------------------------------------
-define('VIEW_ROOT', URL_ROOT . '/templates/views');
-define("VIEW_USER", VIEW_ROOT . "/user");
-define("VIEW_SELLER", VIEW_ROOT . "/seller");
+const VIEW_ROOT = URL_ROOT . '/templates/views';
+const VIEW_USER = VIEW_ROOT . "/user";
+const VIEW_SELLER = VIEW_ROOT . "/seller";
 
 // DATABASE -------------------------------------------------------------
-define("SERVER", "127.0.0.1");
-define("USERNAME", "root");
-define("PASSWORD", "");
-define("DBNAME", "e-commerce");
-define("PORT", "3306");
-define("CHARSET", "utf8");
+const SERVER = "127.0.0.1";
+const USERNAME = "root";
+const PASSWORD = "";
+const DBNAME = "e-commerce";
+const PORT = "3306";
+const CHARSET = "utf8";
 
 // FOLDERS -------------------------------------------------------------
-define("CONFIG", ROOT . "/config");
-define("TEMPLATES", ROOT . "/templates");
+const CONFIG = ROOT . "/config";
+const TEMPLATES = ROOT . "/templates";
 
 // SPECIAL CHARACTERS --------------------------------------------------
-define("EURO", "€");
+const EURO = "€";
 
 // INTERNAL USE --------------------------------------------------------
 
 /**
  * OK value = 0;
  */
-define("OK", 0);
+const OK = 0;
 
 /**
  * ERROR value = 1;
  */
-define("ERROR", 1);
+const ERROR = 1;
 
-define("COSTUMER", "Cliente");
-define("SELLER", "Venditore");
+/**
+ * COSTUMER = cliente
+ */
+const COSTUMER = "cliente";
 
-define("INACTIVE", 0);
-define("ACTIVE", 1);
+/**
+ * SELLER = "venditore";
+ */
+const SELLER = "venditore";
+
+const INACTIVE = 0;
+const ACTIVE = 1;

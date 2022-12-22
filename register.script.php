@@ -1,28 +1,24 @@
 <?php
 
-require("Dbh.php");
+require_once("./config/AppConstans.php");
+include("Dbh.php");
 
-try {
-    $dbh = new Dbh();
-} catch (Exception $e) {
-    echo $e->getMessage();
-}
-
+$dbh = null;
 if (isset($_POST['personal-btn-register'])) {
-
     $params = array(
         "Nome" => filter_var($_POST['personal-name-register'], FILTER_SANITIZE_STRING),
         "Cognome" => filter_var($_POST['personal-surname-register'], FILTER_SANITIZE_STRING),
         "Email" => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
         "Password" => $_POST['personal-password-register']
     );
-
     try {
-        $response = $dbh->signin(COSTUMER, $params);
-        if (is_array($response) && $response["Status"] == ERROR) {
+        $dbh = new Dbh();
+        $response = $dbh->signIn('cliente', $params);
+        if ($response["Status"] == ERROR) {
             $error_register = $response["msg"];
         } else {
-            header("Location: index.php");
+            // redirect to index
+            //header("Location: index.php");
         }
     } catch (Exception $e) {
         echo $e->getMessage();
@@ -30,7 +26,6 @@ if (isset($_POST['personal-btn-register'])) {
 }
 
 if (isset($_POST['business-btn-register'])) {
-
     $params = array(
         "Nome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_STRING),
         "Cognome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_STRING),
@@ -39,10 +34,16 @@ if (isset($_POST['business-btn-register'])) {
         "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
         "Password" => $_POST['business-password-register']
     );
-    $response = $dbh->signin(SELLER, $params);
-    if (is_array($response) && $response["Status"] == ERROR) {
-        $error_register = $response["msg"];
-    } else {
-        header("Location: dashboard.php"); // TODO: @fede metti il link della dashboard che hai creato
+    try {
+        $dbh = new Dbh();
+        $response = $dbh->signIn('venditore', $params);
+        if ($response["Status"] == ERROR) {
+            $error_register = $response["msg"];
+        } else {
+            // redirect to dashboard // TODO: @fede inserisci la dashboard
+            //header("Location: index.php");
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
     }
 }

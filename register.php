@@ -2,7 +2,7 @@
 
 session_start();
 require_once("./config/AppConstans.php");
-include("Dbh.php");
+require_once("register.script.php");
 
 ob_start();
 require './templates/views/utils/register.php';

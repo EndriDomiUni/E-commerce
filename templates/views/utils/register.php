@@ -77,7 +77,7 @@
 
                 <div class="personalaccount box">
                     <section class="form-signin w-100 m-auto show">
-                        <form method="post" action="register.script.php">
+                        <form method="post" >
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating">

@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 --
 
 CREATE TABLE IF NOT EXISTS `cliente` (
-  `Id` int(11) NOT NULL,
+  `Id` int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
   `Email` varchar(35) NOT NULL,
