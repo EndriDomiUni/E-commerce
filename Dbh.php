@@ -32,7 +32,7 @@ class Dbh
         foreach ($params as $par) {
             $types .= $this->getType($par);
         }
-        var_dump($sql);
+        echo var_dump($sql);
 
         if ($stmt = $this->connection->prepare($sql)) {
             if ($types != "")
