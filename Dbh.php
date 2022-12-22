@@ -94,7 +94,7 @@ class Dbh
      */
     private function checkEmail($userType, $email)
     {
-        return count($this->db->execute("SELECT * FROM `?` WHERE Email = ? ", $userType, $email)) == 0;
+        return count($this->execute("SELECT * FROM `?` WHERE Email = ? ", $userType, $email)) == 0;
     }
 
     /**
