@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Creato il: Nov 29, 2022 alle 18:24
--- Versione del server: 10.4.25-MariaDB
--- Versione PHP: 8.1.10
+-- Host: localhost
+-- Creato il: Dic 22, 2022 alle 18:23
+-- Versione del server: 10.4.27-MariaDB
+-- Versione PHP: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,16 +28,17 @@ USE `e-commerce`;
 --
 -- Struttura della tabella `carrello`
 --
--- Creazione: Nov 28, 2022 alle 15:21
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `carrello` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Ammontare` int(20) UNSIGNED NOT NULL,
   `Quantità` int(20) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `carrello`:
@@ -48,13 +49,14 @@ CREATE TABLE IF NOT EXISTS `carrello` (
 --
 -- Struttura della tabella `catalogo`
 --
--- Creazione: Nov 28, 2022 alle 17:14
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `catalogo` (
-  `Id` int(10) UNSIGNED NOT NULL,
-  `Descrizione` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Descrizione` varchar(30) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `catalogo`:
@@ -65,19 +67,19 @@ CREATE TABLE IF NOT EXISTS `catalogo` (
 --
 -- Struttura della tabella `categoria`
 --
--- Creazione: Nov 29, 2022 alle 15:08
--- Ultimo aggiornamento: Nov 29, 2022 alle 15:08
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Nome` varchar(30) NOT NULL,
   `Descrizione` varchar(30) NOT NULL,
   `IdCatalogo` int(10) UNSIGNED NOT NULL,
   `IdCategoriaPadre` int(10) UNSIGNED NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `TImestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `TImestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `categoria`:
@@ -86,39 +88,56 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `cliente`
+-- Struttura della tabella `Cliente`
 --
--- Creazione: Nov 03, 2022 alle 16:39
+-- Creazione: Dic 22, 2022 alle 10:09
+-- Ultimo aggiornamento: Dic 22, 2022 alle 17:20
 --
 
-CREATE TABLE IF NOT EXISTS `cliente` (
-  `Id` int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS `Cliente` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
   `Email` varchar(35) NOT NULL,
   `Password` varchar(35) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `cliente`:
+-- RELAZIONI PER TABELLA `Cliente`:
 --
+
+--
+-- Dump dei dati per la tabella `Cliente`
+--
+
+INSERT INTO `Cliente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `Timestamp`) VALUES
+(1, 'Demo', 'Private', 'demo.private@test.com', '123456789', 1, '2022-12-22 14:34:39'),
+(2, 'Demo2', 'Private2', 'demo.private2@test.com', '1234567890', 1, '2022-12-22 14:36:03'),
+(3, 'Demo', 'Private', 'demo3@private.com', 'password', 1, '2022-12-22 15:35:27'),
+(4, 'Demo3', 'Private3', 'demo3@private.com', '123456789', 1, '2022-12-22 15:39:00'),
+(5, 'Test', 'Test', 'text@test.com', 'test', 1, '2022-12-22 15:43:38'),
+(6, 'Test', 'Test', 'text@test.com', '12345678', 1, '2022-12-22 15:46:55'),
+(7, 'Demo', 'Private', 'test@tesrt.com', '1234567890', 1, '2022-12-22 16:57:11'),
+(8, 'Demo123', 'Private', 'test123@tesrt.com', '12347890', 1, '2022-12-22 17:20:23');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `corriere`
 --
--- Creazione: Nov 29, 2022 alle 15:33
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `corriere` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(30) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `corriere`:
@@ -129,13 +148,14 @@ CREATE TABLE IF NOT EXISTS `corriere` (
 --
 -- Struttura della tabella `galleria immagini`
 --
--- Creazione: Nov 28, 2022 alle 16:30
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `galleria immagini` (
-  `Id` int(10) UNSIGNED NOT NULL,
-  `IdProdotto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `IdProdotto` int(11) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `galleria immagini`:
@@ -146,20 +166,16 @@ CREATE TABLE IF NOT EXISTS `galleria immagini` (
 --
 -- Struttura della tabella `immagine`
 --
--- Creazione: Nov 29, 2022 alle 14:53
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `immagine` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Risorsa` varchar(30) NOT NULL,
-  `IdGalleriaImmagini` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- MEDIA TYPES FOR TABLE `immagine`:
---   `Risorsa`
---       `Image_JPEG`
---
+  `IdGalleriaImmagini` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IdGalleriaImmagini` (`IdGalleriaImmagini`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `immagine`:
@@ -172,22 +188,23 @@ CREATE TABLE IF NOT EXISTS `immagine` (
 --
 -- Struttura della tabella `ordine`
 --
--- Creazione: Nov 28, 2022 alle 16:14
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `ordine` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Carrello` int(10) UNSIGNED NOT NULL,
   `IdStatusOrdine` int(10) UNSIGNED NOT NULL,
   `Ammontare` int(11) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`),
+  KEY `Carrello` (`Carrello`),
+  KEY `IdStatusOrdine` (`IdStatusOrdine`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `ordine`:
---   `Carrello`
---       `carello` -> `Id`
 --   `Carrello`
 --       `carrello` -> `Id`
 --   `IdStatusOrdine`
@@ -199,17 +216,18 @@ CREATE TABLE IF NOT EXISTS `ordine` (
 --
 -- Struttura della tabella `pagamento`
 --
--- Creazione: Nov 29, 2022 alle 15:22
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `pagamento` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IdOrdine` int(10) UNSIGNED NOT NULL,
   `Data` date NOT NULL,
   `Importo` int(30) UNSIGNED NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `pagamento`:
@@ -218,21 +236,22 @@ CREATE TABLE IF NOT EXISTS `pagamento` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `prodotto`
+-- Struttura della tabella `Prodotto`
 --
--- Creazione: Nov 18, 2022 alle 15:13
+-- Creazione: Nov 26, 2022 alle 15:38
 --
 
-CREATE TABLE IF NOT EXISTS `prodotto` (
+CREATE TABLE IF NOT EXISTS `Prodotto` (
   `Id` int(11) NOT NULL,
   `Nome` varchar(50) NOT NULL,
   `Descrizione` varchar(100) NOT NULL,
   `Prezzo` double NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `prodotto`:
+-- RELAZIONI PER TABELLA `Prodotto`:
 --
 
 -- --------------------------------------------------------
@@ -240,17 +259,19 @@ CREATE TABLE IF NOT EXISTS `prodotto` (
 --
 -- Struttura della tabella `spedizione`
 --
--- Creazione: Nov 29, 2022 alle 15:27
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `spedizione` (
-  `Id` int(10) UNSIGNED NOT NULL,
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IdOrdine` int(10) UNSIGNED NOT NULL,
   `DataSpedizione` date NOT NULL,
   `LuogoSpedizione` varchar(30) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`),
+  KEY `IdOrdine` (`IdOrdine`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `spedizione`:
@@ -263,13 +284,14 @@ CREATE TABLE IF NOT EXISTS `spedizione` (
 --
 -- Struttura della tabella `status ordine`
 --
--- Creazione: Nov 28, 2022 alle 16:25
+-- Creazione: Dic 22, 2022 alle 10:08
 --
 
 CREATE TABLE IF NOT EXISTS `status ordine` (
-  `Id` int(10) UNSIGNED NOT NULL,
-  `Descrizione` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Descrizione` varchar(30) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- RELAZIONI PER TABELLA `status ordine`:
@@ -278,13 +300,13 @@ CREATE TABLE IF NOT EXISTS `status ordine` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `venditore`
+-- Struttura della tabella `Venditore`
 --
--- Creazione: Nov 03, 2022 alle 16:39
+-- Creazione: Dic 22, 2022 alle 14:53
 --
 
-CREATE TABLE IF NOT EXISTS `venditore` (
-  `Id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `Venditore` (
+  `Id` int(10) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(25) NOT NULL,
   `Cognome` varchar(25) NOT NULL,
   `Ragione Sociale` varchar(25) NOT NULL,
@@ -292,156 +314,13 @@ CREATE TABLE IF NOT EXISTS `venditore` (
   `Password` varchar(35) NOT NULL,
   `P. IVA` int(20) NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `venditore`:
+-- RELAZIONI PER TABELLA `Venditore`:
 --
-
---
--- Indici per le tabelle scaricate
---
-
---
--- Indici per le tabelle `carrello`
---
-ALTER TABLE `carrello`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `catalogo`
---
-ALTER TABLE `catalogo`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `cliente`
---
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `corriere`
---
-ALTER TABLE `corriere`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `galleria immagini`
---
-ALTER TABLE `galleria immagini`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `immagine`
---
-ALTER TABLE `immagine`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `IdGalleriaImmagini` (`IdGalleriaImmagini`);
-
---
--- Indici per le tabelle `ordine`
---
-ALTER TABLE `ordine`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `Carrello` (`Carrello`),
-  ADD KEY `IdStatusOrdine` (`IdStatusOrdine`);
-
---
--- Indici per le tabelle `pagamento`
---
-ALTER TABLE `pagamento`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `prodotto`
---
-ALTER TABLE `prodotto`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indici per le tabelle `spedizione`
---
-ALTER TABLE `spedizione`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `IdOrdine` (`IdOrdine`);
-
---
--- Indici per le tabelle `status ordine`
---
-ALTER TABLE `status ordine`
-  ADD PRIMARY KEY (`Id`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
---
-
---
--- AUTO_INCREMENT per la tabella `carrello`
---
-ALTER TABLE `carrello`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `catalogo`
---
-ALTER TABLE `catalogo`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `categoria`
---
-ALTER TABLE `categoria`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `corriere`
---
-ALTER TABLE `corriere`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `galleria immagini`
---
-ALTER TABLE `galleria immagini`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `immagine`
---
-ALTER TABLE `immagine`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `ordine`
---
-ALTER TABLE `ordine`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `pagamento`
---
-ALTER TABLE `pagamento`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `spedizione`
---
-ALTER TABLE `spedizione`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `status ordine`
---
-ALTER TABLE `status ordine`
-  MODIFY `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Limiti per le tabelle scaricate
