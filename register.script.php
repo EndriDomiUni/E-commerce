@@ -1,6 +1,8 @@
 <?php
 
 require("Dbh.php");
+require_once("./config/AppConstans.php");
+
 
 try {
     $dbh = new Dbh();
