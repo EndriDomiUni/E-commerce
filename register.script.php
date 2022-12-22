@@ -31,8 +31,8 @@ if (isset($_POST['business-btn-register'])) {
     $params = array(
         "Nome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_STRING),
         "Cognome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_STRING),
-        "Ragione Sociale" => filter_var($_POST["business-businessname-register"], FILTER_SANITIZE_STRING),
-        "P. IVA" => filter_var($_POST["business-businessname-register"], FILTER_SANITIZE_STRING),
+        "Ragione_Sociale" => filter_var($_POST["business-businessname-register"], FILTER_SANITIZE_STRING),
+        "P._IVA" => filter_var($_POST["business-businessname-register"], FILTER_SANITIZE_STRING),
         "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
         "Password" => $_POST['business-password-register']
     );

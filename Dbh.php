@@ -32,7 +32,7 @@ class Dbh
         foreach ($params as $par) {
             $types .= $this->getType($par);
         }
-        echo var_dump($sql);
+        var_dump($sql);
 
         if ($stmt = $this->connection->prepare($sql)) {
             if ($types != "")
@@ -120,14 +120,14 @@ class Dbh
                 $msg = 'Esiste un altro account venditore con la stessa email.';
             } else {
                 $response = $this->execute(
-                    "INSERT INTO venditore (Nome, Cognome, Ragione Sociale, Email, Password, P. IVA, Status) 
+                    "INSERT INTO venditore (Nome, Cognome, Ragione_Sociale, Email, Password, P._IVA, Status) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)",
                     $params['Nome'],
                     $params['Cognome'],
-                    $params['Ragione Sociale'],
+                    $params['Ragione_Sociale'],
                     $params['Email'],
                     $params['Password'],
-                    $params['P. IVA'],
+                    $params['P._IVA'],
                     ACTIVE
                 );
                 if (is_int($response)) {
