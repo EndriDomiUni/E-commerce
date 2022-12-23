@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 22, 2022 alle 18:23
+-- Creato il: Dic 23, 2022 alle 11:09
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.1.12
 
@@ -31,6 +31,7 @@ USE `e-commerce`;
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `carrello`;
 CREATE TABLE IF NOT EXISTS `carrello` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Ammontare` int(20) UNSIGNED NOT NULL,
@@ -52,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `carrello` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `catalogo`;
 CREATE TABLE IF NOT EXISTS `catalogo` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(30) NOT NULL,
@@ -70,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `catalogo` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE IF NOT EXISTS `categoria` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Nome` varchar(30) NOT NULL,
@@ -77,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `IdCatalogo` int(10) UNSIGNED NOT NULL,
   `IdCategoriaPadre` int(10) UNSIGNED NOT NULL,
   `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `TImestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -94,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 -- Ultimo aggiornamento: Dic 22, 2022 alle 17:20
 --
 
+DROP TABLE IF EXISTS `Cliente`;
 CREATE TABLE IF NOT EXISTS `Cliente` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(25) NOT NULL,
@@ -131,6 +135,7 @@ INSERT INTO `Cliente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `corriere`;
 CREATE TABLE IF NOT EXISTS `corriere` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(30) NOT NULL,
@@ -151,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `corriere` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `galleria immagini`;
 CREATE TABLE IF NOT EXISTS `galleria immagini` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IdProdotto` int(11) NOT NULL,
@@ -169,6 +175,7 @@ CREATE TABLE IF NOT EXISTS `galleria immagini` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `immagine`;
 CREATE TABLE IF NOT EXISTS `immagine` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Risorsa` varchar(30) NOT NULL,
@@ -191,6 +198,7 @@ CREATE TABLE IF NOT EXISTS `immagine` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `ordine`;
 CREATE TABLE IF NOT EXISTS `ordine` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Carrello` int(10) UNSIGNED NOT NULL,
@@ -219,6 +227,7 @@ CREATE TABLE IF NOT EXISTS `ordine` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `pagamento`;
 CREATE TABLE IF NOT EXISTS `pagamento` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IdOrdine` int(10) UNSIGNED NOT NULL,
@@ -241,6 +250,7 @@ CREATE TABLE IF NOT EXISTS `pagamento` (
 -- Creazione: Nov 26, 2022 alle 15:38
 --
 
+DROP TABLE IF EXISTS `Prodotto`;
 CREATE TABLE IF NOT EXISTS `Prodotto` (
   `Id` int(11) NOT NULL,
   `Nome` varchar(50) NOT NULL,
@@ -262,6 +272,7 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `spedizione`;
 CREATE TABLE IF NOT EXISTS `spedizione` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IdOrdine` int(10) UNSIGNED NOT NULL,
@@ -287,6 +298,7 @@ CREATE TABLE IF NOT EXISTS `spedizione` (
 -- Creazione: Dic 22, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `status ordine`;
 CREATE TABLE IF NOT EXISTS `status ordine` (
   `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(30) NOT NULL,
@@ -302,9 +314,10 @@ CREATE TABLE IF NOT EXISTS `status ordine` (
 --
 -- Struttura della tabella `Venditore`
 --
--- Creazione: Dic 22, 2022 alle 14:53
+-- Creazione: Dic 23, 2022 alle 10:08
 --
 
+DROP TABLE IF EXISTS `Venditore`;
 CREATE TABLE IF NOT EXISTS `Venditore` (
   `Id` int(10) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(25) NOT NULL,
