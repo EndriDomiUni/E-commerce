@@ -1,5 +1,7 @@
 <?php
 
+use src\model\Costumer;
+
 class Dbh
 {
     protected mysqli $connection;
@@ -32,7 +34,6 @@ class Dbh
         foreach ($params as $par) {
             $types .= $this->getType($par);
         }
-        var_dump($sql);
 
         if ($stmt = $this->connection->prepare($sql)) {
             if ($types != "")
@@ -143,4 +144,59 @@ class Dbh
         $response_array["msg"] = $msg;
         return $response_array;
     }
+
+    public function logIn($params): array
+    {
+        $allCorrect = true;
+        $response_array = [];
+
+        if (!$this->validateParams($params)) {
+            $msg = 'Inserire tutti i campi';
+            $allCorrect = false;
+        }
+
+        $email = $params["Email"];
+        $pass = $params["Password"];
+        $userType = isset($_POST['seller']) ? SELLER : COSTUMER;
+
+        if ($this->checkEmail($userType, $email)) {
+            $msg = 'L\'utente non esiste';
+        } else {
+            $where = "Email = '$email' AND Password = '$pass'";
+            $response = $this->execute("SELECT * FROM `$userType` WHERE $where");
+
+            if ($userType == SELLER) {
+                if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
+                    $this->extracted($response[0]);
+                    $_SESSION['Ragione_Sociale'] = $response[0]["Ragione_Sociale"];
+                    $_SESSION['P_IVA'] = $response[0]["P_IVA"];
+                }
+            }
+
+            if ($userType == COSTUMER) {
+                if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
+                    $this->extracted($response[0]);
+                }
+                // prepare json formato var in $_SESS
+            }
+        }
+        $response_array["Status"] = $allCorrect ? OK : ERROR;
+        $response_array["msg"] = $msg ?? "Ok";
+        return $response_array;
+    }
+
+    /**
+     * @param $response
+     * @return void
+     */
+    public function extracted($response): void
+    {
+        $_SESSION['Id'] = $response["Id"];
+        $_SESSION['Nome'] = $response["Nome"];
+        $_SESSION['Cognome'] = $response["Cognome"];
+        $_SESSION['Email'] = $response["Email"];
+        $_SESSION['Password'] = $response["Password"];
+    }
+
+
 }

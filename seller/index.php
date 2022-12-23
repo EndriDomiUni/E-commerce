@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("../config/AppConstans.php");
+require_once("../config/AppConstants.php");
 ob_start();
 require '../templates/views/seller/index.php';
 $main_Content = ob_get_clean();

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once("./config/AppConstans.php");
+require_once("./config/AppConstants.php");
 require_once("register.script.php");
 
 ob_start();

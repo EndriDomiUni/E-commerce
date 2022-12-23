@@ -2,7 +2,16 @@
 
 $scripts = [
     ROOT . '/index.php' => [
-        JS . '/productSlider.js'
+        JS . '/productSlider.js',
+        JS . '/alert_script.js'
+    ],
+    ROOT . '/register.php' => [
+        JS . '/productSlider.js',
+        JS . '/alert_script.js'
+    ],
+    ROOT . '/login.php' => [
+        JS . '/productSlider.js',
+        JS . '/alert_script.js'
     ],
     ROOT . '/account.php' => [
         JS . '/loginSlide.js',

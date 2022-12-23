@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("./config/AppConstans.php");
+require_once("./config/AppConstants.php");
 include("Dbh.php");
 
 ob_start();

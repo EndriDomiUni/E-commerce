@@ -1,7 +1,7 @@
 <?php
 
 
-require_once("./config/AppConstans.php");
+require_once("./config/AppConstants.php");
 include("Dbh.php");
 
 
@@ -15,7 +15,7 @@ if (isset($_POST['personal-btn-register'])) {
     );
     try {
         $dbh = new Dbh();
-        $response = $dbh->signIn('cliente', $params);
+        $response = $dbh->signIn(COSTUMER, $params);
         if ($response["Status"] == ERROR) {
             $error_register = $response["msg"];
         } else {
@@ -32,13 +32,13 @@ if (isset($_POST['business-btn-register'])) {
         "Nome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_STRING),
         "Cognome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_STRING),
         "Ragione_Sociale" => filter_var($_POST["business-businessname-register"], FILTER_SANITIZE_STRING),
-        "P_IVA" => filter_var($_POST["business-businessname-register"], FILTER_SANITIZE_STRING),
+        "P_IVA" => filter_var($_POST["business-pIva-register"], FILTER_SANITIZE_STRING),
         "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
         "Password" => $_POST['business-password-register']
     );
     try {
         $dbh = new Dbh();
-        $response = $dbh->signIn('venditore', $params);
+        $response = $dbh->signIn(SELLER, $params);
         if ($response["Status"] == ERROR) {
             $error_register = $response["msg"];
         } else {
