@@ -28,7 +28,7 @@ class Dbh
         return 'b';
     }
 
-    public function execute($sql, ...$params)
+    public function execute($sql, ...$params): array|int|string
     {
         $types = "";
         foreach ($params as $par) {
@@ -166,58 +166,19 @@ class Dbh
             $where = "Email = '$email' AND Password = '$pass'";
             $response = $this->execute("SELECT * FROM `$userType` WHERE $where");
 
-            if ($userType == SELLER) {
-                if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
-                    //$this->extracted($response[0]);
-                    //$_SESSION['Ragione_Sociale'] = $response[0]["Ragione_Sociale"];
-                    //$_SESSION['P_IVA'] = $response[0]["P_IVA"];
-                    $session = new Session($response[0]['Id'], SELLER);
-
-                }
-            }
-
-            if ($userType == COSTUMER) {
-                if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
-                    //$this->extracted($response[0]);
-                    $session = new Session($response[0]['Id'], COSTUMER);
-                    if (isset($session->getCurrentUser())){
+            if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
+                $session = new Session($response[0]['Id'], $userType);
+                if ($session->checkSessionId($response[0]['Id'])) {
+                    if ($session->getCurrentUser() !== null){
                         $session->notifyActionResult("Ti sei loggato correttamente", SUCCESS);
                     } else {
                         $session->notifyActionResult("Errore", DANGER);
                     }
                 }
-
-            $this->setUserSession($userType);   
-            
-                // prepare json formato var in $_SESS
             }
         }
         $response_array["Status"] = $allCorrect ? OK : ERROR;
         $response_array["msg"] = $msg ?? "Ok";
         return $response_array;
     }
-
-    /**
-     * @param $response
-     * @return void
-     */
-    public function extracted($response): void
-    {
-        $_SESSION['Id'] = $response["Id"];
-        $_SESSION['Nome'] = $response["Nome"];
-        $_SESSION['Cognome'] = $response["Cognome"];
-        $_SESSION['Email'] = $response["Email"];
-        $_SESSION['Password'] = $response["Password"];
-    }
-
-    // Non completa
-    public function setUserSession($userType){
-        $_SESSION["CurrentUserJson"] = json_encode(array(
-            "Id"=>$_SESSION
-            "Name"=>$_SESSION['name'],
-            "Cognome"=>$_SESSION['Cognome'], 
-            "Email"=>$_SESSION['Email'],
-            "Password"=>$_SESSION['Password']));
-    }
-    
 }

@@ -2,48 +2,58 @@
 
 require_once("./config/AppConstants.php");
 
-class Session{
+class Session
+{
     private int $id;
     private string $typeUser;
 
-    public __construct($id, $typeUser) {
-        $this->id = $id;
-        $this->typeUser = $typeUser;
-    }
-
-    public function checkSessionId($id){
-        try{
-            $dbh = new Dbh();
-            if (isset($id))
-            {
-                $response = $dbh->execute("SELECT * FROM `$userType` WHERE Id = '$id' ");
-                if (is_int($response[0]["Id"])) {
-                    setSessionUser($response[0]);
-                }
-            }
-        } catch (Exception $ex){
-            echo $ex->getMessage();
+    public function __construct($id, $typeUser)
+    {
+        try {
+            $this->id = $id;
+            $this->typeUser = $typeUser;
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 
-    public function setSessionUser($params){
-        $_SESSION['Id'] = $response["Id"];
-        $_SESSION['Nome'] = $response["Nome"];
-        $_SESSION['Cognome'] = $response["Cognome"];
-        $_SESSION['Email'] = $response["Email"];
-        $_SESSION['Password'] = $response["Password"];
+    public function checkSessionId($id): bool
+    {
+        $dbh = new Dbh();
+        if (isset($id))
+        {
+            $response = $dbh->execute("SELECT * FROM $this->typeUser WHERE Id = '$id' ");
+            if (is_int($response[0]["Id"])) {
+                $this->setSessionUser($response[0]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function setSessionUser($params): void
+    {
+        $_SESSION['Id'] = $params["Id"];
+        $_SESSION['Nome'] = $params["Nome"];
+        $_SESSION['Cognome'] = $params["Cognome"];
+        $_SESSION['Email'] = $params["Email"];
+        $_SESSION['Password'] = $params["Password"];
         if ($this->typeUser == SELLER){
             $_SESSION['Ragione_Sociale'];
             $_SESSION['P_IVA'];
         }
-
     }
 
-    public function notifyActionResult($msg, $attribute){
-        echo '<script type="text/javascript">notifyAlert('$msg', '$attribute')</script>';
+    public function notifyActionResult($msg, $attribute): void
+    {
+        echo "<script type=text/javascript >";
+        echo "let alert = document.createElement(" . "div" . ")";
+        echo "alert.innerHTML = '<div class=" . "alert alert-" . $attribute .'" role="alert">'. $msg . '</div>';
+        echo "</script>";
     }
 
-    public function getCurrentUser(){
+    public function getCurrentUser(): array|int
+    {
         $user = array(
             "Id"=>$_SESSION['Id'],
             "Nome"=>$_SESSION['Nome'],
@@ -52,12 +62,16 @@ class Session{
             "Password"=>$_SESSION['Password'],
         );
         if ($this->typeUser == SELLER){
-            $user = array_push(
-                $user, 
+            $seller = array(
                 "Ragione_Sociale"=>$_SESSION['Ragione_Sociale'],
-                "P_IVA"=>$_SESSION['P_IVA']);
+                "P_IVA"=>$_SESSION['P_IVA']
+            );
+            $user = array_push($user, $seller);
         }
         return $user;
     }
 
+    private function drawAlert() {
+
+    }
 }
