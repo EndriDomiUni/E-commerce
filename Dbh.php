@@ -112,6 +112,7 @@ class Dbh
                     $allCorrect = false;
                     $msg = $response;
                 }
+
             }
         }
 
@@ -167,16 +168,27 @@ class Dbh
 
             if ($userType == SELLER) {
                 if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
-                    $this->extracted($response[0]);
-                    $_SESSION['Ragione_Sociale'] = $response[0]["Ragione_Sociale"];
-                    $_SESSION['P_IVA'] = $response[0]["P_IVA"];
+                    //$this->extracted($response[0]);
+                    //$_SESSION['Ragione_Sociale'] = $response[0]["Ragione_Sociale"];
+                    //$_SESSION['P_IVA'] = $response[0]["P_IVA"];
+                    $session = new Session($response[0]['Id'], SELLER);
+
                 }
             }
 
             if ($userType == COSTUMER) {
                 if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
-                    $this->extracted($response[0]);
+                    //$this->extracted($response[0]);
+                    $session = new Session($response[0]['Id'], COSTUMER);
+                    if (isset($session->getCurrentUser())){
+                        $session->notifyActionResult("Ti sei loggato correttamente", SUCCESS);
+                    } else {
+                        $session->notifyActionResult("Errore", DANGER);
+                    }
                 }
+
+            $this->setUserSession($userType);   
+            
                 // prepare json formato var in $_SESS
             }
         }
@@ -198,5 +210,14 @@ class Dbh
         $_SESSION['Password'] = $response["Password"];
     }
 
-
+    // Non completa
+    public function setUserSession($userType){
+        $_SESSION["CurrentUserJson"] = json_encode(array(
+            "Id"=>$_SESSION
+            "Name"=>$_SESSION['name'],
+            "Cognome"=>$_SESSION['Cognome'], 
+            "Email"=>$_SESSION['Email'],
+            "Password"=>$_SESSION['Password']));
+    }
+    
 }

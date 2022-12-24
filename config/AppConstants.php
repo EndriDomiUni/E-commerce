@@ -72,3 +72,6 @@ const SELLER = "venditore";
 
 const INACTIVE = 0;
 const ACTIVE = 1;
+
+const SUCCESS = "success";
+const DANGER = "danger";
