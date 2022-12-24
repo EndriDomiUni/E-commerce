@@ -1,6 +1,6 @@
 <?php
 
-use src\model\Costumer;
+require_once("Session.php");
 
 class Dbh
 {
@@ -167,12 +167,14 @@ class Dbh
             $response = $this->execute("SELECT * FROM `$userType` WHERE $where");
 
             if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
-                $session = new Session($response[0]['Id'], $userType);
-                if ($session->checkSessionId($response[0]['Id'])) {
+                $session = new Session($response[0]["Id"], $userType);
+                if ($session->checkSessionId($response[0]["Id"])) {
                     if ($session->getCurrentUser() !== null){
-                        $session->notifyActionResult("Ti sei loggato correttamente", SUCCESS);
+                        header("index.php");
+                        $_SESSION["msgResponseFromSession"] = "ok";
+
                     } else {
-                        $session->notifyActionResult("Errore", DANGER);
+                        $_SESSION["msgResponseFromSession"] = "fail";
                     }
                 }
             }

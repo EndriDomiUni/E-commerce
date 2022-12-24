@@ -9,12 +9,8 @@ class Session
 
     public function __construct($id, $typeUser)
     {
-        try {
-            $this->id = $id;
-            $this->typeUser = $typeUser;
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        $this->id = $id;
+        $this->typeUser = $typeUser;
     }
 
     public function checkSessionId($id): bool
@@ -44,14 +40,6 @@ class Session
         }
     }
 
-    public function notifyActionResult($msg, $attribute): void
-    {
-        echo "<script type=text/javascript >";
-        echo "let alert = document.createElement(" . "div" . ")";
-        echo "alert.innerHTML = '<div class=" . "alert alert-" . $attribute .'" role="alert">'. $msg . '</div>';
-        echo "</script>";
-    }
-
     public function getCurrentUser(): array|int
     {
         $user = array(
@@ -71,7 +59,8 @@ class Session
         return $user;
     }
 
-    private function drawAlert() {
-
+    public function __toString(): string
+    {
+        return "Id: " . $this->id . " , TypeUser: " . $this->typeUser;
     }
 }

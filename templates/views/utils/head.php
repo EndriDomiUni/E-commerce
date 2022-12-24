@@ -18,4 +18,5 @@
     <?php } ?>
 
     <script src="<?php echo JS; ?>/base.js" defer></script>
+    <script src="<?php echo JS; ?>/Session.js" defer></script>
 </head>

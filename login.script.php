@@ -1,5 +1,9 @@
 <?php
 
+// queste due linee fungono da debbuger
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once("./config/AppConstants.php");
 include("Dbh.php");
 
@@ -12,10 +16,9 @@ if (isset($_POST["btn-login"])) {
         $dbh = new Dbh();
         $response = $dbh->logIn($params);
         if ($response["Status"] == ERROR) {
-            $error_register = $response["msg"];
+            $error = $response["msg"];
         } else {
-            // redirect to dashboard
-            //header("Location: index.php");
+            header("Location: index.php");
         }
     } catch (Exception $e) {
         echo $e->getMessage();

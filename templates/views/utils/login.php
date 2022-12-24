@@ -1,3 +1,4 @@
+
 <div class="container">
     <div class="row">
         <div class="col-sm">
@@ -5,6 +6,13 @@
         <div class="col-sm">
             <div class="container text-center">
                 <main class="form-signin w-100 m-auto">
+
+                    <?php if (isset($error)){
+                        echo "<div class='alert alert-warning' role='alert'>";
+                        echo  $error;
+                        echo "</div> ";
+                    } ?>
+
                     <form method="post">
                         <img src="<?php echo IMG; ?>/logo.svg" width="100" height="100" alt="Logo">
                         <div class="signin-intro">
@@ -27,20 +35,9 @@
                                 <input type="checkbox" value="seller" name="seller"> Sei un venditore?
                             </label>
                         </div>
-                        <button class="w-100 btn btn-lg btn-primary" type="submit" name="btn-login" onclick="showSuccessAlert("response")">Sign in</button>
+                        <button class="w-100 btn btn-lg btn-primary" type="submit" name="btn-login"">Sign in</button>
                         <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                     </form>
-
-                    <?php if (isset($_SESSION['Id'])) {
-                           echo '<script type="text/javascript" src="'. JS . '/alert_script.js"> showSuccessAlert("response", "ok"); </script>';
-                        } else {
-                            echo '<script type="text/javascript" src="'. JS . '/alert_script.js"> showDangerAlert("response", "errore"); </script>';
-                        }
-                    ?>
-
-                    <div id="response">
-                    </div>
-
 
                 </main>
             </div>
