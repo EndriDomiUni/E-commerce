@@ -1,5 +1,7 @@
 <?php
 
+use src\model\Costumer;
+
 require_once("./config/AppConstants.php");
 
 class Session

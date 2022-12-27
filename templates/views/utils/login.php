@@ -8,9 +8,10 @@
                 <main class="form-signin w-100 m-auto">
 
                     <?php if (isset($error)){
-                        echo "<div class='alert alert-warning' role='alert'>";
-                        echo  $error;
-                        echo "</div> ";
+                        //echo "<div class='alert alert-warning' role='alert'>";
+                        // echo  $error;
+                        // echo "</div> ";
+                        echo notifyAlert($error, 'danger');
                     } ?>
 
                     <form method="post">

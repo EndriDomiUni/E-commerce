@@ -18,7 +18,7 @@ if (isset($_POST["btn-login"])) {
         if ($response["Status"] == ERROR) {
             $error = $response["msg"];
         } else {
-            header("Location: index.php");
+            //header("Location: index.php");
         }
     } catch (Exception $e) {
         echo $e->getMessage();

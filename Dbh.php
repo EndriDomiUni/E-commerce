@@ -165,16 +165,18 @@ class Dbh
         } else {
             $where = "Email = '$email' AND Password = '$pass'";
             $response = $this->execute("SELECT * FROM `$userType` WHERE $where");
-
-            if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
-                $session = new Session($response[0]["Id"], $userType);
-                if ($session->checkSessionId($response[0]["Id"])) {
-                    if ($session->getCurrentUser() !== null){
-                        header("index.php");
-                        $_SESSION["msgResponseFromSession"] = "ok";
-
-                    } else {
-                        $_SESSION["msgResponseFromSession"] = "fail";
+            if ($response[0]["Email"] && $response[0]["Password"]) {
+                if ($email == $response[0]["Email"] && $pass == $response[0]["Password"]) {
+                    $session = new Session($response[0]["Id"], $userType);
+                    if ($session->checkSessionId($response[0]["Id"])) {
+                        if ($session->getCurrentUser() !== null) {
+                            if ($session->getCurrentUser()) {
+                                echo $session;
+                            }
+                        } else {
+                            echo "error";
+                            $allCorrect = ERROR;
+                        }
                     }
                 }
             }
@@ -183,4 +185,6 @@ class Dbh
         $response_array["msg"] = $msg ?? "Ok";
         return $response_array;
     }
+
+
 }
