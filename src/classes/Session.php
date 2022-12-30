@@ -1,28 +1,25 @@
 <?php
 
-use src\model\Costumer;
-
 require_once("./config/AppConstants.php");
 
 class Session
 {
     private int $id;
-    private string $typeUser;
 
-    public function __construct($id, $typeUser)
+    public function __construct($id)
     {
         $this->id = $id;
-        $this->typeUser = $typeUser;
     }
 
     public function checkSessionId($id): bool
     {
         $dbh = new Dbh();
         if (isset($id)) {
-            $response = $dbh->execute("SELECT * FROM $this->typeUser WHERE Id = '$id' ");
+            $response = $dbh->execute("SELECT * FROM Utente WHERE Id = '$id' ");
             if (is_int($response[0]["Id"])) {
                 $this->setSessionUser($response[0]);
-                return true;
+                $user = $this->getCurrentUser();
+                return $user["Id"] > 0;
             }
         }
         return false;
@@ -35,33 +32,27 @@ class Session
         $_SESSION['Cognome'] = $params["Cognome"];
         $_SESSION['Email'] = $params["Email"];
         $_SESSION['Password'] = $params["Password"];
-        if ($this->typeUser == SELLER) {
-            $_SESSION['Ragione_Sociale'];
-            $_SESSION['P_IVA'];
-        }
+        $_SESSION['Status'] = $params["Status"];
+        $_SESSION['Claim_id'] = $params["Claim_id"];
+        $_SESSION['Indirizzo_id'] = $params["Indirizzo_id"];
     }
 
     public function getCurrentUser(): array|int
     {
-        $user = array(
+        return array(
             "Id" => $_SESSION['Id'],
             "Nome" => $_SESSION['Nome'],
             "Cognome" => $_SESSION['Cognome'],
             "Email" => $_SESSION['Email'],
             "Password" => $_SESSION['Password'],
+            "Status" => $_SESSION['Status'],
+            "Claim_id" => $_SESSION['Claim_id'],
+            "Indirizzo_id" => $_SESSION['Indirizzo_id']
         );
-        if ($this->typeUser == SELLER) {
-            $seller = array(
-                "Ragione_Sociale" => $_SESSION['Ragione_Sociale'],
-                "P_IVA" => $_SESSION['P_IVA']
-            );
-            $user = array_push($user, $seller);
-        }
-        return $user;
     }
 
     public function __toString(): string
     {
-        return "Id: " . $this->id . " , TypeUser: " . $this->typeUser;
+        return "Id: " . $this->id;
     }
 }

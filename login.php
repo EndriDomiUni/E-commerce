@@ -2,7 +2,7 @@
 
 session_start();
 require_once("./config/AppConstants.php");
-require_once("login.script.php");
+require_once("./script/login.script.php");
 
 ob_start();
 require './templates/views/utils/login.php';

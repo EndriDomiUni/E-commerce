@@ -48,30 +48,33 @@ const TEMPLATES = ROOT . "/templates";
 // SPECIAL CHARACTERS --------------------------------------------------
 const EURO = "€";
 
-// INTERNAL USE --------------------------------------------------------
+// CLAIM ---------------------------------------------------------------
+const CLAIM_GUEST = 0;
+const CLAIM_USER = 1;
+const CLAIM_SELLER = 2;
 
-/**
- * OK value = 0;
- */
-const OK = 0;
+const CLAIM_USER_PRO = 3;
+const CLAIM_SELLER_PR0 = 4;
 
-/**
- * ERROR value = 1;
- */
-const ERROR = 1;
-
-/**
- * COSTUMER = cliente
- */
-const COSTUMER = "cliente";
-
-/**
- * SELLER = "venditore";
- */
-const SELLER = "venditore";
-
+// STATUS --------------------------------------------------------------
 const INACTIVE = 0;
 const ACTIVE = 1;
+
+const STATUS_INTACT_DATA = 0;
+const STATUS_INTACT_DATA = 0;
+const STATUS_DELETED_DATA = 0;
+
+const ADDRESS_UNSET = 1;
+
+
+
+const OK = "Ok";
+const ERROR = "Error";
+
+const COSTUMER = "cliente";
+const SELLER = "venditore";
+
+
 
 const SUCCESS = "success";
 const DANGER = "danger";
