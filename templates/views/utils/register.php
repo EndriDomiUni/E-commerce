@@ -77,7 +77,7 @@
 
                 <div class="personalaccount box">
                     <section class="form-signin w-100 m-auto show">
-                        <form method="post" >
+                        <form method="post">
                             <div class="row">
                                 <div class="col">
                                     <div class="form-floating">
@@ -127,14 +127,6 @@
                                         <label for="business-surname-register">Cognome</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="business-businessname-register" placeholder="Ragione sociale" required name="business-businessname-register">
-                                <label for="business-businessname-register">Ragione Sociale</label>
-                            </div>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="business-pIva-register" placeholder="00000000" required name="business-pIva-register">
-                                <label for="business-pIva-register">Partita IVA</label>
                             </div>
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="business-mail-register" placeholder="mario.rossi@example.com" required name="business-mail-register">
