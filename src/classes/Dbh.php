@@ -88,11 +88,7 @@ class Dbh
             "Status" => ERROR,
             "msg" => ""
         ];
-
-        if (!$this->validateParams($params)) {
-            $responseArray["msg"] = "Inserire tutti i campi";
-            return $responseArray;
-        }
+        $this->checkParams($params);
 
         $email = $params["Email"];
         $pass = $params["Password"];
@@ -112,17 +108,12 @@ class Dbh
     }
 
 
-
     public function register(array $params): array
     {
         $responseArray = [];
         $claim = $this->getClaimByType($params['claimType']);
         if ($claim) {
-            if (!$this->validateParams($params)) {
-                $responseArray['Status'] = ERROR;
-                $responseArray['msg'] = 'Inserire tutti i campi';
-                return $responseArray;
-            }
+            $this->checkParams($params);
             if (!$this->checkEmail($params['Email'])) {
                 $responseArray['Status'] = ERROR;
                 $responseArray['msg'] = 'Esiste un altro account con la stessa email.';
@@ -149,7 +140,8 @@ class Dbh
         return $responseArray;
     }
 
-    private function getClaimByType($typeClaim) {
+    private function getClaimByType($typeClaim)
+    {
         $claim = $this->execute("SELECT * FROM `Claim` WHERE Valore = ?", $typeClaim);
         return $claim[0]["Id"];
     }
@@ -163,6 +155,37 @@ class Dbh
                     //
                 }
             }
+        }
+    }
+
+    public function insertAddressInformation($params): array
+    {
+        $responseArray = [];
+        if ($_SESSION["Id"]) {
+            $this->checkParams($params);
+            $response = $this->execute(
+                "INSERT INTO Indirizzo (Via, Numero_civico, Citta, CAP, Status)
+            VALUES (?, ?, ?, ?, ?, ?, ?)",
+                $params['Via'],
+                $params['Numero_civico'],
+                $params['Citta'],
+                $params['CAP'],
+                STATUS_INTACT_DATA
+            );
+        } else {
+            $responseArray['Status'] = ERROR;
+            $responseArray['msg'] = 'Claim non trovato';
+        }
+
+        return $responseArray;
+    }
+
+    private function checkParams(array $params)
+    {
+        if (!$this->validateParams($params)) {
+            $responseArray['Status'] = ERROR;
+            $responseArray['msg'] = 'Inserire tutti i campi';
+            return $responseArray;
         }
     }
 }

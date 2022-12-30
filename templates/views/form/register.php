@@ -9,7 +9,7 @@
                 <img src="<?php echo IMG; ?>/logo.svg" width="100" height="100" alt="Logo">
                 <div class="signin-intro">
                     <h1 id="greeting-msg" class="heading">Take-it</h1>
-                    <span id="signin-reg-msg" tabindex="-1" class="sub-heading">Registrati o <a href="./login.php" id="create-account-link">Accedi</a>
+                    <span id="signin-reg-msg" tabindex="-1" class="sub-heading">Registrati o <a href="login.php" id="create-account-link">Accedi</a>
                     </span>
                 </div>
 
