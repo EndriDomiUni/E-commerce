@@ -7,5 +7,5 @@ require_once("./script/address.script.php");
 ob_start();
 require './templates/views/form/address.php';
 $mainContent = ob_get_clean();
-$title = "Sign up";
+$title = "Address";
 require_once("./templates/base.php");

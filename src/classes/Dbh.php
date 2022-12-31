@@ -57,15 +57,12 @@ class Dbh
         }
     }
 
-    private function validateParams($params): bool
+    private function validateParams(array $params): bool
     {
-        foreach ($params as $value) {
-            if (empty($value)) {
-                return false;
-            }
-        }
-        return true;
+        $filtered = array_filter($params, 'strlen');
+        return count($filtered) === count($params);
     }
+
 
     public function getLastID()
     {
@@ -88,18 +85,19 @@ class Dbh
             "Status" => ERROR,
             "msg" => ""
         ];
-        $this->checkParams($params);
+        $check = $this->checkParams($params);
+        if ($check['Status'] !== ERROR) {
+            $email = $params["Email"];
+            $pass = $params["Password"];
 
-        $email = $params["Email"];
-        $pass = $params["Password"];
-
-        if (!$this->checkEmail($email)) {
-            $where = "Email = '$email' AND Password = '$pass'";
-            $response = $this->execute("SELECT * FROM `Utente` WHERE $where");
-            $this->checkSession($response[0], $email, $pass);
-        } else {
-            $responseArray["msg"] = "L'utente non esiste";
-            return $responseArray;
+            if (!$this->checkEmail($email)) {
+                $where = "Email = '$email' AND Password = '$pass'";
+                $response = $this->execute("SELECT * FROM `Utente` WHERE $where");
+                $this->checkSession($response[0], $email, $pass);
+            } else {
+                $responseArray["msg"] = "L'utente non esiste";
+                return $responseArray;
+            }
         }
 
         $responseArray["Status"] = OK;
@@ -113,25 +111,26 @@ class Dbh
         $responseArray = [];
         $claim = $this->getClaimByType($params['claimType']);
         if ($claim) {
-            $this->checkParams($params);
-            if (!$this->checkEmail($params['Email'])) {
-                $responseArray['Status'] = ERROR;
-                $responseArray['msg'] = 'Esiste un altro account con la stessa email.';
-                return $responseArray;
-            }
-
-            $response = $this->execute(
-                "INSERT INTO Utente (Nome, Cognome, Email, Password, Status, Claim_id, Indirizzo_id)
+            $check = $this->checkParams($params);
+            if ($check['Status'] !== ERROR) {
+                if (!$this->checkEmail($params['Email'])) {
+                    $responseArray['Status'] = ERROR;
+                    $responseArray['msg'] = 'Esiste un altro account con la stessa email.';
+                    return $responseArray;
+                }
+                $response = $this->execute(
+                    "INSERT INTO Utente (Nome, Cognome, Email, Password, Status, Claim_id, Indirizzo_id)
             VALUES (?, ?, ?, ?, ?, ?, ?)",
-                $params['Nome'],
-                $params['Cognome'],
-                $params['Email'],
-                $params['Password'],
-                STATUS_INTACT_DATA,
-                $claim,
-                ADDRESS_UNSET
-            );
-            $this->checkSession($response[0], $params['Email'], $params['Password']);
+                    $params['Nome'],
+                    $params['Cognome'],
+                    $params['Email'],
+                    $params['Password'],
+                    STATUS_INTACT_DATA,
+                    $claim,
+                    ADDRESS_UNSET
+                );
+                $this->checkSession($response[0], $params['Email'], $params['Password']);
+            }
         } else {
             $responseArray['Status'] = ERROR;
             $responseArray['msg'] = 'Claim non trovato';
@@ -162,16 +161,20 @@ class Dbh
     {
         $responseArray = [];
         if ($_SESSION["Id"]) {
-            $this->checkParams($params);
-            $response = $this->execute(
-                "INSERT INTO Indirizzo (Via, Numero_civico, Citta, CAP, Status)
-            VALUES (?, ?, ?, ?, ?, ?, ?)",
-                $params['Via'],
-                $params['Numero_civico'],
-                $params['Citta'],
-                $params['CAP'],
-                STATUS_INTACT_DATA
-            );
+            $check = $this->checkParams($params);
+            if ($check['Status'] !== ERROR) {
+                $response = $this->execute(
+                    "INSERT INTO Indirizzo (Via, Numero_civico, Citta, CAP, Status)
+            VALUES (?, ?, ?, ?, ?)",
+                    $params['Via'],
+                    $params['Numero_civico'],
+                    $params['Citta'],
+                    $params['CAP'],
+                    STATUS_INTACT_DATA
+                );
+                var_dump($response);
+                $responseArray['Status'] = OK;
+            }
         } else {
             $responseArray['Status'] = ERROR;
             $responseArray['msg'] = 'Claim non trovato';
@@ -180,12 +183,15 @@ class Dbh
         return $responseArray;
     }
 
-    private function checkParams(array $params)
+    private function checkParams(array $params): array
     {
-        if (!$this->validateParams($params)) {
-            $responseArray['Status'] = ERROR;
-            $responseArray['msg'] = 'Inserire tutti i campi';
-            return $responseArray;
-        }
+        return $this->validateParams($params) ? [
+            'Status' => OK,
+            'msg' => OK
+        ] : [
+            'Status' => ERROR,
+            'msg' => 'Inserire tutti i campi'
+        ];
     }
+
 }

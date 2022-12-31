@@ -61,8 +61,8 @@ const INACTIVE = 0;
 const ACTIVE = 1;
 
 const STATUS_INTACT_DATA = 0;
-const STATUS_INTACT_DATA = 0;
-const STATUS_DELETED_DATA = 0;
+const STATUS_MODIFIED_DATA = 1;
+const STATUS_DELETED_DATA = 2;
 
 const ADDRESS_UNSET = 1;
 

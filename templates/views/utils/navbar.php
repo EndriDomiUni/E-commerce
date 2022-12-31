@@ -85,8 +85,8 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end ">
-                        <li><a class="dropdown-item" href="../form/login.php">Log in</a></li>
-                        <li><a class="dropdown-item" href="../form/register.php">Sign up</a></li>
+                        <li><a class="dropdown-item" href="./login.php">Log in</a></li>
+                        <li><a class="dropdown-item" href="./register.php">Sign up</a></li>
                         <li><a class="dropdown-item" href="./account.php">Account</a></li>
                         <li><a class="dropdown-item" href="./address.php">Address</a></li>
                         <li><a class="dropdown-item" href="">Inbox</a></li>
