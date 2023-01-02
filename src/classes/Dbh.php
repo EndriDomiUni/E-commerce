@@ -241,4 +241,11 @@ class Dbh
     {
         return is_int($response);
     }
-}
+
+    public function changeClaim($params): void
+    {
+        if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
+            $this->updateDataForProvidedData($_SESSION["Id"],"Utente", "Claim_id", $params["claimType"]);
+        }
+    }
+ }
