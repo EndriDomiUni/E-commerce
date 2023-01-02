@@ -16,7 +16,7 @@ if (isset($_POST['personal-btn-register'])) {
             "Cognome" => filter_var($_POST['personal-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
             "Email" => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
             "Password" => $_POST['personal-password-register'],
-            "claimType" => CLAIM_USER
+            "claimType" => filter_var(CLAIM_USER, FILTER_SANITIZE_SPECIAL_CHARS)
         ];
 
         $dbh = new Dbh();
