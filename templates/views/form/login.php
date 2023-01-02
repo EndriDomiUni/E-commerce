@@ -5,7 +5,7 @@
         </div>
         <div class="col-sm">
             <div class="container text-center">
-                <main class="form-signin w-100 m-auto">
+                <section class="form-signin w-100 m-auto">
 
                     <?php if (isset($error)){
                         //echo "<div class='alert alert-warning' role='alert'>";
@@ -40,7 +40,7 @@
                         <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                     </form>
 
-                </main>
+                </section>
             </div>
         </div>
         <div class="col-sm">

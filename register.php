@@ -1,5 +1,6 @@
 <?php
 
+
 session_start();
 require_once("./config/AppConstants.php");
 require_once("./script/register.script.php");

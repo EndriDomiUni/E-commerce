@@ -157,6 +157,34 @@ class Dbh
         }
     }
 
+    public function insertCardPayModInformation($params): array
+    {
+        $responseArray = [];
+        if ($_SESSION["Id"]) {
+            $check = $this->checkParams($params);
+            if ($check['Status'] !== ERROR) {
+                $response = $this->execute(
+                    "INSERT INTO forma_di_pagamento (Circuito, Numero_carta, Data_scadenza, CV2, Status, Utente_id)
+            VALUES (?, ?, ?, ?, ?, ?)",
+                    $params['Circuito'],
+                    $params['Numero_carta'],
+                    $params['Data_scadenza'],
+                    $params['CV2'],
+                    STATUS_INTACT_DATA,
+                    $_SESSION["Id"]
+                );
+                if ($this->checkResponse($response)) {
+                    echo "ok" . '</br>';
+                }
+            }
+        } else {
+            $responseArray['Status'] = ERROR;
+            $responseArray['msg'] = 'Claim non trovato';
+        }
+
+        return $responseArray;
+    }
+
     public function insertAddressInformation($params): array
     {
         $responseArray = [];
@@ -172,8 +200,10 @@ class Dbh
                     $params['CAP'],
                     STATUS_INTACT_DATA
                 );
-                var_dump($response);
-                $responseArray['Status'] = OK;
+                if ($this->checkResponse($response)) {
+                    $this->associatesUserInSessionAddress($response);
+                    $this->updateDataForProvidedData($_SESSION["Id"], "Utente", "Status", STATUS_MODIFIED_DATA);
+                }
             }
         } else {
             $responseArray['Status'] = ERROR;
@@ -181,6 +211,19 @@ class Dbh
         }
 
         return $responseArray;
+    }
+
+    private function associatesUserInSessionAddress($addressId): void
+    {
+        if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
+            $this->updateDataForProvidedData($_SESSION["Id"],"Utente", "Indirizzo_id", $addressId);
+        }
+    }
+
+    private function updateDataForProvidedData($id, $tableName, $fieldName, $toUpdate): void
+    {
+        $where = "Id = '$id'";
+        $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
     }
 
     private function checkParams(array $params): array
@@ -194,4 +237,8 @@ class Dbh
         ];
     }
 
+    private function checkResponse($response): bool
+    {
+        return is_int($response);
+    }
 }
