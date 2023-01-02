@@ -38,7 +38,7 @@ if (isset($_POST['business-btn-register'])) {
             "Cognome" => filter_var($_POST['business-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
             "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
             "Password" => $_POST['business-password-register'],
-            "claimType" => CLAIM_SELLER
+            "claimType" => filter_var(CLAIM_SELLER, FILTER_SANITIZE_SPECIAL_CHARS)
         ];
 
         $dbh = new Dbh();
