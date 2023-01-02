@@ -129,7 +129,7 @@ class Dbh
                     $claim,
                     ADDRESS_UNSET
                 );
-                $this->checkSession($response[0], $params['Email'], $params['Password']);
+                $this->checkSession($response, $params['Email'], $params['Password']);
             }
         } else {
             $responseArray['Status'] = ERROR;
