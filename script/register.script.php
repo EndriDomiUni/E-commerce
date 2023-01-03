@@ -11,35 +11,27 @@ $dbh = new Dbh();
 
 if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-register'])) {
     try {
-        $params = [
-            "Nome" => filter_var($_POST['personal-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-            "Cognome" => filter_var($_POST['personal-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-            "Email" => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
-            "Password" => $_POST['personal-password-register'],
-            "claimType" => CLAIM_USER
-        ];
-
-        $dbh = new Dbh();
-        $response = $dbh->register($params);
-        if ($response["Status"] === ERROR) {
-            $error_register = $response["msg"];
-        } else {
-            header("Location: index.php");
+        $params = [];
+        switch (true) {
+            case isset($_POST['personal-btn-register']):
+                $params = [
+                    "Nome" => filter_var($_POST['personal-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    "Cognome" => filter_var($_POST['personal-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    "Email" => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
+                    "Password" => filter_var($_POST['personal-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    "claimType" => filter_var(CLAIM_USER, FILTER_SANITIZE_SPECIAL_CHARS)
+                ];
+                break;
+            case isset($_POST['business-btn-register']):
+                $params = [
+                    "Nome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    "Cognome" => filter_var($_POST['business-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
+                    "Password" => filter_var($_POST['business-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    "claimType" => filter_var(CLAIM_SELLER, FILTER_SANITIZE_SPECIAL_CHARS)
+                ];
+                break;
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-}
-
-if (isset($_POST['business-btn-register'])) {
-    try {
-        $params = [
-            "Nome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-            "Cognome" => filter_var($_POST['business-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-            "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
-            "Password" => $_POST['business-password-register'],
-            "claimType" => CLAIM_SELLER
-        ];
 
         $response = $dbh->register($params);
         $error_register = $response["Status"] === ERROR ? $response["msg"] : null;

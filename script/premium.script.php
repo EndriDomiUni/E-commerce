@@ -10,32 +10,32 @@ require_once "./src/classes/Dbh.php";
 $dbh = new Dbh();
 
 if (isset($_POST["btn-base"]) || isset($_POST["btn-user-pro"]) || isset($_POST["btn-seller-pro"])) {
+    echo "sono qui";
     try {
         $params = [];
         switch (true) {
             case isset($_POST["btn-base"]):
                 $params = [
                     "Status" => STATUS_MODIFIED_DATA,
-                    "claimType" => CLAIM_USER
+                    "claimType" => filter_var(CLAIM_USER, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
             case isset($_POST["btn-user-pro"]):
                 $params = [
                     "Status" => STATUS_MODIFIED_DATA,
-                    "claimType" => CLAIM_USER_PRO
+                    "claimType" => filter_var(CLAIM_USER_PRO, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
             case isset($_POST["btn-seller-pro"]):
                 $params = [
                     "Status" => STATUS_MODIFIED_DATA,
-                    "claimType" => CLAIM_SELLER_PR0
+                    "claimType" => filter_var(CLAIM_SELLER_PR0, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
         }
 
         $response = $dbh->changeClaim($params);
-        $error_register = $response["Status"] === ERROR ? $response["msg"] : null;
-        $response["Status"] === SUCCESS ? header("Location: index.php") : null;
+        $dbh->checkResponse($response) ? header("Location: index.php") : null;
     } catch (Exception $e) {
         echo $e->getMessage();
     }

@@ -1,3 +1,8 @@
+<?php
+    require_once "./config/AppConstants.php";
+    require_once "./src/classes/Dbh.php";
+?>
+
 <nav class="navbar navbar-expand-lg bg-light bd-navbar sticky-top" id="navbar-main">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?php echo ROOT; ?>">
@@ -62,7 +67,7 @@
 
                 <!-- start carrello -->
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="./view/ShopCartView/">
+                    <a class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart-fill nav-icon-item" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                         </svg>
@@ -81,7 +86,22 @@
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                         </svg>
                         <div class="nav-caption-item">
-                            <p>User</p>
+                            <?php
+                                if(isset($_SESSION["Id"])) {
+                                    try {
+                                        $session = new Session($_SESSION["Id"]);
+                                        if ($session->checkSessionId($_SESSION["Id"])) {
+                                            $user = $session->getCurrentUser();
+                                            echo 'Ciao ' . $user["Nome"];
+                                        }
+                                    } catch (Exception $e) {
+                                        echo $e->getMessage();
+
+                                    }
+                                } else {
+                                    echo '<p>Utente</p>';
+                                }
+                            ?>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end ">
@@ -117,3 +137,13 @@
         </div>
     </div>
 </nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        ...
+    </div>
+</div>

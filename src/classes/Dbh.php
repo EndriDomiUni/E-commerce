@@ -106,6 +106,8 @@ class Dbh
     }
 
 
+
+
     public function register(array $params): array
     {
         $responseArray = [];
@@ -202,7 +204,7 @@ class Dbh
                 );
                 if ($this->checkResponse($response)) {
                     $this->associatesUserInSessionAddress($response);
-                    $this->updateDataForProvidedData($_SESSION["Id"], "Utente", "Status", STATUS_MODIFIED_DATA);
+                    $this->updateData($_SESSION["Id"], "Utente", "Status", STATUS_MODIFIED_DATA);
                 }
             }
         } else {
@@ -216,14 +218,15 @@ class Dbh
     private function associatesUserInSessionAddress($addressId): void
     {
         if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
-            $this->updateDataForProvidedData($_SESSION["Id"],"Utente", "Indirizzo_id", $addressId);
+            $this->updateData($_SESSION["Id"],"Utente", "Indirizzo_id", $addressId);
         }
     }
 
-    private function updateDataForProvidedData($id, $tableName, $fieldName, $toUpdate): void
+    private function updateData($id, $tableName, $fieldName, $toUpdate): bool
     {
         $where = "Id = '$id'";
-        $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
+        $res = $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
+        return $this->checkResponse($res);
     }
 
     private function checkParams(array $params): array
@@ -237,7 +240,7 @@ class Dbh
         ];
     }
 
-    private function checkResponse($response): bool
+    public function checkResponse($response): bool
     {
         return is_int($response);
     }
@@ -245,7 +248,14 @@ class Dbh
     public function changeClaim($params): void
     {
         if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
-            $this->updateDataForProvidedData($_SESSION["Id"],"Utente", "Claim_id", $params["claimType"]);
+            if($this->updateData($_SESSION["Id"],"Utente", "Claim_id", $params["claimType"])) {
+                echo "claim update";
+            }
+            if($this->updateData($_SESSION["Id"],"Utente", "Status", $params["Status"])) {
+                echo "status update";
+            }
+        } else {
+            echo $_SESSION["Id"] . " is null or " . $_SESSION["Claim_id"];
         }
     }
  }
