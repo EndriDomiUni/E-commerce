@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Creato il: Gen 03, 2023 alle 16:20
--- Versione del server: 10.4.27-MariaDB
--- Versione PHP: 8.1.12
+-- Host: 127.0.0.1
+-- Creato il: Gen 03, 2023 alle 17:05
+-- Versione del server: 10.4.25-MariaDB
+-- Versione PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,11 +26,11 @@ USE `e-commerce`;
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Articolo`
+-- Struttura della tabella `articolo`
 --
 
-DROP TABLE IF EXISTS `Articolo`;
-CREATE TABLE IF NOT EXISTS `Articolo` (
+DROP TABLE IF EXISTS `articolo`;
+CREATE TABLE IF NOT EXISTS `articolo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Prezzo` double NOT NULL,
   `Quantita` int(10) NOT NULL,
@@ -43,61 +43,62 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Prodotto_id` (`Prodotto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Carrello`
+-- Struttura della tabella `carrello`
 --
 
-DROP TABLE IF EXISTS `Carrello`;
-CREATE TABLE IF NOT EXISTS `Carrello` (
+DROP TABLE IF EXISTS `carrello`;
+CREATE TABLE IF NOT EXISTS `carrello` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Utente_id` int(11) NOT NULL,
   `Status` int(10) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Categoria`
+-- Struttura della tabella `categoria`
 --
 
-DROP TABLE IF EXISTS `Categoria`;
-CREATE TABLE IF NOT EXISTS `Categoria` (
+DROP TABLE IF EXISTS `categoria`;
+CREATE TABLE IF NOT EXISTS `categoria` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
   `Descrizione` varchar(150) NOT NULL,
   `Status` int(7) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Prodotto_id` int(11) NOT NULL,
   `Variazione_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Claim`
+-- Struttura della tabella `claim`
 --
 
-DROP TABLE IF EXISTS `Claim`;
-CREATE TABLE IF NOT EXISTS `Claim` (
+DROP TABLE IF EXISTS `claim`;
+CREATE TABLE IF NOT EXISTS `claim` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(150) NOT NULL,
   `Valore` int(10) NOT NULL,
   `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `Claim`
+-- Dump dei dati per la tabella `claim`
 --
 
-INSERT INTO `Claim` (`Id`, `Descrizione`, `Valore`, `Status`, `Timestamp`) VALUES
+INSERT INTO `claim` (`Id`, `Descrizione`, `Valore`, `Status`, `Timestamp`) VALUES
 (1, 'Guest', 0, 0, '0000-00-00 00:00:00'),
 (2, 'User', 1, 0, '0000-00-00 00:00:00'),
 (3, 'Seller', 2, 0, '0000-00-00 00:00:00'),
@@ -107,56 +108,62 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Valore`, `Status`, `Timestamp`) VALUE
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Configurazione_variazione`
+-- Struttura della tabella `configurazione_variazione`
 --
 
-DROP TABLE IF EXISTS `Configurazione_variazione`;
-CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
+DROP TABLE IF EXISTS `configurazione_variazione`;
+CREATE TABLE IF NOT EXISTS `configurazione_variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Variazione_id` int(11) NOT NULL,
   `Opzio_variazione_id` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Variazione_id` (`Variazione_id`),
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Dettaglio_ordine`
+-- Struttura della tabella `dettaglio_ordine`
 --
 
-DROP TABLE IF EXISTS `Dettaglio_ordine`;
-CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
+DROP TABLE IF EXISTS `dettaglio_ordine`;
+CREATE TABLE IF NOT EXISTS `dettaglio_ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Ordine_id` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Dimensione`
+-- Struttura della tabella `dimensione`
 --
 
-DROP TABLE IF EXISTS `Dimensione`;
-CREATE TABLE IF NOT EXISTS `Dimensione` (
+DROP TABLE IF EXISTS `dimensione`;
+CREATE TABLE IF NOT EXISTS `dimensione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Dim_X` int(7) NOT NULL,
   `Dim_Y` int(7) NOT NULL,
   `Dim_Z` int(7) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Forma_di_pagamento`
+-- Struttura della tabella `forma_di_pagamento`
 --
 
-DROP TABLE IF EXISTS `Forma_di_pagamento`;
-CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
+DROP TABLE IF EXISTS `forma_di_pagamento`;
+CREATE TABLE IF NOT EXISTS `forma_di_pagamento` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Circuito` varchar(20) NOT NULL,
   `Numero_carta` varchar(20) NOT NULL,
@@ -167,16 +174,16 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Utente_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Indirizzo`
+-- Struttura della tabella `indirizzo`
 --
 
-DROP TABLE IF EXISTS `Indirizzo`;
-CREATE TABLE IF NOT EXISTS `Indirizzo` (
+DROP TABLE IF EXISTS `indirizzo`;
+CREATE TABLE IF NOT EXISTS `indirizzo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Via` varchar(150) NOT NULL,
   `Numero_civico` int(10) NOT NULL,
@@ -185,13 +192,13 @@ CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `Indirizzo`
+-- Dump dei dati per la tabella `indirizzo`
 --
 
-INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`, `Timestamp`) VALUES
+INSERT INTO `indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`, `Timestamp`) VALUES
 (1, 'Unset', 0, 'Unset', 0, 0, '2022-12-30 17:08:36'),
 (2, 'Via Don Oreste Benzi', 1, 'Rimini', 47923, 0, '2022-12-31 13:57:45'),
 (3, 'Via Rossi', 1, 'Roma', 11111, 0, '2022-12-31 14:32:01'),
@@ -201,11 +208,11 @@ INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`,
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Magazzino`
+-- Struttura della tabella `magazzino`
 --
 
-DROP TABLE IF EXISTS `Magazzino`;
-CREATE TABLE IF NOT EXISTS `Magazzino` (
+DROP TABLE IF EXISTS `magazzino`;
+CREATE TABLE IF NOT EXISTS `magazzino` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Metri_cubi` int(7) NOT NULL,
   `Status` int(7) NOT NULL,
@@ -213,62 +220,67 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
   `Indirizzo_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Metodo_spedizione`
+-- Struttura della tabella `metodo_spedizione`
 --
 
-DROP TABLE IF EXISTS `Metodo_spedizione`;
-CREATE TABLE IF NOT EXISTS `Metodo_spedizione` (
+DROP TABLE IF EXISTS `metodo_spedizione`;
+CREATE TABLE IF NOT EXISTS `metodo_spedizione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
   `Prezzo` int(7) NOT NULL,
   `Ordine_id` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Opzione_variazione`
+-- Struttura della tabella `opzione_variazione`
 --
 
-DROP TABLE IF EXISTS `Opzione_variazione`;
-CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
+DROP TABLE IF EXISTS `opzione_variazione`;
+CREATE TABLE IF NOT EXISTS `opzione_variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Valore` varchar(50) NOT NULL,
   `Status` int(6) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Ordine`
+-- Struttura della tabella `ordine`
 --
 
-DROP TABLE IF EXISTS `Ordine`;
-CREATE TABLE IF NOT EXISTS `Ordine` (
+DROP TABLE IF EXISTS `ordine`;
+CREATE TABLE IF NOT EXISTS `ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Forma_pag_id` int(11) NOT NULL,
   `Data_ordine` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Tot_ordine` int(7) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Forma_pag_id` (`Forma_pag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Prodotto`
+-- Struttura della tabella `prodotto`
 --
 
-DROP TABLE IF EXISTS `Prodotto`;
-CREATE TABLE IF NOT EXISTS `Prodotto` (
+DROP TABLE IF EXISTS `prodotto`;
+CREATE TABLE IF NOT EXISTS `prodotto` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
   `Descrizione` varchar(50) NOT NULL,
@@ -276,76 +288,82 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   `Dim_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Dim_id` (`Dim_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Prodotto_in_raccolta`
+-- Struttura della tabella `prodotto_in_raccolta`
 --
 
-DROP TABLE IF EXISTS `Prodotto_in_raccolta`;
-CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
+DROP TABLE IF EXISTS `prodotto_in_raccolta`;
+CREATE TABLE IF NOT EXISTS `prodotto_in_raccolta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Raccolta_id` int(11) NOT NULL,
   `Prodotto_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Raccolta_id` (`Raccolta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Raccolta`
+-- Struttura della tabella `raccolta`
 --
 
-DROP TABLE IF EXISTS `Raccolta`;
-CREATE TABLE IF NOT EXISTS `Raccolta` (
+DROP TABLE IF EXISTS `raccolta`;
+CREATE TABLE IF NOT EXISTS `raccolta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tipo_raccolta` varchar(50) NOT NULL,
   `Utente_id` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Status_ordine`
+-- Struttura della tabella `status_ordine`
 --
 
-DROP TABLE IF EXISTS `Status_ordine`;
-CREATE TABLE IF NOT EXISTS `Status_ordine` (
+DROP TABLE IF EXISTS `status_ordine`;
+CREATE TABLE IF NOT EXISTS `status_ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Ordine_id` int(11) NOT NULL,
   `Valore` int(7) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Tipo_di_pagamento`
+-- Struttura della tabella `tipo_di_pagamento`
 --
 
-DROP TABLE IF EXISTS `Tipo_di_pagamento`;
-CREATE TABLE IF NOT EXISTS `Tipo_di_pagamento` (
+DROP TABLE IF EXISTS `tipo_di_pagamento`;
+CREATE TABLE IF NOT EXISTS `tipo_di_pagamento` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Valore` int(11) NOT NULL,
   `Fk_for_pag_id` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Fk_for_pag_id` (`Fk_for_pag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Utente`
+-- Struttura della tabella `utente`
 --
 
-DROP TABLE IF EXISTS `Utente`;
-CREATE TABLE IF NOT EXISTS `Utente` (
+DROP TABLE IF EXISTS `utente`;
+CREATE TABLE IF NOT EXISTS `utente` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
   `Cognome` varchar(50) NOT NULL,
@@ -358,119 +376,123 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Claim_id` (`Claim_id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
--- Dump dei dati per la tabella `Utente`
+-- Dump dei dati per la tabella `utente`
 --
 
-INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `Timestamp`, `Claim_id`, `Indirizzo_id`) VALUES
+INSERT INTO `utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `Timestamp`, `Claim_id`, `Indirizzo_id`) VALUES
 (4, 'Endri', 'Domi', 'endri.domi@lasersoft.it', 'lasersoft', 1, '2023-01-01 15:39:43', 2, 6),
 (5, 'Federico', 'Brunelli', 'federico.brunelli@lasersoft.it', 'lasersoft', 1, '2022-12-31 14:34:31', 2, 5),
 (6, 'Alessandro', 'Pioggia', 'alessandro.pioggia@lasersoft.it', 'lasersoft', 1, '2022-12-31 14:34:31', 2, 5),
 (7, 'Mario', 'Rossi', 'mario.rossi@takeit.com', 'takeit', 1, '2022-12-31 14:34:31', 2, 5),
 (8, 'Marco', 'Pesaresi', 'marco.pesaresi@lasersoft.it', 'lasersoft', 0, '2023-01-01 15:38:45', 3, 1),
-(9, 'Luca', 'Migani', 'luca.migani@lasersoft.it', 'lasersoft', 0, '2023-01-02 17:13:51', 3, 1),
-(10, 'Chiara', 'Delmonte', 'chiara@delmonte.com', '12345678', 0, '2023-01-03 14:45:15', 3, 1);
+(9, 'Luca', 'Franci', 'luca.franci@lasersoft.it', 'lasersoft', 0, '2023-01-02 15:50:29', 3, 1),
+(10, 'luca', 'balda', 'luca.balda@lasersoft.it', 'lasersoft', 0, '2023-01-02 15:59:28', 2, 1),
+(11, 'antonio', 'piolanti', 'antonio.piolanti@lasersoft.it', 'lasersoft', 0, '2023-01-02 16:10:43', 3, 1),
+(12, 'silvio', 'berlusconi', 'silvio.berlusconi@lasersoft.it', 'lasersoft', 0, '2023-01-02 16:15:55', 2, 1),
+(13, 'Prova', 'Ficserror', 'prova.ficserror@lasersoft.it', 'lasersoft', 0, '2023-01-02 16:17:15', 3, 1);
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Variazioni`
+-- Struttura della tabella `variazioni`
 --
 
-DROP TABLE IF EXISTS `Variazioni`;
-CREATE TABLE IF NOT EXISTS `Variazioni` (
+DROP TABLE IF EXISTS `variazioni`;
+CREATE TABLE IF NOT EXISTS `variazioni` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` int(11) NOT NULL,
   `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `Articolo`
+-- Limiti per la tabella `articolo`
 --
-ALTER TABLE `Articolo`
-  ADD CONSTRAINT `articolo_ibfk_1` FOREIGN KEY (`Carrello_id`) REFERENCES `Carrello` (`Id`),
-  ADD CONSTRAINT `articolo_ibfk_2` FOREIGN KEY (`Prodotto_id`) REFERENCES `Prodotto` (`Id`);
+ALTER TABLE `articolo`
+  ADD CONSTRAINT `articolo_ibfk_1` FOREIGN KEY (`Carrello_id`) REFERENCES `carrello` (`Id`),
+  ADD CONSTRAINT `articolo_ibfk_2` FOREIGN KEY (`Prodotto_id`) REFERENCES `prodotto` (`Id`);
 
 --
--- Limiti per la tabella `Carrello`
+-- Limiti per la tabella `carrello`
 --
-ALTER TABLE `Carrello`
-  ADD CONSTRAINT `carrello_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
+ALTER TABLE `carrello`
+  ADD CONSTRAINT `carrello_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `utente` (`Id`);
 
 --
--- Limiti per la tabella `Configurazione_variazione`
+-- Limiti per la tabella `configurazione_variazione`
 --
-ALTER TABLE `Configurazione_variazione`
-  ADD CONSTRAINT `configurazione_variazione_ibfk_1` FOREIGN KEY (`Variazione_id`) REFERENCES `Variazioni` (`Id`),
-  ADD CONSTRAINT `configurazione_variazione_ibfk_2` FOREIGN KEY (`Opzio_variazione_id`) REFERENCES `Opzione_variazione` (`Id`);
+ALTER TABLE `configurazione_variazione`
+  ADD CONSTRAINT `configurazione_variazione_ibfk_1` FOREIGN KEY (`Variazione_id`) REFERENCES `variazioni` (`Id`),
+  ADD CONSTRAINT `configurazione_variazione_ibfk_2` FOREIGN KEY (`Opzio_variazione_id`) REFERENCES `opzione_variazione` (`Id`);
 
 --
--- Limiti per la tabella `Dettaglio_ordine`
+-- Limiti per la tabella `dettaglio_ordine`
 --
-ALTER TABLE `Dettaglio_ordine`
-  ADD CONSTRAINT `dettaglio_ordine_ibfk_1` FOREIGN KEY (`Ordine_id`) REFERENCES `Ordine` (`Id`);
+ALTER TABLE `dettaglio_ordine`
+  ADD CONSTRAINT `dettaglio_ordine_ibfk_1` FOREIGN KEY (`Ordine_id`) REFERENCES `ordine` (`Id`);
 
 --
--- Limiti per la tabella `Forma_di_pagamento`
+-- Limiti per la tabella `forma_di_pagamento`
 --
-ALTER TABLE `Forma_di_pagamento`
-  ADD CONSTRAINT `Utente_id` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
+ALTER TABLE `forma_di_pagamento`
+  ADD CONSTRAINT `Utente_id` FOREIGN KEY (`Utente_id`) REFERENCES `utente` (`Id`);
 
 --
--- Limiti per la tabella `Magazzino`
+-- Limiti per la tabella `magazzino`
 --
-ALTER TABLE `Magazzino`
-  ADD CONSTRAINT `magazzino_ibfk_1` FOREIGN KEY (`Indirizzo_id`) REFERENCES `Indirizzo` (`Id`);
+ALTER TABLE `magazzino`
+  ADD CONSTRAINT `magazzino_ibfk_1` FOREIGN KEY (`Indirizzo_id`) REFERENCES `indirizzo` (`Id`);
 
 --
--- Limiti per la tabella `Metodo_spedizione`
+-- Limiti per la tabella `metodo_spedizione`
 --
-ALTER TABLE `Metodo_spedizione`
-  ADD CONSTRAINT `metodo_spedizione_ibfk_1` FOREIGN KEY (`Ordine_id`) REFERENCES `Ordine` (`Id`);
+ALTER TABLE `metodo_spedizione`
+  ADD CONSTRAINT `metodo_spedizione_ibfk_1` FOREIGN KEY (`Ordine_id`) REFERENCES `ordine` (`Id`);
 
 --
--- Limiti per la tabella `Ordine`
+-- Limiti per la tabella `ordine`
 --
-ALTER TABLE `Ordine`
-  ADD CONSTRAINT `ordine_ibfk_1` FOREIGN KEY (`Forma_pag_id`) REFERENCES `Forma_di_pagamento` (`Id`);
+ALTER TABLE `ordine`
+  ADD CONSTRAINT `ordine_ibfk_1` FOREIGN KEY (`Forma_pag_id`) REFERENCES `forma_di_pagamento` (`Id`);
 
 --
--- Limiti per la tabella `Prodotto`
+-- Limiti per la tabella `prodotto`
 --
-ALTER TABLE `Prodotto`
-  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`Dim_id`) REFERENCES `Dimensione` (`Id`);
+ALTER TABLE `prodotto`
+  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`Dim_id`) REFERENCES `dimensione` (`Id`);
 
 --
--- Limiti per la tabella `Prodotto_in_raccolta`
+-- Limiti per la tabella `prodotto_in_raccolta`
 --
-ALTER TABLE `Prodotto_in_raccolta`
-  ADD CONSTRAINT `prodotto_in_raccolta_ibfk_1` FOREIGN KEY (`Prodotto_id`) REFERENCES `Prodotto` (`Id`),
-  ADD CONSTRAINT `prodotto_in_raccolta_ibfk_2` FOREIGN KEY (`Raccolta_id`) REFERENCES `Raccolta` (`Id`);
+ALTER TABLE `prodotto_in_raccolta`
+  ADD CONSTRAINT `prodotto_in_raccolta_ibfk_1` FOREIGN KEY (`Prodotto_id`) REFERENCES `prodotto` (`Id`),
+  ADD CONSTRAINT `prodotto_in_raccolta_ibfk_2` FOREIGN KEY (`Raccolta_id`) REFERENCES `raccolta` (`Id`);
 
 --
--- Limiti per la tabella `Raccolta`
+-- Limiti per la tabella `raccolta`
 --
-ALTER TABLE `Raccolta`
-  ADD CONSTRAINT `raccolta_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
+ALTER TABLE `raccolta`
+  ADD CONSTRAINT `raccolta_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `utente` (`Id`);
 
 --
--- Limiti per la tabella `Tipo_di_pagamento`
+-- Limiti per la tabella `tipo_di_pagamento`
 --
-ALTER TABLE `Tipo_di_pagamento`
-  ADD CONSTRAINT `tipo_di_pagamento_ibfk_1` FOREIGN KEY (`Fk_for_pag_id`) REFERENCES `Forma_di_pagamento` (`Id`);
+ALTER TABLE `tipo_di_pagamento`
+  ADD CONSTRAINT `tipo_di_pagamento_ibfk_1` FOREIGN KEY (`Fk_for_pag_id`) REFERENCES `forma_di_pagamento` (`Id`);
 
 --
--- Limiti per la tabella `Utente`
+-- Limiti per la tabella `utente`
 --
-ALTER TABLE `Utente`
-  ADD CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`Indirizzo_id`) REFERENCES `Indirizzo` (`Id`);
+ALTER TABLE `utente`
+  ADD CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`Indirizzo_id`) REFERENCES `indirizzo` (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
