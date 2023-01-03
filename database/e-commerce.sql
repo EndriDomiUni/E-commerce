@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 02, 2023 alle 16:44
+-- Creato il: Gen 03, 2023 alle 16:20
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.1.12
 
@@ -358,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Claim_id` (`Claim_id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `Utente`
@@ -369,7 +369,9 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `T
 (5, 'Federico', 'Brunelli', 'federico.brunelli@lasersoft.it', 'lasersoft', 1, '2022-12-31 14:34:31', 2, 5),
 (6, 'Alessandro', 'Pioggia', 'alessandro.pioggia@lasersoft.it', 'lasersoft', 1, '2022-12-31 14:34:31', 2, 5),
 (7, 'Mario', 'Rossi', 'mario.rossi@takeit.com', 'takeit', 1, '2022-12-31 14:34:31', 2, 5),
-(8, 'Marco', 'Pesaresi', 'marco.pesaresi@lasersoft.it', 'lasersoft', 0, '2023-01-01 15:38:45', 3, 1);
+(8, 'Marco', 'Pesaresi', 'marco.pesaresi@lasersoft.it', 'lasersoft', 0, '2023-01-01 15:38:45', 3, 1),
+(9, 'Luca', 'Migani', 'luca.migani@lasersoft.it', 'lasersoft', 0, '2023-01-02 17:13:51', 3, 1),
+(10, 'Chiara', 'Delmonte', 'chiara@delmonte.com', '12345678', 0, '2023-01-03 14:45:15', 3, 1);
 
 -- --------------------------------------------------------
 

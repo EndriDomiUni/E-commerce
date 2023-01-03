@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Dic 23, 2022 alle 11:09
+-- Creato il: Gen 02, 2023 alle 16:44
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.1.12
 
@@ -26,337 +26,449 @@ USE `e-commerce`;
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `carrello`
---
--- Creazione: Dic 22, 2022 alle 10:08
+-- Struttura della tabella `Articolo`
 --
 
-DROP TABLE IF EXISTS `carrello`;
-CREATE TABLE IF NOT EXISTS `carrello` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Ammontare` int(20) UNSIGNED NOT NULL,
-  `Quantità` int(20) NOT NULL,
-  `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `carrello`:
---
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `catalogo`
---
--- Creazione: Dic 22, 2022 alle 10:08
---
-
-DROP TABLE IF EXISTS `catalogo`;
-CREATE TABLE IF NOT EXISTS `catalogo` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Descrizione` varchar(30) NOT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `catalogo`:
---
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `categoria`
---
--- Creazione: Dic 22, 2022 alle 10:08
---
-
-DROP TABLE IF EXISTS `categoria`;
-CREATE TABLE IF NOT EXISTS `categoria` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Nome` varchar(30) NOT NULL,
-  `Descrizione` varchar(30) NOT NULL,
-  `IdCatalogo` int(10) UNSIGNED NOT NULL,
-  `IdCategoriaPadre` int(10) UNSIGNED NOT NULL,
-  `Status` tinyint(5) NOT NULL,
-  `TImestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `categoria`:
---
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `Cliente`
---
--- Creazione: Dic 22, 2022 alle 10:09
--- Ultimo aggiornamento: Dic 22, 2022 alle 17:20
---
-
-DROP TABLE IF EXISTS `Cliente`;
-CREATE TABLE IF NOT EXISTS `Cliente` (
+DROP TABLE IF EXISTS `Articolo`;
+CREATE TABLE IF NOT EXISTS `Articolo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nome` varchar(25) NOT NULL,
-  `Cognome` varchar(25) NOT NULL,
-  `Email` varchar(35) NOT NULL,
-  `Password` varchar(35) NOT NULL,
-  `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `Cliente`:
---
-
---
--- Dump dei dati per la tabella `Cliente`
---
-
-INSERT INTO `Cliente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `Timestamp`) VALUES
-(1, 'Demo', 'Private', 'demo.private@test.com', '123456789', 1, '2022-12-22 14:34:39'),
-(2, 'Demo2', 'Private2', 'demo.private2@test.com', '1234567890', 1, '2022-12-22 14:36:03'),
-(3, 'Demo', 'Private', 'demo3@private.com', 'password', 1, '2022-12-22 15:35:27'),
-(4, 'Demo3', 'Private3', 'demo3@private.com', '123456789', 1, '2022-12-22 15:39:00'),
-(5, 'Test', 'Test', 'text@test.com', 'test', 1, '2022-12-22 15:43:38'),
-(6, 'Test', 'Test', 'text@test.com', '12345678', 1, '2022-12-22 15:46:55'),
-(7, 'Demo', 'Private', 'test@tesrt.com', '1234567890', 1, '2022-12-22 16:57:11'),
-(8, 'Demo123', 'Private', 'test123@tesrt.com', '12347890', 1, '2022-12-22 17:20:23');
+  `Prezzo` double NOT NULL,
+  `Quantita` int(10) NOT NULL,
+  `Carrello_id` int(11) NOT NULL,
+  `Dettaglio_ord_id` int(11) NOT NULL,
+  `Prodotto_id` int(11) NOT NULL,
+  `Conf_variaz_id` int(11) NOT NULL,
+  `Status` int(10) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`Id`),
+  KEY `Carrello_id` (`Carrello_id`),
+  KEY `Prodotto_id` (`Prodotto_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `corriere`
---
--- Creazione: Dic 22, 2022 alle 10:08
+-- Struttura della tabella `Carrello`
 --
 
-DROP TABLE IF EXISTS `corriere`;
-CREATE TABLE IF NOT EXISTS `corriere` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Descrizione` varchar(30) NOT NULL,
-  `Status` tinyint(5) NOT NULL,
+DROP TABLE IF EXISTS `Carrello`;
+CREATE TABLE IF NOT EXISTS `Carrello` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Utente_id` int(11) NOT NULL,
+  `Status` int(10) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Utente_id` (`Utente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Categoria`
+--
+
+DROP TABLE IF EXISTS `Categoria`;
+CREATE TABLE IF NOT EXISTS `Categoria` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(50) NOT NULL,
+  `Descrizione` varchar(150) NOT NULL,
+  `Status` int(7) NOT NULL,
+  `Prodotto_id` int(11) NOT NULL,
+  `Variazione_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Claim`
+--
+
+DROP TABLE IF EXISTS `Claim`;
+CREATE TABLE IF NOT EXISTS `Claim` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Descrizione` varchar(150) NOT NULL,
+  `Valore` int(10) NOT NULL,
+  `Status` int(10) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `Claim`
+--
+
+INSERT INTO `Claim` (`Id`, `Descrizione`, `Valore`, `Status`, `Timestamp`) VALUES
+(1, 'Guest', 0, 0, '0000-00-00 00:00:00'),
+(2, 'User', 1, 0, '0000-00-00 00:00:00'),
+(3, 'Seller', 2, 0, '0000-00-00 00:00:00'),
+(4, 'User pro', 3, 0, '0000-00-00 00:00:00'),
+(5, 'Seller pro', 4, 0, '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Configurazione_variazione`
+--
+
+DROP TABLE IF EXISTS `Configurazione_variazione`;
+CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Variazione_id` int(11) NOT NULL,
+  `Opzio_variazione_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Variazione_id` (`Variazione_id`),
+  KEY `Opzio_variazione_id` (`Opzio_variazione_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Dettaglio_ordine`
+--
+
+DROP TABLE IF EXISTS `Dettaglio_ordine`;
+CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Ordine_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Ordine_id` (`Ordine_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Dimensione`
+--
+
+DROP TABLE IF EXISTS `Dimensione`;
+CREATE TABLE IF NOT EXISTS `Dimensione` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Dim_X` int(7) NOT NULL,
+  `Dim_Y` int(7) NOT NULL,
+  `Dim_Z` int(7) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Forma_di_pagamento`
+--
+
+DROP TABLE IF EXISTS `Forma_di_pagamento`;
+CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Circuito` varchar(20) NOT NULL,
+  `Numero_carta` varchar(20) NOT NULL,
+  `Data_scadenza` varchar(10) NOT NULL,
+  `CV2` int(3) NOT NULL,
+  `Status` int(10) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Utente_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Utente_id` (`Utente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Indirizzo`
+--
+
+DROP TABLE IF EXISTS `Indirizzo`;
+CREATE TABLE IF NOT EXISTS `Indirizzo` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Via` varchar(150) NOT NULL,
+  `Numero_civico` int(10) NOT NULL,
+  `Citta` varchar(50) NOT NULL,
+  `CAP` int(5) NOT NULL,
+  `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `corriere`:
+-- Dump dei dati per la tabella `Indirizzo`
 --
+
+INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`, `Timestamp`) VALUES
+(1, 'Unset', 0, 'Unset', 0, 0, '2022-12-30 17:08:36'),
+(2, 'Via Don Oreste Benzi', 1, 'Rimini', 47923, 0, '2022-12-31 13:57:45'),
+(3, 'Via Rossi', 1, 'Roma', 11111, 0, '2022-12-31 14:32:01'),
+(5, 'dsd', 1, 'ds', 11111, 0, '2022-12-31 14:34:31'),
+(6, 'Via Don Oreste Benzi', 1, 'Rimini', 47832, 0, '2023-01-01 15:39:43');
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `galleria immagini`
---
--- Creazione: Dic 22, 2022 alle 10:08
+-- Struttura della tabella `Magazzino`
 --
 
-DROP TABLE IF EXISTS `galleria immagini`;
-CREATE TABLE IF NOT EXISTS `galleria immagini` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `IdProdotto` int(11) NOT NULL,
+DROP TABLE IF EXISTS `Magazzino`;
+CREATE TABLE IF NOT EXISTS `Magazzino` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Metri_cubi` int(7) NOT NULL,
+  `Status` int(7) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Indirizzo_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Indirizzo_id` (`Indirizzo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Metodo_spedizione`
+--
+
+DROP TABLE IF EXISTS `Metodo_spedizione`;
+CREATE TABLE IF NOT EXISTS `Metodo_spedizione` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(50) NOT NULL,
+  `Prezzo` int(7) NOT NULL,
+  `Ordine_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Ordine_id` (`Ordine_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Opzione_variazione`
+--
+
+DROP TABLE IF EXISTS `Opzione_variazione`;
+CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Valore` varchar(50) NOT NULL,
+  `Status` int(6) NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `galleria immagini`:
---
-
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `immagine`
---
--- Creazione: Dic 22, 2022 alle 10:08
+-- Struttura della tabella `Ordine`
 --
 
-DROP TABLE IF EXISTS `immagine`;
-CREATE TABLE IF NOT EXISTS `immagine` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Risorsa` varchar(30) NOT NULL,
-  `IdGalleriaImmagini` int(10) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `Ordine`;
+CREATE TABLE IF NOT EXISTS `Ordine` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Forma_pag_id` int(11) NOT NULL,
+  `Data_ordine` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Tot_ordine` int(7) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `IdGalleriaImmagini` (`IdGalleriaImmagini`)
+  KEY `Forma_pag_id` (`Forma_pag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `immagine`:
---   `IdGalleriaImmagini`
---       `galleria immagini` -> `Id`
---
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `ordine`
---
--- Creazione: Dic 22, 2022 alle 10:08
---
-
-DROP TABLE IF EXISTS `ordine`;
-CREATE TABLE IF NOT EXISTS `ordine` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Carrello` int(10) UNSIGNED NOT NULL,
-  `IdStatusOrdine` int(10) UNSIGNED NOT NULL,
-  `Ammontare` int(11) NOT NULL,
-  `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`),
-  KEY `Carrello` (`Carrello`),
-  KEY `IdStatusOrdine` (`IdStatusOrdine`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `ordine`:
---   `Carrello`
---       `carrello` -> `Id`
---   `IdStatusOrdine`
---       `status ordine` -> `Id`
---
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `pagamento`
---
--- Creazione: Dic 22, 2022 alle 10:08
---
-
-DROP TABLE IF EXISTS `pagamento`;
-CREATE TABLE IF NOT EXISTS `pagamento` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `IdOrdine` int(10) UNSIGNED NOT NULL,
-  `Data` date NOT NULL,
-  `Importo` int(30) UNSIGNED NOT NULL,
-  `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `pagamento`:
---
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Prodotto`
 --
--- Creazione: Nov 26, 2022 alle 15:38
---
 
 DROP TABLE IF EXISTS `Prodotto`;
 CREATE TABLE IF NOT EXISTS `Prodotto` (
-  `Id` int(11) NOT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
-  `Descrizione` varchar(100) NOT NULL,
-  `Prezzo` double NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `Prodotto`:
---
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `spedizione`
---
--- Creazione: Dic 22, 2022 alle 10:08
---
-
-DROP TABLE IF EXISTS `spedizione`;
-CREATE TABLE IF NOT EXISTS `spedizione` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `IdOrdine` int(10) UNSIGNED NOT NULL,
-  `DataSpedizione` date NOT NULL,
-  `LuogoSpedizione` varchar(30) NOT NULL,
-  `Status` tinyint(5) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Descrizione` varchar(50) NOT NULL,
+  `Immagine` varchar(50) NOT NULL,
+  `Dim_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `IdOrdine` (`IdOrdine`)
+  KEY `Dim_id` (`Dim_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `spedizione`:
---   `IdOrdine`
---       `ordine` -> `Id`
---
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `status ordine`
---
--- Creazione: Dic 22, 2022 alle 10:08
+-- Struttura della tabella `Prodotto_in_raccolta`
 --
 
-DROP TABLE IF EXISTS `status ordine`;
-CREATE TABLE IF NOT EXISTS `status ordine` (
-  `Id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Descrizione` varchar(30) NOT NULL,
+DROP TABLE IF EXISTS `Prodotto_in_raccolta`;
+CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Raccolta_id` int(11) NOT NULL,
+  `Prodotto_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Prodotto_id` (`Prodotto_id`),
+  KEY `Raccolta_id` (`Raccolta_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Raccolta`
+--
+
+DROP TABLE IF EXISTS `Raccolta`;
+CREATE TABLE IF NOT EXISTS `Raccolta` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Tipo_raccolta` varchar(50) NOT NULL,
+  `Utente_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Utente_id` (`Utente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Status_ordine`
+--
+
+DROP TABLE IF EXISTS `Status_ordine`;
+CREATE TABLE IF NOT EXISTS `Status_ordine` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Ordine_id` int(11) NOT NULL,
+  `Valore` int(7) NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- RELAZIONI PER TABELLA `status ordine`:
+-- Struttura della tabella `Tipo_di_pagamento`
 --
+
+DROP TABLE IF EXISTS `Tipo_di_pagamento`;
+CREATE TABLE IF NOT EXISTS `Tipo_di_pagamento` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Valore` int(11) NOT NULL,
+  `Fk_for_pag_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Fk_for_pag_id` (`Fk_for_pag_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Venditore`
---
--- Creazione: Dic 23, 2022 alle 10:08
+-- Struttura della tabella `Utente`
 --
 
-DROP TABLE IF EXISTS `Venditore`;
-CREATE TABLE IF NOT EXISTS `Venditore` (
-  `Id` int(10) NOT NULL AUTO_INCREMENT,
-  `Nome` varchar(25) NOT NULL,
-  `Cognome` varchar(25) NOT NULL,
-  `Ragione_Sociale` varchar(25) NOT NULL,
-  `Email` varchar(35) NOT NULL,
-  `Password` varchar(35) NOT NULL,
-  `P_IVA` int(20) NOT NULL,
-  `Status` tinyint(5) NOT NULL,
+DROP TABLE IF EXISTS `Utente`;
+CREATE TABLE IF NOT EXISTS `Utente` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(50) NOT NULL,
+  `Cognome` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `Password` varchar(50) NOT NULL,
+  `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `Claim_id` int(11) NOT NULL,
+  `Indirizzo_id` int(11) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Claim_id` (`Claim_id`),
+  KEY `Indirizzo_id` (`Indirizzo_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `Venditore`:
+-- Dump dei dati per la tabella `Utente`
 --
+
+INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `Timestamp`, `Claim_id`, `Indirizzo_id`) VALUES
+(4, 'Endri', 'Domi', 'endri.domi@lasersoft.it', 'lasersoft', 1, '2023-01-01 15:39:43', 2, 6),
+(5, 'Federico', 'Brunelli', 'federico.brunelli@lasersoft.it', 'lasersoft', 1, '2022-12-31 14:34:31', 2, 5),
+(6, 'Alessandro', 'Pioggia', 'alessandro.pioggia@lasersoft.it', 'lasersoft', 1, '2022-12-31 14:34:31', 2, 5),
+(7, 'Mario', 'Rossi', 'mario.rossi@takeit.com', 'takeit', 1, '2022-12-31 14:34:31', 2, 5),
+(8, 'Marco', 'Pesaresi', 'marco.pesaresi@lasersoft.it', 'lasersoft', 0, '2023-01-01 15:38:45', 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `Variazioni`
+--
+
+DROP TABLE IF EXISTS `Variazioni`;
+CREATE TABLE IF NOT EXISTS `Variazioni` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Limiti per le tabelle scaricate
 --
 
 --
--- Limiti per la tabella `immagine`
+-- Limiti per la tabella `Articolo`
 --
-ALTER TABLE `immagine`
-  ADD CONSTRAINT `immagine_ibfk_1` FOREIGN KEY (`IdGalleriaImmagini`) REFERENCES `galleria immagini` (`Id`);
+ALTER TABLE `Articolo`
+  ADD CONSTRAINT `articolo_ibfk_1` FOREIGN KEY (`Carrello_id`) REFERENCES `Carrello` (`Id`),
+  ADD CONSTRAINT `articolo_ibfk_2` FOREIGN KEY (`Prodotto_id`) REFERENCES `Prodotto` (`Id`);
 
 --
--- Limiti per la tabella `ordine`
+-- Limiti per la tabella `Carrello`
 --
-ALTER TABLE `ordine`
-  ADD CONSTRAINT `ordine_ibfk_1` FOREIGN KEY (`Carrello`) REFERENCES `carrello` (`Id`),
-  ADD CONSTRAINT `ordine_ibfk_2` FOREIGN KEY (`IdStatusOrdine`) REFERENCES `status ordine` (`Id`);
+ALTER TABLE `Carrello`
+  ADD CONSTRAINT `carrello_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
 
 --
--- Limiti per la tabella `spedizione`
+-- Limiti per la tabella `Configurazione_variazione`
 --
-ALTER TABLE `spedizione`
-  ADD CONSTRAINT `spedizione_ibfk_1` FOREIGN KEY (`IdOrdine`) REFERENCES `ordine` (`Id`);
+ALTER TABLE `Configurazione_variazione`
+  ADD CONSTRAINT `configurazione_variazione_ibfk_1` FOREIGN KEY (`Variazione_id`) REFERENCES `Variazioni` (`Id`),
+  ADD CONSTRAINT `configurazione_variazione_ibfk_2` FOREIGN KEY (`Opzio_variazione_id`) REFERENCES `Opzione_variazione` (`Id`);
+
+--
+-- Limiti per la tabella `Dettaglio_ordine`
+--
+ALTER TABLE `Dettaglio_ordine`
+  ADD CONSTRAINT `dettaglio_ordine_ibfk_1` FOREIGN KEY (`Ordine_id`) REFERENCES `Ordine` (`Id`);
+
+--
+-- Limiti per la tabella `Forma_di_pagamento`
+--
+ALTER TABLE `Forma_di_pagamento`
+  ADD CONSTRAINT `Utente_id` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
+
+--
+-- Limiti per la tabella `Magazzino`
+--
+ALTER TABLE `Magazzino`
+  ADD CONSTRAINT `magazzino_ibfk_1` FOREIGN KEY (`Indirizzo_id`) REFERENCES `Indirizzo` (`Id`);
+
+--
+-- Limiti per la tabella `Metodo_spedizione`
+--
+ALTER TABLE `Metodo_spedizione`
+  ADD CONSTRAINT `metodo_spedizione_ibfk_1` FOREIGN KEY (`Ordine_id`) REFERENCES `Ordine` (`Id`);
+
+--
+-- Limiti per la tabella `Ordine`
+--
+ALTER TABLE `Ordine`
+  ADD CONSTRAINT `ordine_ibfk_1` FOREIGN KEY (`Forma_pag_id`) REFERENCES `Forma_di_pagamento` (`Id`);
+
+--
+-- Limiti per la tabella `Prodotto`
+--
+ALTER TABLE `Prodotto`
+  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`Dim_id`) REFERENCES `Dimensione` (`Id`);
+
+--
+-- Limiti per la tabella `Prodotto_in_raccolta`
+--
+ALTER TABLE `Prodotto_in_raccolta`
+  ADD CONSTRAINT `prodotto_in_raccolta_ibfk_1` FOREIGN KEY (`Prodotto_id`) REFERENCES `Prodotto` (`Id`),
+  ADD CONSTRAINT `prodotto_in_raccolta_ibfk_2` FOREIGN KEY (`Raccolta_id`) REFERENCES `Raccolta` (`Id`);
+
+--
+-- Limiti per la tabella `Raccolta`
+--
+ALTER TABLE `Raccolta`
+  ADD CONSTRAINT `raccolta_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
+
+--
+-- Limiti per la tabella `Tipo_di_pagamento`
+--
+ALTER TABLE `Tipo_di_pagamento`
+  ADD CONSTRAINT `tipo_di_pagamento_ibfk_1` FOREIGN KEY (`Fk_for_pag_id`) REFERENCES `Forma_di_pagamento` (`Id`);
+
+--
+-- Limiti per la tabella `Utente`
+--
+ALTER TABLE `Utente`
+  ADD CONSTRAINT `utente_ibfk_1` FOREIGN KEY (`Indirizzo_id`) REFERENCES `Indirizzo` (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
