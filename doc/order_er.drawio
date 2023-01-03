@@ -27,7 +27,9 @@
                     <mxGeometry x="-468.75" y="677.5" width="47.5" height="47.5" as="geometry"/>
                 </mxCell>
                 <mxCell id="8" value="Status Ordine" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
-                    <mxGeometry x="-780" y="590" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="-780" y="590" width="100" height="40" as="geometry">
+                        <mxRectangle x="-780" y="590" width="120" height="50" as="alternateBounds"/>
+                    </mxGeometry>
                 </mxCell>
                 <mxCell id="9" value="Dettaglio ordine" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=65;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" vertex="1" parent="1">
                     <mxGeometry x="-157.5" y="587.5" width="130" height="45" as="geometry"/>
