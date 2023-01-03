@@ -21,7 +21,12 @@ class Dbh
         }
     }
 
-
+    /**
+     * It returns a string that represents the type of the variable passed to it
+     *
+     * @param $var
+     * @return string The type of the variable.
+     */
     private function getType($var): string
     {
         if (is_string($var)) return 's';
@@ -30,6 +35,13 @@ class Dbh
         return 'b';
     }
 
+    /**
+     * It executes a query and returns the result
+     *
+     * @param $sql
+     * @param ...$params
+     * @return array|int|string The result of the query.
+     */
     public function execute($sql, ...$params): array|int|string
     {
         $types = "";
@@ -69,6 +81,13 @@ class Dbh
         return count($this->execute("SELECT * FROM `Utente` WHERE Email = '$email' ")) == 0;
     }
 
+    /**
+     * It takes an array of parameters, checks if they are all set, then checks if the email is already
+     * in use, and if not, it inserts the data into the database
+     *
+     * @param $params
+     * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
+     */
     public function register($params) {
         if (Utils::checkParams($params)) {
             if (!$this->checkEmail($params["Email"])) {
@@ -89,6 +108,12 @@ class Dbh
         }
     }
 
+    /**
+     * It checks if the user exists, if it does, it returns the user's ID
+     *
+     * @param $params
+     * @return mixed|string|void|null ID of the user if the login is successful, null otherwise.
+     */
     public function logIn($params)  {
         if (Utils::checkParams($params)) {
             if ($this->checkEmail($params["Email"])) {
@@ -102,14 +127,31 @@ class Dbh
             }
         }
     }
-    
-    public function updateData($id, $tableName, $fieldName, $toUpdate): bool
+
+    /**
+     * Update a field in a table with a given value
+     *
+     * @param int $id current user -> $_SESSION["Id"];
+     * @param string $tableName table name
+     * @param string $fieldName table column name to update
+     * @param $toUpdate
+     * @return int|array|null
+     */
+    public function updateData(int $id, string $tableName, string $fieldName, $toUpdate): int|array|null
     {
         $where = "Id = '$id'";
         $res = $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
-        return Utils::checkResponse($res);
+        return Utils::checkResponse($res) ? $res : null;
     }
 
+    /**
+     * It takes a query and an array of parameters, checks if the parameters are valid, and if they
+     * are, it executes the query and returns the response
+     *
+     * @param $query
+     * @param ...$params
+     * @return array|int|string|void|null
+     */
     public function insertData($query, ...$params)
     {
         if (Utils::checkParams($params)) {
