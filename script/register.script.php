@@ -4,6 +4,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+use utility\Utils;
+
+
 require_once "./config/AppConstants.php";
 require_once "./src/classes/Dbh.php";
 
@@ -15,27 +18,29 @@ if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-registe
         switch (true) {
             case isset($_POST['personal-btn-register']):
                 $params = [
-                    "Nome" => filter_var($_POST['personal-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    "Cognome" => filter_var($_POST['personal-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    "Email" => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
-                    "Password" => filter_var($_POST['personal-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    "claimType" => filter_var(CLAIM_USER, FILTER_SANITIZE_SPECIAL_CHARS)
+                    NOME => filter_var($_POST['personal-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    COGNOME => filter_var($_POST['personal-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    EMAIL => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
+                    PASSWORD => filter_var($_POST['personal-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    STATUS =>  filter_var(STATUS_INTACT_DATA, FILTER_SANITIZE_SPECIAL_CHARS),
+                    CLAIM_ID => filter_var(CLAIM_USER_ID, FILTER_SANITIZE_SPECIAL_CHARS),
+                    INDIRIZZO_ID => filter_var(ADDRESS_UNSET, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
             case isset($_POST['business-btn-register']):
                 $params = [
-                    "Nome" => filter_var($_POST['business-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    "Cognome" => filter_var($_POST['business-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    "Email" => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
-                    "Password" => filter_var($_POST['business-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    "claimType" => filter_var(CLAIM_SELLER, FILTER_SANITIZE_SPECIAL_CHARS)
+                    NOME => filter_var($_POST['business-name-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    COGNOME => filter_var($_POST['business-surname-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    EMAIL => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
+                    PASSWORD => filter_var($_POST['business-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    STATUS =>  filter_var(STATUS_INTACT_DATA, FILTER_SANITIZE_SPECIAL_CHARS),
+                    CLAIM_ID => filter_var(CLAIM_SELLER_ID, FILTER_SANITIZE_SPECIAL_CHARS),
+                    INDIRIZZO_ID => filter_var(ADDRESS_UNSET, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
         }
-
         $response = $dbh->register($params);
-        $error_register = $response["Status"] === ERROR ? $response["msg"] : null;
-        $response["Status"] === SUCCESS ? header("Location: index.php") : null;
+        Utils::checkResponse($response) ? header("Location: index.php") : null;
     } catch (Exception $e) {
         error_log($e->getMessage());
     }

@@ -110,6 +110,7 @@
                         <li><a class="dropdown-item" href="./account.php">Account</a></li>
                         <li><a class="dropdown-item" href="./address.php">Address</a></li>
                         <li><a class="dropdown-item" href="./cardPayForm.php">Card Pay Form</a></li>
+                        <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -144,6 +145,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        ...
+        <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
     </div>
 </div>

@@ -33,28 +33,15 @@ const VIEW_ROOT = URL_ROOT . '/templates/views';
 const VIEW_USER = VIEW_ROOT . "/user";
 const VIEW_SELLER = VIEW_ROOT . "/seller";
 
-// DATABASE -------------------------------------------------------------
-const SERVER = "127.0.0.1";
-const USERNAME = "root";
-const PASSWORD = "";
-const DBNAME = "e-commerce";
-const PORT = "3306";
-const CHARSET = "utf8";
-
-// FOLDERS -------------------------------------------------------------
-const CONFIG = ROOT . "/config";
-const TEMPLATES = ROOT . "/templates";
-
-// SPECIAL CHARACTERS --------------------------------------------------
 const EURO = "€";
 
 // CLAIM ---------------------------------------------------------------
-const CLAIM_GUEST = 0;
-const CLAIM_USER = 1;
-const CLAIM_SELLER = 2;
+const CLAIM_GUEST_ID = 1;
+const CLAIM_USER_ID = 2;
+const CLAIM_SELLER_ID = 3;
 
-const CLAIM_USER_PRO = 3;
-const CLAIM_SELLER_PR0 = 4;
+const CLAIM_USER_PRO_ID = 4;
+const CLAIM_SELLER_PR0_ID = 5;
 
 // STATUS --------------------------------------------------------------
 const INACTIVE = 0;
@@ -78,3 +65,27 @@ const SELLER = "venditore";
 
 const SUCCESS = "success";
 const DANGER = "danger";
+
+
+// TABLE NAME
+const UTENTE = "Utente";
+
+
+// TABLE COLUMN NAME
+const ID = "Id";
+const NOME = "Nome";
+const COGNOME = "Cognome";
+const EMAIL = "Email";
+const PASSWORD = "Password";
+const STATUS = "Status";
+const CLAIM_ID = "Claim_id";
+const INDIRIZZO_ID = "Indirizzo_id";
+const VIA = "Via";
+const NUMERO_CIVICO = "Numero_civico";
+const CITTA = "Citta";
+const CAP = "CAP";
+const CIRCUITO = "Circuito";
+const NUMERO_CARTA = "Numero_carta";
+const DATA_SCADENZA = "Data_scadenza";
+const CV2 = "CV2";
+const UTENTE_ID = "Utente_id";
