@@ -1,5 +1,7 @@
 <?php
 
+use utility\Utils;
+
 include("./src/classes/Session.php");
 
 class Dbh
@@ -19,7 +21,12 @@ class Dbh
         }
     }
 
-
+    /**
+     * It returns a string that represents the type of the variable passed to it
+     *
+     * @param $var
+     * @return string The type of the variable.
+     */
     private function getType($var): string
     {
         if (is_string($var)) return 's';
@@ -28,6 +35,13 @@ class Dbh
         return 'b';
     }
 
+    /**
+     * It executes a query and returns the result
+     *
+     * @param $sql
+     * @param ...$params
+     * @return array|int|string The result of the query.
+     */
     public function execute($sql, ...$params): array|int|string
     {
         $types = "";
@@ -57,18 +71,6 @@ class Dbh
         }
     }
 
-    private function validateParams(array $params): bool
-    {
-        $filtered = array_filter($params, 'strlen');
-        return count($filtered) === count($params);
-    }
-
-
-    public function getLastID()
-    {
-        return $this->connection->insert_id;
-    }
-
     /**
      * Returns:
      *      0 if it doesn't exist
@@ -79,195 +81,82 @@ class Dbh
         return count($this->execute("SELECT * FROM `Utente` WHERE Email = '$email' ")) == 0;
     }
 
-    public function logIn(array $params): array
-    {
-        $responseArray = [
-            "Status" => ERROR,
-            "msg" => ""
-        ];
-        $check = $this->checkParams($params);
-        if ($check['Status'] !== ERROR) {
-            $email = $params["Email"];
-            $pass = $params["Password"];
+    /**
+     * It takes an array of parameters, checks if they are all set, then checks if the email is already
+     * in use, and if not, it inserts the data into the database
+     *
+     * @param $params
+     * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
+     */
+    public function register($params) {
+        if (Utils::checkParams($params)) {
+            if (!$this->checkEmail($params["Email"])) {
+                return "Esiste già un account con le stesse credenziali";
+            } else {
+                $query = "INSERT INTO Utente (Nome, Cognome, Email, Password, Status, Claim_id, Indirizzo_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $res = $this->insertData($query,
+                    $params[NOME],
+                    $params[COGNOME],
+                    $params[EMAIL],
+                    $params[PASSWORD],
+                    $params[STATUS],
+                    $params[CLAIM_ID],
+                    $params[INDIRIZZO_ID]);
+                return Utils::checkResponse($res) ? $res : null;
+            }
+        }
+    }
 
-            if (!$this->checkEmail($email)) {
+    /**
+     * It checks if the user exists, if it does, it returns the user's ID
+     *
+     * @param $params
+     * @return mixed|string|void|null ID of the user if the login is successful, null otherwise.
+     */
+    public function logIn($params)  {
+        if (Utils::checkParams($params)) {
+            if ($this->checkEmail($params["Email"])) {
+                return "L'utente non esiste";
+            } else {
+                $email = $params[EMAIL];
+                $pass = $params[PASSWORD];
                 $where = "Email = '$email' AND Password = '$pass'";
                 $response = $this->execute("SELECT * FROM `Utente` WHERE $where");
-                $this->checkSession($response[0], $email, $pass);
-            } else {
-                $responseArray["msg"] = "L'utente non esiste";
-                return $responseArray;
-            }
-        }
-
-        $responseArray["Status"] = OK;
-        $responseArray["msg"] = OK;
-        return $responseArray;
-    }
-
-
-
-
-    public function register(array $params): array
-    {
-        $responseArray = [];
-        $claim = $this->getClaimByType($params['claimType']);
-        if ($claim) {
-            $check = $this->checkParams($params);
-            if ($check['Status'] !== ERROR) {
-                if (!$this->checkEmail($params['Email'])) {
-                    $responseArray['Status'] = ERROR;
-                    $responseArray['msg'] = 'Esiste un altro account con la stessa email.';
-                    return $responseArray;
-                }
-                $response = $this->execute(
-                    "INSERT INTO Utente (Nome, Cognome, Email, Password, Status, Claim_id, Indirizzo_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    $params['Nome'],
-                    $params['Cognome'],
-                    $params['Email'],
-                    $params['Password'],
-                    STATUS_INTACT_DATA,
-                    $claim,
-                    ADDRESS_UNSET
-                );
-                $this->checkSession($response, $params['Email'], $params['Password']);
-            }
-        } else {
-            $responseArray['Status'] = ERROR;
-            $responseArray['msg'] = 'Claim non trovato';
-        }
-
-        return $responseArray;
-    }
-
-    private function getClaimByType($typeClaim)
-    {
-        $claim = $this->execute("SELECT * FROM `Claim` WHERE Valore = ?", $typeClaim);
-        return $claim[0]["Id"];
-    }
-
-    private function checkSession($response, $email, $pass): void
-    {
-        if (isset($response["Email"]) && isset($response["Password"])) {
-            if ($email === $response["Email"] && $pass === $response["Password"]) {
-                $session = new Session($response["Id"]);
-                if ($session->checkSessionId($response["Id"])) {
-                    //
-                }
+                return Utils::checkResponse($response[0][ID]) ? $response[0][ID] : null;
             }
         }
     }
 
-    public function insertCardPayModInformation($params): array
-    {
-        $responseArray = [];
-        if ($_SESSION["Id"]) {
-            $check = $this->checkParams($params);
-            if ($check['Status'] !== ERROR) {
-                $response = $this->execute(
-                    "INSERT INTO forma_di_pagamento (Circuito, Numero_carta, Data_scadenza, CV2, Status, Utente_id)
-            VALUES (?, ?, ?, ?, ?, ?)",
-                    $params['Circuito'],
-                    $params['Numero_carta'],
-                    $params['Data_scadenza'],
-                    $params['CV2'],
-                    STATUS_INTACT_DATA,
-                    $_SESSION["Id"]
-                );
-                if ($this->checkResponse($response)) {
-                    echo "ok" . '</br>';
-                }
-            }
-        } else {
-            $responseArray['Status'] = ERROR;
-            $responseArray['msg'] = 'Claim non trovato';
-        }
-
-        return $responseArray;
-    }
-
-    public function insertAddressInformation($params): array
-    {
-        $responseArray = [];
-        if ($_SESSION["Id"]) {
-            $check = $this->checkParams($params);
-            if ($check['Status'] !== ERROR) {
-                $response = $this->execute(
-                    "INSERT INTO Indirizzo (Via, Numero_civico, Citta, CAP, Status)
-            VALUES (?, ?, ?, ?, ?)",
-                    $params['Via'],
-                    $params['Numero_civico'],
-                    $params['Citta'],
-                    $params['CAP'],
-                    STATUS_INTACT_DATA
-                );
-                if ($this->checkResponse($response)) {
-                    $this->associatesUserInSessionAddress($response);
-                    $this->updateData($_SESSION["Id"], "Utente", "Status", STATUS_MODIFIED_DATA);
-                }
-            }
-        } else {
-            $responseArray['Status'] = ERROR;
-            $responseArray['msg'] = 'Claim non trovato';
-        }
-
-        return $responseArray;
-    }
-
-    public function insertProductBySeller($params): array
-    {
-        $responseArray = [];
-        if ($_SESSION["Id"]) {
-            $check = $this->checkParams($params);
-            if ($check['Status'] !== ERROR) {
-                $response = $this->execute(
-                    "INSERT INTO Prodotto ("
-                )
-        }
-    }
-
-    private function associatesUserInSessionAddress($addressId): void
-    {
-        if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
-            $this->updateData($_SESSION["Id"],"Utente", "Indirizzo_id", $addressId);
-        }
-    }
-
-    private function updateData($id, $tableName, $fieldName, $toUpdate): bool
+    /**
+     * Update a field in a table with a given value
+     *
+     * @param int $id current user -> $_SESSION["Id"];
+     * @param string $tableName table name
+     * @param string $fieldName table column name to update
+     * @param $toUpdate
+     * @return int|array|null
+     */
+    public function updateData(int $id, string $tableName, string $fieldName, $toUpdate): int|array|null
     {
         $where = "Id = '$id'";
         $res = $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
-        return $this->checkResponse($res);
+        return Utils::checkResponse($res) ? $res : null;
     }
 
-    private function checkParams(array $params): array
+    /**
+     * It takes a query and an array of parameters, checks if the parameters are valid, and if they
+     * are, it executes the query and returns the response
+     *
+     * @param $query
+     * @param ...$params
+     * @return array|int|string|void|null
+     */
+    public function insertData($query, ...$params)
     {
-        return $this->validateParams($params) ? [
-            'Status' => OK,
-            'msg' => OK
-        ] : [
-            'Status' => ERROR,
-            'msg' => 'Inserire tutti i campi'
-        ];
-    }
-
-    public function checkResponse($response): bool
-    {
-        return is_int($response);
-    }
-
-    public function changeClaim($params): void
-    {
-        if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
-            if($this->updateData($_SESSION["Id"],"Utente", "Claim_id", $params["claimType"])) {
-                echo "claim update";
-            }
-            if($this->updateData($_SESSION["Id"],"Utente", "Status", $params["Status"])) {
-                echo "status update";
-            }
-        } else {
-            echo $_SESSION["Id"] . " is null or " . $_SESSION["Claim_id"];
+        if (Utils::checkParams($params)) {
+            $response = $this->execute($query, ...$params);
+            return Utils::checkResponse($response) ? $response : null;
         }
     }
  }
