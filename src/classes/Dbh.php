@@ -215,6 +215,18 @@ class Dbh
         return $responseArray;
     }
 
+    public function insertProductBySeller($params): array
+    {
+        $responseArray = [];
+        if ($_SESSION["Id"]) {
+            $check = $this->checkParams($params);
+            if ($check['Status'] !== ERROR) {
+                $response = $this->execute(
+                    "INSERT INTO Prodotto ("
+                )
+        }
+    }
+
     private function associatesUserInSessionAddress($addressId): void
     {
         if (isset($_SESSION["Id"]) && isset($_SESSION["Claim_id"])) {
