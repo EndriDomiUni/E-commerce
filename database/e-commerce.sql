@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 03, 2023 alle 17:05
+-- Creato il: Gen 04, 2023 alle 23:30
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `Descrizione` varchar(150) NOT NULL,
   `Status` int(7) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `Prodotto_id` int(11) NOT NULL,
   `Variazione_id` int(11) NOT NULL,
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`Id`),
+  KEY `Variazione_id` (`Variazione_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -285,9 +285,11 @@ CREATE TABLE IF NOT EXISTS `prodotto` (
   `Nome` varchar(50) NOT NULL,
   `Descrizione` varchar(50) NOT NULL,
   `Immagine` varchar(50) NOT NULL,
-  `Dim_id` int(11) NOT NULL,
+  `Dimensione_id` int(11) NOT NULL,
+  `Categoria_Id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
-  KEY `Dim_id` (`Dim_id`)
+  KEY `Dim_id` (`Dimensione_id`),
+  KEY `Categoria_Id` (`Categoria_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -397,11 +399,11 @@ INSERT INTO `utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Status`, `T
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `variazioni`
+-- Struttura della tabella `variazione`
 --
 
-DROP TABLE IF EXISTS `variazioni`;
-CREATE TABLE IF NOT EXISTS `variazioni` (
+DROP TABLE IF EXISTS `variazione`;
+CREATE TABLE IF NOT EXISTS `variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` int(11) NOT NULL,
   `Status` int(11) NOT NULL,
@@ -427,10 +429,16 @@ ALTER TABLE `carrello`
   ADD CONSTRAINT `carrello_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `utente` (`Id`);
 
 --
+-- Limiti per la tabella `categoria`
+--
+ALTER TABLE `categoria`
+  ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`Variazione_id`) REFERENCES `variazione` (`Id`);
+
+--
 -- Limiti per la tabella `configurazione_variazione`
 --
 ALTER TABLE `configurazione_variazione`
-  ADD CONSTRAINT `configurazione_variazione_ibfk_1` FOREIGN KEY (`Variazione_id`) REFERENCES `variazioni` (`Id`),
+  ADD CONSTRAINT `configurazione_variazione_ibfk_1` FOREIGN KEY (`Variazione_id`) REFERENCES `variazione` (`Id`),
   ADD CONSTRAINT `configurazione_variazione_ibfk_2` FOREIGN KEY (`Opzio_variazione_id`) REFERENCES `opzione_variazione` (`Id`);
 
 --
@@ -467,7 +475,8 @@ ALTER TABLE `ordine`
 -- Limiti per la tabella `prodotto`
 --
 ALTER TABLE `prodotto`
-  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`Dim_id`) REFERENCES `dimensione` (`Id`);
+  ADD CONSTRAINT `prodotto_ibfk_1` FOREIGN KEY (`Dimensione_id`) REFERENCES `dimensione` (`Id`),
+  ADD CONSTRAINT `prodotto_ibfk_2` FOREIGN KEY (`Categoria_Id`) REFERENCES `categoria` (`Id`);
 
 --
 -- Limiti per la tabella `prodotto_in_raccolta`
