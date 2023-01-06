@@ -8,8 +8,8 @@ $stylesheets = [
     ROOT . '/account.php' => [
         CSS . '/loginStyle.css'
     ],
-    ROOT . '/carrello.php' => [
-        CSS . '/carrelloStyle.css'
+    ROOT . '/cart.php' => [
+        CSS . '/cart.css'
     ],
     ROOT . '/dashboard.php' => [
         CSS . '/dashboardStyle.css'

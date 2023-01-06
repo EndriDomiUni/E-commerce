@@ -69,6 +69,7 @@ const DANGER = "danger";
 
 // TABLE NAME
 const UTENTE = "Utente";
+const CARRELLO = "carrello";
 
 
 // TABLE COLUMN NAME

@@ -22,7 +22,7 @@ if (Utils::issetSessionid()) {
             ];
 
             $response = $session->insertAddressInformation($params);
-            Utils::checkResponse($response) ? header("Location: index.php") : null;
+            Utils::checkResponse($response) ? header("Location: index.php") : false;
         } catch (Exception $e) {
             echo $e->getMessage();
         }

@@ -159,4 +159,11 @@ class Dbh
             return Utils::checkResponse($response) ? $response : null;
         }
     }
+
+    public function selectId($tableName, $where) {
+        $response = $this->execute("SELECT `Id` FROM `$tableName` WHERE $where");
+        return Utils::checkResponse($response) ? $response : null;
+    }
+
+
  }
