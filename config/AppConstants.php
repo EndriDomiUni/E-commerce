@@ -89,3 +89,7 @@ const NUMERO_CARTA = "Numero_carta";
 const DATA_SCADENZA = "Data_scadenza";
 const CV2 = "CV2";
 const UTENTE_ID = "Utente_id";
+const DESCRIZIONE = "Descrizione";
+const IMMAGINE = "Immagine";
+const DIMENSIONE_ID = "Dimensione_id";
+const CATEGORIA_ID = "Categoria_id";
