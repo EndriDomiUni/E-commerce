@@ -7,18 +7,29 @@ require_once("./src/utility/Utils.php");
 
 class Session
 {
-    private int $id;
+    private readonly int $id; // $_SESSION["Id"];
     private Dbh $dbh;
+    private int $cartId;
 
+    /**
+     * @throws Exception
+     */
     public function __construct($id)
     {
         $this->id = $id;
         $this->dbh = new Dbh();
+
+        if ($this->checkSessionId($this->id)) {
+            if($this->bindCartWithUser()) {
+                $cart = new Cart();
+                $this->cartId = $cart->getCartByUserId($this->id);
+            }
+        }
     }
 
     public function checkSessionId($id): bool
     {
-        if (isset($id)) {
+        if (isset($this->id)) {
             $response = $this->dbh->execute("SELECT * FROM Utente WHERE Id = '$id' ");
             if (is_int($response[0]["Id"])) {
                 $this->setSessionUser($response[0]);
@@ -43,7 +54,7 @@ class Session
 
     public function getCurrentUser(): array|int
     {
-        return array(
+        return [
             ID => $_SESSION[ID],
             NOME => $_SESSION[NOME],
             COGNOME => $_SESSION[COGNOME],
@@ -52,7 +63,7 @@ class Session
             STATUS => $_SESSION[STATUS],
             CLAIM_ID => $_SESSION[CLAIM_ID],
             INDIRIZZO_ID => $_SESSION[INDIRIZZO_ID]
-        );
+        ];
     }
 
     public function __toString(): string
@@ -74,6 +85,9 @@ class Session
         return Utils::checkResponse($res);
     }
 
+    /**
+     * @throws Exception
+     */
     public function insertAddressInformation($params): bool
     {
         $query = "INSERT INTO Indirizzo (Via, Numero_civico, Citta, CAP, Status)
@@ -84,29 +98,53 @@ class Session
             $params[CITTA],
             $params[CAP],
             $params[STATUS]);
-        $this->associatesUserInSessionAddress();
+        $this->associatesUserInSessionAddress($res);
         return Utils::checkResponse($res);
     }
 
     public function changeClaim($params): bool
     {
-        return $this->dbh->updateData($this->getCurrentUser()["Id"],
+        return Utils::issetSessionId()
+            &&
+            $this->dbh->updateData($this->getCurrentUser()[ID],
                 UTENTE,
                 CLAIM_ID,
                 $params[CLAIM_ID])
             &&
-            $this->dbh->updateData($this->getCurrentUser()["Id"],
+            $this->dbh->updateData($this->getCurrentUser()[ID],
                 UTENTE,
                 STATUS,
                 $params[STATUS]);
     }
 
+    /**
+     * @throws Exception
+     */
     private function associatesUserInSessionAddress($addressId): void
     {
         if (Utils::issetSessionId()) {
             if ($this->getCurrentUser()[ID] && $this->getCurrentUser()[CLAIM_ID]) {
                 $this->dbh->updateData($_SESSION[ID], UTENTE, INDIRIZZO_ID, $addressId);
             }
+        } else {
+            throw new Exception("session id doesn't exist");
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function bindCartWithUser(): bool
+    {
+        if (Utils::issetSessionId()) {
+            $query = "INSERT INTO carrello (Utente_id, Status)
+            VALUES (?, ?)";
+            $res = $this->dbh->insertData($query,
+                $this->getCurrentUser()[ID],
+                STATUS_INTACT_DATA);
+            return Utils::checkResponse($res);
+        }else {
+            throw new Exception("session id doesn't exist");
         }
     }
 
