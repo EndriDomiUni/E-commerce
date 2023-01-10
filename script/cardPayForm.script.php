@@ -12,8 +12,8 @@ require_once "./src/classes/Session.php";
 
 if (Utils::issetSessionid()) {
     if (isset($_POST["btn-card-pay"])) {
-        $session = new Session($_SESSION["Id"]);
         try {
+            $session = new Session($_SESSION["Id"]);
             $params = [
                 CIRCUITO => getBankingCircuit($_POST["Numero_carta"]),
                 NUMERO_CARTA => filter_var($_POST["Numero_carta"], FILTER_SANITIZE_SPECIAL_CHARS),

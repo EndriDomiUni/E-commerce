@@ -11,8 +11,8 @@ require_once "./src/classes/Session.php";
 
 if (Utils::issetSessionid()) {
     if (isset($_POST["btn-address"])) {
-        $session = new Session($_SESSION["Id"]);
         try {
+            $session = new Session($_SESSION["Id"]);
             $params = [
                 VIA => filter_var($_POST["via"], FILTER_SANITIZE_SPECIAL_CHARS),
                 NUMERO_CIVICO => filter_var($_POST["Numero_civico"], FILTER_SANITIZE_SPECIAL_CHARS),

@@ -21,7 +21,7 @@ class Session
 
         if ($this->checkSessionId($this->id)) {
             if($this->bindCartWithUser()) {
-                $cart = new Cart();
+                $cart = new Cart($this->id);
                 $this->cartId = $cart->getCartByUserId($this->id);
             }
         }
@@ -148,7 +148,7 @@ class Session
         }
     }
 
-    private function insertProductBySeller($params): boolNumero_civico
+    private function insertProductBySeller($params): bool
     {
         $query = "INSERT INTO Prodotto (Nome, Descrizione, Immagine, Dimensione_id, Categoria_id,Status)
             VALUES (?, ?, ?, ?, ?)";
@@ -161,5 +161,4 @@ class Session
         
         return Utils::checkResponse($res);
     }
-
 }
