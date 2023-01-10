@@ -147,4 +147,18 @@ class Session
             throw new Exception("session id doesn't exist");
         }
     }
+
+    private function insertProductBySeller($params): bool
+    {
+        $query = "INSERT INTO Prodotto (Nome, Descrizione, Immagine, Dimensione_id, Categoria_id,Status)
+            VALUES (?, ?, ?, ?, ?)";
+        $res = $this->dbh->insertData($query,
+            $params[NOME],
+            $params[DESCRIZIONE],
+            $params[IMMAGINE],
+            $params[DIMENSIONE_ID],
+            $params[CATEGORIA_ID]);
+        
+        return Utils::checkResponse($res);
+    }
 }
