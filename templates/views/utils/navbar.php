@@ -145,6 +145,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+
+        <?php
+            include './templates/views/components/productInCart.php';
+        ?>
+
         <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
     </div>
 </div>

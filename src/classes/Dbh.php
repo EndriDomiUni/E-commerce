@@ -160,10 +160,28 @@ class Dbh
         }
     }
 
-    public function selectId($tableName, $where) {
+    /**
+     * Return id of given table, filtered by where condition
+     *
+     * @param string $tableName table name
+     * @param string $where where condition
+     * @return int|null id or null
+     */
+    public function selectId(string $tableName, string $where): int|null
+    {
         $response = $this->execute("SELECT `Id` FROM `$tableName` WHERE $where");
         return Utils::checkResponse($response) ? $response : null;
     }
 
-
+    /**
+     * Delete record of given table, filtered by where condition
+     *
+     * @param string $tableName
+     * @param string $where
+     * @return void
+     */
+    public function deleteRecord(string $tableName, string $where): void
+    {
+        $this->execute("DELETE FROM $tableName WHERE $where");
+    }
  }

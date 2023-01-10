@@ -68,7 +68,7 @@ const DANGER = "danger";
 
 
 // TABLE NAME
-const UTENTE = "Utente";
+const UTENTE = "utente";
 const CARRELLO = "carrello";
 
 

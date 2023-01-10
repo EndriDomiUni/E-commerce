@@ -6,16 +6,3 @@
     padding-right: 10px;
     justify-content: center;
 }
-
-.col{
-    border-radius: 2%;
-}
-
-.rounded {
-    border-radius: 2%;
-}
-
-img {
-    max-width: 50%;
-    max-height: 75%;
-}

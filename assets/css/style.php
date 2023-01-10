@@ -2,14 +2,14 @@
 
 $stylesheets = [
     ROOT . '/index.php' => [
-        CSS . '/productStyle.css',
-        CSS . '/prodottiStyle.css'
+        CSS . '/productInCart.css'
     ],
     ROOT . '/account.php' => [
         CSS . '/loginStyle.css'
     ],
     ROOT . '/cart.php' => [
-        CSS . '/cart.css'
+        CSS . '/cart.css',
+        CSS . 'productInCart.css'
     ],
     ROOT . '/dashboard.php' => [
         CSS . '/dashboardStyle.css'

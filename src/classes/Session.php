@@ -21,7 +21,7 @@ class Session
 
         if ($this->checkSessionId($this->id)) {
             if($this->bindCartWithUser()) {
-                $cart = new Cart();
+                $cart = new Cart($this->id);
                 $this->cartId = $cart->getCartByUserId($this->id);
             }
         }
@@ -147,6 +147,4 @@ class Session
             throw new Exception("session id doesn't exist");
         }
     }
-
-
 }
