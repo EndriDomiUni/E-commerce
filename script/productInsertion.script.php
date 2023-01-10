@@ -19,8 +19,7 @@ if (isset($_POST['product-btn-insert'])) {
         if ($response["Status"] == ERROR) {
             $error_register = $response["msg"];
         } else {
-            // redirect to index
-            // header("Location: index.php");
+            // redirect...
         }
     } catch (Exception $e) {
         echo $e->getMessage();

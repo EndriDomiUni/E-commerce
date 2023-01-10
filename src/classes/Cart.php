@@ -14,7 +14,6 @@ class Cart
         $this->dbh = new Dbh();
     }
 
-
     public function getCartByUserId($userId) {
         $where = "Utente_id = $userId";
         return $this->dbh->selectId(CARRELLO, $where);

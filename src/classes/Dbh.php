@@ -2,6 +2,7 @@
 
 use utility\Utils;
 
+include("./config/AppConstants.php");
 include("./src/classes/Session.php");
 
 class Dbh
@@ -165,5 +166,9 @@ class Dbh
         return Utils::checkResponse($response) ? $response : null;
     }
 
+    public function getCategories() {
+        $response = $this->execute("SELECT * FROM CATEGORIA");
+        return $response;
+    }
 
  }
