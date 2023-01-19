@@ -2,6 +2,7 @@
 
 use utility\Utils;
 
+include("./config/AppConstants.php");
 include("./src/classes/Session.php");
 
 class Dbh
@@ -184,4 +185,12 @@ class Dbh
     {
         $this->execute("DELETE FROM $tableName WHERE $where");
     }
+    
+    public function getCategories() {
+        $response = $this->execute("SELECT * FROM CATEGORIA");
+        return $response;
+    }
+
+    
+
  }
