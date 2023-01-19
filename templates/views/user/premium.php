@@ -1,10 +1,11 @@
 <section>
     <div class="container">
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal">Pricing</h1>
-            <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this
-                Bootstrap example. It’s built with default Bootstrap components and utilities with little
-                customization.</p>
+            <h1 class="display-4 fw-normal">Premium</h1>
+            <p class="fs-5 text-muted">Sbloccate offerte e sconti esclusivi con l'abbonamento Premium di Take-it.
+                Approfittate della spedizione gratuita e più veloce e del servizio clienti prioritario per ogni acquisto.
+                Migliora la tua esperienza di acquisto e unisciti alla comunità VIP di Take-it oggi stesso!
+            </p>
         </div>
 
         <form method="post">
@@ -15,8 +16,9 @@
                             <h4 class="my-0 fw-normal">Free</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small>
+                            <h1 class="card-title pricing-card-title">0 <?php echo EURO?> <small class="text-muted fw-light">/mo</small>
                             </h1>
+                            
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>10 users included</li>
                                 <li>2 GB of storage</li>
@@ -35,7 +37,7 @@
                             <h4 class="my-0 fw-normal">Pro</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small>
+                            <h1 class="card-title pricing-card-title">15 <?php echo EURO?> <small class="text-muted fw-light">/mo</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>20 users included</li>
@@ -54,7 +56,7 @@
                             <h4 class="my-0 fw-normal">Enterprise</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$29<small class="text-muted fw-light">/mo</small>
+                            <h1 class="card-title pricing-card-title">29 <?php echo EURO?> <small class="text-muted fw-light">/mo</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>30 users included</li>
@@ -70,112 +72,5 @@
                 </div>
             </div>
         </form>
-        <h2 class="display-6 text-center mb-4">Compare plans</h2>
-
-        <div class="table-responsive">
-            <table class="table text-center">
-                <thead>
-                <tr>
-                    <th style="width: 34%;"></th>
-                    <th style="width: 22%;">Free</th>
-                    <th style="width: 22%;">Pro</th>
-                    <th style="width: 22%;">Enterprise</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row" class="text-start">Public</th>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-start">Private</th>
-                    <td></td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                </tr>
-                </tbody>
-
-                <tbody>
-                <tr>
-                    <th scope="row" class="text-start">Permissions</th>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-start">Sharing</th>
-                    <td></td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-start">Unlimited members</th>
-                    <td></td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" class="text-start">Extra security</th>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <svg class="bi" width="24" height="24">
-                            <use xlink:href="#check"></use>
-                        </svg>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </section>
