@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Creato il: Gen 04, 2023 alle 23:30
--- Versione del server: 10.4.25-MariaDB
--- Versione PHP: 8.1.10
+-- Host: localhost
+-- Creato il: Gen 19, 2023 alle 18:38
+-- Versione del server: 10.4.27-MariaDB
+-- Versione PHP: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `articolo` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Prodotto_id` (`Prodotto_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `carrello` (
   `Status` int(10) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `Variazione_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Variazione_id` (`Variazione_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -88,17 +88,17 @@ DROP TABLE IF EXISTS `claim`;
 CREATE TABLE IF NOT EXISTS `claim` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(150) NOT NULL,
-  `Valore` int(10) NOT NULL,
+  `Conto` int(10) NOT NULL,
   `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `claim`
 --
 
-INSERT INTO `claim` (`Id`, `Descrizione`, `Valore`, `Status`, `Timestamp`) VALUES
+INSERT INTO `claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (1, 'Guest', 0, 0, '0000-00-00 00:00:00'),
 (2, 'User', 1, 0, '0000-00-00 00:00:00'),
 (3, 'Seller', 2, 0, '0000-00-00 00:00:00'),
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `configurazione_variazione` (
   PRIMARY KEY (`Id`),
   KEY `Variazione_id` (`Variazione_id`),
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `dettaglio_ordine` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `dimensione` (
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -168,13 +168,14 @@ CREATE TABLE IF NOT EXISTS `forma_di_pagamento` (
   `Circuito` varchar(20) NOT NULL,
   `Numero_carta` varchar(20) NOT NULL,
   `Data_scadenza` varchar(10) NOT NULL,
-  `CV2` int(3) NOT NULL,
+  `CVV` int(3) NOT NULL,
+  `Tipo_di_pagam` int(1) NOT NULL,
   `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `Utente_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `indirizzo` (
   `Status` int(10) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `indirizzo`
@@ -220,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `magazzino` (
   `Indirizzo_id` int(11) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -238,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `metodo_spedizione` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -253,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `opzione_variazione` (
   `Status` int(6) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -271,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `ordine` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Forma_pag_id` (`Forma_pag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -290,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `prodotto` (
   PRIMARY KEY (`Id`),
   KEY `Dim_id` (`Dimensione_id`),
   KEY `Categoria_Id` (`Categoria_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -306,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `prodotto_in_raccolta` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Raccolta_id` (`Raccolta_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -323,40 +324,7 @@ CREATE TABLE IF NOT EXISTS `raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `status_ordine`
---
-
-DROP TABLE IF EXISTS `status_ordine`;
-CREATE TABLE IF NOT EXISTS `status_ordine` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Ordine_id` int(11) NOT NULL,
-  `Valore` int(7) NOT NULL,
-  `Status` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `tipo_di_pagamento`
---
-
-DROP TABLE IF EXISTS `tipo_di_pagamento`;
-CREATE TABLE IF NOT EXISTS `tipo_di_pagamento` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Valore` int(11) NOT NULL,
-  `Fk_for_pag_id` int(11) NOT NULL,
-  `Status` int(11) NOT NULL,
-  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`Id`),
-  KEY `Fk_for_pag_id` (`Fk_for_pag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -378,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `utente` (
   PRIMARY KEY (`Id`),
   KEY `Claim_id` (`Claim_id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utente`
@@ -409,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `variazione` (
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Limiti per le tabelle scaricate
@@ -490,12 +458,6 @@ ALTER TABLE `prodotto_in_raccolta`
 --
 ALTER TABLE `raccolta`
   ADD CONSTRAINT `raccolta_ibfk_1` FOREIGN KEY (`Utente_id`) REFERENCES `utente` (`Id`);
-
---
--- Limiti per la tabella `tipo_di_pagamento`
---
-ALTER TABLE `tipo_di_pagamento`
-  ADD CONSTRAINT `tipo_di_pagamento_ibfk_1` FOREIGN KEY (`Fk_for_pag_id`) REFERENCES `forma_di_pagamento` (`Id`);
 
 --
 -- Limiti per la tabella `utente`
