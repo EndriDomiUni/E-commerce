@@ -276,7 +276,8 @@ CREATE TABLE IF NOT EXISTS `ordine` (
 
 -- --------------------------------------------------------
 
---
+--+ value
+
 -- Struttura della tabella `prodotto`
 --
 

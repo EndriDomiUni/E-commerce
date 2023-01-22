@@ -322,9 +322,6 @@
                 <mxCell id="165" value="(1,1)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="760" y="389.99999999999994" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="167" value="(1, N)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="1000" y="420" width="50" height="20" as="geometry"/>
-                </mxCell>
                 <mxCell id="168" value="(0, N)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="655" y="485" width="50" height="30" as="geometry"/>
                 </mxCell>
@@ -615,9 +612,6 @@
                 </mxCell>
                 <mxCell id="293" value="(1, N)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="-20" y="725" width="50" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="294" value="artiocolo - magazzino" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="1030" y="415" width="140" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="296" value="Modello logico: ordine ingloba metodo spedizione" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="-750" y="971.25" width="290" height="30" as="geometry"/>
