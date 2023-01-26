@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="gQvZ3Ct7qIMsR-oPEBA1" name="Page-1">
-        <mxGraphModel dx="3365" dy="1834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="3061" dy="1834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -51,7 +51,7 @@
                     <mxGeometry y="30" width="160" height="107.5" as="geometry"/>
                 </mxCell>
                 <mxCell id="509" value="Tipo_pagamento" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-                    <mxGeometry x="30" y="280" width="110" height="80" as="geometry"/>
+                    <mxGeometry x="40" y="270" width="110" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="510" value="+ PK: Id&#10;+ Valore&#10;+ Status&#10;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="509" vertex="1">
                     <mxGeometry y="30" width="110" height="50" as="geometry"/>
@@ -70,7 +70,7 @@
                 <mxCell id="514" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endArrow=none;endFill=0;" parent="1" source="516" target="508" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="515" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" parent="1" source="516" edge="1">
+                <mxCell id="515" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="516" edge="1" target="510">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="60" y="315" as="targetPoint"/>
                     </mxGeometry>
