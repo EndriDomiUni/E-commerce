@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once("./config/AppConstants.php");
+include("./src/classes/Dbh.php");
 require_once("./script/address.script.php");
 
 ob_start();

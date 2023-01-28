@@ -7,7 +7,6 @@ ini_set('display_errors', 1);
 use utility\Utils;
 
 
-require_once("./config/AppConstants.php");
 require_once "./src/classes/Session.php";
 
 if (Utils::issetSessionid()) {
@@ -15,10 +14,11 @@ if (Utils::issetSessionid()) {
         try {
             $session = new Session($_SESSION["Id"]);
             $params = [
-                CIRCUITO => getBankingCircuit($_POST["Numero_carta"]),
+                CIRCUITO => getBankingCircuit($_POST["Circuito"]),
                 NUMERO_CARTA => filter_var($_POST["Numero_carta"], FILTER_SANITIZE_SPECIAL_CHARS),
                 DATA_SCADENZA => filter_var($_POST["Data_scadenza"], FILTER_SANITIZE_SPECIAL_CHARS),
-                CV2 => filter_var($_POST["CV2"], FILTER_SANITIZE_SPECIAL_CHARS),
+                CVV => filter_var($_POST["CVV"], FILTER_SANITIZE_SPECIAL_CHARS),
+                TIPO_DI_PAGAMENTO => "", // TODO: fare la form corrispettiva
                 STATUS => STATUS_INTACT_DATA,
                 UTENTE_ID => $_SESSION["Id"]
             ];

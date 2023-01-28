@@ -2,7 +2,6 @@
 
 use utility\Utils;
 
-require_once("./config/AppConstants.php");
 require_once("./src/utility/Utils.php");
 
 class Session
@@ -73,13 +72,14 @@ class Session
 
     public function insertCardPayModInformation($params): bool
     {
-        $query = "INSERT INTO forma_di_pagamento (Circuito, Numero_carta, Data_scadenza, CV2, Status, Utente_id)
+        $query = "INSERT INTO forma_di_pagamento (Circuito, Numero_carta, Data_scadenza, CVV, Tipo_di_pagamento, Status, Utente_id)
             VALUES (?, ?, ?, ?, ?, ?)";
         $res = $this->dbh->insertData($query,
             $params[CIRCUITO],
             $params[NUMERO_CARTA],
             $params[DATA_SCADENZA],
-            $params[CV2],
+            $params[TIPO_DI_PAGAMENTO],
+            $params[CVV],
             $params[STATUS],
             $this->getCurrentUser()[ID]);
         return Utils::checkResponse($res);

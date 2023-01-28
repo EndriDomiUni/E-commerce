@@ -36,12 +36,12 @@ const VIEW_SELLER = VIEW_ROOT . "/seller";
 const EURO = "€";
 
 // CLAIM ---------------------------------------------------------------
-const CLAIM_GUEST_ID = 1;
-const CLAIM_USER_ID = 2;
-const CLAIM_SELLER_ID = 3;
+const CLAIM_GUEST_DESC = "guest";
+const CLAIM_USER_DESC = "user";
+const CLAIM_SELLER_DESC = "seller";
 
-const CLAIM_USER_PRO_ID = 4;
-const CLAIM_SELLER_PR0_ID = 5;
+const CLAIM_USER_PRO_DESC = "user_pro";
+const CLAIM_SELLER_PR0_DESC = "seller_pro";
 
 // STATUS --------------------------------------------------------------
 const INACTIVE = 0;
@@ -89,7 +89,8 @@ const CAP = "CAP";
 const CIRCUITO = "Circuito";
 const NUMERO_CARTA = "Numero_carta";
 const DATA_SCADENZA = "Data_scadenza";
-const CV2 = "CV2";
+const CVV = "CVV";
+const TIPO_DI_PAGAMENTO = "Tipo_di_pagamento";
 const UTENTE_ID = "Utente_id";
 const DESCRIZIONE = "Descrizione";
 const IMMAGINE = "Immagine";

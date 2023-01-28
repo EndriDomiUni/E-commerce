@@ -6,7 +6,6 @@ ini_set('display_errors', 1);
 
 use utility\Utils;
 
-require_once("./config/AppConstants.php");
 require_once "./src/classes/Session.php";
 
 if (Utils::issetSessionid()) {

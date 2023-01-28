@@ -1,5 +1,7 @@
 <?php
 
+require_once "./config/AppConstants.php";
+
 $stylesheets = [
     ROOT . '/index.php' => [
         CSS . '/productInCart.css',
