@@ -22,7 +22,7 @@ if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-registe
                     EMAIL => filter_var($_POST['personal-mail-register'], FILTER_SANITIZE_EMAIL),
                     PASSWORD => filter_var($_POST['personal-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
                     STATUS =>  filter_var(STATUS_INTACT_DATA, FILTER_SANITIZE_SPECIAL_CHARS),
-                    CLAIM_ID => filter_var(CLAIM_USER_DESC, FILTER_SANITIZE_SPECIAL_CHARS),
+                    CLAIM_TYPE => filter_var(CLAIM_USER_DESC, FILTER_SANITIZE_SPECIAL_CHARS),
                     INDIRIZZO_ID => filter_var(ADDRESS_UNSET, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
@@ -33,13 +33,19 @@ if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-registe
                     EMAIL => filter_var($_POST['business-mail-register'], FILTER_SANITIZE_EMAIL),
                     PASSWORD => filter_var($_POST['business-password-register'], FILTER_SANITIZE_SPECIAL_CHARS),
                     STATUS =>  filter_var(STATUS_INTACT_DATA, FILTER_SANITIZE_SPECIAL_CHARS),
-                    CLAIM_ID => filter_var(CLAIM_SELLER_DESC, FILTER_SANITIZE_SPECIAL_CHARS),
+                    CLAIM_TYPE => filter_var(CLAIM_SELLER_DESC, FILTER_SANITIZE_SPECIAL_CHARS),
                     INDIRIZZO_ID => filter_var(ADDRESS_UNSET, FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
                 break;
         }
         $response = $dbh->register($params);
-        Utils::checkResponse($response) ? header("Location: index.php") : null;
+        echo "resp: " . $response;
+        if (is_int($response)) {
+            // header("Location: index.php");
+        } else {
+            $error = $response["msg"];
+        }
+
     } catch (Exception $e) {
         error_log($e->getMessage());
     }

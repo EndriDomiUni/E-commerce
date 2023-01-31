@@ -1,5 +1,9 @@
 <?php
 
+// These two lines are used for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 use utility\Utils;
 
 include("./config/AppConstants.php");
@@ -82,31 +86,38 @@ class Dbh
         return count($this->execute("SELECT * FROM `Utente` WHERE Email = '$email' ")) == 0;
     }
 
-    /**
-     * It takes an array of parameters, checks if they are all set, then checks if the email is already
-     * in use, and if not, it inserts the data into the database
-     *
-     * @param $params
-     * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
-     */
     public function register($params) {
         if (Utils::checkParams($params)) {
             if (!$this->checkEmail($params["Email"])) {
                 return "Esiste già un account con le stesse credenziali";
             } else {
-                $query = "INSERT INTO Utente (Nome, Cognome, Email, Password, Status, Claim_id, Indirizzo_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?)";
-                $res = $this->insertData($query,
+                $claimType = $params[CLAIM_TYPE];
+                $claimId = $this->generateClaim($claimType);
+
+                $query = "INSERT INTO Utente (Nome, Cognome, Email, Password, Claim_id, Indirizzo_id, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $resp = $this->insertData($query,
                     $params[NOME],
                     $params[COGNOME],
                     $params[EMAIL],
                     $params[PASSWORD],
-                    $params[STATUS],
-                    $params[CLAIM_ID],
-                    $params[INDIRIZZO_ID]);
-                return Utils::checkResponse($res) ? $res : null;
+                    $claimId,
+                    $params[INDIRIZZO_ID],
+                    $params[STATUS]);
+                if (Utils::checkResponse($resp)) {
+                    return $resp;
+                }
             }
         }
+    }
+
+    private function generateClaim($claimType): int
+    {
+        $query = "INSERT INTO Claim (Descrizione, Conto, Status) VALUES (?, ?, ?)";
+        return $this->insertData($query,
+            $claimType,
+            0.00,
+            STATUS_INTACT_DATA
+        );
     }
 
     /**
@@ -151,14 +162,14 @@ class Dbh
      *
      * @param $query
      * @param ...$params
-     * @return array|int|string|void|null
+     * @return array|int|string
      */
-    public function insertData($query, ...$params)
+    public function insertData($query, ...$params): int|array|string
     {
-        if (Utils::checkParams($params)) {
-            $response = $this->execute($query, ...$params);
-            return Utils::checkResponse($response) ? $response : null;
-        }
+        echo "query: " . $query . '</br>';
+        $res = $this->execute($query, ...$params);
+        echo "res: " . $res . '</br>';
+        return $res;
     }
 
     /**
