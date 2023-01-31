@@ -4,8 +4,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-use utility\Utils;
-
 
 require_once "./src/classes/Dbh.php";
 
@@ -39,13 +37,11 @@ if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-registe
                 break;
         }
         $response = $dbh->register($params);
-        echo "resp: " . $response;
         if (is_int($response)) {
-            // header("Location: index.php");
+            header("Location: index.php");
         } else {
-            $error = $response["msg"];
+            // alert
         }
-
     } catch (Exception $e) {
         error_log($e->getMessage());
     }

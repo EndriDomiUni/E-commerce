@@ -166,10 +166,7 @@ class Dbh
      */
     public function insertData($query, ...$params): int|array|string
     {
-        echo "query: " . $query . '</br>';
-        $res = $this->execute($query, ...$params);
-        echo "res: " . $res . '</br>';
-        return $res;
+        return $this->execute($query, ...$params);
     }
 
     /**
