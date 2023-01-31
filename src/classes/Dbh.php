@@ -82,6 +82,68 @@ class Dbh
         return count($this->execute("SELECT * FROM `Utente` WHERE Email = '$email' ")) == 0;
     }
 
+    private function getDimensionIdByParameters($dim_x, $dim_y, $dim_z) : array
+    {
+        $response = array();
+        return $response = $this->execute("SELECT Id FROM `Dimensione` 
+         WHERE Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'");
+    }
+
+    /**
+     * @param $dim_x
+     * @param $dim_y
+     * @param $dim_z
+     * @return true if it doesn't exit
+     * @return false if it exists
+     */
+    private function checkDimension($dim_x, $dim_y, $dim_z): bool
+    {
+        return count($this->execute("SELECT * FROM `Dimensione` 
+         WHERE `Dim_X`=$dim_x AND `Dim_Y`=$dim_y AND `Dim_Z`=$dim_z")) == 0;
+    }
+
+    public function insertProduct($params) : bool
+    {
+        if (Utils::checkParams($params)) {
+            $dimensionId = null;
+            $nome = $params["Nome"];
+            $descrizione = $params["Descrizione"];
+            $immagine = $params["Immagine"];
+            $dimensionId = null;
+            $categoriaId = $params['CATEGORIA_ID'];
+            $dim_x = $params["Dim_x"];
+            $dim_y = $params["Dim_y"];
+            $dim_z = $params["Dim_z"];
+            if ($this->checkDimension($params["Dim_x"], $params["Dim_y"], $params["Dim_Y"]))
+            {
+                $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) 
+                    VALUES ('$dim_x', '$dim_y', '$dim_z', current_timestamp())";
+                $res = $this->insertData($query, $dim_x, $dim_y, $dim_z);
+                if (Utils::checkResponse($res))
+                {
+                    $dimensionId = $this->getDimensionIdByParameters($dim_x, $dim_y, $dim_z);
+                }
+                else
+                {
+                    // Errore
+                }
+            }
+            $dimensionTableName = `Dimensione`;
+            $getDimensionIdCondition = "Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'";
+            $dimensionId = $this->selectId($dimensionTableName, $getDimensionIdCondition);
+            $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`)
+                VALUES (?, ?, ?, ?, ?)";
+            $res = $this->insertData($insertProductQuery,
+                $nome,
+                $descrizione,
+                $immagine,
+                $dimensionId,
+                $categoriaId);
+            return Utils::checkResponse($res) ? $res : false;
+        }
+    }
+
+
     /**
      * It takes an array of parameters, checks if they are all set, then checks if the email is already
      * in use, and if not, it inserts the data into the database

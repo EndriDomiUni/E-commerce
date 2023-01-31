@@ -2,24 +2,32 @@
 
 require_once("./config/AppConstants.php");
 include("Dbh.php");
+use utility\Utils;
 
 $dbh = null;
 
 if (isset($_POST['product-btn-insert'])) {
+
+
     $params = array(
         NOME => filter_var($_POST['productName'], FILTER_SANITIZE_SPECIAL_CHARS),
         DESCRIZIONE => filter_var($_POST['productDescription'], FILTER_SANITIZE_SPECIAL_CHARS),
         IMMAGINE => $_POST['productImage'],
-        DIMENSIONE_ID => filter_var($_POST['productDimension'], FILTER_SANITIZE_SPECIAL_CHARS),
+        DIMENSIONE_X_PRODOTTO => filter_var($_POST['productDimensionX'], FILTER_SANITIZE_SPECIAL_CHARS),
+        DIMENSIONE_Y_PRODOTTO => filter_var($_POST['productDimensionY'], FILTER_SANITIZE_SPECIAL_CHARS),
+        DIMENSIONE_Z_PRODOTTO => filter_var($_POST['productDimensionZ'], FILTER_SANITIZE_SPECIAL_CHARS),
         CATEGORIA_ID => filter_var($_POST['productCategory'], FILTER_SANITIZE_SPECIAL_CHARS)
     );
     try {
         $dbh = new Dbh();
-        $response = $dbh->signIn(COSTUMER, $params);
-        if ($response["Status"] == ERROR) {
-            $error_register = $response["msg"];
-        } else {
-            // redirect...
+        $dim_x = $params['DIMENSIONE_X_PRODOTTO'];
+        $dim_y = $params['DIMENSIONE_Y_PRODOTTO'];
+        $dim_z = $params['DIMENSIONE_Z_PRODOTTO'];
+        $response = $dbh->insertProduct($params);
+        Utils::checkResponse($response);
+        if(!Utils::checkResponse($response))
+        {
+            // Error
         }
     } catch (Exception $e) {
         echo $e->getMessage();

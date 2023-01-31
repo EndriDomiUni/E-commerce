@@ -33,6 +33,21 @@ require_once "./src/classes/Dbh.php";
                 <label for="productDescription" class="form-label">Descrizione</label>
                 <input type="text" class="form-control" id="descriptionProductId" />
             </div>
+            <!-- Inserimento immagine -->
+            <div>
+
+            </div>
+            <!-- Inserimento dimensione -->
+            <div>
+
+            </div>
+            <!-- Selezione categoria -->
+            <div>
+
+            </div>
+            <!-- Nuova pagina per variazione - opzioni variazione - articolo -->
+
+
             <!-- Prezzo prodotto -->
             <div class="mb-3">
                 <label for="productPrice" class="form-label">Prezzo del prodotto</label>        
