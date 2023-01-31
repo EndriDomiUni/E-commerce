@@ -1,19 +1,21 @@
 <?php
 
-use utility\Utils;
-
-require_once("./config/AppConstants.php");
 include "./src/classes/Dbh.php";
+
+$dbh = new Dbh();
 
 if (isset($_POST["btn-login"])) {
     try {
         $params = [
             EMAIL => filter_var($_POST["email"], FILTER_SANITIZE_EMAIL),
-            PASSWORD => $_POST['password'],
+            PASSWORD => filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS)
         ];
-        $dbh = new Dbh();
         $response = $dbh->logIn($params);
-        Utils::checkResponse($response) ? header("Location: index.php") : null;
+        if (is_int($response)) {
+            header("Location: index.php");
+        } else {
+            // alert
+        }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
