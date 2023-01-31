@@ -2,8 +2,6 @@
 
 use utility\Utils;
 
-require_once("./src/utility/Utils.php");
-
 class Session
 {
     private readonly int $id; // $_SESSION["Id"];
@@ -17,7 +15,6 @@ class Session
     {
         $this->id = $id;
         $this->dbh = new Dbh();
-
         if ($this->checkSessionId($this->id)) {
             if($this->bindCartWithUser()) {
                 $cart = new Cart($this->id);

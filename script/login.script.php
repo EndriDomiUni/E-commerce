@@ -1,6 +1,10 @@
 <?php
 
-include "./src/classes/Dbh.php";
+// These two lines are used for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include "./src/utility/Utils.php";
 
 $dbh = new Dbh();
 
