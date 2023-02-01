@@ -51,7 +51,9 @@ const STATUS_INTACT_DATA = 0;
 const STATUS_MODIFIED_DATA = 1;
 const STATUS_DELETED_DATA = 2;
 
+// UNSET
 const ADDRESS_UNSET = 1;
+const CLAIM_UNSET = 1;
 
 
 
@@ -81,6 +83,7 @@ const EMAIL = "Email";
 const PASSWORD = "Password";
 const STATUS = "Status";
 const CLAIM_ID = "Claim_id";
+const CLAIM_TYPE = "Claim_type";
 const INDIRIZZO_ID = "Indirizzo_id";
 const VIA = "Via";
 const NUMERO_CIVICO = "Numero_civico";

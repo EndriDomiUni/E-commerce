@@ -1,9 +1,9 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <div class="container">
     <div class="row">
-        <div class="col-sm">
+        <div class="col-3">
         </div>
-        <div class="col-sm">
+        <div class="col-6">
             <div class="container text-center">
 
                 <img src="<?php echo IMG; ?>/logo.svg" width="100" height="100" alt="Logo">
@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm">
+        <div class="col-3">
         </div>
     </div>
 </div>

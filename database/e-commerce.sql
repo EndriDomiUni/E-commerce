@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 26, 2023 alle 16:42
+-- Creato il: Gen 31, 2023 alle 17:01
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.1.12
 
@@ -28,6 +28,8 @@ USE `e-commerce`;
 --
 -- Struttura della tabella `Articolo`
 --
+-- Creazione: Gen 26, 2023 alle 15:23
+--
 
 DROP TABLE IF EXISTS `Articolo`;
 CREATE TABLE IF NOT EXISTS `Articolo` (
@@ -44,10 +46,22 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Articolo`:
+--   `Magazzino_id`
+--       `Magazzino` -> `Id`
+--   `Prodotto_id`
+--       `Prodotto` -> `Id`
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Articolo_in_carrello`
+--
+-- Creazione: Gen 26, 2023 alle 15:26
 --
 
 DROP TABLE IF EXISTS `Articolo_in_carrello`;
@@ -63,10 +77,20 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   KEY `Articolo_id` (`Articolo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Articolo_in_carrello`:
+--   `Carrello_id`
+--       `Carrello` -> `Id`
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Articolo_in_magazzino`
+--
+-- Creazione: Gen 26, 2023 alle 15:40
 --
 
 DROP TABLE IF EXISTS `Articolo_in_magazzino`;
@@ -84,10 +108,20 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   KEY `Magazzino_id` (`Magazzino_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Articolo_in_magazzino`:
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--   `Magazzino_id`
+--       `Magazzino` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Carrello`
+--
+-- Creazione: Gen 26, 2023 alle 14:45
 --
 
 DROP TABLE IF EXISTS `Carrello`;
@@ -100,10 +134,18 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Carrello`:
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Categoria`
+--
+-- Creazione: Gen 26, 2023 alle 14:50
 --
 
 DROP TABLE IF EXISTS `Categoria`;
@@ -116,10 +158,17 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Categoria`:
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Claim`
+--
+-- Creazione: Gen 24, 2023 alle 18:15
+-- Ultimo aggiornamento: Gen 31, 2023 alle 15:38
 --
 
 DROP TABLE IF EXISTS `Claim`;
@@ -130,12 +179,26 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Claim`:
+--
+
+--
+-- Dump dei dati per la tabella `Claim`
+--
+
+INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
+(55, 'user', '0', 0, '2023-01-31 15:35:38'),
+(56, 'seller', '0', 0, '2023-01-31 15:38:04');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Configurazione_variazione`
+--
+-- Creazione: Gen 26, 2023 alle 15:41
 --
 
 DROP TABLE IF EXISTS `Configurazione_variazione`;
@@ -150,10 +213,20 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   KEY `Articolo_id` (`Articolo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Configurazione_variazione`:
+--   `Opzio_variazione_id`
+--       `Opzione_variazione` -> `Id`
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Dettaglio_ordine`
+--
+-- Creazione: Gen 26, 2023 alle 15:38
 --
 
 DROP TABLE IF EXISTS `Dettaglio_ordine`;
@@ -169,10 +242,20 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   KEY `Ordine_id` (`Ordine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Dettaglio_ordine`:
+--   `Articolo_in_carr_id`
+--       `Articolo_in_carrello` -> `Id`
+--   `Ordine_id`
+--       `Ordine` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Dimensione`
+--
+-- Creazione: Gen 26, 2023 alle 14:47
 --
 
 DROP TABLE IF EXISTS `Dimensione`;
@@ -185,10 +268,16 @@ CREATE TABLE IF NOT EXISTS `Dimensione` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Dimensione`:
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Forma_di_pagamento`
+--
+-- Creazione: Gen 26, 2023 alle 15:33
 --
 
 DROP TABLE IF EXISTS `Forma_di_pagamento`;
@@ -206,10 +295,19 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Forma_di_pagamento`:
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Indirizzo`
+--
+-- Creazione: Gen 24, 2023 alle 18:08
+-- Ultimo aggiornamento: Gen 28, 2023 alle 14:15
 --
 
 DROP TABLE IF EXISTS `Indirizzo`;
@@ -222,12 +320,25 @@ CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Status` int(4) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Indirizzo`:
+--
+
+--
+-- Dump dei dati per la tabella `Indirizzo`
+--
+
+INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`, `Timestamp`) VALUES
+(1, 'Unset', 0, 'Unset', 0, 0, '2023-01-28 14:15:44');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Magazzino`
+--
+-- Creazione: Gen 26, 2023 alle 14:52
 --
 
 DROP TABLE IF EXISTS `Magazzino`;
@@ -241,10 +352,18 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
   KEY `Indirizzo_id` (`Indirizzo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Magazzino`:
+--   `Indirizzo_id`
+--       `Indirizzo` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Opzione_variazione`
+--
+-- Creazione: Gen 26, 2023 alle 15:20
 --
 
 DROP TABLE IF EXISTS `Opzione_variazione`;
@@ -258,10 +377,18 @@ CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   KEY `Variazione_id` (`Variazione_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Opzione_variazione`:
+--   `Variazione_id`
+--       `Variazione` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Ordine`
+--
+-- Creazione: Gen 26, 2023 alle 15:35
 --
 
 DROP TABLE IF EXISTS `Ordine`;
@@ -277,10 +404,18 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
   KEY `Forma_di_pag_id` (`Forma_di_pag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Ordine`:
+--   `Forma_di_pag_id`
+--       `Forma_di_pagamento` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Prodotto`
+--
+-- Creazione: Gen 26, 2023 alle 14:50
 --
 
 DROP TABLE IF EXISTS `Prodotto`;
@@ -298,10 +433,20 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   KEY `Categoria_id` (`Categoria_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Prodotto`:
+--   `Dim_id`
+--       `Dimensione` -> `Id`
+--   `Categoria_id`
+--       `Categoria` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Prodotto_in_raccolta`
+--
+-- Creazione: Gen 26, 2023 alle 15:22
 --
 
 DROP TABLE IF EXISTS `Prodotto_in_raccolta`;
@@ -316,10 +461,20 @@ CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
   KEY `Raccolta_id` (`Raccolta_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Prodotto_in_raccolta`:
+--   `Prodotto_id`
+--       `Prodotto` -> `Id`
+--   `Raccolta_id`
+--       `Raccolta` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Raccolta`
+--
+-- Creazione: Gen 26, 2023 alle 14:43
 --
 
 DROP TABLE IF EXISTS `Raccolta`;
@@ -334,10 +489,18 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Raccolta`:
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Recensione`
+--
+-- Creazione: Gen 26, 2023 alle 15:39
 --
 
 DROP TABLE IF EXISTS `Recensione`;
@@ -354,10 +517,21 @@ CREATE TABLE IF NOT EXISTS `Recensione` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Recensione`:
+--   `Dettaglio_ordine_id`
+--       `Dettaglio_ordine` -> `Id`
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Utente`
+--
+-- Creazione: Gen 31, 2023 alle 15:32
+-- Ultimo aggiornamento: Gen 31, 2023 alle 15:38
 --
 
 DROP TABLE IF EXISTS `Utente`;
@@ -369,15 +543,35 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   `Password` varchar(32) NOT NULL,
   `Claim_id` int(11) NOT NULL,
   `Indirizzo_id` int(11) NOT NULL,
+  `Status` int(11) NOT NULL,
+  `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Utente`:
+--   `Indirizzo_id`
+--       `Indirizzo` -> `Id`
+--   `Claim_id`
+--       `Claim` -> `Id`
+--
+
+--
+-- Dump dei dati per la tabella `Utente`
+--
+
+INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, `Indirizzo_id`, `Status`, `Timestamp`) VALUES
+(4, 'Endri', 'Domi', 'endri@takeit.com', 'takeit', 55, 1, 0, '2023-01-31 15:35:38'),
+(5, 'Federico', 'Brunelli', 'fede@takeit.com', 'takeit', 56, 1, 0, '2023-01-31 15:38:04');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Variazione`
+--
+-- Creazione: Gen 26, 2023 alle 15:24
 --
 
 DROP TABLE IF EXISTS `Variazione`;
@@ -390,6 +584,12 @@ CREATE TABLE IF NOT EXISTS `Variazione` (
   PRIMARY KEY (`Id`),
   KEY `Categoria_id` (`Categoria_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Variazione`:
+--   `Categoria_id`
+--       `Categoria` -> `Id`
+--
 
 --
 -- Limiti per le tabelle scaricate

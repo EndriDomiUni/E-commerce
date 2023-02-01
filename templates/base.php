@@ -3,7 +3,6 @@
 require_once("./assets/css/style.php");
 require_once("./assets/js/script.php");
 
-
 ?>
 
 <!DOCTYPE html>

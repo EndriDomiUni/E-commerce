@@ -17,7 +17,7 @@ class Utils
 
     public static function checkResponse($response): bool
     {
-        return is_int($response);
+        return is_int($response) && $response > 0;
     }
 
     public static function issetSessionId(): bool

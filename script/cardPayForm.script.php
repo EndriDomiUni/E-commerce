@@ -6,8 +6,8 @@ ini_set('display_errors', 1);
 
 use utility\Utils;
 
-
 require_once "./src/classes/Session.php";
+include "./src/utility/Utils.php";
 
 if (Utils::issetSessionid()) {
     if (isset($_POST["btn-card-pay"])) {
