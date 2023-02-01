@@ -20,9 +20,6 @@ if (isset($_POST['product-btn-insert'])) {
     );
     try {
         $dbh = new Dbh();
-        $dim_x = $params['DIMENSIONE_X_PRODOTTO'];
-        $dim_y = $params['DIMENSIONE_Y_PRODOTTO'];
-        $dim_z = $params['DIMENSIONE_Z_PRODOTTO'];
         $response = $dbh->insertProduct($params);
         Utils::checkResponse($response);
         if(!Utils::checkResponse($response))

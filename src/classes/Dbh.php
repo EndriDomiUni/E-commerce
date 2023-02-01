@@ -106,14 +106,14 @@ class Dbh
     {
         if (Utils::checkParams($params)) {
             $dimensionId = null;
-            $nome = $params["Nome"];
-            $descrizione = $params["Descrizione"];
-            $immagine = $params["Immagine"];
+            $nome = $params[NOME];
+            $descrizione = $params[DESCRIZIONE];
+            $immagine = $params[IMMAGINE];
             $dimensionId = null;
-            $categoriaId = $params['CATEGORIA_ID'];
-            $dim_x = $params["Dim_x"];
-            $dim_y = $params["Dim_y"];
-            $dim_z = $params["Dim_z"];
+            $categoriaId = $params[CATEGORIA_ID];
+            $dim_x = $params[DIMENSIONE_X_PRODOTTO];
+            $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
+            $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
             if ($this->checkDimension($params["Dim_x"], $params["Dim_y"], $params["Dim_Y"]))
             {
                 $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) 
