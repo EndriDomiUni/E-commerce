@@ -7,7 +7,6 @@ use utility\Utils;
 $dbh = null;
 $session = new Session($_SESSION["Id"]);
 
-
 if (isset($_POST['product-btn-insert']))
 {
     $params = array(

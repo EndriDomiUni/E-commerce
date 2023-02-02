@@ -62,6 +62,17 @@ class Session
         ];
     }
 
+    /**
+     * returns current product while insertion new product
+     * @return array|int
+     */
+    public function getCurrentProduct(): array|int
+    {
+        return [
+            ID => $_SESSION['']
+        ]
+    }
+
     public function __toString(): string
     {
         return $this->getCurrentUser();
