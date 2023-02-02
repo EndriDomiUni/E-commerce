@@ -33,46 +33,60 @@ require_once "./src/classes/Dbh.php";
                 <label for="productDescription" class="form-label">Descrizione</label>
                 <input type="text" class="form-control" id="descriptionProductId" />
             </div>
-            <!-- Inserimento immagine -->
+            <!-- Immagine prodotto -->
             <div>
-
+                <div class="mb-4 d-flex justify-content-center">
+                    <!-- TODO: usare javascript per caricare l'immagine inserita da input -->
+                    <img alt="" style="width: 200px;" src="<?php
+                    if($_SESSION["Immagine"]!=null)
+                    {
+                        echo $_SESSION["Immagine"];
+                    }
+                    else
+                    {
+                        echo "";
+                    }
+                    ?>" />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="btn btn-primary btn-rounded">
+                        <label class="form-label text-white m-1" for="productImage">Scegli file</label>
+                        <input type="file" class="form-control d-none" id="productImage" />
+                    </div>
+                </div>
             </div>
-            <!-- Inserimento dimensione -->
+            <!-- Inserimento dimensioni -->
             <div>
-
-            </div>
-            <!-- Selezione categoria -->
-            <div>
-
-            </div>
-            <!-- Nuova pagina per variazione - opzioni variazione - articolo -->
-
-
-            <!-- Prezzo prodotto -->
-            <div class="mb-3">
-                <label for="productPrice" class="form-label">Prezzo del prodotto</label>        
-                <input type="Number" class="form-control" id="productPrice" aria-describedby="productPriceHelp" />
-                <div id="productPriceHelp" class="form-text">Questo è l'importo visualizzato da tutti gli utenti.</div>
+                <div class="form-group">
+                    <label for="productDimensionX">Name:</label>
+                    <input type="text" class="form-control" id="productDimensionX">
+                </div>
+                <div class="form-group">
+                    <label for="productDimensionY">Name:</label>
+                    <input type="text" class="form-control" id="productDimensionY">
+                </div>
+                <div class="form-group">
+                    <label for="productDimensionZ">Name:</label>
+                    <input type="text" class="form-control" id="productDimensionZ">
+                </div>
             </div>
             <!-- Categoria prodotto -->
             <div class="mb-3">
-                <select class="form-select">
+                <label for="categoriaId">Categoria</label>
+                <select class="form-select" d="categoriaId">
                     <option value="">--Seleziona categoria prodotto--</option>
                         <?php
-                        // TODO: Stampare il nome di ogni categoria
-                        $dbh = new Dbh();
+                            $dbh = new Dbh();
                             $categories = $dbh->getCategories();
                             foreach ($categories as $category) {
                                 $nome = $category["Nome"];
-                                echo "<option value='$nome'>$nome</option>";
+                                $categoryId = $category["Id"];
+                                echo "<option value='$categoryId'>$nome</option>";
                             }
                         ?>
                 </select>
             </div>
-            <div>
-
-            </div>
-            <button type="submit" class="btn btn-primary" name="product-btn-insert">Inserisci</button>
+            <button type="submit" class="btn btn-primary" name="product-btn-insert">Inserisci Prodotto</button>
         </form>
     </div>
 </section>

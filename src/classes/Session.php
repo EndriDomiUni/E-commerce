@@ -145,6 +145,7 @@ class Session
         }
     }
 
+    /*
     private function insertProductBySeller($params): bool
     {
         $query = "INSERT INTO Prodotto (Nome, Descrizione, Immagine, Dimensione_id, Categoria_id,Status)
@@ -158,4 +159,5 @@ class Session
         
         return Utils::checkResponse($res);
     }
+    */
 }

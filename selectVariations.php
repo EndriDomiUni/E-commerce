@@ -2,10 +2,11 @@
 
 session_start();
 require_once("./config/AppConstants.php");
-require_once("./script/productInsertion.script.php");
+require_once("./script/selectVariations.script.php");
 
 ob_start();
-require './templates/views/form/productInsertion.php';
+require './templates/views/form/selectVariations.php';
 $mainContent = ob_get_clean();
-$title = "Login";
+$title = "Configurazione articolo";
 require_once("./templates/base.php");
+

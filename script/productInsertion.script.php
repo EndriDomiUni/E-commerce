@@ -5,10 +5,11 @@ include("Dbh.php");
 use utility\Utils;
 
 $dbh = null;
+$session = new Session($_SESSION["Id"]);
 
-if (isset($_POST['product-btn-insert'])) {
 
-
+if (isset($_POST['product-btn-insert']))
+{
     $params = array(
         NOME => filter_var($_POST['productName'], FILTER_SANITIZE_SPECIAL_CHARS),
         DESCRIZIONE => filter_var($_POST['productDescription'], FILTER_SANITIZE_SPECIAL_CHARS),
@@ -21,10 +22,10 @@ if (isset($_POST['product-btn-insert'])) {
     try {
         $dbh = new Dbh();
         $response = $dbh->insertProduct($params);
-        Utils::checkResponse($response);
-        if(!Utils::checkResponse($response))
+        if($response)
         {
-            // Error
+            $session[CATEGORIA_ID] = $params[CATEGORIA_ID];
+            header("Location: selectVariations.php");
         }
     } catch (Exception $e) {
         echo $e->getMessage();

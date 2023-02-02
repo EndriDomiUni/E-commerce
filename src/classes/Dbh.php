@@ -89,9 +89,20 @@ class Dbh
 
     private function getDimensionIdByParameters($dim_x, $dim_y, $dim_z) : array
     {
-        $response = array();
-        return $response = $this->execute("SELECT Id FROM `Dimensione` 
-         WHERE Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'");
+        return $this->execute("SELECT Id FROM `Dimensione` 
+            WHERE Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'");
+    }
+
+    public function getVariationsByCategoryId($categoryId) : array
+    {
+        return $this->execute("SELECT * FROM `Variazione`
+            WHERE Categoria_id = '$categoryId'");
+    }
+
+    public function getOptionsByVariationId($variationId) : array
+    {
+        return $this->execute("SELECT * FROM `Opzione_variazione`
+            WHERE Variazione_Id = '$variationId'");
     }
 
     /**
@@ -144,7 +155,7 @@ class Dbh
                 $immagine,
                 $dimensionId,
                 $categoriaId);
-            return Utils::checkResponse($res) ? $res : false;
+            return Utils::checkResponse($res) ? true : false;
         }
     }
 

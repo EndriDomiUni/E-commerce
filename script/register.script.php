@@ -38,7 +38,15 @@ if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-registe
         }
         $response = $dbh->register($params);
         if (is_int($response)) {
-            header("Location: index.php");
+            // TODO: verificare l'eguaglianza tra $_SESSION["Claim"] e "btn-seller-pro"
+            if ($_SESSION["Claim"]=="btn-seller-pro")
+            {
+                header("Location: dashboard.php");
+            }
+            else
+            {
+                header("Location: index.php");
+            }
         } else {
             // alert
         }

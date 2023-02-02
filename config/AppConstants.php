@@ -101,3 +101,4 @@ const CATEGORIA_ID = "Categoria_id";
 const DIMENSIONE_X_PRODOTTO = "Dimensione_x";
 const DIMENSIONE_Y_PRODOTTO = "Dimensione_y";
 const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
+const PREZZO = "Prezzo_articolo";
