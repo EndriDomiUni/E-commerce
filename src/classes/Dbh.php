@@ -4,7 +4,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-use utility\Utils;
+use utility\UtilsFunctions;
 
 include("./config/AppConstants.php");
 include("./src/classes/Session.php");
@@ -90,7 +90,7 @@ class Dbh
     private function getDimensionIdByParameters($dim_x, $dim_y, $dim_z) : array
     {
         return $this->execute("SELECT Id FROM `Dimensione` 
-            WHERE Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'");
+            WHERE Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z");
     }
 
     public function getVariationsByCategoryId($categoryId) : array
@@ -130,7 +130,7 @@ class Dbh
             $dim_x = $params[DIMENSIONE_X_PRODOTTO];
             $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
             $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
-            if ($this->checkDimension($params["Dim_x"], $params["Dim_y"], $params["Dim_Y"]))
+            if ($this->checkDimension($params["Dim_x"], $params["Dim_y"], $params["Dim_z"]))
             {
                 $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) 
                     VALUES ('$dim_x', '$dim_y', '$dim_z', current_timestamp())";
@@ -146,7 +146,7 @@ class Dbh
             }
             $dimensionTableName = `Dimensione`;
             $getDimensionIdCondition = "Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'";
-            $dimensionId = $this->selectId($dimensionTableName, $getDimensionIdCondition);
+            $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
             $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`)
                 VALUES (?, ?, ?, ?, ?)";
             $res = $this->insertData($insertProductQuery,
@@ -155,8 +155,9 @@ class Dbh
                 $immagine,
                 $dimensionId,
                 $categoriaId);
-            return Utils::checkResponse($res) ? true : false;
+            return UtilsFunctions::checkResponse($res);
         }
+        return false;
     }
 
 
@@ -168,7 +169,7 @@ class Dbh
      * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
      */
     public function register($params) {
-        if (Utils::checkParams($params)) {
+        if (UtilsFunctions::checkParams($params)) {
             if (!$this->checkEmail($params["Email"])) {
                 return "Esiste già un account con le stesse credenziali";
             } else {
@@ -184,7 +185,7 @@ class Dbh
                     $claimId,
                     $params[INDIRIZZO_ID],
                     $params[STATUS]);
-                if (Utils::checkResponse($resp)) {
+                if (UtilsFunctions::checkResponse($resp)) {
                     return $resp;
                 }
             }
@@ -208,7 +209,7 @@ class Dbh
      * @return mixed|string|void|null ID of the user if the login is successful, null otherwise.
      */
     public function logIn($params)  {
-        if (Utils::checkParams($params)) {
+        if (UtilsFunctions::checkParams($params)) {
             if ($this->checkEmail($params["Email"])) {
                 return "L'utente non esiste";
             } else {
@@ -216,7 +217,7 @@ class Dbh
                 $pass = $params[PASSWORD];
                 $where = "Email = '$email' AND Password = '$pass'";
                 $response = $this->execute("SELECT * FROM `Utente` WHERE $where");
-                return Utils::checkResponse($response[0][ID]) ? $response[0][ID] : null;
+                return UtilsFunctions::checkResponse($response[0][ID]) ? $response[0][ID] : null;
             }
         }
     }
@@ -234,7 +235,7 @@ class Dbh
     {
         $where = "Id = '$id'";
         $res = $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
-        return Utils::checkResponse($res) ? $res : null;
+        return UtilsFunctions::checkResponse($res) ? $res : null;
     }
 
     /**
@@ -251,16 +252,45 @@ class Dbh
     }
 
     /**
-     * Return id of given table, filtered by where condition
+     * //TODO: DA FIXARE
+     * Check always !== null
      *
-     * @param string $tableName table name
-     * @param string $where where condition
-     * @return int|null id or null
+     * @param string $tableName
+     * @param string $field
+     * @param string $where
+     * @return int|string|array|null
      */
-    public function selectId(string $tableName, string $where): int|null
+    public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
-        $response = $this->execute("SELECT `Id` FROM `$tableName` WHERE $where");
-        return Utils::checkResponse($response) ? $response : null;
+        $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
+        if (UtilsFunctions::checkExistence($response)) {
+            if (is_array($response)) {
+                if (!empty($response)) {
+                    foreach ($response as $value) {
+                        echo "response value: " . $value . '</br>';
+                    }
+                } else {
+                    echo "response is empty. " . '</br>';
+                }
+            }
+        } else {
+            echo "response is null" . '</br>';
+        }
+        return UtilsFunctions::checkResponse($response[0][$field]) ? $response[0][$field] : null;
+    }
+
+    /**
+     * //TODO: DA FIXARE
+     * Check always !== null
+     *
+     * @param string $tableName
+     * @param string $where
+     * @return mixed|string|null
+     */
+    public function getRecord(string $tableName, string $where): mixed
+    {
+        $response = $this->execute("SELECT * FROM `$tableName` WHERE $where");
+        return UtilsFunctions::checkResponse($response[0]) ? $response[0] : null;
     }
 
     /**
@@ -276,8 +306,7 @@ class Dbh
     }
     
     public function getCategories() {
-        $response = $this->execute("SELECT * FROM CATEGORIA");
-        return $response;
+        return $this->execute("SELECT * FROM CATEGORIA");
     }
 
     

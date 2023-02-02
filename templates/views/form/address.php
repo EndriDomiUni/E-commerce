@@ -21,25 +21,28 @@
                         <div class="row">
                             <div class="col-9">
                                 <div class="form-floating">
-                                    <label for="via">Via</label>
-                                    <input type="text" class="form-control" id="via" name="via" placeholder="Inserisci via">
+                                    <input type="text" class="form-control" id="via" placeholder="Inserisci via" required name="via">
+                                    <label for="personal-surname-register">Via</label>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-floating">
+                                    <input type="text" class="form-control" id="Numero_civico" placeholder="Inserisci civico" required name="Numero_civico">
                                     <label for="Numero_civico">Civico</label>
-                                    <input type="text" class="form-control" id="Numero_civico" name="Numero_civico" placeholder="Inserisci civico">
                                 </div>
                             </div>
                         </div>
                         <div class="form-floating">
+                            <input type="text" class="form-control" id="Citta" placeholder="Inserisci città" required name="Citta">
                             <label for="Citta">Città</label>
-                            <input type="text" class="form-control" id="Citta" name="Citta" placeholder="Inserisci città">
                         </div>
+
+
                         <div class="form-floating">
+                            <input type="text" class="form-control" id="CAP" placeholder="Inserisci CAP" required name="CAP">
                             <label for="CAP">CAP</label>
-                            <input type="text" class="form-control" id="CAP" name="CAP" placeholder="Inserisci CAP">
                         </div>
+
                         <button class="w-100 btn btn-lg btn-primary" type="submit" name="btn-address"">Invio</button>
                         <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                     </form>

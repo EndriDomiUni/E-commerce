@@ -1,8 +1,7 @@
 <?php
 
 require_once("./config/AppConstants.php");
-include("Dbh.php");
-use utility\Utils;
+use utility\UtilsFunctions;
 
 $dbh = null;
 $session = new Session($_SESSION["Id"]);

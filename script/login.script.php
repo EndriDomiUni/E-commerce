@@ -4,7 +4,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include "./src/utility/Utils.php";
+
+require_once "./src/classes/Dbh.php";
 
 $dbh = new Dbh();
 
@@ -16,14 +17,23 @@ if (isset($_POST["btn-login"])) {
         ];
         $response = $dbh->logIn($params);
         if (is_int($response)) {
-            // TODO: verificare l'eguaglianza tra $_SESSION["Claim"] e "btn-seller-pro"
-            if ($_SESSION["Claim"]=="btn-seller-pro")
-            {
-                header("Location: dashboard.php");
-            }
-            else
-            {
-                header("Location: index.php");
+            $session = new Session($response);
+            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+
+            if ($claimType !== null) {
+                switch ($claimType) {
+                    case CLAIM_USER_PRO_DESC:
+                    case CLAIM_USER_DESC:
+                        header("Location: index.php");
+                        break;
+
+                    case CLAIM_SELLER_PR0_DESC:
+                    case CLAIM_SELLER_DESC:
+                        header("Location: dashboard.php");
+                        break;
+                }
+            } else {
+                echo "error sono qui";
             }
         } else {
             // alert

@@ -1,7 +1,7 @@
 <?php
 
 require_once("./config/AppConstants.php");
-include("Dbh.php");
+
 use utility\Utils;
 
 $dbh = null;

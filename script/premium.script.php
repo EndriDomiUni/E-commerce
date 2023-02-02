@@ -1,6 +1,6 @@
 <?php
 
-use utility\Utils;
+use utility\UtilsFunctions;
 
 if (isset($_POST["btn-base"]) || isset($_POST["btn-user-pro"]) || isset($_POST["btn-seller-pro"])) {
     try {
@@ -24,7 +24,7 @@ if (isset($_POST["btn-base"]) || isset($_POST["btn-user-pro"]) || isset($_POST["
         ];
 
         $response = $session->changeClaim($params);
-        if (Utils::checkResponse($response)) {
+        if (UtilsFunctions::checkResponse($response)) {
             header("Location: index.php");
         }
     } catch (Exception $e) {
