@@ -1,13 +1,16 @@
 <?php
 
-use utility\UtilsFunctions;
+// These two lines are used for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require_once "./src/classes/Session.php";
 
+
 if (isset($_POST["btn-base"]) || isset($_POST["btn-user-pro"]) || isset($_POST["btn-seller-pro"])) {
     try {
-        echo "sono qui";
-        $session = new Session($_SESSION["Id"]);
+        echo "sono quiii";
+        $session =  new Session($_SESSION["Id"]);
         $claimType = null;
         switch (true) {
             case isset($_POST["btn-base"]):
@@ -26,10 +29,8 @@ if (isset($_POST["btn-base"]) || isset($_POST["btn-user-pro"]) || isset($_POST["
             CLAIM_ID => $claimType
         ];
 
-        $response = $session->changeClaim($params);
-        if (UtilsFunctions::checkResponse($response)) {
-            header("Location: index.php");
-        }
+        $session->changeClaim($params);
+        header("Location: index.php");
     } catch (Exception $e) {
         echo $e->getMessage();
     }
