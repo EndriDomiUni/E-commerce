@@ -3,12 +3,11 @@
 use utility\Utils;
 
 require_once("./config/AppConstants.php");
-require_once("./src/utility/Utils.php");
+require_once("./src/utility/UtilsFunctions.php");
 
-class Cart
+class Cart extends Dbh
 {
     private readonly int $id; // $_SESSION["Id"];
-    private Dbh $dbh;
     private Session $session;
 
     /**
@@ -16,8 +15,8 @@ class Cart
      */
     public function __construct($id)
     {
+        parent::__construct();
         $this->id = $id;
-        $this->dbh = new Dbh();
         $this->session = new Session($this->id);
     }
 
@@ -31,7 +30,7 @@ class Cart
         $query = "INSERT INTO Articolo (Prezzo, Quantita, Carrello_id, Dettaglio_ord_id, Prodotto_id, Conf_variaz_id, Status)
             VALUES (?, ?, ?, ?, ?)";
         $res = $this->dbh->insertData($query, $params); // da pensare come gestire
-        return Utils::checkResponse($res);
+        return UtilsFunctions::checkResponse($res);
     }
 
     public function removeArticleFromCart(): void

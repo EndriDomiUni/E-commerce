@@ -2,11 +2,11 @@
 
 namespace utility;
 
-class Utils
+class UtilsFunctions
 {
     public static function checkParams(array $params): bool
     {
-        return Utils::validateParams($params);
+        return UtilsFunctions::validateParams($params);
     }
 
     private static function validateParams(array $params): bool
@@ -23,5 +23,10 @@ class Utils
     public static function issetSessionId(): bool
     {
         return isset($_SESSION["Id"]);
+    }
+
+    public static function checkExistence($value): bool
+    {
+        return isset($value);
     }
 }

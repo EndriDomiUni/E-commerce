@@ -51,31 +51,19 @@ const STATUS_INTACT_DATA = 0;
 const STATUS_MODIFIED_DATA = 1;
 const STATUS_DELETED_DATA = 2;
 
-// UNSET
+// UNSET ---------------------------------------------------------------
 const ADDRESS_UNSET = 1;
 const CLAIM_UNSET = 1;
 
 
-
-const OK = "Ok";
-const ERROR = "Error";
-
-const COSTUMER = "cliente";
-const SELLER = "venditore";
-
+// TABLE NAME ----------------------------------------------------------
+const UTENTE = "Utente";
+const CARRELLO = "Carrello";
+const CATEGORIA = "Categoria";
+const CLAIM = "Claim";
 
 
-const SUCCESS = "success";
-const DANGER = "danger";
-
-
-// TABLE NAME
-const UTENTE = "utente";
-const CARRELLO = "carrello";
-const CATEGORIA = "categoria";
-
-
-// TABLE COLUMN NAME
+// TABLE COLUMN NAME ---------------------------------------------------
 const ID = "Id";
 const NOME = "Nome";
 const COGNOME = "Cognome";

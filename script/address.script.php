@@ -4,12 +4,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-use utility\Utils;
+use utility\UtilsFunctions;
 
 require_once "./src/classes/Session.php";
-include "./src/utility/Utils.php";
 
-if (Utils::issetSessionid()) {
+
+if (UtilsFunctions::issetSessionid()) {
     if (isset($_POST["btn-address"])) {
         try {
             $session = new Session($_SESSION["Id"]);
@@ -22,7 +22,7 @@ if (Utils::issetSessionid()) {
             ];
 
             $response = $session->insertAddressInformation($params);
-            Utils::checkResponse($response) ? header("Location: index.php") : false;
+            UtilsFunctions::checkResponse($response) ? header("Location: index.php") : false;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
