@@ -2,8 +2,11 @@
 
 use utility\UtilsFunctions;
 
+require_once "./src/classes/Session.php";
+
 if (isset($_POST["btn-base"]) || isset($_POST["btn-user-pro"]) || isset($_POST["btn-seller-pro"])) {
     try {
+        echo "sono qui";
         $session = new Session($_SESSION["Id"]);
         $claimType = null;
         switch (true) {

@@ -118,6 +118,7 @@ class Dbh
          WHERE `Dim_X`=$dim_x AND `Dim_Y`=$dim_y AND `Dim_Z`=$dim_z")) == 0;
     }
 
+
     /**
      * It takes an array of parameters, checks if they are all set, then checks if the email is already
      * in use, and if not, it inserts the data into the database

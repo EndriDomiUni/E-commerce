@@ -77,19 +77,19 @@ class Session extends Dbh
         return $this->getCurrentUser();
     }
 
-    public function insertCardPayModInformation($params): bool
+    public function insertCardPayModInformation($params): array|int|string|null
     {
-        $query = "INSERT INTO forma_di_pagamento (Circuito, Numero_carta, Data_scadenza, CVV, Tipo_di_pagamento, Status, Utente_id)
-            VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Forma_di_pagamento (Circuito, Numero_carta, Data_scadenza, CVV, Tipo_di_pagamento, Utente_id, Status)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
         $res = parent::insertData($query,
             $params[CIRCUITO],
             $params[NUMERO_CARTA],
             $params[DATA_SCADENZA],
-            $params[TIPO_DI_PAGAMENTO],
             $params[CVV],
-            $params[STATUS],
-            $this->getCurrentUser()[ID]);
-        return UtilsFunctions::checkResponse($res);
+            $params[TIPO_DI_PAGAMENTO],
+            $this->getCurrentUser()[ID],
+            $params[STATUS]);
+        return UtilsFunctions::checkResponse($res) ? $res : null;
     }
 
     /**
