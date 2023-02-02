@@ -32,9 +32,6 @@
                         </div>
 
                         <div class="checkbox mb-3">
-                            <label>
-                                <input type="checkbox" value="seller" name="seller"> Sei un venditore?
-                            </label>
                         </div>
                         <button class="w-100 btn btn-lg btn-primary" type="submit" name="btn-login"">Sign in</button>
                         <p class="mt-5 mb-3 text-muted">© 2022–2023</p>

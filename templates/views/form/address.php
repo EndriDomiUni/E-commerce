@@ -36,10 +36,13 @@
                             <input type="text" class="form-control" id="Citta" placeholder="Inserisci città" required name="Citta">
                             <label for="Citta">Città</label>
                         </div>
+
+
                         <div class="form-floating">
                             <input type="text" class="form-control" id="CAP" placeholder="Inserisci CAP" required name="CAP">
                             <label for="CAP">CAP</label>
                         </div>
+
                         <button class="w-100 btn btn-lg btn-primary" type="submit" name="btn-address"">Invio</button>
                         <p class="mt-5 mb-3 text-muted">© 2022–2023</p>
                     </form>
