@@ -120,7 +120,7 @@ class Dbh
 
     public function insertProduct($params) : bool
     {
-        if (Utils::checkParams($params)) {
+        if (UtilsFunctions::checkParams($params)) {
             $dimensionId = null;
             $nome = $params[NOME];
             $descrizione = $params[DESCRIZIONE];
@@ -135,7 +135,7 @@ class Dbh
                 $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) 
                     VALUES ('$dim_x', '$dim_y', '$dim_z', current_timestamp())";
                 $res = $this->insertData($query, $dim_x, $dim_y, $dim_z);
-                if (Utils::checkResponse($res))
+                if (UtilsFunctions::checkResponse($res))
                 {
                     $dimensionId = $this->getDimensionIdByParameters($dim_x, $dim_y, $dim_z);
                 }
