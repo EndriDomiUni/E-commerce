@@ -3,7 +3,6 @@
 require_once("./config/AppConstants.php");
 use utility\UtilsFunctions;
 
-$dbh = null;
 $session = new Session($_SESSION["Id"]);
 
 if (isset($_POST['product-btn-insert']))
@@ -18,10 +17,10 @@ if (isset($_POST['product-btn-insert']))
         CATEGORIA_ID => filter_var($_POST['productCategory'], FILTER_SANITIZE_SPECIAL_CHARS)
     );
     try {
-        $dbh = new Dbh();
-        $response = $dbh->insertProduct($params);
+        $response = $session->insertProduct($params);
         if($response)
         {
+            $session[PRODOTTO_ID] = $response;
             $session[CATEGORIA_ID] = $params[CATEGORIA_ID];
             header("Location: selectVariations.php");
         }

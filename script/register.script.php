@@ -7,6 +7,7 @@ ini_set('display_errors', 1);
 require_once "./src/classes/Dbh.php";
 
 
+
 $dbh = new Dbh();
 
 if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-register'])) {
@@ -38,16 +39,24 @@ if (isset($_POST['personal-btn-register']) || isset($_POST['business-btn-registe
         }
         $response = $dbh->register($params);
         if (is_int($response)) {
-            header("Location: index.php");
-            /*// TODO: verificare l'eguaglianza tra $_SESSION["Claim"] e "btn-seller-pro"
-            if ($_SESSION["Claim"]=="btn-seller-pro")
-            {
-                header("Location: dashboard.php");
+            $session =new Session($response);
+            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+
+            if ($claimType !== null) {
+                switch ($claimType) {
+                    case CLAIM_USER_PRO_DESC:
+                    case CLAIM_USER_DESC:
+                        header("Location: index.php");
+                        break;
+
+                    case CLAIM_SELLER_PR0_DESC:
+                    case CLAIM_SELLER_DESC:
+                        header("Location: dashboard.php");
+                        break;
+                }
+            } else {
+                echo "error sono qui";
             }
-            else
-            {
-                header("Location: index.php");
-            }*/
         } else {
             // alert
         }

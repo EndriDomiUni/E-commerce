@@ -61,15 +61,15 @@ class Session extends Dbh
         ];
     }
 
+
+
     /**
      * returns current product while insertion new product
      * @return array|int
      */
     public function getCurrentProduct(): array|int
     {
-        return [
-            ID => $_SESSION['']
-        ]
+        return parent::getProductById($_SESSION[PRODOTTO_ID]);
     }
 
     public function __toString(): string
@@ -161,6 +161,50 @@ class Session extends Dbh
         return $res[0][DESCRIZIONE];
     }
 
+    public function insertProduct($params)
+    {
+        if (Utils::checkParams($params)) {
+            $dimensionId = null;
+            $nome = $params[NOME];
+            $descrizione = $params[DESCRIZIONE];
+            $immagine = $params[IMMAGINE];
+            $dimensionId = null;
+            $categoriaId = $params[CATEGORIA_ID];
+            $dim_x = $params[DIMENSIONE_X_PRODOTTO];
+            $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
+            $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
+            if (parent::checkDimension($params["Dim_x"], $params["Dim_y"], $params["Dim_z"]))
+            {
+                $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) 
+                    VALUES ('$dim_x', '$dim_y', '$dim_z', current_timestamp())";
+                $res = $this->insertData($query, $dim_x, $dim_y, $dim_z);
+                if (UtilsFunctions::checkResponse($res))
+                {
+                    $dimensionId = parent::getDimensionIdByParameters($dim_x, $dim_y, $dim_z);
+                }
+                else
+                {
+                    // Errore
+                }
+            }
+            $dimensionTableName = `Dimensione`;
+            $getDimensionIdCondition = "Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'";
+            $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
+            $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`)
+                VALUES (?, ?, ?, ?, ?)";
+            $res = $this->insertData($insertProductQuery,
+                $nome,
+                $descrizione,
+                $immagine,
+                $dimensionId,
+                $categoriaId);
+            if (UtilsFunctions::checkResponse($res))
+            {
+                return $res;
+            }
+        }
+        return false;
+    }
     /*
     private function insertProductBySeller($params): bool
     {
