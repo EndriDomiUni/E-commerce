@@ -2,13 +2,10 @@
 
 use utility\UtilsFunctions;
 
-require_once("./src/classes/Cart.php");
 
 class Session extends Dbh
 {
     private readonly int $id; // $_SESSION["Id"];
-    private int $cartId;
-
 
     public function __construct($id)
     {
@@ -98,19 +95,18 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res);
     }
 
-    public function changeClaim($params): bool
+    public function changeClaim($params)
     {
-        return UtilsFunctions::issetSessionId()
-            &&
+        if (UtilsFunctions::issetSessionId()) {
             parent::updateData($this->getCurrentUser()[ID],
                 UTENTE,
                 CLAIM_ID,
-                $params[CLAIM_ID])
-            &&
+                $params[CLAIM_ID]);
             parent::updateData($this->getCurrentUser()[ID],
                 UTENTE,
                 STATUS,
                 $params[STATUS]);
+        }
     }
 
     /**
