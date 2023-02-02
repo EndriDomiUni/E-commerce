@@ -13,17 +13,32 @@ class Dbh
 {
     protected mysqli $connection;
 
-    public function __construct($dbhost = '127.0.0.1', $dbuser = 'root', $dbpass = '', $dbname = 'e-commerce', $charset = 'utf8')
+    public function __construct($dbhost = 'localhost', $dbuser = 'root', $dbpass = '', $dbname = 'e-commerce', $charset = 'utf8')
     {
+
         try {
+
             $this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
             if ($this->connection->connect_error) {
                 echo "Connection failed: " . $this->connection->connect_error;
             }
             $this->connection->set_charset($charset);
         } catch (\Exception $e) {
-            echo "Connection failed: " . $e->getMessage();
+            echo "[Dbh:26] Sono qui";
+            echo "Connection failed: " . mysqli_connect_error();;
         }
+        /*
+        $this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+        if ($this->connection->connect_error) {
+            echo "Connection failed: " . $this->connection->connect_error;
+        }
+        $this->connection->set_charset($charset);
+        if (mysqli_connect_errno())
+        {
+            echo "[Dbh:38] Sono qui";
+            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        }
+        */
     }
 
     /**
