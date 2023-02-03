@@ -6,5 +6,5 @@ require_once("./script/productInsertion.script.php");
 ob_start();
 require './templates/views/form/editProduct.php';
 $mainContent = ob_get_clean();
-$title = "Insert product";
+$title = "Edit product";
 require_once("./templates/base.php");
