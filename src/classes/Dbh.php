@@ -8,6 +8,7 @@ use utility\UtilsFunctions;
 
 include("./config/AppConstants.php");
 include("./src/classes/Session.php");
+include("./src/utility/UtilsFunctions.php");
 
 class Dbh
 {
