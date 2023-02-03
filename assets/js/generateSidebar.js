@@ -9,13 +9,13 @@ sidebar.innerHTML += '<div class="sidebar">\n' +
     '                <hr>\n' +
     '                <ul class="nav nav-pills flex-column mb-auto">\n' +
     '                    <li>\n' +
-    '                        <a href="#" class="nav-link link-white active showContent" >\n' +
+    '                        <a href="./productInsertion.php" class="nav-link link-white active showContent" >\n' +
     '                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>\n' +
     '                            Inserisci prodotto\n' +
     '                        </a>\n' +
     '                    </li>\n' +
     '                    <li>\n' +
-    '                        <a href="#b1" class="nav-link link-dark showContent">\n' +
+    '                        <a href="./editProduct.php" class="nav-link link-dark showContent">\n' +
     '                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>\n' +
     '                            Modifica prodotto\n' +
     '                        </a>\n' +

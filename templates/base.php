@@ -24,7 +24,7 @@ if (isset($_SESSION["Id"])) {
     try {
         $session = new Session($_SESSION["Id"]);
         if ($session->checkSessionId($_SESSION["Id"])) {
-            if ($title === "Dashboard") {
+            if ($title === "Dashboard" || $title === "Insert product") {
                 $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
                 if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
 
@@ -32,7 +32,7 @@ if (isset($_SESSION["Id"])) {
                                 <div id="sidebar" class="col">
                                 </div>
                                 
-                                <div class="col-10">';
+                                <div class="col-9">';
                                     echo $mainContent;
                     echo '      </div>
                         </div>';
