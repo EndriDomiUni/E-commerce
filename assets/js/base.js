@@ -17,6 +17,7 @@ const footerHr = document.querySelectorAll("hr-footer");
 // enable, disable dark mode
 function checkForDarkMode(event)
 {
+    console.log("darkmode called");
     if (event.target.checked)
     {
         navbar.setAttribute("class", "navbar navbar-expand-lg bg-dark");
@@ -70,4 +71,5 @@ function checkForDarkMode(event)
         });
     }
 }
+
 

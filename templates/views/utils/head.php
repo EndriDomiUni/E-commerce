@@ -13,11 +13,7 @@
             echo "<link rel='stylesheet' type='text/css' href='" . $stylesheets[$_SERVER['PHP_SELF']][$i] . "'>";
         }
     }
-    if (isset($seller)) { ?>
-        <link rel="stylesheet" href="<?php echo CSS; ?>/sidebarAdmin.css">
-    <?php } ?>
-
+    ?>
     <script src="<?php echo JS; ?>/base.js" defer></script>
-    <script src="<?php echo JS; ?>/base2.js" defer></script>
     <script src="<?php echo JS; ?>/Session.js" defer></script>
 </head>
