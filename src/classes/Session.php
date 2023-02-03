@@ -159,7 +159,7 @@ class Session extends Dbh
 
     public function insertProduct($params)
     {
-        if (Utils::checkParams($params)) {
+        if (UtilsFunctions::checkParams($params)) {
             $dimensionId = null;
             $nome = $params[NOME];
             $descrizione = $params[DESCRIZIONE];
@@ -169,10 +169,10 @@ class Session extends Dbh
             $dim_x = $params[DIMENSIONE_X_PRODOTTO];
             $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
             $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
-            if (parent::checkDimension($params["Dim_x"], $params["Dim_y"], $params["Dim_z"]))
+            if (parent::checkDimension($dim_x, $dim_y, $dim_y))
             {
-                $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) 
-                    VALUES ('$dim_x', '$dim_y', '$dim_z', current_timestamp())";
+                $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`) 
+                    VALUES (?, ?, ?)";
                 $res = $this->insertData($query, $dim_x, $dim_y, $dim_z);
                 if (UtilsFunctions::checkResponse($res))
                 {
@@ -183,8 +183,8 @@ class Session extends Dbh
                     // Errore
                 }
             }
-            $dimensionTableName = `Dimensione`;
-            $getDimensionIdCondition = "Dim_X = '$dim_x AND Dim_Y = '$dim_y AND Dim_Z = '$dim_z'";
+            $dimensionTableName = "Dimensione";
+            $getDimensionIdCondition = "Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z";
             $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
             $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`)
                 VALUES (?, ?, ?, ?, ?)";

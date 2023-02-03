@@ -6,10 +6,10 @@ ini_set('display_errors', 1);
 
 session_start();
 include "./src/classes/Dbh.php";
-require_once("./script/dashboard.script.php");
+require_once("./script/productInsertion.script.php");
 
 ob_start();
-require './templates/views/user/dashboard.php';
+require './templates/views/form/productInsertion.php';
 $mainContent = ob_get_clean();
 $title = "Dashboard";
 require_once("./templates/base.php");

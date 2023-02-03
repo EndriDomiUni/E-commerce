@@ -3,7 +3,6 @@
 // These two lines are used for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 use utility\UtilsFunctions;
 
 include("./config/AppConstants.php");
@@ -267,7 +266,8 @@ class Dbh
     
     public function getCategories()
     {
-        return $this->execute("SELECT * FROM CATEGORIA");
+        $table = "Categoria";
+        return $this->execute("SELECT * FROM $table");
     }
 
     public function getProductById($id)
