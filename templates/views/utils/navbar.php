@@ -26,20 +26,15 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="./dashboard.php">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-inbox-fill nav-icon-item" viewBox="0 0 16 16">
                             <path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm-1.17-.437A1.5 1.5 0 0 1 4.98 3h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z" />
                         </svg>
                         <div class="nav-caption-item">
-                            <p>Inbox</p>
+                            <p>Dashboard</p>
                         </div>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end ">
-                        <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="#">Notifications</a></li>
-                        <li><a class="dropdown-item" href="#">Ordini</a></li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">
@@ -146,10 +141,11 @@
     </div>
     <div class="offcanvas-body">
 
+        <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
         <?php
             include './templates/views/components/productInCart.php';
         ?>
 
-        <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
+
     </div>
 </div>

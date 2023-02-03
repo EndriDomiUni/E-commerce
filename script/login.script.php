@@ -29,7 +29,7 @@ if (isset($_POST["btn-login"])) {
 
                     case CLAIM_SELLER_PR0_DESC:
                     case CLAIM_SELLER_DESC:
-                        //header("Location: dashboard.php");
+                        header("Location: dashboard.php");
                         break;
                 }
             } else {
