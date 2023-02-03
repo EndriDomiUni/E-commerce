@@ -2,7 +2,6 @@
 
 use utility\UtilsFunctions;
 
-
 class Session extends Dbh
 {
     private readonly int $id; // $_SESSION["Id"];
@@ -186,14 +185,16 @@ class Session extends Dbh
             $dimensionTableName = "Dimensione";
             $getDimensionIdCondition = "Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z";
             $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
-            $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`)
-                VALUES (?, ?, ?, ?, ?)";
+            $status = 1;
+            $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`, `Status`)
+                VALUES (?, ?, ?, ?, ?, ?)";
             $res = $this->insertData($insertProductQuery,
                 $nome,
                 $descrizione,
                 $immagine,
                 $dimensionId,
-                $categoriaId);
+                $categoriaId,
+                $status);
             if (UtilsFunctions::checkResponse($res))
             {
                 return $res;

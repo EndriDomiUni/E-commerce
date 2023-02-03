@@ -2,7 +2,8 @@
 
 session_start();
 require_once("./config/AppConstants.php");
-require_once("./script/selectVariations.script.php");
+require_once("./script/addArticle.script.php");
+echo"selectvariations.php";
 
 ob_start();
 require './templates/views/form/selectVariations.php';

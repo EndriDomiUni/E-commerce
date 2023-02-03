@@ -1,14 +1,23 @@
 <?php
+// queste due linee fungono da debbuger
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-require_once("./config/AppConstants.php");
+use utility\UtilsFunctions;
 
-use utility\Utils;
+require_once "./src/classes/Session.php";
 
-$dbh = null;
-$session = new Session($_SESSION["Id"]);
+
+$sessionId = $_SESSION[ID];
+echo "$sessionId </br>";
+
+$session = $_SESSION;
+echo "addArticle.script.php </br>";
 
 if (isset($_POST['article-btn-insert']))
 {
+    echo "addArticle.script.php </br>";
+
     $params = array(
         PREZZO => filter_var($_POST['articlePrice'], FILTER_SANITIZE_SPECIAL_CHARS),
         // TODO: completare

@@ -221,19 +221,25 @@ class Dbh
      */
     public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
+        echo $tableName."</br>";
+        echo $field."</br>";
+        echo $where."</br>";
+        echo "SELECT `$field` FROM `$tableName` WHERE $where"."</br>";
         $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
         if (UtilsFunctions::checkExistence($response)) {
             if (is_array($response)) {
                 if (!empty($response)) {
                     foreach ($response as $value) {
-                        echo "response value: " . $value . '</br>';
+                        echo "response value: " . $value[ID] . '</br>';
                     }
                 } else {
                     echo "response is empty. " . '</br>';
+                    return array();
                 }
             }
         } else {
             echo "response is null" . '</br>';
+            return null;
         }
         return UtilsFunctions::checkResponse($response[0][$field]) ? $response[0][$field] : null;
     }

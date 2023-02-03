@@ -9,7 +9,7 @@ use utility\UtilsFunctions;
 require_once "./src/classes/Session.php";
 
 
-$session = new Session($_SESSION["Id"]);
+$session = new Session($_SESSION[ID]);
 
 if (isset($_POST['product-btn-insert']))
 {
@@ -26,8 +26,9 @@ if (isset($_POST['product-btn-insert']))
         $response = $session->insertProduct($params);
         if($response)
         {
-            $session[PRODOTTO_ID] = $response;
-            $session[CATEGORIA_ID] = $params[CATEGORIA_ID];
+            echo "[DEBUG:productInsertion.script.php->29]".$response."</br>";
+            $_SESSION[PRODOTTO_ID] = $response;
+            $_SESSION[CATEGORIA_ID] = $params[CATEGORIA_ID];
             header("Location: selectVariations.php");
         }
     } catch (Exception $e) {
