@@ -5,12 +5,11 @@ ini_set('display_errors', 1);
 
 use utility\UtilsFunctions;
 
+require_once "./src/classes/Session.php";
 
 $sessionId = $_SESSION[ID];
-echo "$sessionId </br>";
 
 $session = $_SESSION;
-echo "addArticle.script.php </br>";
 
 if (isset($_POST['article-btn-insert']))
 {
