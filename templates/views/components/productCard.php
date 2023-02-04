@@ -12,20 +12,20 @@
                 $whereProductId = "Id = " . $article[PRODOTTO_ID];
                 $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId);
                 $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId);
-                $currentProductImage = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId);
+                $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId);
 
                 echo ' 
                  <div class="card mb-3" style="max-width: 540px;">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <img src=' . '"/empty_cart.jpeg" class="card-img" alt="Product Name">
+                                <img src="' . $currentProductImage . '" class="card-img" alt="Product Name">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">Product Name</h5>
+                                    <h5 class="card-title">' . $currentProductName . '</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card s content.</p>
                                     <div class="card-price">
-                                        <p class="card-text">Price:  <?php echo EURO?></p>
+                                        <p class="card-text">Price:  ' . $currentProductPrice . '</p>
                             </div>
                             <div class="card-size">
                                 <select class="form-select" aria-label="Default select example">
