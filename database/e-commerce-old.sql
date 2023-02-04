@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 31, 2023 alle 17:01
+-- Creato il: Feb 02, 2023 alle 16:18
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.1.12
 
@@ -28,8 +28,6 @@ USE `e-commerce`;
 --
 -- Struttura della tabella `Articolo`
 --
--- Creazione: Gen 26, 2023 alle 15:23
---
 
 DROP TABLE IF EXISTS `Articolo`;
 CREATE TABLE IF NOT EXISTS `Articolo` (
@@ -37,31 +35,17 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   `Prezzo` decimal(11,0) NOT NULL,
   `Utente_id` int(11) NOT NULL,
   `Prodotto_id` int(11) NOT NULL,
-  `Magazzino_id` int(11) NOT NULL,
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
-  KEY `Magazzino_id` (`Magazzino_id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `Articolo`:
---   `Magazzino_id`
---       `Magazzino` -> `Id`
---   `Prodotto_id`
---       `Prodotto` -> `Id`
---   `Utente_id`
---       `Utente` -> `Id`
---
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Articolo_in_carrello`
---
--- Creazione: Gen 26, 2023 alle 15:26
 --
 
 DROP TABLE IF EXISTS `Articolo_in_carrello`;
@@ -77,20 +61,10 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   KEY `Articolo_id` (`Articolo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Articolo_in_carrello`:
---   `Carrello_id`
---       `Carrello` -> `Id`
---   `Articolo_id`
---       `Articolo` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Articolo_in_magazzino`
---
--- Creazione: Gen 26, 2023 alle 15:40
 --
 
 DROP TABLE IF EXISTS `Articolo_in_magazzino`;
@@ -108,20 +82,10 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   KEY `Magazzino_id` (`Magazzino_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Articolo_in_magazzino`:
---   `Articolo_id`
---       `Articolo` -> `Id`
---   `Magazzino_id`
---       `Magazzino` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Carrello`
---
--- Creazione: Gen 26, 2023 alle 14:45
 --
 
 DROP TABLE IF EXISTS `Carrello`;
@@ -132,20 +96,95 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `Carrello`:
---   `Utente_id`
---       `Utente` -> `Id`
+-- Dump dei dati per la tabella `Carrello`
 --
+
+INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
+(1, 4, 0, '2023-02-02 09:35:40'),
+(2, 4, 0, '2023-02-02 09:36:53'),
+(3, 4, 0, '2023-02-02 09:36:53'),
+(4, 4, 0, '2023-02-02 09:36:53'),
+(5, 4, 0, '2023-02-02 09:36:53'),
+(6, 4, 0, '2023-02-02 09:36:53'),
+(7, 4, 0, '2023-02-02 09:36:53'),
+(8, 4, 0, '2023-02-02 09:36:53'),
+(9, 4, 0, '2023-02-02 09:36:53'),
+(10, 4, 0, '2023-02-02 09:36:53'),
+(11, 4, 0, '2023-02-02 09:36:53'),
+(12, 4, 0, '2023-02-02 09:36:53'),
+(13, 4, 0, '2023-02-02 09:36:53'),
+(14, 4, 0, '2023-02-02 09:36:53'),
+(15, 4, 0, '2023-02-02 09:36:53'),
+(16, 4, 0, '2023-02-02 09:36:53'),
+(17, 4, 0, '2023-02-02 09:36:53'),
+(18, 4, 0, '2023-02-02 09:36:53'),
+(19, 4, 0, '2023-02-02 09:36:53'),
+(20, 4, 0, '2023-02-02 09:36:53'),
+(21, 4, 0, '2023-02-02 09:36:53'),
+(22, 4, 0, '2023-02-02 09:36:53'),
+(23, 4, 0, '2023-02-02 09:36:53'),
+(24, 4, 0, '2023-02-02 09:36:53'),
+(25, 4, 0, '2023-02-02 09:36:53'),
+(26, 4, 0, '2023-02-02 09:36:53'),
+(27, 4, 0, '2023-02-02 09:36:53'),
+(28, 4, 0, '2023-02-02 09:36:53'),
+(29, 4, 0, '2023-02-02 09:36:53'),
+(30, 4, 0, '2023-02-02 09:36:53'),
+(31, 4, 0, '2023-02-02 09:36:53'),
+(32, 4, 0, '2023-02-02 09:36:53'),
+(33, 4, 0, '2023-02-02 09:36:53'),
+(34, 4, 0, '2023-02-02 09:36:53'),
+(35, 4, 0, '2023-02-02 09:36:53'),
+(36, 4, 0, '2023-02-02 09:36:53'),
+(37, 4, 0, '2023-02-02 09:36:53'),
+(38, 4, 0, '2023-02-02 09:36:53'),
+(39, 4, 0, '2023-02-02 09:36:53'),
+(40, 4, 0, '2023-02-02 09:36:53'),
+(41, 4, 0, '2023-02-02 09:36:53'),
+(42, 4, 0, '2023-02-02 09:36:53'),
+(43, 4, 0, '2023-02-02 09:36:53'),
+(44, 4, 0, '2023-02-02 09:36:53'),
+(45, 4, 0, '2023-02-02 09:36:53'),
+(46, 4, 0, '2023-02-02 09:36:53'),
+(47, 4, 0, '2023-02-02 09:36:53'),
+(48, 4, 0, '2023-02-02 09:36:53'),
+(49, 4, 0, '2023-02-02 09:36:53'),
+(50, 4, 0, '2023-02-02 09:36:53'),
+(51, 4, 0, '2023-02-02 09:36:53'),
+(52, 4, 0, '2023-02-02 09:36:53'),
+(53, 4, 0, '2023-02-02 09:36:53'),
+(54, 4, 0, '2023-02-02 09:36:53'),
+(55, 4, 0, '2023-02-02 09:36:53'),
+(56, 4, 0, '2023-02-02 09:36:53'),
+(57, 4, 0, '2023-02-02 09:36:53'),
+(58, 4, 0, '2023-02-02 09:36:53'),
+(59, 4, 0, '2023-02-02 09:36:53'),
+(60, 4, 0, '2023-02-02 09:36:53'),
+(61, 4, 0, '2023-02-02 09:36:53'),
+(62, 4, 0, '2023-02-02 09:36:53'),
+(63, 4, 0, '2023-02-02 09:36:53'),
+(64, 4, 0, '2023-02-02 09:36:53'),
+(65, 4, 0, '2023-02-02 09:36:53'),
+(66, 4, 0, '2023-02-02 09:36:53'),
+(67, 4, 0, '2023-02-02 09:36:53'),
+(68, 4, 0, '2023-02-02 09:36:53'),
+(69, 4, 0, '2023-02-02 09:36:53'),
+(70, 4, 0, '2023-02-02 09:36:53'),
+(71, 4, 0, '2023-02-02 09:36:53'),
+(72, 4, 0, '2023-02-02 09:36:53'),
+(73, 4, 0, '2023-02-02 09:36:53'),
+(74, 4, 0, '2023-02-02 09:36:53'),
+(75, 4, 0, '2023-02-02 09:36:53'),
+(76, 4, 0, '2023-02-02 09:36:53'),
+(77, 4, 0, '2023-02-02 09:36:53');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Categoria`
---
--- Creazione: Gen 26, 2023 alle 14:50
 --
 
 DROP TABLE IF EXISTS `Categoria`;
@@ -158,17 +197,10 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Categoria`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Claim`
---
--- Creazione: Gen 24, 2023 alle 18:15
--- Ultimo aggiornamento: Gen 31, 2023 alle 15:38
 --
 
 DROP TABLE IF EXISTS `Claim`;
@@ -179,11 +211,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `Claim`:
---
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `Claim`
@@ -191,14 +219,14 @@ CREATE TABLE IF NOT EXISTS `Claim` (
 
 INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (55, 'user', '0', 0, '2023-01-31 15:35:38'),
-(56, 'seller', '0', 0, '2023-01-31 15:38:04');
+(56, 'seller', '0', 0, '2023-01-31 15:38:04'),
+(57, 'seller', '0', 0, '2023-02-02 08:32:19'),
+(58, 'user', '0', 0, '2023-02-02 13:44:59');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Configurazione_variazione`
---
--- Creazione: Gen 26, 2023 alle 15:41
 --
 
 DROP TABLE IF EXISTS `Configurazione_variazione`;
@@ -213,20 +241,10 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   KEY `Articolo_id` (`Articolo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Configurazione_variazione`:
---   `Opzio_variazione_id`
---       `Opzione_variazione` -> `Id`
---   `Articolo_id`
---       `Articolo` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Dettaglio_ordine`
---
--- Creazione: Gen 26, 2023 alle 15:38
 --
 
 DROP TABLE IF EXISTS `Dettaglio_ordine`;
@@ -242,20 +260,10 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   KEY `Ordine_id` (`Ordine_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Dettaglio_ordine`:
---   `Articolo_in_carr_id`
---       `Articolo_in_carrello` -> `Id`
---   `Ordine_id`
---       `Ordine` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Dimensione`
---
--- Creazione: Gen 26, 2023 alle 14:47
 --
 
 DROP TABLE IF EXISTS `Dimensione`;
@@ -268,16 +276,10 @@ CREATE TABLE IF NOT EXISTS `Dimensione` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Dimensione`:
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Forma_di_pagamento`
---
--- Creazione: Gen 26, 2023 alle 15:33
 --
 
 DROP TABLE IF EXISTS `Forma_di_pagamento`;
@@ -293,21 +295,20 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `Forma_di_pagamento`:
---   `Utente_id`
---       `Utente` -> `Id`
+-- Dump dei dati per la tabella `Forma_di_pagamento`
 --
+
+INSERT INTO `Forma_di_pagamento` (`Id`, `Circuito`, `Numero_carta`, `Data_scadenza`, `CVV`, `Tipo_di_pagamento`, `Utente_id`, `Status`, `Timestamp`) VALUES
+(3, 'Unknown', '4444 5555 6666 7777', '2023-02-02', 1, 1, 4, 0, '2023-02-02 14:59:11'),
+(4, 'American Express', '3434 4545 5656 6767', '2023-02-12', 2, 1, 5, 0, '2023-02-02 15:02:01');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Indirizzo`
---
--- Creazione: Gen 24, 2023 alle 18:08
--- Ultimo aggiornamento: Gen 28, 2023 alle 14:15
 --
 
 DROP TABLE IF EXISTS `Indirizzo`;
@@ -320,25 +321,21 @@ CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Status` int(4) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `Indirizzo`:
---
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `Indirizzo`
 --
 
 INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`, `Timestamp`) VALUES
-(1, 'Unset', 0, 'Unset', 0, 0, '2023-01-28 14:15:44');
+(1, 'Unset', 0, 'Unset', 0, 0, '2023-01-28 14:15:44'),
+(2, 'Santa Maria Maddalena', 100, 'Rimini', 47900, 0, '2023-02-02 13:52:44'),
+(3, 'Santa Maria Maddalena', 100, 'Rimini', 47900, 0, '2023-02-02 14:00:40');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Magazzino`
---
--- Creazione: Gen 26, 2023 alle 14:52
 --
 
 DROP TABLE IF EXISTS `Magazzino`;
@@ -352,18 +349,10 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
   KEY `Indirizzo_id` (`Indirizzo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Magazzino`:
---   `Indirizzo_id`
---       `Indirizzo` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Opzione_variazione`
---
--- Creazione: Gen 26, 2023 alle 15:20
 --
 
 DROP TABLE IF EXISTS `Opzione_variazione`;
@@ -377,18 +366,10 @@ CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   KEY `Variazione_id` (`Variazione_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Opzione_variazione`:
---   `Variazione_id`
---       `Variazione` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Ordine`
---
--- Creazione: Gen 26, 2023 alle 15:35
 --
 
 DROP TABLE IF EXISTS `Ordine`;
@@ -404,18 +385,10 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
   KEY `Forma_di_pag_id` (`Forma_di_pag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Ordine`:
---   `Forma_di_pag_id`
---       `Forma_di_pagamento` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Prodotto`
---
--- Creazione: Gen 26, 2023 alle 14:50
 --
 
 DROP TABLE IF EXISTS `Prodotto`;
@@ -433,20 +406,10 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   KEY `Categoria_id` (`Categoria_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Prodotto`:
---   `Dim_id`
---       `Dimensione` -> `Id`
---   `Categoria_id`
---       `Categoria` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Prodotto_in_raccolta`
---
--- Creazione: Gen 26, 2023 alle 15:22
 --
 
 DROP TABLE IF EXISTS `Prodotto_in_raccolta`;
@@ -461,20 +424,10 @@ CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
   KEY `Raccolta_id` (`Raccolta_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Prodotto_in_raccolta`:
---   `Prodotto_id`
---       `Prodotto` -> `Id`
---   `Raccolta_id`
---       `Raccolta` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Raccolta`
---
--- Creazione: Gen 26, 2023 alle 14:43
 --
 
 DROP TABLE IF EXISTS `Raccolta`;
@@ -489,18 +442,10 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Raccolta`:
---   `Utente_id`
---       `Utente` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Recensione`
---
--- Creazione: Gen 26, 2023 alle 15:39
 --
 
 DROP TABLE IF EXISTS `Recensione`;
@@ -517,21 +462,10 @@ CREATE TABLE IF NOT EXISTS `Recensione` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELAZIONI PER TABELLA `Recensione`:
---   `Dettaglio_ordine_id`
---       `Dettaglio_ordine` -> `Id`
---   `Utente_id`
---       `Utente` -> `Id`
---
-
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Utente`
---
--- Creazione: Gen 31, 2023 alle 15:32
--- Ultimo aggiornamento: Gen 31, 2023 alle 15:38
 --
 
 DROP TABLE IF EXISTS `Utente`;
@@ -548,30 +482,22 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELAZIONI PER TABELLA `Utente`:
---   `Indirizzo_id`
---       `Indirizzo` -> `Id`
---   `Claim_id`
---       `Claim` -> `Id`
---
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `Utente`
 --
 
 INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, `Indirizzo_id`, `Status`, `Timestamp`) VALUES
-(4, 'Endri', 'Domi', 'endri@takeit.com', 'takeit', 55, 1, 0, '2023-01-31 15:35:38'),
-(5, 'Federico', 'Brunelli', 'fede@takeit.com', 'takeit', 56, 1, 0, '2023-01-31 15:38:04');
+(4, 'Endri', 'Domi', 'endri@takeit.com', 'takeit', 55, 3, 0, '2023-01-31 15:35:38'),
+(5, 'Federico', 'Brunelli', 'fede@takeit.com', 'takeit', 56, 1, 0, '2023-01-31 15:38:04'),
+(6, 'Chiara', 'Delmonte', 'chiara.delmonte@takeit.com', 'takeit', 57, 1, 0, '2023-02-02 08:32:19'),
+(7, 'Mario', 'Rossi', 'mario@rossi.com', 'mariorossi', 58, 1, 0, '2023-02-02 13:44:59');
 
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `Variazione`
---
--- Creazione: Gen 26, 2023 alle 15:24
 --
 
 DROP TABLE IF EXISTS `Variazione`;
@@ -586,12 +512,6 @@ CREATE TABLE IF NOT EXISTS `Variazione` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELAZIONI PER TABELLA `Variazione`:
---   `Categoria_id`
---       `Categoria` -> `Id`
---
-
---
 -- Limiti per le tabelle scaricate
 --
 
@@ -599,7 +519,6 @@ CREATE TABLE IF NOT EXISTS `Variazione` (
 -- Limiti per la tabella `Articolo`
 --
 ALTER TABLE `Articolo`
-  ADD CONSTRAINT `articolo_ibfk_1` FOREIGN KEY (`Magazzino_id`) REFERENCES `Magazzino` (`Id`),
   ADD CONSTRAINT `articolo_ibfk_2` FOREIGN KEY (`Prodotto_id`) REFERENCES `Prodotto` (`Id`),
   ADD CONSTRAINT `articolo_ibfk_3` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`Id`);
 
