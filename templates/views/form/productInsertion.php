@@ -18,7 +18,7 @@ Funzionalità richieste:
             // echo "</div> ";
             echo notifyAlert($error, 'danger');
         } ?>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <!-- Nome prodotto -->
             <div class="mb-4">
                 <label for="productName" class="form-label">Nome del prodotto</label>

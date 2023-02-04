@@ -221,9 +221,11 @@ class Dbh
      */
     public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
+
         echo $tableName."</br>";
         echo $field."</br>";
         echo $where."</br>";
+
         echo "SELECT `$field` FROM `$tableName` WHERE $where"."</br>";
         $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
         if (UtilsFunctions::checkExistence($response)) {
@@ -241,6 +243,7 @@ class Dbh
             echo "response is null" . '</br>';
             return null;
         }
+
         return UtilsFunctions::checkResponse($response[0][$field]) ? $response[0][$field] : null;
     }
 

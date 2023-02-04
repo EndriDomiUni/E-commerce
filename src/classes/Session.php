@@ -1,4 +1,7 @@
 <?php
+// These two lines are used for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 use utility\UtilsFunctions;
 
@@ -185,6 +188,7 @@ class Session extends Dbh
             $dimensionTableName = "Dimensione";
             $getDimensionIdCondition = "Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z";
             $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
+            echo "Dimension Id: ".$dimensionId."</br>";
             $status = 1;
             $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`, `Status`)
                 VALUES (?, ?, ?, ?, ?, ?)";
