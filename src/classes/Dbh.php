@@ -21,9 +21,9 @@ class Dbh
                 echo "Connection failed: " . $this->connection->connect_error;
             }
             $this->connection->set_charset($charset);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo "[Dbh:26] Sono qui";
-            echo "Connection failed: " . mysqli_connect_error();;
+            echo "Connection failed: " . mysqli_connect_error();
         }
     }
 
@@ -273,13 +273,13 @@ class Dbh
         $this->execute("DELETE FROM $tableName WHERE $where");
     }
     
-    public function getCategories()
+    public function getCategories() : array
     {
         $table = "Categoria";
         return $this->execute("SELECT * FROM $table");
     }
 
-    public function getProductById($id)
+    public function getProductById($id) : array
     {
         return $this->execute("SELECT * FROM PRODOTTO 
             WHERE `Id` = $id");
@@ -323,11 +323,12 @@ class Dbh
             }
             while(file_exists($path.$imageName));
             $fullPath = $path.$imageName;
+            echo "full path: ".$fullPath."</br>";
         }
 
         //Se non ci sono errori, sposto il file dalla posizione temporanea alla cartella di destinazione
         if(strlen($msg)==0){
-            if(!move_uploaded_file($image["tmp_name"], $fullPath)){
+            if(!move_uploaded_file($image["tmp_name"], getcwd().$fullPath)){
                 $msg.= "Errore nel caricamento dell'immagine.";
             }
             else{
