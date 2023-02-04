@@ -50,6 +50,8 @@ if (isset($_SESSION["Id"])) {
     } catch (Exception $e) {
         echo $e->getMessage();
     }
+} else {
+    echo $mainContent;
 }
 ?>
 
