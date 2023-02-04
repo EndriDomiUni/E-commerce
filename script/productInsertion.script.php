@@ -13,7 +13,7 @@ $session = new Session($_SESSION[ID]);
 
 if (isset($_POST['product-btn-insert']))
 {
-
+/*
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["product-image"]["name"]);
     $uploadOk = 1;
@@ -52,7 +52,6 @@ if (isset($_POST['product-btn-insert']))
         echo "Sorry, your file was not uploaded.</br>";
         // if everything is ok, try to upload file
     } else {
-        /*
         echo $_FILES["product-image"]["tmp_name"]."</br>";
         echo $target_file."</br>";
         $dirpath = realpath(dirname(getcwd()));
@@ -73,30 +72,35 @@ if (isset($_POST['product-btn-insert']))
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
-        //fclose($imageFile);
-        */
-    }
+*/
+}
 
-    $params = array(
-        NOME => filter_var($_POST['product-name'], FILTER_SANITIZE_SPECIAL_CHARS),
-        DESCRIZIONE => filter_var($_POST['product-description'], FILTER_SANITIZE_SPECIAL_CHARS),
-        IMMAGINE => $target_file,
-        DIMENSIONE_X_PRODOTTO => filter_var($_POST['product-dimensionX'], FILTER_SANITIZE_SPECIAL_CHARS),
-        DIMENSIONE_Y_PRODOTTO => filter_var($_POST['product-dimensionY'], FILTER_SANITIZE_SPECIAL_CHARS),
-        DIMENSIONE_Z_PRODOTTO => filter_var($_POST['product-dimensionZ'], FILTER_SANITIZE_SPECIAL_CHARS),
-        CATEGORIA_ID => filter_var($_POST['product-category'], FILTER_SANITIZE_SPECIAL_CHARS)
-    );
-    try {
-        $response = $session->insertProduct($params);
-        echo "response: ".$response."</br>";
-        if($response)
-        {
-            echo "[DEBUG:productInsertion.script.php->29]".$response."</br>";
-            $_SESSION[PRODOTTO_ID] = $response;
-            $_SESSION[CATEGORIA_ID] = $params[CATEGORIA_ID];
-            //header("Location: selectVariations.php");
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
+$target_dir = "uploads/";
+$target_path = $target_dir . basename( $_FILES["product-image"]["name"]);
+list($result, $msg) = $session->uploadImage($target_path, $_FILES["product-image"]);
+if($result == 0){
+    // ERROR
+}
+
+$params = array(
+    NOME => filter_var($_POST['product-name'], FILTER_SANITIZE_SPECIAL_CHARS),
+    DESCRIZIONE => filter_var($_POST['product-description'], FILTER_SANITIZE_SPECIAL_CHARS),
+    IMMAGINE => $msg,
+    DIMENSIONE_X_PRODOTTO => filter_var($_POST['product-dimensionX'], FILTER_SANITIZE_SPECIAL_CHARS),
+    DIMENSIONE_Y_PRODOTTO => filter_var($_POST['product-dimensionY'], FILTER_SANITIZE_SPECIAL_CHARS),
+    DIMENSIONE_Z_PRODOTTO => filter_var($_POST['product-dimensionZ'], FILTER_SANITIZE_SPECIAL_CHARS),
+    CATEGORIA_ID => filter_var($_POST['product-category'], FILTER_SANITIZE_SPECIAL_CHARS)
+);
+try {
+    $response = $session->insertProduct($params);
+    echo "response: ".$response."</br>";
+    if($response)
+    {
+        echo "[DEBUG:productInsertion.script.php->29]".$response."</br>";
+        $_SESSION[PRODOTTO_ID] = $response;
+        $_SESSION[CATEGORIA_ID] = $params[CATEGORIA_ID];
+        header("Location: selectVariations.php");
     }
+} catch (Exception $e) {
+    echo $e->getMessage();
 }
