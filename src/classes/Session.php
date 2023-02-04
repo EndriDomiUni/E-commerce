@@ -7,17 +7,17 @@ use utility\UtilsFunctions;
 
 class Session extends Dbh
 {
-    private readonly int $id; // $_SESSION["Id"];
+    private readonly int $id;
 
     public function __construct($id)
     {
         parent::__construct();
         $this->id = $id;
         if ($this->checkSessionId($this->id)) {
-           /* if($this->bindCartWithUser()) {
-                $cart = new Cart($this->id);
-                $this->cartId = $cart->getCartByUserId($this->id);
-            }*/
+            $claimType = $this->getClaimTypeFromId($this->id);
+            if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
+                $this->bindCartWithUser();
+            }
         }
     }
 
@@ -122,6 +122,11 @@ class Session extends Dbh
         }
     }
 
+    public function generateOrder($params) {
+        // id, Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pagamento
+
+    }
+
     /**
      * @throws Exception
      */
@@ -136,27 +141,22 @@ class Session extends Dbh
         }
     }
 
-    /**
-     * @throws Exception
-     */
-    private function bindCartWithUser(): bool
+
+    private function bindCartWithUser(): void
     {
         if (UtilsFunctions::issetSessionId()) {
             $query = "INSERT INTO carrello (Utente_id, Status)
             VALUES (?, ?)";
-            $res = parent::insertData($query,
+            parent::insertData($query,
                 $this->getCurrentUser()[ID],
                 STATUS_INTACT_DATA);
-            return UtilsFunctions::checkResponse($res);
-        }else {
-            throw new Exception("session id doesn't exist");
         }
     }
 
     public function getClaimTypeFromId($id): ?string
     {
         $res = parent::execute("SELECT * FROM Claim WHERE Id = '$id' ");
-        return $res[0][DESCRIZIONE];
+        return $res ? $res[0][DESCRIZIONE] : "";
     }
 
     public function insertProduct($params)

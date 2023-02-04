@@ -115,6 +115,10 @@ Funzionalità richieste:
     </div>
 </section>
 
+<section id="articles">
+
+</section>
+
 <section id="">
     <?php require './templates/views/user/premium.php';?>
 </section>

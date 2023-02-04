@@ -27,6 +27,7 @@ const JS = ROOT . "/assets/js";
  * /app/assets/img
  */
 const IMG = ROOT . "/assets/img";
+const UPLOADS = ROOT . "/uploads";
 
 // VIEWS ----------------------------------------------------------------
 const VIEW_ROOT = URL_ROOT . '/templates/views';
@@ -54,6 +55,8 @@ const STATUS_DELETED_DATA = 2;
 // UNSET ---------------------------------------------------------------
 const ADDRESS_UNSET = 1;
 const CLAIM_UNSET = 1;
+const DIMENSION_UNSET = 2;
+const CATEGORY_UNSET = 1;
 
 
 // TABLE NAME ----------------------------------------------------------
@@ -61,6 +64,8 @@ const UTENTE = "Utente";
 const CARRELLO = "Carrello";
 const CATEGORIA = "Categoria";
 const CLAIM = "Claim";
+const PRODOTTO = "Prodotto";
+const ARTICOLO = "Articolo";
 
 
 // TABLE COLUMN NAME ---------------------------------------------------
@@ -92,3 +97,4 @@ const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
 const PREZZO = "Prezzo_articolo";
 const PRODOTTO_ID = "Prodotto_id";
 const ARTICOLO_ID = "Articolo_id";
+const PRODOTTO_NOME = "";

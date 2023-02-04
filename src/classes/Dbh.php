@@ -3,11 +3,12 @@
 // These two lines are used for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 use utility\UtilsFunctions;
 
 include("./config/AppConstants.php");
-include("./src/classes/Session.php");
 include("./src/utility/UtilsFunctions.php");
+include("./src/classes/Session.php");
 
 class Dbh
 {
@@ -88,19 +89,19 @@ class Dbh
     }
 
 
-    public function getDimensionIdByParameters($dim_x, $dim_y, $dim_z) : array
+    public function getDimensionIdByParameters($dim_x, $dim_y, $dim_z): array
     {
         return $this->execute("SELECT Id FROM `Dimensione` 
             WHERE Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z");
     }
 
-    public function getVariationsByCategoryId($categoryId) : array
+    public function getVariationsByCategoryId($categoryId): array
     {
         return $this->execute("SELECT * FROM `Variazione`
             WHERE Categoria_id = '$categoryId'");
     }
 
-    public function getOptionsByVariationId($variationId) : array
+    public function getOptionsByVariationId($variationId): array
     {
         return $this->execute("SELECT * FROM `Opzione_variazione`
             WHERE Variazione_Id = '$variationId'");
@@ -127,7 +128,8 @@ class Dbh
      * @param $params
      * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
      */
-    public function register($params) {
+    public function register($params)
+    {
         if (UtilsFunctions::checkParams($params)) {
             if (!$this->checkEmail($params["Email"])) {
                 return "Esiste già un account con le stesse credenziali";
@@ -167,7 +169,8 @@ class Dbh
      * @param $params
      * @return mixed|string|void|null ID of the user if the login is successful, null otherwise.
      */
-    public function logIn($params)  {
+    public function logIn($params)
+    {
         if (UtilsFunctions::checkParams($params)) {
             if ($this->checkEmail($params["Email"])) {
                 return "L'utente non esiste";
@@ -221,29 +224,7 @@ class Dbh
      */
     public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
-
-        echo $tableName."</br>";
-        echo $field."</br>";
-        echo $where."</br>";
-
-        echo "SELECT `$field` FROM `$tableName` WHERE $where"."</br>";
         $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
-        if (UtilsFunctions::checkExistence($response)) {
-            if (is_array($response)) {
-                if (!empty($response)) {
-                    foreach ($response as $value) {
-                        echo "response value: " . $value[ID] . '</br>';
-                    }
-                } else {
-                    echo "response is empty. " . '</br>';
-                    return array();
-                }
-            }
-        } else {
-            echo "response is null" . '</br>';
-            return null;
-        }
-
         return UtilsFunctions::checkResponse($response[0][$field]) ? $response[0][$field] : null;
     }
 
@@ -272,7 +253,7 @@ class Dbh
     {
         $this->execute("DELETE FROM $tableName WHERE $where");
     }
-    
+
     public function getCategories() : array
     {
         $table = "Categoria";
@@ -339,5 +320,15 @@ class Dbh
         return array($result, $msg);
     }
 
+    public function getProductImg($productId): array|int|string
+    {
+        $query = "SELECT Immagine FROM Prodotto WHERE 'Id' = $productId";
+        return $this->execute($query);
+    }
 
+    public function loadArticles(): string|int|array
+    {
+        $query = "SELECT * FROM Articolo";
+        return $this->execute($query);
+    }
 }
