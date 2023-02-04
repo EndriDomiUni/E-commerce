@@ -21,13 +21,7 @@ sidebar.innerHTML += '<div class="sidebar">\n' +
     '                        </a>\n' +
     '                    </li>\n' +
     '                    <li>\n' +
-    '                        <a href="#" class="nav-link link-dark showContent">\n' +
-    '                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>\n' +
-    '                            Elimina prodotto\n' +
-    '                        </a>\n' +
-    '                    </li>\n' +
-    '                    <li>\n' +
-    '                        <a href="#" class="nav-link link-dark showContent">\n' +
+    '                        <a href="./warehouse.php" class="nav-link link-dark showContent">\n' +
     '                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>\n' +
     '                            Magazzino\n' +
     '                        </a>\n' +
