@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 02, 2023 alle 16:18
+-- Creato il: Feb 04, 2023 alle 17:54
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.1.12
 
@@ -32,7 +32,7 @@ USE `e-commerce`;
 DROP TABLE IF EXISTS `Articolo`;
 CREATE TABLE IF NOT EXISTS `Articolo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Prezzo` decimal(11,0) NOT NULL,
+  `Prezzo` varchar(100) NOT NULL,
   `Utente_id` int(11) NOT NULL,
   `Prodotto_id` int(11) NOT NULL,
   `Status` int(11) NOT NULL,
@@ -40,7 +40,14 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `Articolo`
+--
+
+INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `Timestamp`) VALUES
+(1, '0', 5, 1, 0, '2023-02-04 10:00:34');
 
 -- --------------------------------------------------------
 
@@ -195,7 +202,14 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `Categoria`
+--
+
+INSERT INTO `Categoria` (`Id`, `Nome`, `Descrizione`, `Status`, `Timestamp`) VALUES
+(1, 'name_unset', 'desc_unset', 0, '2023-02-04 09:47:10');
 
 -- --------------------------------------------------------
 
@@ -269,12 +283,19 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
 DROP TABLE IF EXISTS `Dimensione`;
 CREATE TABLE IF NOT EXISTS `Dimensione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Dim_X` decimal(11,0) NOT NULL,
-  `Dim_Y` decimal(11,0) NOT NULL,
-  `Dim_Z` decimal(11,0) NOT NULL,
+  `Dim_X` varchar(100) NOT NULL,
+  `Dim_Y` varchar(100) NOT NULL,
+  `Dim_Z` varchar(100) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `Dimensione`
+--
+
+INSERT INTO `Dimensione` (`Id`, `Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) VALUES
+(2, 'dimX_unset', 'dimY_unset', 'dimZ_unset', '2023-02-04 09:43:18');
 
 -- --------------------------------------------------------
 
@@ -404,7 +425,14 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   PRIMARY KEY (`Id`),
   KEY `Dim_id` (`Dim_id`),
   KEY `Categoria_id` (`Categoria_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `Prodotto`
+--
+
+INSERT INTO `Prodotto` (`Id`, `Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`, `Status`, `Timestamp`) VALUES
+(1, 'name_unset', 'desc_unset', 'img_unset', 2, 1, 0, '2023-02-04 09:55:55');
 
 -- --------------------------------------------------------
 
