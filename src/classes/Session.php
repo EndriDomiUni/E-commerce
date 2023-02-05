@@ -225,4 +225,26 @@ class Session extends Dbh
         }
         return "CLAIM incorrect";
     }
+
+    public function addArticle($params){
+
+        if (UtilsFunctions::checkParams($params)) {
+            echo "add article in Session</br>";
+            $prezzo = $params[PREZZO];
+            $utente_id = $params[UTENTE_ID];
+            $prodotto_id = $params[PRODOTTO_ID];
+            $status = 1;
+            $insertArticleQuery = "INSERT INTO `Articolo` (`Prezzo`, `Utente_id`, `Prodotto_id`, `Status`)
+                VALUES (?, ?, ?, ?)";
+            $res = $this->insertData($prezzo,
+                $utente_id,
+                $prodotto_id,
+                $status);
+            if (UtilsFunctions::checkResponse($res))
+            {
+                echo "id articolo: ".$res."</br>";
+                return $res;
+            }
+        }
+    }
 }

@@ -262,7 +262,7 @@ class Dbh
 
     public function getProductById($id) : array
     {
-        return $this->execute("SELECT * FROM PRODOTTO 
+        return $this->execute("SELECT * FROM Prodotto 
             WHERE `Id` = $id");
     }
 

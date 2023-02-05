@@ -10,13 +10,10 @@ require_once "./src/classes/Session.php";
 
 $session = new Session($_SESSION[ID]);
 
-echo "addArticle.script.php </br>";
 if (isset($_POST['article-btn-insert']))
 {
-
-
     $params = array(
-        PREZZO => filter_var($_POST['articlePrice'], FILTER_SANITIZE_SPECIAL_CHARS),
+        PREZZO => filter_var($_POST['article-price'], FILTER_SANITIZE_SPECIAL_CHARS),
         // TODO: completare
         UTENTE_ID => $session->getCurrentUser()[ID],
         PRODOTTO_ID => $session->getCurrentProduct()[ID],
@@ -27,7 +24,7 @@ if (isset($_POST['article-btn-insert']))
         if($response)
         {
             $session[ARTICOLO_ID] = $response;
-            header("Location: productInsertion.php");
+            //header("Location: productInsertion.php");
         }
     } catch (Exception $e) {
         echo $e->getMessage();
