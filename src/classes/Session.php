@@ -206,19 +206,23 @@ class Session extends Dbh
         }
         return false;
     }
-    /*
-    private function insertProductBySeller($params): bool
+
+    public function loadArticlesByUserId($userId): array|int|string
     {
-        $query = "INSERT INTO Prodotto (Nome, Descrizione, Immagine, Dimensione_id, Categoria_id,Status)
-            VALUES (?, ?, ?, ?, ?)";
-        $res = $this->dbh->insertData($query,
-            $params[NOME],
-            $params[DESCRIZIONE],
-            $params[IMMAGINE],
-            $params[DIMENSIONE_ID],
-            $params[CATEGORIA_ID]);
-        
-        return Utils::checkResponse($res);
+        $where = "Utente_id = $userId";
+        $query = "SELECT * FROM Articolo WHERE $where";
+        return parent::execute($query); // should return an array
     }
-    */
+
+    public function loadArticlesInCart($cartId): string|int|array
+    {
+        if ($this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_DESC
+            || $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_PRO_DESC) {
+
+            $where = "Carrello_id = $cartId";
+            $query = "SELECT * FROM Articolo_in_carrello WHERE $where";
+            return parent::execute($query); // should return an array
+        }
+        return "CLAIM incorrect";
+    }
 }
