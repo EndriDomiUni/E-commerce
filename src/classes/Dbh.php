@@ -338,4 +338,10 @@ class Dbh
         return $this->execute($query);
     }
 
+    public function getVariations(): string|int|array
+    {
+        $query = "SELECT * FROM Variazione";
+        return $this->execute($query);
+    }
+
 }

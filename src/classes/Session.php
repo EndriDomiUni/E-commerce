@@ -236,15 +236,27 @@ class Session extends Dbh
             $status = 1;
             $insertArticleQuery = "INSERT INTO `Articolo` (`Prezzo`, `Utente_id`, `Prodotto_id`, `Status`)
                 VALUES (?, ?, ?, ?)";
-            $res = $this->insertData($prezzo,
+            $res = $this->insertData($insertArticleQuery,
+                $prezzo,
                 $utente_id,
                 $prodotto_id,
                 $status);
+            echo "response after add article attempt: ".$res."</br>";
             if (UtilsFunctions::checkResponse($res))
             {
-                echo "id articolo: ".$res."</br>";
                 return $res;
             }
         }
+    }
+
+    public function addConfigurationArticle($params) : int
+    {
+        $query = "INSERT INTO Configurazione_variazione (Articolo_id, Opzio_variazione_id, Status)
+            VALUES (?, ?, ?)";
+        $res = parent::insertData($query,
+            $params[ARTICOLO_ID],
+            $params[OPZIONE_ID],
+            STATUS_MODIFIED_DATA);
+        return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 }
