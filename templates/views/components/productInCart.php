@@ -15,7 +15,7 @@
 
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
-                $cartId = $session->getCartId();
+                $cartId = $session->getUserCartIdFromDb();
                 $articlesInCart = $session->loadArticlesInCart($cartId);
 
                 var_dump($articlesInCart);
