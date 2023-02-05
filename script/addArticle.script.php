@@ -62,10 +62,21 @@ if (isset($_POST['article-btn-insert']))
             }
             $warehouseArticleParams = [
                 TAX => $tax,
-                DATA_INIZIO => $_];
+                DATA_INIZIO => date("yy-mm-dd/m/y H:i"),
+                DATA_FINE => date("yy-mm-dd/m/y H:i",2024),
+                ARTICOLO_ID => $articleIdResponse,
+                MAGAZZINO_ID => filter_var($_POST['warehouse-id'], FILTER_SANITIZE_SPECIAL_CHARS)
+                ];
 
+            $warehouseArticleResponse = $session->addWarehouseArticle($warehouseArticleParams);
+            if ($warehouseArticleResponse){
+                echo "Articolo in magazzino: ".$warehouseArticleResponse."</br>";
+                //header("Location: dashboard.php");
+            }
+            else{
+                echo "Errore inserimento articolo in magazzino </br>";
+            }
 
-            //header("Location: dashboard.php");
         }
     } catch (Exception $e) {
         echo $e->getMessage();

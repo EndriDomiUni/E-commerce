@@ -101,3 +101,6 @@ const ARTICOLO_ID = "Articolo_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const PRODOTTO_NOME = "";
 const TAX = "Tassa";
+const DATA_INIZIO = "Data_inizio";
+const DATA_FINE = "Data_fine";
+const MAGAZZINO_ID = "Magazzino_id";

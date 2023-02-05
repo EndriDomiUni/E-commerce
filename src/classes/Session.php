@@ -259,4 +259,19 @@ class Session extends Dbh
             STATUS_MODIFIED_DATA);
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
+
+    public function addWarehouseArticle($params) : int
+    {
+        $query = "INSERT INTO Configurazione_variazione (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
+            VALUES (?, ?, ?)";
+        $res = parent::insertData($query,
+            $params[TAX],
+            $params[DATA_INIZIO],
+            $params[DATA_FINE],
+            $params[ARTICOLO_ID],
+            $params[MAGAZZINO_ID],
+            STATUS_MODIFIED_DATA);
+        return UtilsFunctions::checkResponse($res) ? $res : 0;
+    }
+
 }
