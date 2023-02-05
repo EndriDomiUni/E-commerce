@@ -1,9 +1,5 @@
 <?php
 
-// These two lines are used for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require_once("./assets/css/style.php");
 require_once("./assets/js/script.php");
 
@@ -23,41 +19,38 @@ require_once("./assets/js/script.php");
 <!-- ======================= Header END -->
 
 
- <?php
+<?php
 if (isset($_SESSION["Id"])) {
     try {
         $session = new Session($_SESSION["Id"]);
         if ($session->checkSessionId($_SESSION["Id"])) {
-            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
-                if ($claimType === CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
-                    if ($title === "Dashboard" || $title === "Insert product" || $title === "Edit product" ||
-                        $title === "Warehouse") {
-                        echo '<div class="row">
+            if ($title === "Dashboard" || $title === "Insert product" || $title === "Edit product" ||
+                $title === "Warehouse" || $title === "Configurazione articolo") {
+                $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+                if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
+
+                    echo '<div class="row">
                                 <div id="sidebar" class="col">
                                 </div>
-
+                                
                                 <div class="col-9">';
-                        echo $mainContent;
-                        echo '      </div>
+                                    echo $mainContent;
+                    echo '      </div>
                         </div>';
 
-                        echo '<script src="/app/assets/js/generateSidebar.js" type="text/javascript">',
-                        '</script>';
-
-                    } else { // se non è una pagina da seller
-                        echo $mainContent;
-                    }
-                } else { // se non è seller o seller pro
-                    echo $mainContent;
+                    echo '<script src="/app/assets/js/generateSidebar.js" type="text/javascript">',
+                    '</script>';
                 }
-        } else { // se non ha accesso alla sessione
-            echo "sono qui";
-            //echo $mainContent;
+            } else {
+                echo $mainContent;
+            }
+        } else {
+            echo $mainContent;
         }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
-} else { // se è un guest
+} else {
     echo $mainContent;
 }
 ?>

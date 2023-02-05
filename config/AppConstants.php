@@ -57,6 +57,7 @@ const ADDRESS_UNSET = 1;
 const CLAIM_UNSET = 1;
 const DIMENSION_UNSET = 2;
 const CATEGORY_UNSET = 1;
+const VARIATION_UNSET = 1;
 
 
 // TABLE NAME ----------------------------------------------------------

@@ -332,4 +332,10 @@ class Dbh
         return $this->execute($query);
     }
 
+    public function getWarehouses(): string|int|array
+    {
+        $query = "SELECT * FROM Magazzino";
+        return $this->execute($query);
+    }
+
 }

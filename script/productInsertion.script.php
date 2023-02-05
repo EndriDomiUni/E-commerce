@@ -8,7 +8,6 @@ use utility\UtilsFunctions;
 
 require_once "./src/classes/Session.php";
 
-
 $session = new Session($_SESSION[ID]);
 
 if (isset($_POST['product-btn-insert']))
@@ -44,6 +43,5 @@ if (isset($_POST['product-btn-insert']))
     else {
         echo "Errore caricamento immagine</br>";
     }
-
 
 }
