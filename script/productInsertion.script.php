@@ -34,6 +34,7 @@ if (isset($_POST['product-btn-insert']))
                 echo "[DEBUG:productInsertion.script.php->29]".$response."</br>";
                 $_SESSION[PRODOTTO_ID] = $response;
                 $_SESSION[CATEGORIA_ID] = $params[CATEGORIA_ID];
+
                 header("Location: selectVariations.php");
             }
         } catch (Exception $e) {

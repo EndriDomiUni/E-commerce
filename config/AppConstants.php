@@ -58,7 +58,7 @@ const CLAIM_UNSET = 1;
 const DIMENSION_UNSET = 2;
 const CATEGORY_UNSET = 1;
 const VARIATION_UNSET = 1;
-
+const CONFIGURATION_VARIATION_UNSET = 1;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
@@ -67,7 +67,7 @@ const CATEGORIA = "Categoria";
 const CLAIM = "Claim";
 const PRODOTTO = "Prodotto";
 const ARTICOLO = "Articolo";
-
+const INDIRIZZO = "Indirizzo";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 const ID = "Id";
@@ -98,4 +98,6 @@ const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
 const PREZZO = "Prezzo";
 const PRODOTTO_ID = "Prodotto_id";
 const ARTICOLO_ID = "Articolo_id";
-const QUANTITA = "Quantità";
+const OPZIONE_ID = "Opzio_variazione_id";
+const PRODOTTO_NOME = "";
+const TAX = "Tassa";

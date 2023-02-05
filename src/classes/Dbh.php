@@ -262,7 +262,7 @@ class Dbh
 
     public function getProductById($id) : array
     {
-        return $this->execute("SELECT * FROM PRODOTTO 
+        return $this->execute("SELECT * FROM Prodotto 
             WHERE `Id` = $id");
     }
 
@@ -335,6 +335,12 @@ class Dbh
     public function getWarehouses(): string|int|array
     {
         $query = "SELECT * FROM Magazzino";
+        return $this->execute($query);
+    }
+
+    public function getVariations(): string|int|array
+    {
+        $query = "SELECT * FROM Variazione";
         return $this->execute($query);
     }
 
