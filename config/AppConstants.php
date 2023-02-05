@@ -100,3 +100,4 @@ const PRODOTTO_ID = "Prodotto_id";
 const ARTICOLO_ID = "Articolo_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const PRODOTTO_NOME = "";
+const TAX = "Tassa";
