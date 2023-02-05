@@ -4,15 +4,26 @@
 
     <?php
         $dbh = new Dbh();
-
         $articles = $dbh->loadArticles();
+
         if (is_array($articles)) {
             foreach ($articles as $article) {
 
+                echo "current id: " . $article[ID];
+                var_dump($article);
+
                 $whereProductId = "Id = " . $article[PRODOTTO_ID];
-                $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId);
-                $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId);
-                $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId);
+                $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId) !== null
+                    ? $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId)
+                    : "Error get img";
+
+                $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId) !== null
+                    ? $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId)
+                    : "Error get name";
+
+                $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId) !== null
+                    ? $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId)
+                    : "Error get price";
 
                 echo ' 
                  <div class="card mb-3" style="max-width: 540px;">
