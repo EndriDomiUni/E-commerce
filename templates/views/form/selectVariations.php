@@ -17,19 +17,25 @@ if (isset($error)){
                 <?php
                     $dbh = new Dbh();
                     $categoryId = $_SESSION[CATEGORIA_ID];
-                    $variations = $dbh->getVariationsByCategoryId($categoryId);
-                    foreach ($variations as $variation)
-                    {
-                        echo "<label for='variation-id-{$variation[ID]}'>Variazione {$variation[ID]}</label>";
-                        echo "<select class='form-select' id='variation-id-{$variation[ID]}' name='variation-id-{$variation[ID]}' required>";
-                        $options = $dbh->getOptionsByVariationId($variation[ID]);
-                        foreach ($options as $option)
+                    $whereCategoryId = "Id = ".$categoryId;
+                    $categoryId = $dbh->selectSpecificField(CATEGORIA, ID, $whereCategoryId);
+                    if($categoryId!==null){
+                        echo "categoria id: ".$categoryId."</br>";
+                        $variations = $dbh->getVariationsByCategoryId($categoryId);
+                        var_dump($variations);
+                        foreach ($variations as $variation)
                         {
-                            $optionId = $option["Id"];
-                            $optionValue = $option["Valore"];
-                            echo "<option value='$optionId'>$optionValue</option>";
+                            echo "<label for='variation-id-{$variation[ID]}'>Variazione {$variation[ID]}</label>";
+                            echo "<select class='form-select' id='variation-id-{$variation[ID]}' name='variation-id-{$variation[ID]}' required>";
+                            $options = $dbh->getOptionsByVariationId($variation[ID]);
+                            foreach ($options as $option)
+                            {
+                                $optionId = $option["Id"];
+                                $optionValue = $option["Valore"];
+                                echo "<option value='$optionId'>$optionValue</option>";
+                            }
+                            echo "</select>";
                         }
-                        echo "</select>";
                     }
                 ?>
             </div>
@@ -39,7 +45,6 @@ if (isset($error)){
                 <input type="text" class="form-control" id="article-price" name="article-price" aria-describedby="articlePriceHelp" required />
                 <div id="articlePriceHelp" class="form-text">Verrà visualizzato come prezzo dell'articolo.</div>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit" name="article-btn-insert">Inserisci Articolo</button>
 
             <!-- Magazzino -->
             <div class="mb-3">
@@ -48,14 +53,17 @@ if (isset($error)){
                     <option value="">--Seleziona magazzino--</option>
                     <?php
                     $warehouses = $dbh->getWarehouses();
-                    foreach ($warehouses as $warehouse) {
-                        //$nome = $warehouse["Nome"];
-                        $warehouseId = $warehouse["Id"];
-                        echo "<option value='$warehouseId'>$warehouse</option>";
+                    if(is_array($warehouses)){
+                        foreach ($warehouses as $warehouse) {
+                            //$nome = $warehouse["Nome"];
+                            $warehouseId = $warehouse["Id"];
+                            echo "<option value='$warehouseId'>$warehouse</option>";
+                        }
                     }
                     ?>
                 </select>
             </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit" name="article-btn-insert">Inserisci Articolo</button>
         </form>
     </div>
 </section>
