@@ -8,8 +8,8 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
-        $dbh = new Dbh();
-        $articles = $dbh->loadArticles();
+        $session = new Session($_SESSION[ID]);
+        $articles = $session->loadArticles();
 
         if (is_array($articles)) {
             foreach ($articles as $article) {
@@ -18,19 +18,21 @@
                 var_dump($article);
 
                 $whereProductId = "Id = " . $article[PRODOTTO_ID];
-                $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId) !== null
-                    ? $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId)
+                $currentProductImage = $session->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId) !== null
+                    ? $session->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId)
                     : "Error get img";
 
-                $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId) !== null
-                    ? $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId)
+                $currentProductName = $session->selectSpecificField(PRODOTTO, NOME, $whereProductId) !== null
+                    ? $session->selectSpecificField(PRODOTTO, NOME, $whereProductId)
                     : "Error get name";
 
-                $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId) !== null
-                    ? $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId)
+                $currentProductPrice = $session->selectSpecificField(ARTICOLO, PREZZO, $whereProductId) !== null
+                    ? $session->selectSpecificField(ARTICOLO, PREZZO, $whereProductId)
                     : "Error get price";
 
-                $currentArticleVariations = $session
+                $currentArticleConfigurations = $session->getArticleConfigurations($article[ID]);
+
+
                 echo ' 
                  <div class="card mb-3" style="max-width: 540px;">
                         <div class="row no-gutters">
@@ -44,8 +46,16 @@
                                     <div class="card-price">
                                         <p class="card-text">Price:  ' . $currentProductPrice . '</p>
                             </div>
-                            <div class="card-size">
-                                <select class="form-select" aria-label="Default select example">
+                            <div class="card-size">';
+                foreach ($currentArticleConfigurations as $articleConfiguration){
+                    $option_configuration_id = $articleConfiguration[OPZIONE_ID];
+                    $queryCondition = "";
+                    $option_variation = $session->getRecord(OPZIONE_VARIAZIONE);
+                    //TODO: aggiungere taglia e opzioni
+                }
+
+
+                                '<select class="form-select" aria-label="Default select example">
                                     <option selected>Taglia</option>
                                     <option value="1">S</option>
                                     <option value="2">M</option>

@@ -68,6 +68,7 @@ const CLAIM = "Claim";
 const PRODOTTO = "Prodotto";
 const ARTICOLO = "Articolo";
 const INDIRIZZO = "Indirizzo";
+const OPZIONE_VARIAZIONE = "Opzione_variazione";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 const ID = "Id";
