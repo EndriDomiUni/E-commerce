@@ -262,8 +262,10 @@ class Session extends Dbh
 
     public function addWarehouseArticle($params) : int
     {
-        $query = "INSERT INTO Configurazione_variazione (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
-            VALUES (?, ?, ?)";
+        $query = "INSERT INTO Articolo_in_magazzino (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
+            VALUES (?, ?, ?, ?, ?, ?)";
+        echo "sono qui";
+
         $res = parent::insertData($query,
             $params[TAX],
             $params[DATA_INIZIO],

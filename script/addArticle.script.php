@@ -62,8 +62,8 @@ if (isset($_POST['article-btn-insert']))
             }
             $warehouseArticleParams = [
                 TAX => $tax,
-                DATA_INIZIO => date("yy-mm-dd/m/y H:i"),
-                DATA_FINE => date("yy-mm-dd/m/y H:i",2024),
+                DATA_INIZIO => date("Y-m-d"),
+                DATA_FINE => SCADENZA,
                 ARTICOLO_ID => $articleIdResponse,
                 MAGAZZINO_ID => filter_var($_POST['warehouse-id'], FILTER_SANITIZE_SPECIAL_CHARS)
                 ];
