@@ -1,5 +1,7 @@
 <?php
-    require_once "./config/AppConstants.php";
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
     require_once "./src/classes/Dbh.php";
 ?>
 
@@ -143,7 +145,7 @@
 
         <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
         <?php
-            include './templates/views/components/productInCart.php';
+        // include './templates/views/components/productInCart.php';
         ?>
 
 

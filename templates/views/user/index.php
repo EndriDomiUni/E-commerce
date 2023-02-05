@@ -109,9 +109,7 @@ Funzionalità richieste:
 
 <section id="">
     <div class="row">
-        <div class="col"><?php require './templates/views/components/productCard.php'; ?></div>
-        <div class="col"><?php require './templates/views/components/productCard.php'; ?></div>
-        <div class="col"><?php require './templates/views/components/productCard.php'; ?></div>
+        <!-- <div class="col"><?php require './templates/views/components/productCard.php'; ?></div> -->
     </div>
 </section>
 
