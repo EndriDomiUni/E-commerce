@@ -25,7 +25,7 @@ if (isset($_SESSION["Id"])) {
         $session = new Session($_SESSION["Id"]);
         if ($session->checkSessionId($_SESSION["Id"])) {
             if ($title === "Dashboard" || $title === "Insert product" || $title === "Edit product" ||
-                $title === "Warehouse") {
+                $title === "Warehouse" || $title === "Configurazione articolo") {
                 $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
                 if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
 

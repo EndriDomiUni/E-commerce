@@ -1,4 +1,5 @@
 <?php
+
 // queste due linee fungono da debbuger
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -7,13 +8,12 @@ use utility\UtilsFunctions;
 
 require_once "./src/classes/Session.php";
 
-$sessionId = $_SESSION[ID];
+$session = new Session($_SESSION[ID]);
 
-$session = $_SESSION;
-
+echo "addArticle.script.php </br>";
 if (isset($_POST['article-btn-insert']))
 {
-    echo "addArticle.script.php </br>";
+
 
     $params = array(
         PREZZO => filter_var($_POST['articlePrice'], FILTER_SANITIZE_SPECIAL_CHARS),
