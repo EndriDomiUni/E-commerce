@@ -3,6 +3,11 @@
 <section>
 
     <?php
+
+    // These two lines are used for debugging
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
         $dbh = new Dbh();
         $articles = $dbh->loadArticles();
 
@@ -80,6 +85,8 @@
                     </div>
                     </div>';
             }
+        } else {
+            echo "Articoli  non disponibili";
         }
     ?>
 </section>
