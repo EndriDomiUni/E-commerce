@@ -8,6 +8,7 @@ use utility\UtilsFunctions;
 class Session extends Dbh
 {
     private readonly int $id;
+    private int $cartId;
 
     public function __construct($id)
     {
@@ -16,7 +17,7 @@ class Session extends Dbh
         if ($this->checkSessionId($this->id)) {
             $claimType = $this->getClaimTypeFromId($this->id);
             if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
-                $this->bindCartWithUser();
+                $this->cartId = $this->bindCartWithUser();
             }
         }
     }
@@ -60,7 +61,10 @@ class Session extends Dbh
         ];
     }
 
-
+    public function getCartId(): int
+    {
+        return $this->cartId;
+    }
 
     /**
      * returns current product while insertion new product
@@ -142,7 +146,7 @@ class Session extends Dbh
     }
 
 
-    private function bindCartWithUser(): void
+    private function bindCartWithUser(): int
     {
         if (UtilsFunctions::issetSessionId()) {
             $query = "INSERT INTO carrello (Utente_id, Status)

@@ -98,4 +98,4 @@ const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
 const PREZZO = "Prezzo";
 const PRODOTTO_ID = "Prodotto_id";
 const ARTICOLO_ID = "Articolo_id";
-const PRODOTTO_NOME = "";
+const QUANTITA = "Quantità";
