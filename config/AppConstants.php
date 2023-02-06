@@ -105,3 +105,4 @@ const DIMENSIONE_Y_PRODOTTO = "Dimensione_y";
 const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
 const PREZZO = "Prezzo";
 const TAX = "Tassa";
+const QUANTITA = "Quantità";

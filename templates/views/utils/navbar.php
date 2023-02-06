@@ -143,20 +143,21 @@ ini_set('display_errors', 1);
     </div>
     <div class="offcanvas-body">
 
-        <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
         <?php
             if(isset($_SESSION["Id"])) {
                 $session = new Session($_SESSION["Id"]);
                 if ($session->checkSessionId($_SESSION["Id"])) {
                     $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
                     if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
-                        // require './templates/views/components/productInCart.php';
+                         require './templates/views/components/productInCart.php';
                     }
                 }
             } else {
                 echo '<p>Niente</p>';
             }
         ?>
+
+        <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
 
     </div>
 </div>
