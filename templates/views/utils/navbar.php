@@ -2,7 +2,10 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-    require_once "./src/classes/Dbh.php";
+
+require_once "UIHelper.php";
+require_once "./src/classes/Dbh.php";
+
 ?>
 
 <nav class="navbar navbar-expand-lg bg-light bd-navbar sticky-top" id="navbar-main">
@@ -142,20 +145,8 @@ ini_set('display_errors', 1);
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-
-
         <?php
-            if(isset($_SESSION["Id"])) {
-                $session = new Session($_SESSION["Id"]);
-                if ($session->checkSessionId($_SESSION["Id"])) {
-                    $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
-                    if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
-                         require './templates/views/components/productInCart.php';
-                    }
-                }
-            } else {
-                echo '<p>Niente</p>';
-            }
+            showArticlesInCart();
         ?>
         <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
     </div>

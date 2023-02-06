@@ -1,3 +1,11 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once "UIHelper.php";
+?>
+
 
 <div class="container text-center px-4">
     <h1>Carrello</h1>
@@ -9,12 +17,11 @@
                     <img src="./assets/img/logo.svg" class="img-fluid" alt="Carrello Vuoto">
                 </div>
             </div>
-            <div class="col">
-                <h2>Il carrello è vuoto</h2>
-                <p>
-                    Vai all' <a href="index.php">home page<a/>.
-                </p>
-            </div>
+
+            <?php
+                showArticlesInCart();
+            ?>
+
             <div class="col">
                 <div class="row rounded">
                     <h3>Dati utenti</h3>

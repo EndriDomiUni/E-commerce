@@ -2,6 +2,8 @@
 
 namespace utility;
 
+use Session;
+
 class UtilsFunctions
 {
     public static function checkParams(array $params): bool
@@ -29,4 +31,6 @@ class UtilsFunctions
     {
         return isset($value);
     }
+
+
 }

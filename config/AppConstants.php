@@ -81,9 +81,6 @@ const ARTICOLO_ID = "Articolo_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const CLAIM_ID = "Claim_id";
 const CATEGORIA_ID = "Categoria_id";
-const PRODOTTO_ID = "Prodotto_id";
-const ARTICOLO_ID = "Articolo_id";
-const OPZIONE_ID = "Opzio_variazione_id";
 const MAGAZZINO_ID = "Magazzino_id";
 
 // FIELD

@@ -8,7 +8,6 @@ use utility\UtilsFunctions;
 class Session extends Dbh
 {
     private readonly int $id;
-    private int $cartId;
 
     public function __construct($id)
     {
