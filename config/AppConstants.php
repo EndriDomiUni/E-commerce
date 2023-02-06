@@ -59,6 +59,7 @@ const DIMENSION_UNSET = 2;
 const CATEGORY_UNSET = 1;
 const VARIATION_UNSET = 1;
 const CONFIGURATION_VARIATION_UNSET = 1;
+const CARRELLO_UNSET = 1;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
@@ -70,15 +71,24 @@ const ARTICOLO = "Articolo";
 const INDIRIZZO = "Indirizzo";
 
 // TABLE COLUMN NAME ---------------------------------------------------
+// ID
 const ID = "Id";
+const CARRELLO_ID = "Carrello_id";
+const INDIRIZZO_ID = "Indirizzo_id";
+const UTENTE_ID = "Utente_id";
+const PRODOTTO_ID = "Prodotto_id";
+const ARTICOLO_ID = "Articolo_id";
+const OPZIONE_ID = "Opzio_variazione_id";
+const CLAIM_ID = "Claim_id";
+const CATEGORIA_ID = "Categoria_id";
+
+// FIELD
 const NOME = "Nome";
 const COGNOME = "Cognome";
 const EMAIL = "Email";
 const PASSWORD = "Password";
 const STATUS = "Status";
-const CLAIM_ID = "Claim_id";
 const CLAIM_TYPE = "Claim_type";
-const INDIRIZZO_ID = "Indirizzo_id";
 const VIA = "Via";
 const NUMERO_CIVICO = "Numero_civico";
 const CITTA = "Citta";
@@ -88,10 +98,8 @@ const NUMERO_CARTA = "Numero_carta";
 const DATA_SCADENZA = "Data_scadenza";
 const CVV = "CVV";
 const TIPO_DI_PAGAMENTO = "Tipo_di_pagamento";
-const UTENTE_ID = "Utente_id";
 const DESCRIZIONE = "Descrizione";
 const IMMAGINE = "Immagine";
-const CATEGORIA_ID = "Categoria_id";
 const DIMENSIONE_X_PRODOTTO = "Dimensione_x";
 const DIMENSIONE_Y_PRODOTTO = "Dimensione_y";
 const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
@@ -100,7 +108,7 @@ const PRODOTTO_ID = "Prodotto_id";
 const ARTICOLO_ID = "Articolo_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const PRODOTTO_NOME = "";
-const TAX = "Tassa";
 const DATA_INIZIO = "Data_inizio";
 const DATA_FINE = "Data_fine";
 const MAGAZZINO_ID = "Magazzino_id";
+const TAX = "Tassa";
