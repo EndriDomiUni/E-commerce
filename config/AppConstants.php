@@ -81,6 +81,10 @@ const ARTICOLO_ID = "Articolo_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const CLAIM_ID = "Claim_id";
 const CATEGORIA_ID = "Categoria_id";
+const PRODOTTO_ID = "Prodotto_id";
+const ARTICOLO_ID = "Articolo_id";
+const OPZIONE_ID = "Opzio_variazione_id";
+const MAGAZZINO_ID = "Magazzino_id";
 
 // FIELD
 const NOME = "Nome";
@@ -104,11 +108,7 @@ const DIMENSIONE_X_PRODOTTO = "Dimensione_x";
 const DIMENSIONE_Y_PRODOTTO = "Dimensione_y";
 const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
 const PREZZO = "Prezzo";
-const PRODOTTO_ID = "Prodotto_id";
-const ARTICOLO_ID = "Articolo_id";
-const OPZIONE_ID = "Opzio_variazione_id";
-const PRODOTTO_NOME = "";
 const DATA_INIZIO = "Data_inizio";
 const DATA_FINE = "Data_fine";
-const MAGAZZINO_ID = "Magazzino_id";
 const TAX = "Tassa";
+const QUANTITA = "Quantità";

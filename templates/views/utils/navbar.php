@@ -143,6 +143,7 @@ ini_set('display_errors', 1);
     </div>
     <div class="offcanvas-body">
 
+
         <?php
             if(isset($_SESSION["Id"])) {
                 $session = new Session($_SESSION["Id"]);
@@ -156,8 +157,6 @@ ini_set('display_errors', 1);
                 echo '<p>Niente</p>';
             }
         ?>
-
         <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
-
     </div>
 </div>

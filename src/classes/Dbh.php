@@ -214,7 +214,7 @@ class Dbh
     }
 
     /**
-     *
+     * //TODO: DA FIXARE
      * Check always !== null
      *
      * @param string $tableName
@@ -229,7 +229,7 @@ class Dbh
     }
 
     /**
-     *
+     * //TODO: DA FIXARE
      * Check always !== null
      *
      * @param string $tableName
