@@ -239,7 +239,7 @@ class Dbh
     public function getRecord(string $tableName, string $where): mixed
     {
         $response = $this->execute("SELECT * FROM `$tableName` WHERE $where");
-        return UtilsFunctions::checkResponse($response[0]) ? $response[0] : null;
+        return UtilsFunctions::checkResponse($response[0][ID]) ? $response[0] : null;
     }
 
     /**
