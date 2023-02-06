@@ -49,8 +49,8 @@ if (isset($error)){
 
             <!-- Magazzino -->
             <div class="mb-3">
-                <label for="magazzinoId">Magazzino</label>
-                <select class="form-select" id="magazzinoId" required>
+                <label for="warehouse-id">Magazzino</label>
+                <select class="form-select" id="warehouse-id" name="warehouse-id" required>
                     <option value="">--Seleziona magazzino--</option>
                     <?php
                     $warehouses = $dbh->getWarehouses();
