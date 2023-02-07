@@ -30,7 +30,7 @@ function showArticlesInCart(): void
  *
  * @return void
  */
-function showArticles(): void
+function showAllArticles(): void
 {
     echo ' <div class="row">
             <div class="col">' . require './templates/views/components/productCard.php'; '</div>

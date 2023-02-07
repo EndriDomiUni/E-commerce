@@ -111,15 +111,12 @@ Funzionalità richieste:
         </div>
 </section> -->
 
-<section id="">
-
-</section>
-
 <section id="articles">
-    <?php showArticles(); ?>
+    <?php showAllArticles(); ?>
 </section>
 
-<section id="">
+
+<section id="premium">
     <?php require './templates/views/user/premium.php';?>
 </section>
 
