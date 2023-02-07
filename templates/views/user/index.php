@@ -112,7 +112,9 @@ Funzionalità richieste:
 </section> -->
 
 <section id="articles">
-    <?php showAllArticles(); ?>
+    <?php
+         showAllArticles();
+    ?>
 </section>
 
 

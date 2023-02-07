@@ -92,7 +92,7 @@ require_once "./src/classes/Dbh.php";
                                         $session = new Session($_SESSION["Id"]);
                                         if ($session->checkSessionId($_SESSION["Id"])) {
                                             $user = $session->getCurrentUser();
-                                            echo 'Ciao ' . $user["Nome"];
+                                            echo 'Ciao ' . $user[NOME];
                                         }
                                     } catch (Exception $e) {
                                         echo $e->getMessage();
