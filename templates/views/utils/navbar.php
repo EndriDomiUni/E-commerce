@@ -100,6 +100,7 @@ ini_set('display_errors', 1);
                                 }
                             ?>
                         </div>
+                        +
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end ">
                         <li><a class="dropdown-item" href="./login.php">Log in</a></li>

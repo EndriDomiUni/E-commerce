@@ -22,10 +22,8 @@ if (isset($error)){
                     if($categoryId!==null){
                         //echo "categoria id: ".$categoryId."</br>";
                         $variations = $dbh->getVariationsByCategoryId($categoryId);
-                        $counter = 0;
                         foreach ($variations as $variation){
 
-                            $counter++;
                             echo "<label for='variation-id-{$variation[ID]}'>Variazione {$variation[NOME]}</label>";
                             echo "<select class='form-select' id='variation-id-{$variation[ID]}' name='variation-id-{$variation[ID]}' required>";
                             $options = $dbh->getOptionsByVariationId($variation[ID]);
@@ -56,7 +54,6 @@ if (isset($error)){
                     $warehouses = $dbh->getWarehouses();
                     if(is_array($warehouses)){
                         foreach ($warehouses as $warehouse) {
-                            //$nome = $warehouse["Nome"];
                             $warehouseId = $warehouse["Id"];
                             $whereAddressId = "Id = " . $warehouse[INDIRIZZO_ID];
                             $addressVia = $dbh->selectSpecificField(INDIRIZZO, VIA, $whereAddressId);

@@ -1,5 +1,3 @@
-
-
 <section>
 
     <?php
@@ -7,17 +5,22 @@
     // These two lines are used for debugging
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
+    require_once "./src/classes/Session.php";
 
-        $session = new Session($_SESSION[ID]);
-        $articles = $session->loadArticles();
+    if ($_SESSION[ID] == null){
+        $_SESSION[ID] = -1;
+    }
+    $session = new Session($_SESSION[ID]);
+        //$articles = $session->loadArticles();
+        $products = $session->getProducts();
 
-        if (is_array($articles)) {
-            foreach ($articles as $article) {
+        if (is_array($products)) {
+            foreach ($products as $product) {
 
-                echo "current id: " . $article[ID];
-                var_dump($article);
+                echo "current id: " . $product[ID];
+                var_dump($product);
 
-                $whereProductId = "Id = " . $article[PRODOTTO_ID];
+                $whereProductId = "Id = " . $product[ID];
                 $currentProductImage = $session->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId) !== null
                     ? $session->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId)
                     : "Error get img";
@@ -29,9 +32,6 @@
                 $currentProductPrice = $session->selectSpecificField(ARTICOLO, PREZZO, $whereProductId) !== null
                     ? $session->selectSpecificField(ARTICOLO, PREZZO, $whereProductId)
                     : "Error get price";
-
-                $currentArticleConfigurations = $session->getArticleConfigurations($article[ID]);
-
 
                 echo ' 
                  <div class="card mb-3" style="max-width: 540px;">
@@ -47,15 +47,31 @@
                                         <p class="card-text">Price:  ' . $currentProductPrice . '</p>
                             </div>
                             <div class="card-size">';
+
+                $currentArticleConfigurations = $session->getArticleConfigurations($product[ID]) != null
+                    ? $session->getArticleConfigurations($article[ID]) : "Error get article configurations";
+                $variations = array();
+                $options = array();
+                echo $currentArticleConfigurations;
                 foreach ($currentArticleConfigurations as $articleConfiguration){
-                    $option_configuration_id = $articleConfiguration[OPZIONE_ID];
-                    $queryCondition = "";
-                    $option_variation = $session->getRecord(OPZIONE_VARIAZIONE);
-                    //TODO: aggiungere taglia e opzioni
+                    $option_id = $articleConfiguration[OPZIONE_ID];
+                    $queryOption = "WHERE 'Id' = $option_id";
+                    $currentOption = $session->getRecord(OPZIONE_VARIAZIONE, $queryOption);
+
+                    $currentVariation = $session->getVariationById($currentOption[VARIAZIONE_ID]);
+
+                    if (!in_array($currentVariation, $variations)){
+                        echo '<select class="form-select" id="article-variation" required name="article-variation" aria-label="Default select example">';
+                        echo '<option value="">--Seleziona opzione--</option>';
+                        $variations[$currentVariation[ID]] = $currentVariation;
+                    }
+                    if (!in_array($currentOption, $options)){
+                        echo '<option value="option-'.$currentOption[ID].'">'.$currentOption[VALORE];   
+                        $options[$currentOption[ID]] = $currentOption;
+                    }
                 }
-
-
-                                '<select class="form-select" aria-label="Default select example">
+                /*
+                echo '<select class="form-select" aria-label="Default select example">
                                     <option selected>Taglia</option>
                                     <option value="1">S</option>
                                     <option value="2">M</option>
@@ -69,7 +85,8 @@
                             <label class="btn btn-green form-check-label"> <input class="form-check-input" type="radio" autocomplete="off"> </label>
                             <label class="btn btn-orange form-check-label"> <input class="form-check-input" type="radio" autocomplete="off"> </label>
                             <label class="btn btn-pink form-check-label"> <input class="form-check-input" type="radio" autocomplete="off"> </label>
-                        </div>
+                        </div>*/
+                echo '
                     </div>
                     </div>
                     </div>

@@ -193,7 +193,6 @@ class Session extends Dbh
     public function insertProduct($params)
     {
         if (UtilsFunctions::checkParams($params)) {
-            $dimensionId = null;
             $nome = $params[NOME];
             $descrizione = $params[DESCRIZIONE];
             $immagine = $params[IMMAGINE];
@@ -209,10 +208,10 @@ class Session extends Dbh
                 if (UtilsFunctions::checkResponse($res)) {
                     $dimensionId = parent::getDimensionIdByParameters($dim_x, $dim_y, $dim_z);
                 } else {
-                    // Errore
+                    return false;
                 }
             }
-            $dimensionTableName = "Dimensione";
+            $dimensionTableName = DIMENSIONE;
             $getDimensionIdCondition = "Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z";
             $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
             echo "Dimension Id: " . $dimensionId . "</br>";
@@ -304,4 +303,14 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 
+    public function getArticleConfigurations($articleId){
+        $query = "SELECT * FROM ".CONFIGURAZIONE_VARIAZIONE." WHERE ".ARTICOLO_ID." = ".$articleId;
+        echo $query;
+        parent::execute($query);
+    }
+
+    public function getProducts(){
+        $query = "SELECT * FROM ".PRODOTTO;
+        parent::execute($query);
+    }
 }
