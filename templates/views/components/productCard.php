@@ -8,7 +8,7 @@
     require_once "./src/classes/Session.php";
 
     if ($_SESSION[ID] == null){
-        $_SESSION[ID] = -1;
+        $_SESSION[ID] = 1;
     }
     $session = new Session($_SESSION[ID]);
         //$articles = $session->loadArticles();
@@ -47,9 +47,10 @@
                                         <p class="card-text">Price:  ' . $currentProductPrice . '</p>
                             </div>
                             <div class="card-size">';
-
-                $currentArticleConfigurations = $session->getArticleConfigurations($product[ID]) != null
-                    ? $session->getArticleConfigurations($article[ID]) : "Error get article configurations";
+                $currentArticleConfigurations = $session->getArticlesByProductId($product[ID]) != null
+                ? $session->getArticlesByProductId($product[ID]) : "Errore get article by product id";
+                //$currentArticleConfigurations = $session->getArticleConfigurations($product[ID]) != null
+                //    ? $session->getArticleConfigurations($product[ID]) : "Error get article configurations";
                 $variations = array();
                 $options = array();
                 echo $currentArticleConfigurations;
@@ -94,7 +95,7 @@
                     <div class="row no-gutters">
                         <div class="col-md-5"></div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary" type="submit" name="" onclick="drawProductCardOnClick()">
+                            <button class="btn btn-primary" type="submit" name="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
                                     <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
                                 </svg>

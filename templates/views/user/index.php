@@ -7,6 +7,10 @@ Funzionalità richieste:
     .4 : query varie 
  -->
 
+<?php
+    require_once "UIHelper.php";
+?>
+
 <section id="intro">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -107,18 +111,14 @@ Funzionalità richieste:
         </div>
 </section> -->
 
-<section id="">
-    <div class="row">
-
-        <div class="col"><?php require './templates/views/components/productCard.php'; ?></div>
-    </div>
-</section>
-
 <section id="articles">
-
+    <?php
+         showAllArticles();
+    ?>
 </section>
 
-<section id="">
+
+<section id="premium">
     <?php require './templates/views/user/premium.php';?>
 </section>
 

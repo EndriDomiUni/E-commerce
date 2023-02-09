@@ -8,7 +8,6 @@ use utility\UtilsFunctions;
 class Session extends Dbh
 {
     private readonly int $id;
-    private int $cartId;
 
     public function __construct($id)
     {
@@ -25,8 +24,8 @@ class Session extends Dbh
             switch ($claimType) {
                 case CLAIM_USER_DESC:
                 case CLAIM_USER_PRO_DESC:
-                    echo "user cart id: " . $this->getUserCartIdFromDb() . '</br>';
-                    echo "user cart id session: " . $this->getCurrentUser()[CARRELLO_ID] . '</br>';
+                    // echo "user cart id: " . $this->getUserCartIdFromDb() . '</br>';
+                    // echo "user cart id session: " . $this->getCurrentUser()[CARRELLO_ID] . '</br>';
                     break;
                 case CLAIM_SELLER_DESC:
                 case CLAIM_SELLER_PR0_DESC:
@@ -59,7 +58,7 @@ class Session extends Dbh
         $_SESSION[STATUS] = $params[STATUS];
         $_SESSION[CLAIM_ID] = $params[CLAIM_ID];
         $_SESSION[INDIRIZZO_ID] = $params[INDIRIZZO_ID];
-        $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== CARRELLO_UNSET
+        $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== null && $this->getUserCartIdFromDb() !== CARRELLO_UNSET
             ? $this->getUserCartIdFromDb()
             : $this->bindCartWithUser();
     }
@@ -77,11 +76,6 @@ class Session extends Dbh
             INDIRIZZO_ID => $_SESSION[INDIRIZZO_ID],
             CARRELLO_ID => $_SESSION[CARRELLO_ID]
         ];
-    }
-
-    public function getCartId(): int
-    {
-        return $this->cartId;
     }
 
     /**
@@ -113,9 +107,6 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : null;
     }
 
-    /**
-     * @throws Exception
-     */
     public function insertAddressInformation($params): bool
     {
         $query = "INSERT INTO Indirizzo (Via, Numero_civico, Citta, CAP, Status)
@@ -150,17 +141,12 @@ class Session extends Dbh
 
     }
 
-    /**
-     * @throws Exception
-     */
     private function associatesUserInSessionAddress($addressId): void
     {
         if (UtilsFunctions::issetSessionId()) {
             if ($this->getCurrentUser()[ID] && $this->getCurrentUser()[CLAIM_ID]) {
                 parent::updateData($_SESSION[ID], UTENTE, INDIRIZZO_ID, $addressId);
             }
-        } else {
-            throw new Exception("session id doesn't exist");
         }
     }
 
@@ -181,7 +167,9 @@ class Session extends Dbh
     {
         $where = "Utente_id = " . $this->getCurrentUser()[ID];
         $res = parent::getRecord(CARRELLO, $where);
-        return UtilsFunctions::checkResponse($res[ID]) ? $res[ID] : CARRELLO_UNSET;
+        return UtilsFunctions::checkResponse($res[ID])
+            ? $res[ID]
+            : CARRELLO_UNSET;
     }
 
     public function getClaimTypeFromId($id): ?string
@@ -246,11 +234,9 @@ class Session extends Dbh
 
             $where = "Carrello_id = $cartId";
             $query = "SELECT * FROM Articolo_in_carrello WHERE $where";
-            $res = parent::execute($query);
-            var_dump($res);
-            return 0; // should return an array
+            return parent::execute($query); // should return an array
         }
-        return "CLAIM incorrect";
+        return CARRELLO_UNSET;
     }
 
     public function addArticle($params)
