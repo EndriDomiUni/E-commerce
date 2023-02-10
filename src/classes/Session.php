@@ -61,6 +61,9 @@ class Session extends Dbh
         $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== null && $this->getUserCartIdFromDb() !== CARRELLO_UNSET
             ? $this->getUserCartIdFromDb()
             : $this->bindCartWithUser();
+        $_SESSION[RACCOLTA_ID] = $this->getUserCollectionIdFromDb() !== null && $this->getUserCartIdFromDb() !== RACCOLTA_UNSET
+            ? $this->getUserCollectionIdFromDb()
+            : $this->generateCollectionRecord();
     }
 
     public function getCurrentUser(): array|int
@@ -74,8 +77,31 @@ class Session extends Dbh
             STATUS => $_SESSION[STATUS],
             CLAIM_ID => $_SESSION[CLAIM_ID],
             INDIRIZZO_ID => $_SESSION[INDIRIZZO_ID],
-            CARRELLO_ID => $_SESSION[CARRELLO_ID]
+            CARRELLO_ID => $_SESSION[CARRELLO_ID],
+            RACCOLTA_ID => $_SESSION[RACCOLTA_ID]
         ];
+    }
+
+    private function generateCollectionRecord(): array|int|string
+    {
+        if (UtilsFunctions::issetSessionId()) {
+            $query = "INSERT INTO Raccolta (Tipo_raccolta, Titolo, Utente_id, Status)
+            VALUES (?, ?, ?, ?)";
+            return parent::insertData($query,
+                WHISLIST,
+                WHISLIST_STRING,
+                $_SESSION[ID],
+                STATUS_INTACT_DATA);
+        }
+        return RACCOLTA_UNSET;
+    }
+
+    public function getUserCollectionIdFromDb() {
+        $where = "Utente_id = " . $this->getCurrentUser()[ID];
+        $res = parent::getRecord(RACCOLTA, $where);
+        return UtilsFunctions::checkResponse($res[ID])
+            ? $res[ID]
+            : RACCOLTA_UNSET;
     }
 
     /**
@@ -240,6 +266,15 @@ class Session extends Dbh
         return CARRELLO_UNSET;
     }
 
+    public function loadProductInWishlist(): array|int|string|null
+    {
+        $collectionUserId = $this->getCurrentUser()[RACCOLTA_ID];
+        $where = "Raccolta_id = $collectionUserId";
+        $query = "SELECT * FROM Prodotto_in_raccolta WHERE $where";
+        return parent::execute($query); // should return an array
+    }
+
+
     public function addArticle($params)
     {
 
@@ -287,5 +322,4 @@ class Session extends Dbh
             STATUS_MODIFIED_DATA);
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
-
 }

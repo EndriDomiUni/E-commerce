@@ -60,6 +60,7 @@ const CATEGORY_UNSET = 1;
 const VARIATION_UNSET = 1;
 const CONFIGURATION_VARIATION_UNSET = 1;
 const CARRELLO_UNSET = 1;
+const RACCOLTA_UNSET = 0;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
@@ -69,6 +70,7 @@ const CLAIM = "Claim";
 const PRODOTTO = "Prodotto";
 const ARTICOLO = "Articolo";
 const INDIRIZZO = "Indirizzo";
+const RACCOLTA = "Raccolta";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
@@ -82,6 +84,7 @@ const OPZIONE_ID = "Opzio_variazione_id";
 const CLAIM_ID = "Claim_id";
 const CATEGORIA_ID = "Categoria_id";
 const MAGAZZINO_ID = "Magazzino_id";
+const RACCOLTA_ID = "Raccolta_id";
 
 // FIELD
 const NOME = "Nome";
@@ -109,3 +112,5 @@ const DATA_INIZIO = "Data_inizio";
 const DATA_FINE = "Data_fine";
 const TAX = "Tassa";
 const QUANTITA = "Quantità";
+const WHISLIST = 1;
+const WHISLIST_STRING = "whislist";
