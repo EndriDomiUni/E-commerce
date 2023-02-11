@@ -61,6 +61,7 @@ const VARIATION_UNSET = 1;
 const CONFIGURATION_VARIATION_UNSET = 1;
 const CARRELLO_UNSET = 1;
 const RACCOLTA_UNSET = 0;
+const ID_UNSET = 1;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
@@ -74,6 +75,8 @@ const OPZIONE_VARIAZIONE = "Opzione_variazione";
 const DIMENSIONE = "Dimensione";
 const CONFIGURAZIONE_VARIAZIONE = "Configurazione_variazione";
 const RACCOLTA = "Raccolta";
+const VARIAZIONE = "Variazione";
+
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
 const ID = "Id";

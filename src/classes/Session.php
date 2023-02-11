@@ -58,12 +58,20 @@ class Session extends Dbh
         $_SESSION[STATUS] = $params[STATUS];
         $_SESSION[CLAIM_ID] = $params[CLAIM_ID];
         $_SESSION[INDIRIZZO_ID] = $params[INDIRIZZO_ID];
-        $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== null && $this->getUserCartIdFromDb() !== CARRELLO_UNSET
+
+        //debug
+        //echo "Session.php 61</br>";
+        //echo "UserCartIdFromDb: ".$this->getUserCartIdFromDb()."</br>";
+
+        $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== null || $this->getUserCartIdFromDb() !== CARRELLO_UNSET
             ? $this->getUserCartIdFromDb()
             : $this->bindCartWithUser();
         $_SESSION[RACCOLTA_ID] = $this->getUserCollectionIdFromDb() !== null && $this->getUserCartIdFromDb() !== RACCOLTA_UNSET
             ? $this->getUserCollectionIdFromDb()
             : $this->generateCollectionRecord();
+
+        //debug
+        //echo "current carrello id: ".$_SESSION[CARRELLO_ID];
     }
 
     public function getCurrentUser(): array|int
@@ -191,8 +199,12 @@ class Session extends Dbh
 
     public function getUserCartIdFromDb()
     {
-        $where = "Utente_id = " . $this->getCurrentUser()[ID];
+        $where = UTENTE_ID." = ".$this->getCurrentUser()[ID];
         $res = parent::getRecord(CARRELLO, $where);
+
+        //debug
+        //echo "res: ".$res[ID]."</br>";
+
         return UtilsFunctions::checkResponse($res[ID])
             ? $res[ID]
             : CARRELLO_UNSET;
@@ -249,7 +261,7 @@ class Session extends Dbh
     public function loadArticlesByUserId($userId): array|int|string
     {
         $where = "Utente_id = $userId";
-        $query = "SELECT * FROM Articolo WHERE $where";
+        $query = "SELECT * FROM `Articolo` WHERE $where";
         return parent::execute($query); // should return an array
     }
 
@@ -312,7 +324,7 @@ class Session extends Dbh
     {
         $query = "INSERT INTO Articolo_in_magazzino (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
             VALUES (?, ?, ?, ?, ?, ?)";
-        echo "sono qui";
+        //echo "sono qui";
 
         $res = parent::insertData($query,
             $params[TAX],
@@ -325,14 +337,39 @@ class Session extends Dbh
     }
 
     public function getArticleConfigurations($articleId){
-        $query = "SELECT * FROM ".CONFIGURAZIONE_VARIAZIONE." WHERE ".ARTICOLO_ID." = ".$articleId;
-        echo $query;
-        parent::execute($query);
+        $query = "SELECT * FROM `".CONFIGURAZIONE_VARIAZIONE."` WHERE `".ARTICOLO_ID."` = ".$articleId;
+        return parent::execute($query);
+    }
+
+    public function getArticlesByProductId($productId){
+        $query = "SELECT * FROM `".ARTICOLO."` WHERE `".PRODOTTO_ID."` = ".$productId;
+        //debug
+        //echo "query get article by product: ".$query."</br>";
+
+        return parent::execute($query);
     }
 
     public function getProducts(){
-        $query = "SELECT * FROM ".PRODOTTO;
-        parent::execute($query);
+        $query = "SELECT * FROM `".PRODOTTO."` WHERE `".ID."` != ".ID_UNSET;
+        //debug
+        //echo "query get products: ".$query."</br>";
+
+        return parent::execute($query);
     }
 
+    public function getAllProductsBySeller($userId) : array
+    {
+        $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;
+        //debug
+        echo "query products ids: ".$queryProductsIds."</br>";
+
+        $productIds = parent::execute($queryProductsIds);
+        $products = array();
+        foreach ($productIds as $productId){
+            $queryProducts = "SELECT * FROM `".PRODOTTO."` WHERE `".ID."` = ".array_values($productId)[0];
+            $product = parent::execute($queryProducts);
+            $products[array_values($productId)[0]] = $product;
+        }
+        return $products;
+    }
 }

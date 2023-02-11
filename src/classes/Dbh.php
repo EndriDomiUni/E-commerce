@@ -214,7 +214,6 @@ class Dbh
     }
 
     /**
-     * //TODO: DA FIXARE
      * Check always !== null
      *
      * @param string $tableName
@@ -238,7 +237,16 @@ class Dbh
      */
     public function getRecord(string $tableName, string $where): mixed
     {
+        //debug
+        //echo "getRecord..</br>";
+        //echo "tablename: ".$tableName."</br>";
+        //echo "where: ".$where."</br>";
+
         $response = $this->execute("SELECT * FROM `$tableName` WHERE $where");
+
+        //debug
+        //echo "checkResponse: ".UtilsFunctions::checkResponse($response[0][ID])."</br>";
+
         return UtilsFunctions::checkResponse($response[0][ID]) ? $response[0] : null;
     }
 
