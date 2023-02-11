@@ -60,6 +60,7 @@ const CATEGORY_UNSET = 1;
 const VARIATION_UNSET = 1;
 const CONFIGURATION_VARIATION_UNSET = 1;
 const CARRELLO_UNSET = 1;
+const RACCOLTA_UNSET = 0;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
@@ -72,7 +73,7 @@ const INDIRIZZO = "Indirizzo";
 const OPZIONE_VARIAZIONE = "Opzione_variazione";
 const DIMENSIONE = "Dimensione";
 const CONFIGURAZIONE_VARIAZIONE = "Configurazione_variazione";
-
+const RACCOLTA = "Raccolta";
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
 const ID = "Id";
@@ -86,6 +87,7 @@ const CLAIM_ID = "Claim_id";
 const CATEGORIA_ID = "Categoria_id";
 const VARIAZIONE_ID = "Variazione_id";
 const MAGAZZINO_ID = "Magazzino_id";
+const RACCOLTA_ID = "Raccolta_id";
 
 // FIELD
 const NOME = "Nome";
@@ -115,4 +117,5 @@ const SCADENZA = "2024-12-31"; //Y-m-d
 const TAX = "Tassa";
 const VALORE = "Valore";
 const QUANTITA = "Quantità";
-
+const WHISLIST = 1;
+const WHISLIST_STRING = "whislist";

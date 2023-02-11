@@ -65,6 +65,19 @@ require_once "./src/classes/Dbh.php";
             <!-- menu right start -->
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto justify-content-between" id="btn-toogle-navbar">
 
+                <!-- start wishlist -->
+                <li class="nav-item">
+                    <a class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-heart-fill nav-icon-item" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                        <div class="nav-caption-item">
+                            <p>Wishlist</p>
+                        </div>
+                    </a>
+                </li>
+                <!-- end wishlist -->
+
                 <!-- start carrello -->
                 <li class="nav-item">
                     <a class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
@@ -96,7 +109,6 @@ require_once "./src/classes/Dbh.php";
                                         }
                                     } catch (Exception $e) {
                                         echo $e->getMessage();
-
                                     }
                                 } else {
                                     echo '<p>Utente</p>';
@@ -150,5 +162,18 @@ require_once "./src/classes/Dbh.php";
             showArticlesInCart();
         ?>
         <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Wishlist</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <?php
+            showAllArticlesInWishlist();
+        ?>
+        <a class="btn btn-outline-secondary" href="./wishlist.php">Vai alla Wishlist</a>
     </div>
 </div>

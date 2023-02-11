@@ -41,3 +41,23 @@ function showAllArticles(): void
             <div class="col">' . require './templates/views/components/productCard.php'; '</div>
          </div>';
 }
+
+function showAllArticlesInWishlist(): void
+{
+    if (isset($_SESSION["Id"])) {
+        $session = new Session($_SESSION["Id"]);
+        if ($session->checkSessionId($_SESSION["Id"])) {
+            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+            if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
+                require './templates/views/components/productInWishlist.php';
+            }
+        }
+    } else {
+        echo '<div class="col">
+                        <h2>La raccolta è vuota</h2>
+                        <p>
+                            Vai all <a href="index.php">home page<a/>.
+                        </p>
+                    </div>';
+    }
+}
