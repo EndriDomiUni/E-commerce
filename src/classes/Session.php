@@ -196,9 +196,12 @@ class Session extends Dbh
     {
         $where = "Utente_id = " . $this->getCurrentUser()[ID];
         $res = parent::getRecord(CARRELLO, $where);
-        return UtilsFunctions::checkResponse($res[ID])
-            ? $res[ID]
-            : CARRELLO_UNSET;
+        if ($res !== null) {
+            return UtilsFunctions::checkResponse($res[ID])
+                ? $res[ID]
+                : CARRELLO_UNSET;
+        }
+        return null;
     }
 
     public function getClaimTypeFromId($id): ?string
