@@ -1,7 +1,5 @@
-<script
-        src="https://www.gstatic.com/charts/loader.js">
+<script src="https://www.gstatic.com/charts/loader.js">
 </script>
-
 
 <!-- Sales Report Section -->
 <div class="container my-5">
