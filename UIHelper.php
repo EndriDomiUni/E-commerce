@@ -15,10 +15,11 @@ function showArticlesInCart(): void
     if (isset($_SESSION["Id"])) {
         $session = new Session($_SESSION["Id"]);
         if ($session->checkSessionId($_SESSION["Id"])) {
-            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+            /*$claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
                 require './templates/views/components/productInCart.php';
-            }
+            }*/
+            require './templates/views/components/productInCart.php';
         }
     } else {
         echo '<div class="col">
@@ -47,10 +48,11 @@ function showAllArticlesInWishlist(): void
     if (isset($_SESSION["Id"])) {
         $session = new Session($_SESSION["Id"]);
         if ($session->checkSessionId($_SESSION["Id"])) {
-            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+            /*$claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_USER_PRO_DESC) {
                 require './templates/views/components/productInWishlist.php';
-            }
+            }*/
+            require './templates/views/components/productInWishlist.php';
         }
     } else {
         echo '<div class="col">

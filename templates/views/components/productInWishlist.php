@@ -7,7 +7,6 @@
 
     if (isset($_SESSION["Id"])) {
         $session = new Session($_SESSION["Id"]);
-        echo "raccolda id: " . $session->getCurrentUser()[RACCOLTA_ID] . '</br>';
         if ($session->getCurrentUser()[RACCOLTA_ID] !== null && $session->getCurrentUser()[RACCOLTA_ID] !== RACCOLTA_UNSET) {
             $articlesInCollection = $session->loadProductInWishlist();
             if (is_array($articlesInCollection) && !empty($articlesInCollection)) {

@@ -14,31 +14,40 @@
             $session = new Session($_SESSION["Id"]);
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
 
-            if ($claimType === CLAIM_USER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
-                $cartId = $session->getCurrentUser()[CARRELLO_ID];
-                if ($cartId !== CARRELLO_UNSET) {
-                    $articlesInCart = $session->loadArticlesInCart($cartId);
-                    if ($articlesInCart !== CARRELLO_UNSET) {
-                        if (is_array($articlesInCart) && !empty($articlesInCart)) {
-                            foreach ($articlesInCart as $value) {
-                                $whereArticleId = "Id = " . $value[ARTICOLO_ID];
-                                $article = $session->getRecord(ARTICOLO, $whereArticleId);
-                                $whereProductId = "Id = " . $article[PRODOTTO_ID];
-                                $product = $session->getRecord(PRODOTTO, $whereProductId);
-                                if ($product !== null) {
-                                    echo '<div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title">' . $product[NOME] . '</h5>
-                                                <p class="card-text">' . $product[DESCRIZIONE] . '</p>
-                                                <p class="card-text">' . $value[QUANTITA] . '</p> <!-- da aggiungere due pulsanti -->
-                                                <p class="card-text"> Prezzo:' . $article[PREZZO] . '</p>
-                                            </div>
-                                        </div>';
+            switch ($claimType) {
+                case CLAIM_USER_DESC:
+                case CLAIM_USER_PRO_DESC:
+                    $cartId = $session->getCurrentUser()[CARRELLO_ID];
+                    if ($cartId !== CARRELLO_UNSET) {
+                        $articlesInCart = $session->loadArticlesInCart($cartId);
+                        if ($articlesInCart !== CARRELLO_UNSET) {
+                            if (is_array($articlesInCart) && !empty($articlesInCart)) {
+                                foreach ($articlesInCart as $value) {
+                                    $whereArticleId = "Id = " . $value[ARTICOLO_ID];
+                                    $article = $session->getRecord(ARTICOLO, $whereArticleId);
+                                    if ($article !== null) {
+                                        $whereProductId = "Id = " . $article[PRODOTTO_ID];
+                                        $product = $session->getRecord(PRODOTTO, $whereProductId);
+                                        if ($product !== null) {
+                                            echo '<div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">' . $product[NOME] . '</h5>
+                                                    <p class="card-text">' . $product[DESCRIZIONE] . '</p>
+                                                    <p class="card-text">' . $value[QUANTITA] . '</p> <!-- da aggiungere due pulsanti -->
+                                                    <p class="card-text"> Prezzo:' . $article[PREZZO] . '</p>
+                                                </div>
+                                            </div>';
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
+                    break;
+
+                case CLAIM_SELLER_DESC:
+                case CLAIM_SELLER_PR0_DESC:
+                    break;
             }
         } else {
             echo "sono qui";

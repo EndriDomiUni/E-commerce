@@ -107,9 +107,12 @@ class Session extends Dbh
     public function getUserCollectionIdFromDb() {
         $where = "Utente_id = " . $this->getCurrentUser()[ID];
         $res = parent::getRecord(RACCOLTA, $where);
-        return UtilsFunctions::checkResponse($res[ID])
-            ? $res[ID]
-            : RACCOLTA_UNSET;
+        if ($res !== null) {
+            return UtilsFunctions::checkResponse($res[ID])
+                ? $res[ID]
+                : RACCOLTA_UNSET;
+        }
+        return null;
     }
 
     /**
