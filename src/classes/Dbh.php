@@ -126,9 +126,9 @@ class Dbh
      * in use, and if not, it inserts the data into the database
      *
      * @param $params
-     * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
+     * @return array|int|string|null result of the query, if the query is successful, otherwise it returns null.
      */
-    public function register($params)
+    public function register($params): array|int|string|null
     {
         if (UtilsFunctions::checkParams($params)) {
             if (!$this->checkEmail($params["Email"])) {
@@ -151,6 +151,7 @@ class Dbh
                 }
             }
         }
+        return null;
     }
 
     private function generateClaim($claimType): int
