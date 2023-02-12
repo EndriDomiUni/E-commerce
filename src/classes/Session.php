@@ -58,6 +58,9 @@ class Session extends Dbh
         $_SESSION[STATUS] = $params[STATUS];
         $_SESSION[CLAIM_ID] = $params[CLAIM_ID];
         $_SESSION[INDIRIZZO_ID] = $params[INDIRIZZO_ID];
+
+        //debug
+        //echo "sono qui -> set session user</br>";
         $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== null && $this->getUserCartIdFromDb() !== CARRELLO_UNSET
             ? $this->getUserCartIdFromDb()
             : $this->bindCartWithUser();
@@ -183,8 +186,12 @@ class Session extends Dbh
     private function bindCartWithUser(): int
     {
         if (UtilsFunctions::issetSessionId()) {
-            $query = "INSERT INTO carrello (Utente_id, Status)
+            $query = "INSERT INTO `Carrello` (Utente_id, Status)
             VALUES (?, ?)";
+
+            //debug
+            //echo "query bind cart with user: {$query}</br>";
+
             return parent::insertData($query,
                 $this->getCurrentUser()[ID],
                 STATUS_INTACT_DATA);
@@ -202,6 +209,7 @@ class Session extends Dbh
                 : CARRELLO_UNSET;
         }
         return null;
+
     }
 
     public function getClaimTypeFromId($id): ?string
@@ -256,7 +264,7 @@ class Session extends Dbh
     public function loadArticlesByUserId($userId): array|int|string
     {
         $where = "Utente_id = $userId";
-        $query = "SELECT * FROM Articolo WHERE $where";
+        $query = "SELECT * FROM `Articolo` WHERE $where";
         return parent::execute($query); // should return an array
     }
 
