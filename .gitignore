@@ -5,3 +5,7 @@
 /prova
 
 *.css? [sm]
+
+.idea
+
+.vs_code
