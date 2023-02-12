@@ -224,7 +224,10 @@ class Dbh
     public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
         $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
-        return $response[0][$field];
+        if(UtilsFunctions::checkResponse($response)){
+            return $response[0][$field];
+        }
+        else return null;
     }
 
     /**

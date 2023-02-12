@@ -17,6 +17,7 @@ if (isset($_POST['article-btn-insert']))
         UTENTE_ID => $session->getCurrentUser()[ID],
         PRODOTTO_ID => $_SESSION[PRODOTTO_ID],
         );
+    //debug
     //echo "prezzo article: ".$params[PREZZO]."</br>";
     //echo "utente id article: ".$params[UTENTE_ID]."</br>";
     //echo "prodotto id article: ".$params[PRODOTTO_ID]."</br>";
@@ -25,13 +26,11 @@ if (isset($_POST['article-btn-insert']))
         $articleIdResponse = $session->addArticle($params);
         if($articleIdResponse)
         {
+            //debug
             //echo "articolo id: ".$response."</br>";
             //$session[ARTICOLO_ID] = $response;
 
-            //TODO: aggiungere configurazione articolo
-            $parameters = array(
-                ARTICOLO_ID => $articleIdResponse,
-            );
+            $parameters = [ARTICOLO_ID => $articleIdResponse];
 
             $variations = $session->getVariations();
 
@@ -60,6 +59,7 @@ if (isset($_POST['article-btn-insert']))
             if ($claimType == CLAIM_SELLER_PR0_DESC){
                 $tax = 0;
             }
+
             $warehouseArticleParams = [
                 TAX => $tax,
                 DATA_INIZIO => date("Y-m-d"),

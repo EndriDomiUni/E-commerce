@@ -76,6 +76,7 @@ const DIMENSIONE = "Dimensione";
 const CONFIGURAZIONE_VARIAZIONE = "Configurazione_variazione";
 const RACCOLTA = "Raccolta";
 const VARIAZIONE = "Variazione";
+const ARTICOLO_IN_CARRELLO = "Articolo_in_carrello";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
