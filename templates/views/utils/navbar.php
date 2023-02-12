@@ -34,9 +34,7 @@ require_once "./src/classes/Dbh.php";
                 <?php
                     if (isset($_SESSION[ID])) {
                         $session = new Session($_SESSION[ID]);
-                        if ($session->checkSessionId($_SESSION["Id"])) {
                             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
-                        }
 
                         switch ($claimType) {
                             case CLAIM_SELLER_DESC:
@@ -91,9 +89,8 @@ require_once "./src/classes/Dbh.php";
 
                 <?php
                 if (isset($_SESSION[ID])) {
-                $session = new Session($_SESSION[ID]);if ($session->checkSessionId($_SESSION["Id"])) {
+                $session = new Session($_SESSION[ID]);
                         $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
-                    }
 
                 switch ($claimType) {
                     case CLAIM_USER_DESC:
