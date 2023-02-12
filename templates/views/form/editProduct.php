@@ -2,7 +2,7 @@
     .container {
         background-color: #f2f2f2;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 50px;
     }
 
@@ -17,7 +17,7 @@
         padding: 10px;
         border-radius: 5px;
         border: none;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin-top: 20px;
         width: 100%;
     }
@@ -35,7 +35,7 @@
         padding: 15px;
         border-radius: 50px;
         border: none;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-in-out;
     }
 
