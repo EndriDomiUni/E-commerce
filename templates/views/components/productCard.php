@@ -11,12 +11,14 @@
 
     if (is_array($products)) {
         foreach ($products as $product) {
-            echo '<form method="post">';
+            echo '<div class="justify-content-center">
+                    <form method="post">';
             $whereProductId = "`Id` = " . $product[ID];
             $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId);
             $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId);
             $currentProductDescription = $dbh->selectSpecificField(PRODOTTO, DESCRIZIONE, $whereProductId);
-            $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId);
+            $whereArticleProduct = "`Prodotto_id` = " . $product[ID];
+            $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereArticleProduct);
 
             if ($currentProductImage !== null && $currentProductName !== null
                 && $currentProductDescription !== null && $currentProductPrice !== null) {
@@ -25,7 +27,7 @@
                              <div class="card mb-3" style="max-width: 540px;">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
-                                            <img src="'. UPLOADS. '/' . $product[IMMAGINE] .'" class="card-img" alt="Product Image">
+                                            <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body" name="product-id" value="' . $product[ID] . '">
@@ -44,7 +46,7 @@
                              <div class="card mb-3" style="max-width: 540px;">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
-                                            <img src="'. UPLOADS. '/' . $product[IMMAGINE] .'" class="card-img" alt="Product Image">
+                                            <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
@@ -98,12 +100,12 @@
                         echo '<option value="">--Seleziona opzione--</option>';
                         foreach ($options as $option) {
                             if ($option[VARIAZIONE_ID] === $variation[ID]) {
-                                echo '<option value="'.$option[ID].'">' . $option[VALORE] . '</option>';
+                                echo '<option value="' . $option[ID] . '">' . $option[VALORE] . '</option>';
                             }
                         }
                         echo '</select>';
                     }
-                    drawCardFooter($product[ID]);
+                    drawCardFooter($product[ID], $session);
                 }
             }
         }
@@ -112,7 +114,7 @@
 </section>
 
 <?php
-function drawCardFooter($productId): void
+function drawCardFooter($productId, $session): void
 {
     echo '
                     </select>
@@ -120,7 +122,10 @@ function drawCardFooter($productId): void
                     </div>
                     </div>
                     </div>
-                    </div>
+                    </div>';
+    if (!($session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]) === CLAIM_SELLER_DESC) &&
+        !($session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]) === CLAIM_SELLER_PR0_DESC)) {
+        echo '
                     <div class="card-footer d-flex justify-content-end">
                         <style>
                            .btn-primary{
@@ -147,9 +152,13 @@ function drawCardFooter($productId): void
                                 </svg>
                                 Buy Now
                             </button>
-                        </div>
-                    </div>
-                </form>';
+';
     }
+    echo '              </div>
+                    </div>
+                </form>
+            </div>';
+}
+
 ?>
 
