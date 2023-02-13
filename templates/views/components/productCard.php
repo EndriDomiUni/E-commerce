@@ -39,7 +39,6 @@
                                                     <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
                                         </div>
                                         <div class="card-size">';
-                    drawCardFooter($product[ID]);
                 } else {
                     $session = new Session($_SESSION[ID]);
                     echo ' 
