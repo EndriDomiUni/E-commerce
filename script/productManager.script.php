@@ -80,13 +80,11 @@ foreach ($products as $product) {
                     $rightArticle = $article;
 
                     //debug
-                    echo "articolo id: " . $article[ID] . "</br>";
+                    //echo "articolo id: " . $article[ID] . "</br>";
 
                     $whereArticleId = "Id = " . $article[ID];
                     if ($session->getRecord(ARTICOLO, $whereArticleId) !== null) {
 
-                        //debug
-                        echo "sono qui";
                         controller($session, $quantity, $session->getCurrentUser()[CARRELLO_ID], $article[ID], $product[ID]);
 
                     } else {
