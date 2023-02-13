@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 13, 2023 alle 01:17
+-- Creato il: Feb 13, 2023 alle 14:47
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `e-commerce`
 --
+CREATE DATABASE IF NOT EXISTS `e-commerce` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `e-commerce`;
 
 -- --------------------------------------------------------
 
@@ -127,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=466 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=467 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Carrello`
@@ -598,7 +600,8 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (462, 19, 0, '2023-02-12 20:52:26'),
 (463, 20, 0, '2023-02-12 20:55:47'),
 (464, 21, 0, '2023-02-12 21:55:43'),
-(465, 22, 0, '2023-02-12 22:16:51');
+(465, 22, 0, '2023-02-12 22:16:51'),
+(466, 23, 0, '2023-02-13 00:23:38');
 
 -- --------------------------------------------------------
 
@@ -638,7 +641,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Claim`
@@ -663,7 +666,8 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (70, 'user', '0', 0, '2023-02-12 20:52:26'),
 (71, 'seller', '0', 0, '2023-02-12 20:55:47'),
 (72, 'user', '0', 0, '2023-02-12 21:55:43'),
-(73, 'seller', '0', 0, '2023-02-12 22:16:51');
+(73, 'seller', '0', 0, '2023-02-12 22:16:51'),
+(74, 'user', '0', 0, '2023-02-13 00:23:38');
 
 -- --------------------------------------------------------
 
@@ -943,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Raccolta`
@@ -956,7 +960,8 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 (4, 1, 'whislist', 19, 0, '2023-02-12 20:52:26'),
 (5, 1, 'whislist', 20, 0, '2023-02-12 20:55:47'),
 (6, 1, 'whislist', 21, 0, '2023-02-12 21:55:43'),
-(7, 1, 'whislist', 22, 0, '2023-02-12 22:16:51');
+(7, 1, 'whislist', 22, 0, '2023-02-12 22:16:51'),
+(8, 1, 'whislist', 23, 0, '2023-02-13 00:23:38');
 
 -- --------------------------------------------------------
 
@@ -996,7 +1001,7 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Utente`
@@ -1021,7 +1026,8 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, 
 (19, 'Mirko', 'Viroli', 'mirko@viroli.com', 'takeit', 70, 1, 0, '2023-02-12 20:52:26'),
 (20, 'Alessandro', 'Mancini', 'ale@mancini.com', 'takeit', 71, 1, 0, '2023-02-12 20:55:47'),
 (21, 'Roberto', 'Casadei', 'robi@casadei.com', 'takeit', 72, 1, 0, '2023-02-12 21:55:43'),
-(22, 'Francesco', 'Guzzoni', 'francesco.guzzoni@takeit.it', 'takeit', 73, 1, 0, '2023-02-12 22:16:51');
+(22, 'Francesco', 'Guzzoni', 'francesco.guzzoni@takeit.it', 'takeit', 73, 1, 0, '2023-02-12 22:16:51'),
+(23, 'Giulia', 'Raguselli', 'giulia@takeit.it', 'takeit', 74, 1, 0, '2023-02-13 00:23:38');
 
 -- --------------------------------------------------------
 
