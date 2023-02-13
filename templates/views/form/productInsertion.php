@@ -79,9 +79,8 @@ Funzionalità richieste:
                             $dbh = new Dbh();
                             $categories = $dbh->getCategories();
                             foreach ($categories as $category) {
-                                echo
-                                $nome = $category["Nome"];
-                                $categoryId = $category["Id"];
+                                $nome = $category[NOME];
+                                $categoryId = $category[ID];
                                 echo "<option value='$categoryId'>$nome</option>";
                             }
                         ?>

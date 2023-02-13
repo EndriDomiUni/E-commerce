@@ -38,7 +38,7 @@ class Session extends Dbh
     public function checkSessionId($id): bool
     {
         if (isset($id)) {
-            $response = parent::execute("SELECT * FROM Utente WHERE Id = '$id' ");
+            $response = parent::execute("SELECT * FROM `Utente` WHERE `Id` = '$id' ");
             if (is_int($response[0]["Id"])) {
                 $this->setSessionUser($response[0]);
                 $user = $this->getCurrentUser();
@@ -58,12 +58,17 @@ class Session extends Dbh
         $_SESSION[STATUS] = $params[STATUS];
         $_SESSION[CLAIM_ID] = $params[CLAIM_ID];
         $_SESSION[INDIRIZZO_ID] = $params[INDIRIZZO_ID];
+
+        //echo "sono qui -> set session user</br>";
         $_SESSION[CARRELLO_ID] = $this->getUserCartIdFromDb() !== null && $this->getUserCartIdFromDb() !== CARRELLO_UNSET
             ? $this->getUserCartIdFromDb()
             : $this->bindCartWithUser();
         $_SESSION[RACCOLTA_ID] = $this->getUserCollectionIdFromDb() !== null && $this->getUserCartIdFromDb() !== RACCOLTA_UNSET
             ? $this->getUserCollectionIdFromDb()
             : $this->generateCollectionRecord();
+
+        //debug
+        //echo "current carrello id: ".$_SESSION[CARRELLO_ID];
     }
 
     public function getCurrentUser(): array|int
@@ -183,8 +188,12 @@ class Session extends Dbh
     private function bindCartWithUser(): int
     {
         if (UtilsFunctions::issetSessionId()) {
-            $query = "INSERT INTO carrello (Utente_id, Status)
+            $query = "INSERT INTO `Carrello` (Utente_id, Status)
             VALUES (?, ?)";
+
+            //debug
+            //echo "query bind cart with user: {$query}</br>";
+
             return parent::insertData($query,
                 $this->getCurrentUser()[ID],
                 STATUS_INTACT_DATA);
@@ -194,11 +203,16 @@ class Session extends Dbh
 
     public function getUserCartIdFromDb()
     {
-        $where = "Utente_id = " . $this->getCurrentUser()[ID];
+        $where = UTENTE_ID." = ".$this->getCurrentUser()[ID];
         $res = parent::getRecord(CARRELLO, $where);
-        return UtilsFunctions::checkResponse($res[ID])
-            ? $res[ID]
-            : CARRELLO_UNSET;
+
+        if ($res !== null) {
+            return UtilsFunctions::checkResponse($res[ID])
+                ? $res[ID]
+                : CARRELLO_UNSET;
+        }
+        return null;
+
     }
 
     public function getClaimTypeFromId($id): ?string
@@ -207,33 +221,30 @@ class Session extends Dbh
         return $res ? $res[0][DESCRIZIONE] : "";
     }
 
-    public function insertProduct($params)
+    public function insertProduct($params): false|array|int|string
     {
         if (UtilsFunctions::checkParams($params)) {
-            $dimensionId = null;
             $nome = $params[NOME];
             $descrizione = $params[DESCRIZIONE];
             $immagine = $params[IMMAGINE];
-            $dimensionId = null;
             $categoriaId = $params[CATEGORIA_ID];
             $dim_x = $params[DIMENSIONE_X_PRODOTTO];
             $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
             $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
-            if (parent::checkDimension($dim_x, $dim_y, $dim_y)) {
+            $getDimensionIdCondition = "`Dim_X` = {$dim_x} AND `Dim_Y` = {$dim_y} AND `Dim_Z` = {$dim_z}";
+            $dimensionId = parent::getRecord(DIMENSIONE,$getDimensionIdCondition )[ID] != null ?
+                parent::getRecord(DIMENSIONE,$getDimensionIdCondition )[ID] : null;
+
+            if ($dimensionId === null ) {
                 $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`) 
                     VALUES (?, ?, ?)";
                 $res = $this->insertData($query, $dim_x, $dim_y, $dim_z);
                 if (UtilsFunctions::checkResponse($res)) {
                     $dimensionId = parent::getDimensionIdByParameters($dim_x, $dim_y, $dim_z);
                 } else {
-                    // Errore
+                    return false;
                 }
             }
-            $dimensionTableName = "Dimensione";
-            $getDimensionIdCondition = "Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z";
-            $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
-            echo "Dimension Id: " . $dimensionId . "</br>";
-            $status = 1;
             $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`, `Status`)
                 VALUES (?, ?, ?, ?, ?, ?)";
             $res = $this->insertData($insertProductQuery,
@@ -242,7 +253,7 @@ class Session extends Dbh
                 $immagine,
                 $dimensionId,
                 $categoriaId,
-                $status);
+                STATUS_MODIFIED_DATA);
             if (UtilsFunctions::checkResponse($res)) {
                 return $res;
             }
@@ -253,7 +264,7 @@ class Session extends Dbh
     public function loadArticlesByUserId($userId): array|int|string
     {
         $where = "Utente_id = $userId";
-        $query = "SELECT * FROM Articolo WHERE $where";
+        $query = "SELECT * FROM `Articolo` WHERE $where";
         return parent::execute($query); // should return an array
     }
 
@@ -262,7 +273,7 @@ class Session extends Dbh
         if ($this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_DESC
             || $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_PRO_DESC) {
 
-            $where = "Carrello_id = $cartId";
+            $where = "Carrello_id = ". $cartId . " AND Articolo_id != 1";
             $query = "SELECT * FROM Articolo_in_carrello WHERE $where";
             return parent::execute($query); // should return an array
         }
@@ -286,15 +297,17 @@ class Session extends Dbh
             $prezzo = $params[PREZZO];
             $utente_id = $params[UTENTE_ID];
             $prodotto_id = $params[PRODOTTO_ID];
-            $status = 1;
             $insertArticleQuery = "INSERT INTO `Articolo` (`Prezzo`, `Utente_id`, `Prodotto_id`, `Status`)
                 VALUES (?, ?, ?, ?)";
             $res = $this->insertData($insertArticleQuery,
                 $prezzo,
                 $utente_id,
                 $prodotto_id,
-                $status);
-            echo "response after add article attempt: " . $res . "</br>";
+                STATUS_MODIFIED_DATA);
+
+            //debug
+            //echo "response after add article attempt: " . $res . "</br>";
+
             if (UtilsFunctions::checkResponse($res)) {
                 return $res;
             }
@@ -314,8 +327,10 @@ class Session extends Dbh
 
     public function addWarehouseArticle($params) : int
     {
-        $query = "INSERT INTO Configurazione_variazione (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
-            VALUES (?, ?, ?)";
+        $query = "INSERT INTO Articolo_in_magazzino (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
+            VALUES (?, ?, ?, ?, ?, ?)";
+        //echo "sono qui";
+
         $res = parent::insertData($query,
             $params[TAX],
             $params[DATA_INIZIO],
@@ -325,4 +340,6 @@ class Session extends Dbh
             STATUS_MODIFIED_DATA);
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
+
+
 }

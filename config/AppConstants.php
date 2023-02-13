@@ -36,6 +36,8 @@ const VIEW_SELLER = VIEW_ROOT . "/seller";
 
 const EURO = "€";
 
+const ERROR_STR = "error";
+
 // CLAIM ---------------------------------------------------------------
 const CLAIM_GUEST_DESC = "guest";
 const CLAIM_USER_DESC = "user";
@@ -61,6 +63,7 @@ const VARIATION_UNSET = 1;
 const CONFIGURATION_VARIATION_UNSET = 1;
 const CARRELLO_UNSET = 1;
 const RACCOLTA_UNSET = 0;
+const ID_UNSET = 1;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
@@ -70,7 +73,12 @@ const CLAIM = "Claim";
 const PRODOTTO = "Prodotto";
 const ARTICOLO = "Articolo";
 const INDIRIZZO = "Indirizzo";
+const OPZIONE_VARIAZIONE = "Opzione_variazione";
+const DIMENSIONE = "Dimensione";
+const CONFIGURAZIONE_VARIAZIONE = "Configurazione_variazione";
 const RACCOLTA = "Raccolta";
+const VARIAZIONE = "Variazione";
+const ARTICOLO_IN_CARRELLO = "Articolo_in_carrello";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
@@ -83,6 +91,7 @@ const ARTICOLO_ID = "Articolo_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const CLAIM_ID = "Claim_id";
 const CATEGORIA_ID = "Categoria_id";
+const VARIAZIONE_ID = "Variazione_id";
 const MAGAZZINO_ID = "Magazzino_id";
 const RACCOLTA_ID = "Raccolta_id";
 
@@ -110,7 +119,9 @@ const DIMENSIONE_Z_PRODOTTO = "Dimensione_z";
 const PREZZO = "Prezzo";
 const DATA_INIZIO = "Data_inizio";
 const DATA_FINE = "Data_fine";
+const SCADENZA = "2024-12-31"; //Y-m-d
 const TAX = "Tassa";
+const VALORE = "Valore";
 const QUANTITA = "Quantità";
 const WHISLIST = 1;
 const WHISLIST_STRING = "whislist";

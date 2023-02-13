@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once "UIHelper.php";
-require_once "./src/classes/Dbh.php";
+//require_once "./src/classes/Dbh.php";
 
 ?>
 
@@ -34,7 +34,8 @@ require_once "./src/classes/Dbh.php";
                 <?php
                     if (isset($_SESSION[ID])) {
                         $session = new Session($_SESSION[ID]);
-                        $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+                            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+
                         switch ($claimType) {
                             case CLAIM_SELLER_DESC:
                             case CLAIM_SELLER_PR0_DESC:
@@ -89,7 +90,8 @@ require_once "./src/classes/Dbh.php";
                 <?php
                 if (isset($_SESSION[ID])) {
                 $session = new Session($_SESSION[ID]);
-                $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+                        $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+
                 switch ($claimType) {
                     case CLAIM_USER_DESC:
                     case CLAIM_USER_PRO_DESC:
@@ -173,9 +175,11 @@ require_once "./src/classes/Dbh.php";
                                 if(isset($_SESSION["Id"])) {
                                     try {
                                         $session = new Session($_SESSION["Id"]);
-                                        if ($session->checkSessionId($_SESSION["Id"])) {
-                                            $user = $session->getCurrentUser();
+                                        $user = $session->getCurrentUser();
+                                        if ($user[ID] !== ID_UNSET) {
                                             echo 'Ciao ' . $user[NOME];
+                                        } else {
+                                            echo '<p>Utente</p>';
                                         }
                                     } catch (Exception $e) {
                                         echo $e->getMessage();

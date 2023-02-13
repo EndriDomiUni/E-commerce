@@ -85,26 +85,26 @@ class Dbh
      */
     private function checkEmail($email): bool
     {
-        return count($this->execute("SELECT * FROM `Utente` WHERE Email = '$email' ")) == 0;
+        return count($this->execute("SELECT * FROM `Utente` WHERE `Email` = '$email' ")) == 0;
     }
 
 
     public function getDimensionIdByParameters($dim_x, $dim_y, $dim_z): array
     {
         return $this->execute("SELECT Id FROM `Dimensione` 
-            WHERE Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z");
+            WHERE `Dim_X` = $dim_x AND `Dim_Y` = $dim_y AND `Dim_Z` = $dim_z");
     }
 
     public function getVariationsByCategoryId($categoryId): array
     {
         return $this->execute("SELECT * FROM `Variazione`
-            WHERE Categoria_id = '$categoryId'");
+            WHERE `Categoria_id` = '$categoryId'");
     }
 
     public function getOptionsByVariationId($variationId): array
     {
         return $this->execute("SELECT * FROM `Opzione_variazione`
-            WHERE Variazione_Id = '$variationId'");
+            WHERE `Variazione_Id` = '$variationId'");
     }
 
     /**
@@ -117,7 +117,7 @@ class Dbh
     public function checkDimension($dim_x, $dim_y, $dim_z): bool
     {
         return count($this->execute("SELECT * FROM `Dimensione` 
-         WHERE `Dim_X`=$dim_x AND `Dim_Y`=$dim_y AND `Dim_Z`=$dim_z")) == 0;
+         WHERE `Dim_X` = {$dim_x} AND `Dim_Y` = {$dim_y} AND `Dim_Z` = {$dim_z}")) == 0;
     }
 
 
@@ -126,9 +126,9 @@ class Dbh
      * in use, and if not, it inserts the data into the database
      *
      * @param $params
-     * @return array|int|string|void|null result of the query, if the query is successful, otherwise it returns null.
+     * @return array|int|string|null result of the query, if the query is successful, otherwise it returns null.
      */
-    public function register($params)
+    public function register($params): array|int|string|null
     {
         if (UtilsFunctions::checkParams($params)) {
             if (!$this->checkEmail($params["Email"])) {
@@ -151,6 +151,7 @@ class Dbh
                 }
             }
         }
+        return null;
     }
 
     private function generateClaim($claimType): int
@@ -214,7 +215,6 @@ class Dbh
     }
 
     /**
-     * //TODO: DA FIXARE
      * Check always !== null
      *
      * @param string $tableName
@@ -224,8 +224,11 @@ class Dbh
      */
     public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
-        $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
-        return $response[0][$field];
+        $query = "SELECT `$field` FROM `$tableName` WHERE $where";
+        $response = $this->execute($query);
+        return !empty($response) && $response[0] !== null && $response[0][$field] !== null
+            ? $response[0][$field]
+            : null;
     }
 
     /**
@@ -328,20 +331,77 @@ class Dbh
 
     public function loadArticles(): string|int|array
     {
-        $query = "SELECT * FROM Articolo";
+        $query = "SELECT * FROM `Articolo`";
         return $this->execute($query);
     }
 
     public function getWarehouses(): string|int|array
     {
-        $query = "SELECT * FROM Magazzino";
+        $query = "SELECT * FROM `Magazzino`";
         return $this->execute($query);
     }
 
     public function getVariations(): string|int|array
     {
-        $query = "SELECT * FROM Variazione";
+        $query = "SELECT * FROM `Variazione`";
         return $this->execute($query);
     }
 
+    public function getProducts(): array|int|string
+    {
+        $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
+        return $this->execute($query);
+    }
+
+    public function getArticlesByProductId($productId): array|int|string
+    {
+        $query = "SELECT * FROM `".ARTICOLO."` WHERE `".PRODOTTO_ID."` = ".$productId;
+        //debug
+        //echo "query get article by product: ".$query."</br>";
+
+        return $this->execute($query);
+    }
+
+    public function getArticleConfigurations($articleId): array|int|string
+    {
+        $query = "SELECT * FROM `".CONFIGURAZIONE_VARIAZIONE."` WHERE `".ARTICOLO_ID."` = ".$articleId;
+        return $this->execute($query);
+    }
+
+    public function addArticleInCart($quantity, $cartId, $articleId): array|int|string
+    {
+        $queryInsertArticleInCart = "INSERT INTO `Articolo_in_carrello` (Quantità, Carrello_id, Articolo_id, Status)
+                                VALUES (?, ?, ?, ?) ";
+        return $this->insertData($queryInsertArticleInCart,
+            $quantity,
+            $cartId,
+            $articleId,
+            STATUS_MODIFIED_DATA);
+    }
+
+    public function addProductInWishlist($wishlistId, $productId): array|int|string
+    {
+        $queryInsertProductInWishlist= "INSERT INTO `Prodotto_in_raccolta` (Raccolta_id, Prodotto_id, Status)
+                                VALUES (?, ?, ?) ";
+        return $this->insertData($queryInsertProductInWishlist,
+            $wishlistId,
+            $productId,
+            STATUS_MODIFIED_DATA);
+    }
+
+    public function getAllProductsBySeller($userId) : array
+    {
+        $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;
+        //debug
+        echo "query products ids: ".$queryProductsIds."</br>";
+
+        $productIds = $this->execute($queryProductsIds);
+        $products = array();
+        foreach ($productIds as $productId){
+            $queryProducts = "SELECT * FROM `".PRODOTTO."` WHERE `".ID."` = ".array_values($productId)[0];
+            $product = $this->execute($queryProducts);
+            $products[array_values($productId)[0]] = $product;
+        }
+        return $products;
+    }
 }
