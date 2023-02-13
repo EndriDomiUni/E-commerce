@@ -273,7 +273,7 @@ class Session extends Dbh
         if ($this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_DESC
             || $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_PRO_DESC) {
 
-            $where = "Carrello_id = $cartId";
+            $where = "Carrello_id = ". $cartId . " AND Articolo_id != 1";
             $query = "SELECT * FROM Articolo_in_carrello WHERE $where";
             return parent::execute($query); // should return an array
         }

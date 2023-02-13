@@ -17,17 +17,19 @@ require_once "UIHelper.php";
 
             $finalAmount = 0.00;
             if (is_array($articlesInCart) && !empty($articlesInCart)) {
+                echo '<form method="post">';
                 foreach ($articlesInCart as $articleInCart) {
                     $articleId = $articleInCart[ARTICOLO_ID];
                     $whereArticle = "Id = " . $articleId;
-                    $article = $session->getRecord(PRODOTTO, $whereArticle);
+                    $article = $session->getRecord(ARTICOLO, $whereArticle);
 
                     if ($article !== null) {
-                        $whereProduct = "Prodotto_id = " . $article[PRODOTTO_ID];
-                        $product = $session->getRecord(PRODOTTO, $whereProduct);
+                        if (isset($article[PRODOTTO_ID]) && $article[PRODOTTO_ID] > 0) {
+                            $whereProduct = "Id = " . $article[PRODOTTO_ID];
+                            $product = $session->getRecord(PRODOTTO, $whereProduct);
 
-                        $finalAmount = $finalAmount + floatval($article[PREZZO]);
-                        echo '<div class="row">
+                            $finalAmount = $finalAmount + floatval($article[PREZZO]);
+                            echo '<div class="row">
                         <div class="col-md-2">
                             <img
                                     src="'. UPLOADS. '/' . $product[IMMAGINE] .'"
@@ -51,23 +53,24 @@ require_once "UIHelper.php";
                         </div>
                     </div>';
 
-                        echo '<!-- Cart Total -->
+                            echo '<!-- Cart Total -->
                             <div class="row mt-3">
                                 <div class="col-md-10"></div>
                                 <div class="col-md-2">
                                     <h4>Cart Total: ' . EURO . ' ' . $finalAmount .' </h4>
                                 </div>
-                            </div>
-                        
-                            <!-- Checkout Button -->
+                            </div>';
+                        }
+                        }
+                }
+                echo '
                             <div class="row mt-3">
                                 <div class="col-md-10"></div>
                                 <div class="col-md-2">
                                     <a href="#" class="btn btn-primary btn-block">Checkout</a>
                                 </div>
                             </div>';
-                    }
-                }
+                echo '</form>';
             } else {
                 echo '<div>Non ci sono articoli in carrello</div>';
             }
