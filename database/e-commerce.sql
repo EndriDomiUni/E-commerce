@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 13, 2023 alle 14:47
+-- Creato il: Feb 13, 2023 alle 14:52
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -102,19 +102,6 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Magazzino_id` (`Magazzino_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
-
---
--- Dump dei dati per la tabella `Articolo_in_magazzino`
---
-
-INSERT INTO `Articolo_in_magazzino` (`Id`, `Tassa`, `Data_inizio`, `Data_fine`, `Articolo_id`, `Magazzino_id`, `Status`, `Timestamp`) VALUES
-(1, '3', '2023-02-13', '2024-12-31', 3, 1, 1, '2023-02-12 23:32:58'),
-(3, '3', '2023-02-13', '2024-12-31', 7, 1, 1, '2023-02-12 23:42:34'),
-(4, '3', '2023-02-13', '2024-12-31', 9, 1, 1, '2023-02-12 23:43:03'),
-(5, '3', '2023-02-13', '2024-12-31', 11, 1, 1, '2023-02-12 23:44:14'),
-(6, '3', '2023-02-13', '2024-12-31', 13, 2, 1, '2023-02-13 00:07:25'),
-(7, '3', '2023-02-13', '2024-12-31', 15, 2, 1, '2023-02-13 00:10:48'),
-(8, '3', '2023-02-13', '2024-12-31', 17, 2, 1, '2023-02-13 00:13:00');
 
 -- --------------------------------------------------------
 
