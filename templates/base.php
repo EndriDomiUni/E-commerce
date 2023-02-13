@@ -23,26 +23,22 @@ require_once("./assets/js/script.php");
 if (isset($_SESSION["Id"])) {
     try {
         $session = new Session($_SESSION["Id"]);
-        if ($session->checkSessionId($_SESSION["Id"])) {
-            if ($title === "Dashboard" || $title === "Insert product" || $title === "Edit product" ||
-                $title === "Warehouse" || $title === "Configurazione articolo") {
-                $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
-                if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
+        if ($title === "Dashboard" || $title === "Insert product" || $title === "Edit product" ||
+            $title === "Warehouse" || $title === "Configurazione articolo") {
+            $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
+            if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
 
-                    echo '<div class="row">
+                echo '<div class="row">
                                 <div id="sidebar" class="col">
                                 </div>
                                 
                                 <div class="col-9">';
-                                    echo $mainContent;
-                    echo '      </div>
+                echo $mainContent;
+                echo '      </div>
                         </div>';
 
-                    echo '<script src="/app/assets/js/generateSidebar.js" type="text/javascript">',
-                    '</script>';
-                }
-            } else {
-                echo $mainContent;
+                echo '<script src="/app/assets/js/generateSidebar.js" type="text/javascript">',
+                '</script>';
             }
         } else {
             echo $mainContent;
