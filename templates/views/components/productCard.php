@@ -47,7 +47,7 @@
                                             <img src="'. UPLOADS. '/' . $product[IMMAGINE] .'" class="card-img" alt="Product Image">
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="card-body" name="product-id" value="' . $product[ID] . '">
+                                            <div class="card-body">
                                                 <h5 class="card-title" >' . $currentProductName . '</h5>
                                                 <p class="card-text" >' . $currentProductDescription . '</p>
                                                 <div class="card-price">
@@ -98,7 +98,7 @@
                         echo '<option value="">--Seleziona opzione--</option>';
                         foreach ($options as $option) {
                             if ($option[VARIAZIONE_ID] === $variation[ID]) {
-                                echo '<option value="option-' . $option[ID] . '">' . $option[VALORE] . '</option>';
+                                echo '<option value="'.$option[ID].'">' . $option[VALORE] . '</option>';
                             }
                         }
                         echo '</select>';

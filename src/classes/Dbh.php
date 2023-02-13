@@ -352,4 +352,18 @@ class Dbh
         $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
         return $this->execute($query);
     }
+
+    public function getArticlesByProductId($productId): array|int|string
+    {
+        $query = "SELECT * FROM `".ARTICOLO."` WHERE `".PRODOTTO_ID."` = ".$productId;
+        //debug
+        //echo "query get article by product: ".$query."</br>";
+
+        return $this->execute($query);
+    }
+
+    public function getArticleConfigurations($articleId){
+        $query = "SELECT * FROM `".CONFIGURAZIONE_VARIAZIONE."` WHERE `".ARTICOLO_ID."` = ".$articleId;
+        return $this->execute($query);
+    }
 }

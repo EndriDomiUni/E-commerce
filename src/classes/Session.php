@@ -368,19 +368,6 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 
-    public function getArticleConfigurations($articleId){
-        $query = "SELECT * FROM `".CONFIGURAZIONE_VARIAZIONE."` WHERE `".ARTICOLO_ID."` = ".$articleId;
-        return parent::execute($query);
-    }
-
-    public function getArticlesByProductId($productId){
-        $query = "SELECT * FROM `".ARTICOLO."` WHERE `".PRODOTTO_ID."` = ".$productId;
-        //debug
-        //echo "query get article by product: ".$query."</br>";
-
-        return parent::execute($query);
-    }
-
     public function getAllProductsBySeller($userId) : array
     {
         $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;
