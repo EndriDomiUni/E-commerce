@@ -177,7 +177,11 @@ require_once "UIHelper.php";
                                     try {
                                         $session = new Session($_SESSION["Id"]);
                                         $user = $session->getCurrentUser();
-                                        echo 'Ciao ' . $user[NOME];
+                                        if ($user[ID] !== ID_UNSET) {
+                                            echo 'Ciao ' . $user[NOME];
+                                        } else {
+                                            echo '<p>Utente</p>';
+                                        }
                                     } catch (Exception $e) {
                                         echo $e->getMessage();
                                     }
