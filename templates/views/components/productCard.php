@@ -120,6 +120,7 @@ function drawCardFooter($productId): void
                     </div>
                     </div>
                     </div>
+                    </div>
                     <div class="row no-gutters">
                         <div class="col-md-5"></div>
                         <div class="col-md-9">
