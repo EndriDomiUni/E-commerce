@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 session_start();
 include("./src/classes/Dbh.php");
-
+//require_once("./script/productManager.script.php");
 ob_start();
 
 require_once("./templates/views/user/index.php");
