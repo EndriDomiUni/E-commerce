@@ -1,11 +1,12 @@
 <!-- TODO: Inserire configurazione articolo -->
 <?php
+
+require_once "./src/classes/Session.php";
 if (isset($error)){
     //echo "<div class='alert alert-warning' role='alert'>";
     // echo  $error;
     // echo "</div> ";
     echo notifyAlert($error, 'danger');
-
 } ?>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <section class="form-articleConfiguration w-100 m-auto">
@@ -15,18 +16,22 @@ if (isset($error)){
             <!-- Variazioni -->
             <div class="mb-3">
                 <?php
-                    $dbh = new Dbh();
+                if (isset($_SESSION["Id"])){
+                    $session = new Session($_SESSION[ID]);
+
                     $categoryId = $_SESSION[CATEGORIA_ID];
-                    $whereCategoryId = "Id = ".$categoryId;
-                    $categoryId = $dbh->selectSpecificField(CATEGORIA, ID, $whereCategoryId);
-                    if($categoryId!==null){
-                        //echo "categoria id: ".$categoryId."</br>";
-                        $variations = $dbh->getVariationsByCategoryId($categoryId);
+                    $whereCategoryId = "`Id` = ".$categoryId;
+                    $categoryId = $session->selectSpecificField(CATEGORIA, ID, $whereCategoryId);
+                    if($categoryId !== null){
+
+                        //debug
+                        echo "categoria id: ".$categoryId."</br>";
+                        $variations = $session->getVariationsByCategoryId($categoryId);
                         foreach ($variations as $variation){
 
                             echo "<label for='variation-id-{$variation[ID]}'>Variazione {$variation[NOME]}</label>";
                             echo "<select class='form-select' id='variation-id-{$variation[ID]}' name='variation-id-{$variation[ID]}' required>";
-                            $options = $dbh->getOptionsByVariationId($variation[ID]);
+                            $options = $session->getOptionsByVariationId($variation[ID]);
                             foreach ($options as $option)
                             {
                                 $optionId = $option["Id"];
@@ -36,6 +41,7 @@ if (isset($error)){
                             echo "</select>";
                         }
                     }
+
                 ?>
             </div>
             <!-- Prezzo articolo -->
@@ -51,15 +57,20 @@ if (isset($error)){
                 <select class="form-select" id="warehouse-id" name="warehouse-id" required>
                     <option value="">--Seleziona magazzino--</option>
                     <?php
-                    $warehouses = $dbh->getWarehouses();
+                    $warehouses = $session->getWarehouses();
                     if(is_array($warehouses)){
                         foreach ($warehouses as $warehouse) {
-                            $warehouseId = $warehouse["Id"];
-                            $whereAddressId = "Id = " . $warehouse[INDIRIZZO_ID];
-                            $addressVia = $dbh->selectSpecificField(INDIRIZZO, VIA, $whereAddressId);
+
+                            //debug
+                            echo "magazzino...</br>";
+                            echo "id: {$warehouse[ID]}";
+                            $warehouseId = $warehouse[ID];
+                            $whereAddressId = "`Id` = " . $warehouse[INDIRIZZO_ID];
+                            $addressVia = $session->selectSpecificField(INDIRIZZO, VIA, $whereAddressId);
                             echo "<option value='$warehouseId'>$addressVia</option>";
                         }
                     }
+                }
                     ?>
                 </select>
             </div>

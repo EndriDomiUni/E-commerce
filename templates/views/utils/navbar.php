@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once "UIHelper.php";
-require_once "./src/classes/Dbh.php";
+//require_once "./src/classes/Dbh.php";
 
 ?>
 
@@ -187,7 +187,6 @@ require_once "./src/classes/Dbh.php";
                                 }
                             ?>
                         </div>
-                        +
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end ">
                         <li><a class="dropdown-item" href="./login.php">Log in</a></li>

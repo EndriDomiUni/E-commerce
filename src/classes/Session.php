@@ -38,7 +38,7 @@ class Session extends Dbh
     public function checkSessionId($id): bool
     {
         if (isset($id)) {
-            $response = parent::execute("SELECT * FROM Utente WHERE Id = '$id' ");
+            $response = parent::execute("SELECT * FROM `Utente` WHERE `Id` = '$id' ");
             if (is_int($response[0]["Id"])) {
                 $this->setSessionUser($response[0]);
                 $user = $this->getCurrentUser();
@@ -227,12 +227,15 @@ class Session extends Dbh
             $nome = $params[NOME];
             $descrizione = $params[DESCRIZIONE];
             $immagine = $params[IMMAGINE];
-            $dimensionId = null;
             $categoriaId = $params[CATEGORIA_ID];
             $dim_x = $params[DIMENSIONE_X_PRODOTTO];
             $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
             $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
-            if (parent::checkDimension($dim_x, $dim_y, $dim_y)) {
+            $getDimensionIdCondition = "`Dim_X` = {$dim_x} AND `Dim_Y` = {$dim_y} AND `Dim_Z` = {$dim_z}";
+            $dimensionId = parent::getRecord(DIMENSIONE,$getDimensionIdCondition )[ID] != null ?
+                parent::getRecord(DIMENSIONE,$getDimensionIdCondition )[ID] : null;
+
+            if ($dimensionId === null ) {
                 $query = "INSERT INTO `Dimensione` (`Dim_X`, `Dim_Y`, `Dim_Z`) 
                     VALUES (?, ?, ?)";
                 $res = $this->insertData($query, $dim_x, $dim_y, $dim_z);
@@ -242,11 +245,6 @@ class Session extends Dbh
                     return false;
                 }
             }
-            $dimensionTableName = DIMENSIONE;
-            $getDimensionIdCondition = "Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z";
-            $dimensionId = $this->selectSpecificField($dimensionTableName, ID, $getDimensionIdCondition);
-            echo "Dimension Id: " . $dimensionId . "</br>";
-            $status = 1;
             $insertProductQuery = "INSERT INTO `Prodotto` (`Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`, `Status`)
                 VALUES (?, ?, ?, ?, ?, ?)";
             $res = $this->insertData($insertProductQuery,
@@ -255,7 +253,7 @@ class Session extends Dbh
                 $immagine,
                 $dimensionId,
                 $categoriaId,
-                $status);
+                STATUS_MODIFIED_DATA);
             if (UtilsFunctions::checkResponse($res)) {
                 return $res;
             }
@@ -299,15 +297,17 @@ class Session extends Dbh
             $prezzo = $params[PREZZO];
             $utente_id = $params[UTENTE_ID];
             $prodotto_id = $params[PRODOTTO_ID];
-            $status = 1;
             $insertArticleQuery = "INSERT INTO `Articolo` (`Prezzo`, `Utente_id`, `Prodotto_id`, `Status`)
                 VALUES (?, ?, ?, ?)";
             $res = $this->insertData($insertArticleQuery,
                 $prezzo,
                 $utente_id,
                 $prodotto_id,
-                $status);
-            echo "response after add article attempt: " . $res . "</br>";
+                STATUS_MODIFIED_DATA);
+
+            //debug
+            //echo "response after add article attempt: " . $res . "</br>";
+
             if (UtilsFunctions::checkResponse($res)) {
                 return $res;
             }

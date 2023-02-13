@@ -71,8 +71,10 @@ if (isset($_POST['article-btn-insert']))
 
                 $warehouseArticleResponse = $session->addWarehouseArticle($warehouseArticleParams);
                 if ($warehouseArticleResponse) {
-                    echo "Articolo in magazzino: " . $warehouseArticleResponse . "</br>";
-                    //header("Location: dashboard.php");
+                    //debug
+                    //echo "Articolo in magazzino: " . $warehouseArticleResponse . "</br>";
+
+                    header("Location: dashboard.php");
                 } else {
                     echo "Errore inserimento articolo in magazzino </br>";
                 }

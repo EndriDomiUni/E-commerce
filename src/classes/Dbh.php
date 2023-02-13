@@ -85,26 +85,26 @@ class Dbh
      */
     private function checkEmail($email): bool
     {
-        return count($this->execute("SELECT * FROM `Utente` WHERE Email = '$email' ")) == 0;
+        return count($this->execute("SELECT * FROM `Utente` WHERE `Email` = '$email' ")) == 0;
     }
 
 
     public function getDimensionIdByParameters($dim_x, $dim_y, $dim_z): array
     {
         return $this->execute("SELECT Id FROM `Dimensione` 
-            WHERE Dim_X = $dim_x AND Dim_Y = $dim_y AND Dim_Z = $dim_z");
+            WHERE `Dim_X` = $dim_x AND `Dim_Y` = $dim_y AND `Dim_Z` = $dim_z");
     }
 
     public function getVariationsByCategoryId($categoryId): array
     {
         return $this->execute("SELECT * FROM `Variazione`
-            WHERE Categoria_id = '$categoryId'");
+            WHERE `Categoria_id` = '$categoryId'");
     }
 
     public function getOptionsByVariationId($variationId): array
     {
         return $this->execute("SELECT * FROM `Opzione_variazione`
-            WHERE Variazione_Id = '$variationId'");
+            WHERE `Variazione_Id` = '$variationId'");
     }
 
     /**
@@ -117,7 +117,7 @@ class Dbh
     public function checkDimension($dim_x, $dim_y, $dim_z): bool
     {
         return count($this->execute("SELECT * FROM `Dimensione` 
-         WHERE `Dim_X`=$dim_x AND `Dim_Y`=$dim_y AND `Dim_Z`=$dim_z")) == 0;
+         WHERE `Dim_X` = {$dim_x} AND `Dim_Y` = {$dim_y} AND `Dim_Z` = {$dim_z}")) == 0;
     }
 
 
@@ -224,11 +224,21 @@ class Dbh
      */
     public function selectSpecificField(string $tableName, string $field, string $where): int|string|array|null
     {
-        $response = $this->execute("SELECT `$field` FROM `$tableName` WHERE $where");
-        if(UtilsFunctions::checkResponse($response)){
+        $query = "SELECT `$field` FROM `$tableName` WHERE $where";
+        $response = $this->execute($query);
+
+        //debug
+        //echo "query select specific field: {$query} </br>";
+        //echo "type result: ".gettype($response)." </br>";
+        //var_dump($response);
+
+        if(UtilsFunctions::checkResponse($response[0][$field])){
+            //debug
+            //echo "response: ".$response[0][$field]."</br>";
             return $response[0][$field];
         }
-        else return null;
+
+        return null;
     }
 
     /**
@@ -340,19 +350,19 @@ class Dbh
 
     public function loadArticles(): string|int|array
     {
-        $query = "SELECT * FROM Articolo";
+        $query = "SELECT * FROM `Articolo`";
         return $this->execute($query);
     }
 
     public function getWarehouses(): string|int|array
     {
-        $query = "SELECT * FROM Magazzino";
+        $query = "SELECT * FROM `Magazzino`";
         return $this->execute($query);
     }
 
     public function getVariations(): string|int|array
     {
-        $query = "SELECT * FROM Variazione";
+        $query = "SELECT * FROM `Variazione`";
         return $this->execute($query);
     }
 

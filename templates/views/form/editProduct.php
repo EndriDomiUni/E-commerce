@@ -50,15 +50,15 @@
 
 
 <div class="container my-5">
-    <h1 class="text-center font-weight-bold">Edit Product Data</h1>
+    <h1 class="text-center font-weight-bold">Modifica prodotto</h1>
     <form class="mt-5">
         <div class="form-group">
-            <label for="productName">Product Name</label>
-            <input type="text" class="form-control" id="productName" placeholder="Enter Product Name">
+            <label for="product-name">Nome prodotto</label>
+            <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Enter Product Name">
         </div>
         <div class="form-group">
-            <label for="productDescription">Product Description</label>
-            <textarea class="form-control" id="productDescription" rows="5" placeholder="Enter Product Description"></textarea>
+            <label for="product-description">Descrizone prodo</label>
+            <textarea class="form-control" id="product-description" name="product-description" rows="5" placeholder="Enter Product Description"></textarea>
         </div>
         <div class="form-group">
             <label for="productPrice">Product Price</label>
