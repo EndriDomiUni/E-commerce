@@ -226,19 +226,7 @@ class Dbh
     {
         $query = "SELECT `$field` FROM `$tableName` WHERE $where";
         $response = $this->execute($query);
-
-        //debug
-        //echo "query select specific field: {$query} </br>";
-        //echo "type result: ".gettype($response)." </br>";
-        //var_dump($response);
-
-        if(UtilsFunctions::checkResponse($response[0][$field])){
-            //debug
-            //echo "response: ".$response[0][$field]."</br>";
-            return $response[0][$field];
-        }
-
-        return null;
+        return $response[0][$field];
     }
 
     /**
@@ -368,4 +356,9 @@ class Dbh
         return $this->execute($query);
     }
 
+    public function getProducts(): array|int|string
+    {
+        $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
+        return $this->execute($query);
+    }
 }

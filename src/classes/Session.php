@@ -381,14 +381,6 @@ class Session extends Dbh
         return parent::execute($query);
     }
 
-    public function getProducts(){
-        $query = "SELECT * FROM `".PRODOTTO."` WHERE `".ID."` != ".ID_UNSET;
-        //debug
-        //echo "query get products: ".$query."</br>";
-
-        return parent::execute($query);
-    }
-
     public function getAllProductsBySeller($userId) : array
     {
         $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;

@@ -36,6 +36,8 @@ const VIEW_SELLER = VIEW_ROOT . "/seller";
 
 const EURO = "€";
 
+const ERROR_STR = "error";
+
 // CLAIM ---------------------------------------------------------------
 const CLAIM_GUEST_DESC = "guest";
 const CLAIM_USER_DESC = "user";

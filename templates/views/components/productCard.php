@@ -1,149 +1,119 @@
-<form>
-
+<section>
     <?php
 
     // These two lines are used for debugging
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    require_once "./src/classes/Session.php";
 
-    if ($_SESSION[ID] == null){
-        $_SESSION[ID] = 1;
-    }
-    $session = new Session($_SESSION[ID]);
-        //$articles = $session->loadArticles();
-        $products = $session->getProducts();
+    $dbh = new Dbh();
+    $products = $dbh->getProducts();
 
-        if (is_array($products)) {
-            foreach ($products as $product) {
-                echo '<form method="post" action="script/productManager.script.php">';
-                //debug
-                //echo "current id: " . $product[ID]."</br>";
-                //var_dump($product);
+    if (is_array($products)) {
+        foreach ($products as $product) {
+            echo '<form method="post">';
+            $whereProductId = "`Id` = " . $product[ID];
+            $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId);
+            $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId);
+            $currentProductDescription = $dbh->selectSpecificField(PRODOTTO, DESCRIZIONE, $whereProductId);
+            $currentProductPrice = $dbh->selectSpecificField(ARTICOLO, PREZZO, $whereProductId);
 
-                $whereProductId = "`Id` = " . $product[ID];
-                $currentProductImage = $session->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId) !== null
-                    ? $session->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId)
-                    : "Error get img";
-
-                $currentProductName = $session->selectSpecificField(PRODOTTO, NOME, $whereProductId) !== null
-                    ? $session->selectSpecificField(PRODOTTO, NOME, $whereProductId)
-                    : "Error get name";
-
-                $currentProductDescription = $session->selectSpecificField(PRODOTTO, DESCRIZIONE, $whereProductId) !== null
-                    ? $session->selectSpecificField(PRODOTTO, DESCRIZIONE, $whereProductId)
-                    : "Error get description";
-
-                $currentProductPrice = null;
-                $currentProductPrice = $session->selectSpecificField(ARTICOLO, PREZZO, $whereProductId) !== null
-                    ? $session->selectSpecificField(ARTICOLO, PREZZO, $whereProductId)
-                    : "Error get price";
-                echo ' 
+            if ($currentProductImage !== null && $currentProductName !== null
+                && $currentProductDescription !== null && $currentProductPrice !== null) {
+                if (!isset($_SESSION[ID])) {
+                    echo ' 
                              <div class="card mb-3" style="max-width: 540px;">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                             <img src="" class="card-img" alt="Product Image">
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="card-body" name="product-id" value="'.$product[ID].'">
+                                            <div class="card-body" name="product-id" value="' . $product[ID] . '">
                                                 <h5 class="card-title" >' . $currentProductName . '</h5>
                                                 <p class="card-text" >' . $currentProductDescription . '</p>
                                                 <div class="card-price">
-                                                    <p class="card-text">A partire da: '.EURO.' '. $currentProductPrice . '</p>
+                                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
                                                     <label for="article-quantity" class="form-label">Quantità</label>
                                                     <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
                                         </div>
                                         <div class="card-size">';
-                //debug
-                //echo "product id: ".$product[ID]."</br>";
-                $currentArticles= $session->getArticlesByProductId($product[ID]) != null
-                    ? $session->getArticlesByProductId($product[ID]) : "Error get article by product id";
-
-                //$currentArticleConfigurations = $session->getArticleConfigurations($product[ID]) != null
-                //    ? $session->getArticleConfigurations($product[ID]) : "Error get article configurations";
-                $variations = array();
-                $options = array();
-
-                foreach ($currentArticles as $currentArticle){
+                    drawCardFooter();
+                } else {
+                    $session = new Session($_SESSION[ID]);
+                    echo ' 
+                             <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4">
+                                            <img src="" class="card-img" alt="Product Image">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body" name="product-id" value="' . $product[ID] . '">
+                                                <h5 class="card-title" >' . $currentProductName . '</h5>
+                                                <p class="card-text" >' . $currentProductDescription . '</p>
+                                                <div class="card-price">
+                                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
+                                                    <label for="article-quantity" class="form-label">Quantità</label>
+                                                    <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
+                                        </div>
+                                        <div class="card-size">';
                     //debug
-                    //echo "article  id: ".$currentArticle[ID]."</br>";
-                    //foreach ($currentArticle as $field){
-                    //    echo "current article field: ".$field."</br>";
-                    //}
+                    //echo "product id: ".$product[ID]."</br>";
+                    $currentArticles = $session->getArticlesByProductId($product[ID]) != null
+                        ? $session->getArticlesByProductId($product[ID]) : "Error get article by product id";
 
+                    $variations = [];
+                    $options = [];
 
-                    $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
+                    foreach ($currentArticles as $currentArticle) {
 
-                    foreach ($articleConfigurations as $articleConfiguration){
+                        $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
+                        foreach ($articleConfigurations as $articleConfiguration) {
+                            $option_id = $articleConfiguration[OPZIONE_ID];
 
-                        //debug
-                        //echo "article configuration id: ".$articleConfiguration[ID]."</br>";
-                        //foreach ($articleConfiguration as $field){
-                        //    echo "current article configuration field: ".$field."</br>";
-                        //}
+                            //debug
+                            //echo "option id: ".$option_id."</br>";
+                            $queryOption = "SELECT * FROM `" . OPZIONE_VARIAZIONE . "` WHERE `" . ID . "` = " . $option_id;
+                            $currentOption = $dbh->execute($queryOption);
 
+                            if ($currentProductPrice == null) {
+                                $currentProductPrice = (int)$currentArticle[PREZZO];
+                            }
 
-                        $option_id = $articleConfiguration[OPZIONE_ID];
+                            $queryGetVariation = "SELECT * FROM `" . VARIAZIONE . "` WHERE `" . ID . "` = " . $currentOption[0][VARIAZIONE_ID];
+                            $currentVariation = $session->execute($queryGetVariation);
 
-                        //debug
-                        //echo "option id: ".$option_id."</br>";
-
-                        $queryOption = "SELECT * FROM `".OPZIONE_VARIAZIONE."` WHERE `".ID."` = ".$option_id;
-
-                        $currentOption = $session->execute($queryOption);
-                        //debug
-                        /*
-                        echo "</br>current option id:".$option_id."</br>";
-                        foreach ($currentOption as $value){
-                            if (is_array($value)){
-                                foreach ($value as $element){
-                                    if (is_array($element)){
-                                        foreach ($element as $insideElement){
-                                            echo "inside element: ".$value."</br>";
-                                        }
-                                    }
-                                    else {
-                                        echo "element: ".$element."</br>";
-                                    }
+                            if (!in_array($currentVariation[0], $variations)) {
+                                $variations[$currentVariation[0][ID]] = $currentVariation[0];
+                            }
+                            if (!in_array($currentOption, $options)) {
+                                $currentOption[0][VARIAZIONE_ID];
+                                //echo '<option value="option-'.$currentOption[0][ID].'">'.$currentOption[0][VALORE].'</option>';
+                                $options[$currentOption[0][ID]] = $currentOption[0];
+                            }
+                        }
+                        foreach ($variations as $variation) {
+                            echo '<label for="product-variation-' . $variation[ID] . '">' . $variation[NOME] . '</label>';
+                            echo '<select class="form-select" id="product-variation-' . $variation[ID] . '"  name="product-variation-' . $variation[ID] . '" aria-label="Default select example">';
+                            echo '<option value="">--Seleziona opzione--</option>';
+                            foreach ($options as $option) {
+                                if ($option[VARIAZIONE_ID] === $variation[ID]) {
+                                    echo '<option value="option-' . $option[ID] . '">' . $option[VALORE] . '</option>';
                                 }
                             }
-                            else {
-                                echo "value: ".$value."</br>";
-                            }
+                            echo '</select>';
                         }
-                        */
-
-                        if ($currentProductPrice == null){
-                            $currentProductPrice = (int) $currentArticle[PREZZO];
-                        }
-
-                        $queryGetVariation = "SELECT * FROM `".VARIAZIONE."` WHERE `".ID."` = ".$currentOption[0][VARIAZIONE_ID];
-                        $currentVariation = $session->execute($queryGetVariation);
-
-
-                        if (!in_array($currentVariation[0], $variations)){
-                            $variations[$currentVariation[0][ID]] = $currentVariation[0];
-                        }
-                        if (!in_array($currentOption, $options)){
-                            $currentOption[0][VARIAZIONE_ID];
-                            //echo '<option value="option-'.$currentOption[0][ID].'">'.$currentOption[0][VALORE].'</option>';
-                            $options[$currentOption[0][ID]] = $currentOption[0];
-                        }
+                        drawCardFooter();
                     }
-                    foreach ($variations as $variation){
-                        echo '<label for="product-variation-'.$variation[ID].'">'.$variation[NOME].'</label>';
-                        echo '<select class="form-select" id="product-variation-'.$variation[ID].'"  name="product-variation-'.$variation[ID].'" aria-label="Default select example">';
-                        echo '<option value="">--Seleziona opzione--</option>';
-                        foreach ($options as $option){
-                            if ($option[VARIAZIONE_ID] === $variation[ID]){
-                                echo '<option value="option-'.$option[ID].'">'.$option[VALORE].'</option>';
-                            }
-                        }
-                        echo '</select>';
-                    }
-
                 }
-                echo '
+            }
+        }
+    }
+    ?>
+</section>
+
+<?php
+function drawCardFooter(): void
+{
+    echo '
                     </select>
                     
                     </div>
@@ -175,13 +145,8 @@
                             </button>
                         </div>
                     </div>
-                    </div>';
-            }
-        } else {
-            echo "Articoli  non disponibili";
-        }
-    ?>
-    </form>
-</section>
-
+                    </div>
+                </form>';
+}
+?>
 
