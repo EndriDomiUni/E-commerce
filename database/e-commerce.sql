@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 13, 2023 alle 14:52
+-- Creato il: Feb 13, 2023 alle 15:08
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -79,7 +79,6 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
 --
 
 INSERT INTO `Articolo_in_carrello` (`Id`, `Quantità`, `Carrello_id`, `Articolo_id`, `Status`, `Timestamp`) VALUES
-(1, 0, 1, 1, 0, '2023-02-05 10:19:58'),
 (2, 1, 175, 1, 0, '2023-02-05 16:13:59'),
 (3, 1, 176, 1, 0, '2023-02-06 15:01:01');
 
@@ -116,14 +115,14 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=467 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=480 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Carrello`
 --
 
 INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
-(1, 4, 0, '2023-02-02 09:35:40'),
+(1, 1, 1, '2023-02-13 14:05:18'),
 (2, 4, 0, '2023-02-02 09:36:53'),
 (3, 4, 0, '2023-02-02 09:36:53'),
 (4, 4, 0, '2023-02-02 09:36:53'),
@@ -588,7 +587,20 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (463, 20, 0, '2023-02-12 20:55:47'),
 (464, 21, 0, '2023-02-12 21:55:43'),
 (465, 22, 0, '2023-02-12 22:16:51'),
-(466, 23, 0, '2023-02-13 00:23:38');
+(466, 23, 0, '2023-02-13 00:23:38'),
+(467, 1, 0, '2023-02-13 14:05:47'),
+(468, 1, 0, '2023-02-13 14:05:47'),
+(469, 1, 0, '2023-02-13 14:05:47'),
+(470, 1, 0, '2023-02-13 14:05:47'),
+(471, 1, 0, '2023-02-13 14:05:47'),
+(472, 1, 0, '2023-02-13 14:05:47'),
+(473, 1, 0, '2023-02-13 14:05:47'),
+(474, 1, 0, '2023-02-13 14:05:47'),
+(475, 1, 0, '2023-02-13 14:05:47'),
+(476, 1, 0, '2023-02-13 14:05:47'),
+(477, 1, 0, '2023-02-13 14:05:47'),
+(478, 1, 0, '2023-02-13 14:05:47'),
+(479, 1, 0, '2023-02-13 14:05:47');
 
 -- --------------------------------------------------------
 
@@ -635,6 +647,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
 --
 
 INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
+(1, 'unset', '0', 1, '2023-02-13 14:04:32'),
 (55, 'user', '0', 0, '2023-01-31 15:35:38'),
 (56, 'seller', '0', 0, '2023-01-31 15:38:04'),
 (57, 'seller', '0', 0, '2023-02-02 08:32:19'),
@@ -934,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Raccolta`
@@ -948,7 +961,8 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 (5, 1, 'whislist', 20, 0, '2023-02-12 20:55:47'),
 (6, 1, 'whislist', 21, 0, '2023-02-12 21:55:43'),
 (7, 1, 'whislist', 22, 0, '2023-02-12 22:16:51'),
-(8, 1, 'whislist', 23, 0, '2023-02-13 00:23:38');
+(8, 1, 'whislist', 23, 0, '2023-02-13 00:23:38'),
+(9, 1, 'whislist', 1, 0, '2023-02-13 14:05:47');
 
 -- --------------------------------------------------------
 
@@ -995,6 +1009,7 @@ CREATE TABLE IF NOT EXISTS `Utente` (
 --
 
 INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, `Indirizzo_id`, `Status`, `Timestamp`) VALUES
+(1, 'unset', 'unset', 'unset', 'unset', 71, 1, 1, '2023-02-13 14:03:51'),
 (4, 'Endri', 'Domi', 'endri@takeit.com', 'takeit', 55, 3, 0, '2023-01-31 15:35:38'),
 (5, 'Federico', 'Brunelli', 'fede@takeit.com', 'takeit', 56, 1, 0, '2023-01-31 15:38:04'),
 (6, 'Chiara', 'Delmonte', 'chiara.delmonte@takeit.com', 'takeit', 57, 1, 0, '2023-02-02 08:32:19'),

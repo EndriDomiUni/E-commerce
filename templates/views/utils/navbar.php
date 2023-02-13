@@ -38,6 +38,7 @@ require_once "UIHelper.php";
 
                         switch ($claimType) {
                             case CLAIM_SELLER_DESC:
+                                break;
                             case CLAIM_SELLER_PR0_DESC:
                                 echo
                                 '<li class="nav-item">
