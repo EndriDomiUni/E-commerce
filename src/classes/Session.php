@@ -341,19 +341,5 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 
-    public function getAllProductsBySeller($userId) : array
-    {
-        $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;
-        //debug
-        echo "query products ids: ".$queryProductsIds."</br>";
 
-        $productIds = parent::execute($queryProductsIds);
-        $products = array();
-        foreach ($productIds as $productId){
-            $queryProducts = "SELECT * FROM `".PRODOTTO."` WHERE `".ID."` = ".array_values($productId)[0];
-            $product = parent::execute($queryProducts);
-            $products[array_values($productId)[0]] = $product;
-        }
-        return $products;
-    }
 }

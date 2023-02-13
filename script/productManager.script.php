@@ -67,10 +67,6 @@ foreach ($products as $product) {
                     foreach ($optionsSelected as $option) {
 
                         if ("" . $articleConfiguration[OPZIONE_ID] === $option) {
-                            echo "</br>";
-
-                            var_dump($articleConfiguration[OPZIONE_ID]);
-                            echo "</br>";
                             $checkConfigurations[] = $articleConfiguration;
                             break;
                         }
