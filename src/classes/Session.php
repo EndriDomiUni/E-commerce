@@ -341,33 +341,6 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 
-    public function addProductInWishlist($productID): array|int|string
-    {
-        $query = "INSERT INTO Prodotto_in_raccolta (Raccolta_id, Prodotto_id, Status)
-        VALUES (?, ?, ?)";
-
-        $res = parent::insertData($query,
-            $this->getCurrentUser()[RACCOLTA_ID],
-            $productID,
-            STATUS_MODIFIED_DATA
-        );
-        return UtilsFunctions::checkResponse($res) ? $res : 0;
-    }
-
-    public function addArticleInCart($params): array|int|string
-    {
-        $query = "INSERT INTO Articolo_in_carrello (Quantità, Carrello_id, Articolo_id, Status)
-        VALUES (?, ?, ?, ?)";
-
-        $res = parent::insertData($query,
-            $params[QUANTITA],
-            $params[CARRELLO_ID],
-            $params[ARTICOLO_ID],
-            STATUS_MODIFIED_DATA
-        );
-        return UtilsFunctions::checkResponse($res) ? $res : 0;
-    }
-
     public function getAllProductsBySeller($userId) : array
     {
         $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;

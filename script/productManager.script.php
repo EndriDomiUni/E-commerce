@@ -19,83 +19,165 @@ foreach ($products as $product) {
         isset($_POST['buy-now-' . $product[ID]]) ||
         isset($_POST['add-product-' . $product[ID] . '-in-wishlist'])) {
 
-        if (!isset($_SESSION[ID])){
+
+        if (!isset($_SESSION[ID])) {
             header("Location: login.php");
-        }
-        else {
+        } else {
+
+
+
             $session = new Session($_SESSION[ID]);
 
-            switch (true) {
-                case isset($_POST['add-article-' . $product[ID] . '-in-cart']):
+            if (isset($_POST['add-product-' . $product[ID] . '-in-wishlist'])){
+                $res = $session->addProductInWishlist($session->getCurrentUser()[RACCOLTA_ID],
+                    $product[ID]);
+                if (UtilsFunctions::checkResponse($res)){
+                    echo '<div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Prodotto aggiunto in raccolta</h4>
+                        </div>';
+                    break;
+                }
+            }
+
+            $quantity = $_POST["article-quantity"];
+
+
+            //debug
+            //echo 'add-article' . $product[ID] . '-in-cart';
+
+            $variations = $dbh->getVariations();
+            $optionsSelected = array();
+            foreach ($variations as $variation) {
+                //debug
+                //echo "variationId: ".$variation[ID]."</br>";
+                $variationTagName = 'product-variation-' . $variation[ID];
+                if (isset($_POST[$variationTagName])) {
+                    $variationIdSelect = $_POST[$variationTagName];
+                    $optionsSelected[] = $variationIdSelect;
                     //debug
-                    echo 'add-article' . $product[ID] . '-in-cart';
-                    $quantity = $_POST["article-quantity"];
-                    $optionsVariations = array();
-                    $variations = $dbh->getVariations();
-                    $optionsSelected = array();
-                    foreach ($variations as $variation) {
-                        //debug
-                        //echo "variationId: ".$variation[ID]."</br>";
-                        $variationTagName = 'product-variation-' . $variation[ID];
-                        if (isset($_POST[$variationTagName])) {
-                            $variationIdSelect = $_POST[$variationTagName];
-                            $optionsSelected[] = $variationIdSelect;
-                            //debug
-                            //echo "variationIdSelect: ".$variationIdSelect."</br>";
-                        }
-                    }
-                    $rightArticle = [];
-                    $articles = $dbh->getArticlesByProductId($product[ID]);
-                    foreach ($articles as $article) {
-                        $articleConfigurations = $dbh->getArticleConfigurations($article[ID]);
-                        $checkConfigurations = [];
-                        foreach ($articleConfigurations as $articleConfiguration) {
-                            foreach ($optionsSelected as $option) {
-                                //var_dump($option);
+                    //echo "variationIdSelect: ".$variationIdSelect."</br>";
+                }
+            }
+            $rightArticle = [];
+            $articles = $dbh->getArticlesByProductId($product[ID]);
+            foreach ($articles as $article) {
+                $articleConfigurations = $dbh->getArticleConfigurations($article[ID]);
+                $checkConfigurations = [];
+                foreach ($articleConfigurations as $articleConfiguration) {
+                    foreach ($optionsSelected as $option) {
 
+                        if ("" . $articleConfiguration[OPZIONE_ID] === $option) {
+                            echo "</br>";
 
-                                if ("".$articleConfiguration[OPZIONE_ID] === $option) {
-                                    echo "</br>";
-
-                                    var_dump($articleConfiguration[OPZIONE_ID]);
-                                    echo "</br>";
-                                    $checkConfigurations[] = $articleConfiguration;
-                                    break;
-                                }
-                            }
-                        }
-                        if (sizeof($checkConfigurations) === sizeof($optionsSelected)) {
-                            $rightArticle = $article;
-                            //debug
-                            echo "articolo id: " . $article[ID] . "</br>";
-                            $queryInsertArticleInCart = "INSERT INTO `Articolo_in_carrello` (Quantità, Carrello_id, Articolo_id, Status)
-                                VALUES (?, ?, ?, ?) ";
-                            $result = $dbh->insertData($queryInsertArticleInCart,
-                                $quantity,
-                                $session->getCurrentUser()[CARRELLO_ID],
-                                $article[ID],
-                                STATUS_MODIFIED_DATA);
-                            if (UtilsFunctions::checkResponse($result)) {
-                                //debug
-                                echo "Insert article in cart";
-                            }
+                            var_dump($articleConfiguration[OPZIONE_ID]);
+                            echo "</br>";
+                            $checkConfigurations[] = $articleConfiguration;
                             break;
                         }
                     }
+                }
+                if (sizeof($checkConfigurations) === sizeof($optionsSelected)) {
+                    $rightArticle = $article;
 
+                    //debug
+                    echo "articolo id: " . $article[ID] . "</br>";
 
+                    $whereArticleId = "Id = " . $article[ID];
+                    if ($session->getRecord(ARTICOLO, $whereArticleId) !== null) {
+
+                        //debug
+                        echo "sono qui";
+                        controller($session, $quantity, $session->getCurrentUser()[CARRELLO_ID], $article[ID], $product[ID]);
+
+                    } else {
+                        echo '<div class="alert alert-warning" role="alert">
+                                          <h4 class="alert-heading">Articolo selezionato non esistente</h4>
+                                          <hr>
+                                          <p class="mb-0">Seleziona una configurazione diversa</p>
+                                        </div>';
+                    }
                     break;
-                case isset($_POST['buy-now-' . $product[ID]]):
-
-                    break;
-                case isset($_POST['add-product-' . $product[ID] . '-in-wishlist']):
-
-                    break;
+                }
             }
         }
     }
 }
 
+function controller($session, $quantity, $cartId, $articleId, $productId): void
+{
+    switch (true){
+        case isset($_POST['buy-now-' . $productId]):
+            if ($quantity > 0 && $cartId > 0 && $articleId > 0){
+                $res = $session->addArticleInCart($quantity, $cartId, $articleId);
+                if (UtilsFunctions::checkResponse($res)){
+                    header("Location: cart.php");
+                }
+            }
+            break;
+        case isset($_POST['add-article-' . $productId . '-in-cart']):
+            if ($quantity > 0 && $cartId > 0 && $articleId > 0){
+                $res = $session->addArticleInCart($quantity, $cartId, $articleId);
+                if (UtilsFunctions::checkResponse($res)){
+                    echo '<div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Articolo inserito con successo</h4>
+                        </div>';
+                }
+            }
+            break;
+    }
+}
+
+
+
+/*
+private function getArticle($session, $product)
+{
+    $variations = $dbh->getVariations();
+    $optionsSelected = array();
+    foreach ($variations as $variation) {
+        //debug
+        //echo "variationId: ".$variation[ID]."</br>";
+        $variationTagName = 'product-variation-' . $variation[ID];
+        if (isset($_POST[$variationTagName])) {
+            $variationIdSelect = $_POST[$variationTagName];
+            $optionsSelected[] = $variationIdSelect;
+            //debug
+            //echo "variationIdSelect: ".$variationIdSelect."</br>";
+        }
+    }
+    $rightArticle = [];
+    $articles = $dbh->getArticlesByProductId($product[ID]);
+    foreach ($articles as $article) {
+        $articleConfigurations = $dbh->getArticleConfigurations($article[ID]);
+        $checkConfigurations = [];
+        foreach ($articleConfigurations as $articleConfiguration) {
+            foreach ($optionsSelected as $option) {
+
+                if ("" . $articleConfiguration[OPZIONE_ID] === $option) {
+                    echo "</br>";
+
+                    var_dump($articleConfiguration[OPZIONE_ID]);
+                    echo "</br>";
+                    $checkConfigurations[] = $articleConfiguration;
+                    break;
+                }
+            }
+        }
+        if (sizeof($checkConfigurations) === sizeof($optionsSelected)) {
+            $rightArticle = $article;
+
+            //debug
+            echo "articolo id: " . $article[ID] . "</br>";
+
+            $whereArticleId = "Id = " . $article[ID];
+            if ($session->getRecord(ARTICOLO, $whereArticleId) !== null) {
+                return $article;
+            } else {
+                return null;
+            }
+        }
+    }
+}
 
 /*
 if (isset($_POST['add-article-in-cart']) || isset($_POST['buy-now'])){

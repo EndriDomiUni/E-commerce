@@ -362,8 +362,30 @@ class Dbh
         return $this->execute($query);
     }
 
-    public function getArticleConfigurations($articleId){
+    public function getArticleConfigurations($articleId): array|int|string
+    {
         $query = "SELECT * FROM `".CONFIGURAZIONE_VARIAZIONE."` WHERE `".ARTICOLO_ID."` = ".$articleId;
         return $this->execute($query);
+    }
+
+    public function addArticleInCart($quantity, $cartId, $articleId): array|int|string
+    {
+        $queryInsertArticleInCart = "INSERT INTO `Articolo_in_carrello` (Quantità, Carrello_id, Articolo_id, Status)
+                                VALUES (?, ?, ?, ?) ";
+        return $this->insertData($queryInsertArticleInCart,
+            $quantity,
+            $cartId,
+            $articleId,
+            STATUS_MODIFIED_DATA);
+    }
+
+    public function addProductInWishlist($wishlistId, $productId): array|int|string
+    {
+        $queryInsertProductInWishlist= "INSERT INTO `Prodotto_in_raccolta` (Raccolta_id, Prodotto_id, Status)
+                                VALUES (?, ?, ?) ";
+        return $this->insertData($queryInsertProductInWishlist,
+            $wishlistId,
+            $productId,
+            STATUS_MODIFIED_DATA);
     }
 }
