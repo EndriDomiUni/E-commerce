@@ -42,15 +42,15 @@
             <div class="card-body">
                 <!-- User Data Content Here -->
                 <div class="form-group">
-                    <label for="currentPassword">Current Password:</label>
+                    <label for="currentPassword">Password Corrente:</label>
                     <input type="password" class="form-control" id="currentPassword" required>
                 </div>
                 <div class="form-group">
-                    <label for="newPassword">New Password:</label>
+                    <label for="newPassword">Nuova Password:</label>
                     <input type="password" class="form-control" id="newPassword" required>
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword">Confirm Password:</label>
+                    <label for="confirmPassword">Confirma Password:</label>
                     <input type="password" class="form-control" id="confirmPassword" required>
                 </div>
             </div>
