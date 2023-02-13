@@ -72,7 +72,7 @@
                             //debug
                             //echo "option id: ".$option_id."</br>";
                             $queryOption = "SELECT * FROM `" . OPZIONE_VARIAZIONE . "` WHERE `" . ID . "` = " . $option_id;
-                            $currentOption = $dbh->execute($queryOption);
+                            $currentOption = $session->execute($queryOption);
 
                             if ($currentProductPrice == null) {
                                 $currentProductPrice = (int)$currentArticle[PREZZO];
@@ -86,7 +86,6 @@
                             }
                             if (!in_array($currentOption, $options)) {
                                 $currentOption[0][VARIAZIONE_ID];
-                                //echo '<option value="option-'.$currentOption[0][ID].'">'.$currentOption[0][VALORE].'</option>';
                                 $options[$currentOption[0][ID]] = $currentOption[0];
                             }
                         }
