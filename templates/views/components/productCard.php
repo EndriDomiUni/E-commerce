@@ -37,7 +37,7 @@
                                                     <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
                                         </div>
                                         <div class="card-size">';
-                    drawCardFooter();
+                    drawCardFooter($product[ID]);
                 } else {
                     $session = new Session($_SESSION[ID]);
                     echo ' 
@@ -121,11 +121,13 @@ function drawCardFooter($productId): void
                     </div>
                     </div>
                     </div>
-                    <div class="row no-gutters">
-                        <div class="col-md-5"></div>
-                        <div class="col-md-9">
-                        <div class="card-footer d-flex justify-content-end">
-                            <button class="btn btn-primary ml-auto type="submit" name="add-product-' . $productId . '-in-wishlist">
+                    <div class="card-footer d-flex justify-content-end">
+                        <style>
+                           .btn-primary{
+                                margin: 1px;
+                           }
+                        </style>
+                            <button class="btn btn-primary ml-auto" type="submit" name="add-product-' . $productId . '-in-wishlist">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                                 </svg>
@@ -146,9 +148,6 @@ function drawCardFooter($productId): void
                                 Buy Now
                             </button>
                         </div>
-                           
-                        </div>
-                    </div>
                     </div>
                 </form>';
     }
