@@ -1,6 +1,7 @@
 <section>
     <?php
 
+
     // These two lines are used for debugging
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -64,6 +65,7 @@
                     $options = [];
 
                     foreach ($currentArticles as $currentArticle) {
+
 
                         $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
                         foreach ($articleConfigurations as $articleConfiguration) {
@@ -146,6 +148,6 @@ function drawCardFooter(): void
                     </div>
                     </div>
                 </form>';
-}
+    }
 ?>
 
