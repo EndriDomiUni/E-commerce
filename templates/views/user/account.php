@@ -1,3 +1,4 @@
+
 <div class="container mt-5">
     <h1 class="text-center">Account Details</h1>
 
@@ -13,10 +14,20 @@
                     <img src="https://via.placeholder.com/150x150" class="rounded-circle mb-3">
                 </div>
                 <div class="col-md-9">
-                    <h3 class="mb-3">First Name Last Name</h3>
-                    <p class="text-muted">Job Title</p>
-                    <p class="mb-0">Email: email@example.com</p>
-                    <p class="mb-0">Phone: (123) 456-7890</p>
+
+                    <?php
+                    if (isset($_SESSION[ID])) {
+                        $session = new Session($_SESSION[ID]);
+                        echo
+                        '<h3 class="mb-3">' . $session->getCurrentUser()[NOME] . ' ' . $session->getCurrentUser()[COGNOME] . '</h3>
+                            <p class="mb-0">Email: ' . $session->getCurrentUser()[EMAIL] . '</p>
+                            <p class="mb-0">Type: ' . $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]). '</p>
+                            <p class="mb-0">Phone: (123) 456-7890</p>
+                        ';
+                    }
+                    ?>
+
+
                 </div>
             </div>
         </div>
