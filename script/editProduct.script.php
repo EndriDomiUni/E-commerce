@@ -10,8 +10,17 @@ require_once "./src/classes/Session.php";
 
 $session = new Session($_SESSION[ID]);
 
-$products = [$session->getAllProductsBySeller($session->getCurrentUser()[ID])];
+//$products =array($session->getAllProductsBySeller($session->getCurrentUser()[ID]));
+if (isset($_POST['btn-edit-product'])){
+    $params = [
+        NOME => $_POST['product-name'],
+        DESCRIZIONE => $_POST['product-description'],
 
+
+    ];
+
+
+}
 /*
 foreach ($products as $product){
 
