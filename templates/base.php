@@ -28,17 +28,88 @@ if (isset($_SESSION["Id"])) {
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
 
-                echo '<div class="row">
-                                <div id="sidebar" class="col">
-                                </div>
-                                
-                                <div class="col-9">';
+                echo '<div class="row">';
+
+                echo '<div class="sidebar col-3">
+                               <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="max-width: 250px;">
+                                   <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                                        <span class="fs-4">Take it</span>
+                                   </a>
+                                    <hr>
+                                    <ul class="nav nav-pills flex-column mb-auto">';
+                echo '<li>
+                                            <a href="./dashboard.php" class="nav-link link-white ';
+                if ($title === "Dashboard"){
+                    echo 'active';
+                }
+                else {
+                }
+                echo ' showContent" >';
+                echo'
+                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                                                Dashboard
+                                            </a>
+                                        </li>';
+                echo '<li>
+                                            <a href="./productInsertion.php" class="nav-link link-white ';
+                if ($title === "Insert product"){
+                    echo 'active';
+                }
+                else {
+                }
+                echo ' showContent" >';
+                echo'
+                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                                                Inserisci prodotto
+                                            </a>
+                                        </li>';
+
+
+                echo '<li>
+                                            <a href="./editProduct.php" class="nav-link link-dark ';
+                if ($title === "Edit product"){
+                    echo 'active';
+                }
+                else {
+                }
+                echo ' showContent" >';
+                echo'
+                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                                                Modifica prodotto
+                                            </a>
+                                        </li>';
+
+
+                echo '<li>
+                                            <a href="./warehouse.php" class="nav-link link-dark ';
+                if ($title === "Warehouse"){
+                    echo 'active';
+                }
+                else {
+                }
+                echo ' showContent" >';
+                echo'
+                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                                                Magazzino
+                                            </a>
+                                        </li>';
+
+
+
+
+                echo '                                           
+                                    </ul>
+                                    <hr>
+                                     </div>
+                                </div>';
+
+                echo '          <div class="col-9">';
                 echo $mainContent;
                 echo '      </div>
                         </div>';
 
-                echo '<script src="/app/assets/js/generateSidebar.js" type="text/javascript">',
-                '</script>';
+
             }
         } else {
             echo $mainContent;
