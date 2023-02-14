@@ -9,42 +9,45 @@
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
+                <span class="text-muted">Il tuo carrello</span>
                 <span class="badge badge-secondary badge-pill">3</span>
             </h4>
             <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Product name</h6>
-                        <small class="text-muted">Brief description</small>
-                    </div>
-                    <span class="text-muted">$12</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Second product</h6>
-                        <small class="text-muted">Brief description</small>
-                    </div>
-                    <span class="text-muted">$8</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">Third item</h6>
-                        <small class="text-muted">Brief description</small>
-                    </div>
-                    <span class="text-muted">$5</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                        <h6 class="my-0">Promo code</h6>
-                        <small>EXAMPLECODE</small>
-                    </div>
-                    <span class="text-success">-$5</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (USD)</span>
-                    <strong>$20</strong>
-                </li>
+                <?php
+                    if (isset($_SESSION["Id"])) {
+                        $session = new Session($_SESSION["Id"]);
+                        $finalAmount = 0.00;
+                        $articlesInCart = $session->loadArticlesInCart($session->getCurrentUser()[CARRELLO_ID]);
+                        if ($articlesInCart !== CARRELLO_UNSET) {
+                            if (is_array($articlesInCart) && !empty($articlesInCart)) {
+                                foreach ($articlesInCart as $value) {
+                                    $whereArticleId = "Id = " . $value[ARTICOLO_ID];
+                                    $article = $session->getRecord(ARTICOLO, $whereArticleId);
+                                    if ($article !== null) {
+                                        $finalAmount = $finalAmount + floatval($article[PREZZO]);
+                                        $whereProductId = "Id = " . $article[PRODOTTO_ID];
+                                        $product = $session->getRecord(PRODOTTO, $whereProductId);
+                                        if ($product !== null) {
+                                            echo '<li class="list-group-item d-flex justify-content-between lh-condensed">
+                                                    <div>
+                                                        <h6 class="my-0">' . $product[NOME] . '</h6>
+                                                        <small class="text-muted">' . $product[DESCRIZIONE] . '</small>
+                                                    </div>
+                                                    <span class="text-muted">' . EURO . ' ' . $article[PREZZO] . '</span>
+                                                </li>';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        echo '<li class="list-group-item d-flex justify-content-between">
+                                <span>Totale (EUR)</span>
+                                <strong>' . EURO . ' ' . $finalAmount . '</strong>
+                         </li>';
+                    } else {
+                        echo '<div>Non sembri essere registrato? <a class="btn btn-outline-secondary" href="./login.php">Accedi</a></div>';
+                    }
+                ?>
             </ul>
 
             <form class="card p-2">

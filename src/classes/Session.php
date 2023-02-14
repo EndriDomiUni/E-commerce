@@ -283,7 +283,7 @@ class Session extends Dbh
     public function loadProductInWishlist(): array|int|string|null
     {
         $collectionUserId = $this->getCurrentUser()[RACCOLTA_ID];
-        $where = "Raccolta_id = $collectionUserId";
+        $where = "Raccolta_id = " . $collectionUserId . " AND Id != 1";
         $query = "SELECT * FROM Prodotto_in_raccolta WHERE $where";
         return parent::execute($query); // should return an array
     }
@@ -291,7 +291,6 @@ class Session extends Dbh
 
     public function addArticle($params)
     {
-
         if (UtilsFunctions::checkParams($params)) {
             echo "add article in Session</br>";
             $prezzo = $params[PREZZO];

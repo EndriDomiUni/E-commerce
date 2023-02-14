@@ -78,15 +78,6 @@ require_once "UIHelper.php";
             <!-- menu right start -->
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto justify-content-between" id="btn-toogle-navbar">
 
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="./checkout.php">
-                        <div class="nav-caption-item">
-                            <p>Checkout</p>
-                        </div>
-                    </a>
-                </li>
-
-
                 <?php
                 if (isset($_SESSION[ID])) {
                 $session = new Session($_SESSION[ID]);

@@ -349,7 +349,7 @@ class Dbh
 
     public function getProducts(): array|int|string
     {
-        $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
+        $query = "SELECT * FROM `Prodotto` WHERE Id != 1 AND Id != 2";
         return $this->execute($query);
     }
 
