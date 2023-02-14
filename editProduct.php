@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("./src/classes/Dbh.php");
-require_once("./script/editProduct.script.php");
+require_once("./script/productManagerSeller.php");
 
 ob_start();
 require './templates/views/components/productCardSeller.php';

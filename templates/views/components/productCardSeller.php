@@ -14,7 +14,6 @@ $session = new Session($_SESSION[ID]);
 $products = $session->getAllProductsBySeller($session->getCurrentUser()[ID]);
 foreach ($products as $product){
 
-    //var_dump($product);
     echo '
                 <div class="card mb-3 center-block d-flex justify-content-center" style="max-width: 540px;">
                     <div class="row no-gutters">
@@ -23,8 +22,8 @@ foreach ($products as $product){
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">' . array_values($product)[0][NOME] . '</h5>
-                                <p class="card-text">' . array_values($product)[0][DESCRIZIONE] . '</p>
+                                <h5 class="card-title">' . $product[0][NOME] . '</h5>
+                                <p class="card-text">' . $product[0][DESCRIZIONE] . '</p>
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end">
