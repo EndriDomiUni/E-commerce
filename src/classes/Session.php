@@ -372,7 +372,7 @@ class Session extends Dbh
     }
 
     public function removeArticlesInCart() {
-        parent::deleteRecord(ARTICOLO_IN_CARRELLO, "Utente_id = " . $this->getCurrentUser()[ID]);
+        parent::deleteRecord(ARTICOLO_IN_CARRELLO, "Carrello_id = " . $this->getCurrentUser()[CARRELLO_ID]);
     }
 
     public function loadOrders() {

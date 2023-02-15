@@ -71,7 +71,7 @@ require_once "UIHelper.php";
                             </div>';
             echo '</form>';
         } else {
-            echo '<div>Non ci sono articoli in carrello</div>';
+            echo '<div>Non ci sono articoli in carrello! <a class="btn btn-outline-secondary" href="./index.php">Aggiungine uno!</a></div>';
         }
 
     } else {

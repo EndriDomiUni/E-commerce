@@ -30,15 +30,17 @@
         $session = new Session($_SESSION[ID]);
         $orders = $session->loadOrders();
         if (!empty($orders)) {
-            echo '<tr>
-                <td>' . $orders[ID] . '</td>
-                <td>' . $orders[DATA_ORDINE] . '</td>
-                <td>' . $orders[TOTALE_ORDINE] . '</td>
+            foreach ($orders as $order) {
+                echo '<tr>
+                <td>' . $order[ID] . '</td>
+                <td>' . $order[DATA_ORDINE] . '</td>
+                <td>' . $order[TOTALE_ORDINE] . '</td>
                 <td>Pagato</td>
                 <td>
                   <a href="#" class="btn btn-primary">Visualizza Dettagli</a>
                 </td>
               </tr>';
+            }
         }
     } else {
         header("Location: login.php");
