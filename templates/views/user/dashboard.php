@@ -19,8 +19,8 @@
                     ]);
                     let options = {
                         title: 'House Prices vs Size',
-                        hAxis: {title: 'Square Meters'},
-                        vAxis: {title: 'Price in Millions'},
+                        hAxis: {title: 'Time'},
+                        vAxis: {title: 'Amount'},
                         legend: 'none'
                     };
                     let chart = new google.visualization.LineChart(document.getElementById('myChart'));

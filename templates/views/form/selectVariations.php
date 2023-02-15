@@ -33,7 +33,7 @@ if (isset($error)){
                     if($categoryId !== null){
 
                         //debug
-                        echo "categoria id: ".$categoryId."</br>";
+                        //echo "categoria id: ".$categoryId."</br>";
                         $variations = $session->getVariationsByCategoryId($categoryId);
                         foreach ($variations as $variation){
 
@@ -70,8 +70,8 @@ if (isset($error)){
                         foreach ($warehouses as $warehouse) {
 
                             //debug
-                            echo "magazzino...</br>";
-                            echo "id: {$warehouse[ID]}";
+                            //echo "magazzino...</br>";
+                            //echo "id: {$warehouse[ID]}";
                             $warehouseId = $warehouse[ID];
                             $whereAddressId = "`Id` = " . $warehouse[INDIRIZZO_ID];
                             $addressVia = $session->selectSpecificField(INDIRIZZO, VIA, $whereAddressId);
