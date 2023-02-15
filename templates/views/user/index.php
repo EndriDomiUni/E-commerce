@@ -42,13 +42,13 @@ Funzionalità richieste:
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="<?php echo IMG; ?> /intro01.jpg" class="d-block w-100" alt="img-intro01">
+                <img src="<?php echo IMG; ?>/intro01.jpg" class="d-block w-100" alt="img-intro01">
             </div>
             <div class="carousel-item">
-                <img src="<?php echo IMG; ?> /intro02.jpg" class="d-block w-100" alt="img-intro02">
+                <img src="<?php echo IMG; ?>/intro02.jpg" class="d-block w-100" alt="img-intro02">
             </div>
             <div class="carousel-item">
-                <img src="<?php echo IMG; ?> /intro03.jpg" class="d-block w-100" alt="img-intro03">
+                <img src="<?php echo IMG; ?>/intro03.jpg" class="d-block w-100" alt="img-intro03">
             </div>
         </div>
     </div>
