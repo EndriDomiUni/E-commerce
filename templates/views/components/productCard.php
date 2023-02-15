@@ -10,8 +10,9 @@
     $products = $dbh->getProducts();
 
     if (is_array($products)) {
+        echo '<div class="row">';
         foreach ($products as $product) {
-            echo '<div class="justify-content-center">
+            echo '<div class="col">
                     <form method="post">';
             $whereProductId = "`Id` = " . $product[ID];
             $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId);
@@ -68,8 +69,6 @@
                     $options = [];
 
                     foreach ($currentArticles as $currentArticle) {
-
-
                         $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
                         foreach ($articleConfigurations as $articleConfiguration) {
                             $option_id = $articleConfiguration[OPZIONE_ID];
@@ -110,6 +109,7 @@
                 }
             }
         }
+        echo '</div>';
     }
     ?>
 </section>
@@ -118,8 +118,6 @@
 function drawCardFooter($productId, $session): void
 {
     echo '
-                    </select>
-                    
                     </div>
                     </div>
                     </div>
@@ -165,7 +163,8 @@ function drawCardFooter($productId, $session): void
         echo '              </div>
                     </div>
                 </form>
-            </div>';
+            </div>
+            ';
     }
 }
 
