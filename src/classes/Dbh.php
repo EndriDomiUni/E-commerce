@@ -196,8 +196,8 @@ class Dbh
      */
     public function updateData(int $id, string $tableName, string $fieldName, $toUpdate): int|array|null
     {
-        $where = "Id = '$id'";
-        $res = $this->execute("UPDATE `$tableName` SET $fieldName = $toUpdate WHERE $where");
+        $where = "`Id` = $id";
+        $res = $this->execute("UPDATE `$tableName` SET $fieldName = '$toUpdate' WHERE $where");
         return UtilsFunctions::checkResponse($res) ? $res : null;
     }
 
@@ -393,7 +393,7 @@ class Dbh
     {
         $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;
         //debug
-        echo "query products ids: ".$queryProductsIds."</br>";
+        //echo "query products ids: ".$queryProductsIds."</br>";
 
         $productIds = $this->execute($queryProductsIds);
         $products = array();
@@ -403,5 +403,16 @@ class Dbh
             $products[array_values($productId)[0]] = $product;
         }
         return $products;
+    }
+
+    public function getProductCategory($productId)
+    {
+        $query = "`Id` = " . $productId;
+        $product = $this->getRecord(PRODOTTO, $query);
+        if ($product !== null){
+            return $product[CATEGORIA_ID];
+        } else {
+            return null;
+        }
     }
 }

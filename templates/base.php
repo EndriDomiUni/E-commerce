@@ -23,7 +23,7 @@ require_once("./assets/js/script.php");
 if (isset($_SESSION["Id"])) {
     try {
         $session = new Session($_SESSION["Id"]);
-        if ($title === "Dashboard" || $title === "Insert product" || $title === "Edit product" ||
+        if ($title === "Dashboard" || $title === "Insert product" || $title === "Manage products" ||
             $title === "Warehouse" || $title === "Configurazione articolo") {
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
@@ -67,8 +67,8 @@ if (isset($_SESSION["Id"])) {
 
 
                 echo '<li>
-                                            <a href="./editProduct.php" class="nav-link link-dark ';
-                if ($title === "Edit product"){
+                                            <a href="./manageProducts.php" class="nav-link link-dark ';
+                if ($title === "Manage products"){
                     echo 'active';
                 }
                 else {
@@ -79,25 +79,6 @@ if (isset($_SESSION["Id"])) {
                                                 Modifica prodotto
                                             </a>
                                         </li>';
-
-
-                echo '<li>
-                                            <a href="./warehouse.php" class="nav-link link-dark ';
-                if ($title === "Warehouse"){
-                    echo 'active';
-                }
-                else {
-                }
-                echo ' showContent" >';
-                echo'
-                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-                                                Magazzino
-                                            </a>
-                                        </li>';
-
-
-
-
                 echo '                                           
                                     </ul>
                                     <hr>

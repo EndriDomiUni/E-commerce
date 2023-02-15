@@ -51,19 +51,19 @@
 
 <div class="container my-5">
     <h1 class="text-center font-weight-bold">Modifica prodotto</h1>
-    <form class="mt-5" enctype="multipart/form-data">
+    <form class="mt-5" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="product-name">Nome prodotto</label>
             <input type="text" class="form-control" id="product-name" name="product-name" placeholder="Enter Product Name">
         </div>
         <div class="form-group">
-            <label for="product-description">Descrizone prodo</label>
+            <label for="product-description">Descrizone prodotto</label>
             <textarea class="form-control" id="product-description" name="product-description" rows="5" placeholder="Enter Product Description"></textarea>
         </div>
         <div class="form-group">
             <label for="productImage">Product Image</label>
-            <input type="file" class="form-control-file" id="productImage">
+            <input type="file" class="form-control-file" id="product-image" name="product-image">
         </div>
-        <button type="submit" class="btn btn-primary btn-block my-5">Save Changes</button>
+        <button type="submit" class="btn btn-primary btn-block my-5" name="btn-edit-product">Save Changes</button>
     </form>
 </div>

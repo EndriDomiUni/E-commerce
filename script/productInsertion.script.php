@@ -31,7 +31,8 @@ if (isset($_POST['product-btn-insert']))
                 echo "response: ".$response."</br>";
                 if($response)
                 {
-                    echo "[DEBUG:productInsertion.script.php->29]".$response."</br>";
+                    //debug
+                    //echo "[DEBUG:productInsertion.script.php->29]".$response."</br>";
                     $_SESSION[PRODOTTO_ID] = $response;
                     $_SESSION[CATEGORIA_ID] = $params[CATEGORIA_ID];
 

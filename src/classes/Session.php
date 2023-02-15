@@ -340,5 +340,28 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 
+    public function editProduct($productId, $name, $description, $image): int|array|null
+    {
+        $checkName = null;
+        $checkDescription = null;
+        $checkImage = null;
+
+        if ($name !== null){
+            $checkName = parent::updateData($productId, PRODOTTO, NOME, $name);
+        }
+        if ($description !== null){
+            $checkDescription = parent::updateData($productId, PRODOTTO, DESCRIZIONE, $description);
+        }
+        if ($image !== null){
+            $checkImage = parent::updateData($productId, PRODOTTO, IMMAGINE, $image);
+        }
+        if ($checkName === null && $checkDescription && $checkImage === null){
+            return null;
+        }
+        else {
+            return 1;
+        }
+
+    }
 
 }

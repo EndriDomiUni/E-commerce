@@ -18,10 +18,18 @@ if (isset($error)){
                 <?php
                 if (isset($_SESSION["Id"])){
                     $session = new Session($_SESSION[ID]);
-
-                    $categoryId = $_SESSION[CATEGORIA_ID];
-                    $whereCategoryId = "`Id` = ".$categoryId;
-                    $categoryId = $session->selectSpecificField(CATEGORIA, ID, $whereCategoryId);
+                    if (isset($_SESSION[PRODOTTO_ID])) {
+                        $categoryId = $session->getProductCategory($_SESSION[PRODOTTO_ID]);
+                        if ($categoryId  === null && !is_int($categoryId)){
+                            //errore
+                            echo 'qualcosa è andato storto: categoryId: </br>';
+                            var_dump($categoryId);
+                        }
+                    } else {
+                        $categoryId = $_SESSION[CATEGORIA_ID];
+                        $whereCategoryId = "`Id` = ".$categoryId;
+                        $categoryId = $session->selectSpecificField(CATEGORIA, ID, $whereCategoryId);
+                    }
                     if($categoryId !== null){
 
                         //debug

@@ -5,10 +5,10 @@ ini_set('display_errors', 1);
 
 session_start();
 include("./src/classes/Dbh.php");
-require_once("./script/productInsertion.script.php");
+require_once("./script/productManagerSeller.php");
 
 ob_start();
-require './templates/views/form/productInsertion.php';
+require './templates/views/components/productCardSeller.php';
 $mainContent = ob_get_clean();
-$title = "Insert product";
+$title = "Manage products";
 require_once("./templates/base.php");

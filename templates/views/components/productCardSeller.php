@@ -14,7 +14,8 @@ $session = new Session($_SESSION[ID]);
 $products = $session->getAllProductsBySeller($session->getCurrentUser()[ID]);
 foreach ($products as $product){
 
-    echo '
+    echo '<div class="row">
+            <form method="post">
                 <div class="card mb-3 center-block d-flex justify-content-center" style="max-width: 540px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -55,8 +56,9 @@ foreach ($products as $product){
                             </button>
                         </div>
                     </div>
-                    </div>
                 </div>
+            </form>
+        </div>
                 ';
 }
 ?>
