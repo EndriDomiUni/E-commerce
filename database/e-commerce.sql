@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 15, 2023 alle 11:01
+-- Creato il: Feb 15, 2023 alle 12:02
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo`
@@ -56,7 +56,17 @@ INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `T
 (18, '25', 5, 8, 1, '2023-02-13 22:13:52'),
 (19, '25', 5, 8, 1, '2023-02-13 22:13:52'),
 (20, '18', 5, 9, 1, '2023-02-13 22:17:19'),
-(21, '18', 5, 9, 1, '2023-02-13 22:17:19');
+(21, '18', 5, 9, 1, '2023-02-13 22:17:19'),
+(22, '13', 5, 10, 1, '2023-02-15 10:12:48'),
+(23, '22', 5, 12, 1, '2023-02-15 10:20:48'),
+(24, '22', 5, 12, 1, '2023-02-15 10:23:14'),
+(25, '22', 5, 12, 1, '2023-02-15 10:23:38'),
+(26, '16', 5, 13, 1, '2023-02-15 10:27:56'),
+(27, '45', 5, 14, 1, '2023-02-15 10:30:58'),
+(28, '30', 5, 15, 1, '2023-02-15 10:33:58'),
+(29, '12', 5, 16, 1, '2023-02-15 10:37:56'),
+(30, '70', 5, 17, 1, '2023-02-15 10:40:20'),
+(31, '21', 5, 18, 1, '2023-02-15 10:43:28');
 
 -- --------------------------------------------------------
 
@@ -74,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_carrello`
@@ -108,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Magazzino_id` (`Magazzino_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_magazzino`
@@ -116,7 +126,17 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
 
 INSERT INTO `Articolo_in_magazzino` (`Id`, `Tassa`, `Data_inizio`, `Data_fine`, `Articolo_id`, `Magazzino_id`, `Status`, `Timestamp`) VALUES
 (9, '3', '2023-02-13', '2024-12-31', 19, 2, 1, '2023-02-13 22:13:52'),
-(10, '3', '2023-02-13', '2024-12-31', 21, 2, 1, '2023-02-13 22:17:19');
+(10, '3', '2023-02-13', '2024-12-31', 21, 2, 1, '2023-02-13 22:17:19'),
+(11, '3', '2023-02-15', '2024-12-31', 22, 2, 1, '2023-02-15 10:12:48'),
+(12, '3', '2023-02-15', '2024-12-31', 23, 2, 1, '2023-02-15 10:20:48'),
+(13, '3', '2023-02-15', '2024-12-31', 24, 2, 1, '2023-02-15 10:23:14'),
+(14, '3', '2023-02-15', '2024-12-31', 25, 2, 1, '2023-02-15 10:23:38'),
+(15, '3', '2023-02-15', '2024-12-31', 26, 2, 1, '2023-02-15 10:27:56'),
+(16, '3', '2023-02-15', '2024-12-31', 27, 2, 1, '2023-02-15 10:30:58'),
+(17, '3', '2023-02-15', '2024-12-31', 28, 2, 1, '2023-02-15 10:33:58'),
+(18, '3', '2023-02-15', '2024-12-31', 29, 2, 1, '2023-02-15 10:37:56'),
+(19, '3', '2023-02-15', '2024-12-31', 30, 2, 1, '2023-02-15 10:40:20'),
+(20, '3', '2023-02-15', '2024-12-31', 31, 2, 1, '2023-02-15 10:43:29');
 
 -- --------------------------------------------------------
 
@@ -131,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=542 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=543 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Carrello`
@@ -678,7 +698,8 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (538, 28, 0, '2023-02-13 18:15:18'),
 (539, 29, 0, '2023-02-13 20:35:11'),
 (540, 30, 0, '2023-02-14 16:39:13'),
-(541, 31, 0, '2023-02-14 17:18:38');
+(541, 31, 0, '2023-02-14 17:18:38'),
+(542, 32, 0, '2023-02-15 10:44:46');
 
 -- --------------------------------------------------------
 
@@ -693,7 +714,7 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Categoria`
@@ -703,7 +724,8 @@ INSERT INTO `Categoria` (`Id`, `Nome`, `Descrizione`, `Status`, `Timestamp`) VAL
 (1, 'name_unset', 'desc_unset', 0, '2023-02-04 09:47:10'),
 (2, 'T-shirt', 'Maglietta', 1, '2023-02-12 22:51:58'),
 (3, 'Scarpe', 'Scarpe', 1, '2023-02-12 22:52:28'),
-(4, 'Felpa', 'Felpe', 1, '2023-02-12 22:53:10');
+(4, 'Felpa', 'Felpe', 1, '2023-02-12 22:53:10'),
+(5, 'Cappelli e berrette', 'Cappelli e berrette', 1, '2023-02-15 10:14:41');
 
 -- --------------------------------------------------------
 
@@ -718,7 +740,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Claim`
@@ -753,7 +775,8 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (79, 'user', '0', 0, '2023-02-13 18:15:18'),
 (80, 'user', '0', 0, '2023-02-13 20:35:11'),
 (81, 'user', '0', 0, '2023-02-14 16:39:13'),
-(82, 'user', '0', 0, '2023-02-14 17:18:38');
+(82, 'user', '0', 0, '2023-02-14 17:18:38'),
+(83, 'user', '0', 0, '2023-02-15 10:44:46');
 
 -- --------------------------------------------------------
 
@@ -770,7 +793,7 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   PRIMARY KEY (`Id`),
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Configurazione_variazione`
@@ -786,7 +809,27 @@ INSERT INTO `Configurazione_variazione` (`Id`, `Articolo_id`, `Opzio_variazione_
 (7, 19, 11, 1, '2023-02-13 22:13:52'),
 (8, 19, 14, 1, '2023-02-13 22:13:52'),
 (9, 21, 8, 1, '2023-02-13 22:17:19'),
-(10, 21, 18, 1, '2023-02-13 22:17:19');
+(10, 21, 18, 1, '2023-02-13 22:17:19'),
+(11, 22, 4, 1, '2023-02-15 10:12:48'),
+(12, 22, 5, 1, '2023-02-15 10:12:48'),
+(13, 23, 21, 1, '2023-02-15 10:20:48'),
+(14, 23, 22, 1, '2023-02-15 10:20:48'),
+(15, 24, 19, 1, '2023-02-15 10:23:14'),
+(16, 24, 22, 1, '2023-02-15 10:23:14'),
+(17, 25, 19, 1, '2023-02-15 10:23:38'),
+(18, 25, 22, 1, '2023-02-15 10:23:38'),
+(19, 26, 20, 1, '2023-02-15 10:27:56'),
+(20, 26, 24, 1, '2023-02-15 10:27:56'),
+(21, 27, 11, 1, '2023-02-15 10:30:58'),
+(22, 27, 15, 1, '2023-02-15 10:30:58'),
+(23, 28, 12, 1, '2023-02-15 10:33:58'),
+(24, 28, 15, 1, '2023-02-15 10:33:58'),
+(25, 29, 3, 1, '2023-02-15 10:37:56'),
+(26, 29, 25, 1, '2023-02-15 10:37:56'),
+(27, 30, 8, 1, '2023-02-15 10:40:20'),
+(28, 30, 18, 1, '2023-02-15 10:40:20'),
+(29, 31, 21, 1, '2023-02-15 10:43:29'),
+(30, 31, 23, 1, '2023-02-15 10:43:29');
 
 -- --------------------------------------------------------
 
@@ -906,7 +949,6 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
 --
 
 INSERT INTO `Magazzino` (`Id`, `Metri_cubi`, `Indirizzo_id`, `Status`, `Timestamp`) VALUES
-(1, 0, 1, 1, '2023-02-12 23:25:50'),
 (2, 750, 2, 1, '2023-02-12 23:25:50');
 
 -- --------------------------------------------------------
@@ -923,7 +965,7 @@ CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Variazione_id` (`Variazione_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Opzione_variazione`
@@ -947,7 +989,14 @@ INSERT INTO `Opzione_variazione` (`Id`, `Valore`, `Variazione_id`, `Status`, `Ti
 (15, 'Altro', 7, 1, '2023-02-12 23:03:35'),
 (16, 'Bianco', 5, 1, '2023-02-12 23:07:10'),
 (17, 'Nero', 5, 1, '2023-02-12 23:07:10'),
-(18, 'Mixed', 5, 1, '2023-02-12 23:07:10');
+(18, 'Mixed', 5, 1, '2023-02-12 23:07:10'),
+(19, 'S', 8, 1, '2023-02-15 10:19:46'),
+(20, 'M', 8, 1, '2023-02-15 10:19:46'),
+(21, 'L', 8, 1, '2023-02-15 10:19:46'),
+(22, 'Chiaro', 9, 1, '2023-02-15 10:19:46'),
+(23, 'Scuro', 9, 1, '2023-02-15 10:19:46'),
+(24, 'Mixed', 9, 1, '2023-02-15 10:19:46'),
+(25, 'Mixed', 3, 1, '2023-02-15 10:37:44');
 
 -- --------------------------------------------------------
 
@@ -994,7 +1043,7 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   PRIMARY KEY (`Id`),
   KEY `Dim_id` (`Dim_id`),
   KEY `Categoria_id` (`Categoria_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Prodotto`
@@ -1004,7 +1053,15 @@ INSERT INTO `Prodotto` (`Id`, `Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Cate
 (2, 'KeShoes', 'Scarpe comode, allenamento', '81621oAc4wL.jpeg', 3, 3, 1, '2023-02-12 23:24:13'),
 (3, 'Basic t-shirt', 'Maglietta essenziale', '1489021968081376512-1539072890.jpeg', 3, 2, 1, '2023-02-12 23:45:30'),
 (8, 'Felpa vintage', 'Felpa vintage', '5f5f613100f220db988b47d6-2355604996.jpeg', 3, 4, 1, '2023-02-13 22:13:15'),
-(9, 'Ciabatte estive', 'Ciabatte comode', 'ciabatte_rosse.jpeg', 3, 3, 1, '2023-02-13 22:16:51');
+(9, 'Ciabatte estive', 'Ciabatte comode', 'ciabatte_rosse.jpeg', 3, 3, 1, '2023-02-13 22:16:51'),
+(10, 'Maglia Easy.', 'Maglia comoda, leggera, facilmente lavabile', 'maglia_nera.png', 3, 2, 1, '2023-02-15 10:12:20'),
+(12, 'Cappello Cowboy', 'Cappello in feltro di pelle, Riverina', 'cappello_01.jpeg', 3, 5, 1, '2023-02-15 10:20:32'),
+(13, 'Cappello invernale', 'Cappello invernale, berretta comfort', 'cappello_02.jpeg', 3, 5, 1, '2023-02-15 10:27:44'),
+(14, 'Nike Court Heritage', 'Felpa con cappuccio, logo ricamato', 'felpa_02.jpeg', 3, 4, 1, '2023-02-15 10:30:37'),
+(15, 'Felpa tecnica con cappuccio', 'Basic Active Hoody Clique, Unisex ', 'felpa_03.jpeg', 3, 4, 1, '2023-02-15 10:33:26'),
+(16, 'Gildan Softstyle T-Shirt', '150gm, Doppio ago manica e orli inferiori', 'maglia_03.jpeg', 3, 2, 1, '2023-02-15 10:36:53'),
+(17, 'Geox U15BYA', 'Scarpe Sportive per Uomo in tessuto blu', 'scarpe_03.jpeg', 3, 3, 1, '2023-02-15 10:40:01'),
+(18, 'Fila - Cappello da pescatore', 'Fascia interna in twill di cotone', 'cappello_03.jpeg', 3, 5, 1, '2023-02-15 10:43:10');
 
 -- --------------------------------------------------------
 
@@ -1048,7 +1105,7 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Raccolta`
@@ -1071,7 +1128,8 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 (14, 1, 'whislist', 28, 0, '2023-02-13 18:15:18'),
 (15, 1, 'whislist', 29, 0, '2023-02-13 20:35:11'),
 (16, 1, 'whislist', 30, 0, '2023-02-14 16:39:13'),
-(17, 1, 'whislist', 31, 0, '2023-02-14 17:18:38');
+(17, 1, 'whislist', 31, 0, '2023-02-14 17:18:38'),
+(18, 1, 'whislist', 32, 0, '2023-02-15 10:44:46');
 
 -- --------------------------------------------------------
 
@@ -1111,7 +1169,7 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Utente`
@@ -1141,11 +1199,11 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, 
 (24, 'Admin', 'Seller', 'admin@seller.takeit.it', 'takeit', 75, 1, 0, '2023-02-13 16:05:57'),
 (25, 'Ciro', 'Immobile', 'ciro@immobile.com', 'takeit', 76, 1, 0, '2023-02-13 16:18:05'),
 (26, 'Thomas', 'Franchi', 'thomas@takeit.com', 'takeit', 77, 1, 0, '2023-02-13 16:25:18'),
-(27, 'Carlo', 'Cracco', 'carlo@cracco.com', 'takeit', 78, 1, 0, '2023-02-13 17:56:08'),
 (28, 'christian', 'Rocchi', 'christian@takeit.it', 'takeit', 79, 1, 0, '2023-02-13 18:15:18'),
 (29, 'ale', 'ssandro', 'ale@takeit.com', 'taleit', 80, 1, 0, '2023-02-13 20:35:11'),
 (30, 'Umberto', 'Alarico', 'umberto@takeit.it', 'takeit', 81, 1, 0, '2023-02-14 16:39:13'),
-(31, 'Gigi', 'Buffon', 'gigi@buffon.com', 'takeit', 82, 1, 0, '2023-02-14 17:18:38');
+(31, 'Gigi', 'Buffon', 'gigi@buffon.com', 'takeit', 82, 1, 0, '2023-02-14 17:18:38'),
+(32, 'Endri', 'Domi', 'endri.domi@takeit.it', 'takeit', 83, 1, 0, '2023-02-15 10:44:46');
 
 -- --------------------------------------------------------
 
@@ -1161,7 +1219,7 @@ CREATE TABLE IF NOT EXISTS `Variazione` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Categoria_id` (`Categoria_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Variazione`
@@ -1174,7 +1232,9 @@ INSERT INTO `Variazione` (`Id`, `Nome`, `Categoria_id`, `Status`, `Timestamp`) V
 (4, 'Taglia Scarpe', 3, 1, '2023-02-12 22:55:01'),
 (5, 'Colore scarpe', 3, 1, '2023-02-12 22:55:01'),
 (6, 'Taglia Felpa', 4, 1, '2023-02-12 22:55:50'),
-(7, 'Colore Felpa', 4, 1, '2023-02-12 22:55:50');
+(7, 'Colore Felpa', 4, 1, '2023-02-12 22:55:50'),
+(8, 'Taglia Cappello', 5, 1, '2023-02-15 10:18:19'),
+(9, 'Colore Cappello', 5, 1, '2023-02-15 10:18:19');
 
 --
 -- Limiti per le tabelle scaricate
