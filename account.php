@@ -6,6 +6,8 @@ ini_set('display_errors', 1);
 
 session_start();
 include("./src/classes/Dbh.php");
+require_once("./script/cardPayForm.script.php");
+require_once("./script/address.script.php");
 
 ob_start();
 require './templates/views/user/account.php';

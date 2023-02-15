@@ -20,9 +20,8 @@ if (UtilsFunctions::issetSessionid()) {
                 CAP => filter_var($_POST["CAP"], FILTER_SANITIZE_SPECIAL_CHARS),
                 STATUS => STATUS_INTACT_DATA
             ];
-
             $response = $session->insertAddressInformation($params);
-            UtilsFunctions::checkResponse($response) ? header("Location: index.php") : false;
+            header("Location: account.php");
         } catch (Exception $e) {
             echo $e->getMessage();
         }

@@ -11,45 +11,32 @@
 </style>
 
 <div class="container mt-5">
-  <h2 class="text-center">Order History</h2>
+  <h2 class="text-center">Storico ordini</h2>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Order ID</th>
-        <th>Date</th>
-        <th>Total</th>
+        <th>Ordine ID</th>
+        <th>Data</th>
+        <th>Totale</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+    <?php
+
+    // per ogni ordine ottieni dati
+
+    echo '<tr>
         <td>#101</td>
         <td>01/01/2021</td>
         <td>$100</td>
         <td>Delivered</td>
         <td>
-          <a href="#" class="btn btn-primary">View Details</a>
+          <a href="#" class="btn btn-primary">Visualizza Dettagli</a>
         </td>
-      </tr>
-      <tr>
-        <td>#102</td>
-        <td>02/01/2021</td>
-        <td>$200</td>
-        <td>Pending</td>
-        <td>
-          <a href="#" class="btn btn-primary">View Details</a>
-        </td>
-      </tr>
-      <tr>
-        <td>#103</td>
-        <td>03/01/2021</td>
-        <td>$300</td>
-        <td>Cancelled</td>
-        <td>
-          <a href="#" class="btn btn-primary">View Details</a>
-        </td>
-      </tr>
+      </tr>';
+    ?>
     </tbody>
   </table>
 </div>

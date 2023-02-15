@@ -79,6 +79,7 @@ const CONFIGURAZIONE_VARIAZIONE = "Configurazione_variazione";
 const RACCOLTA = "Raccolta";
 const VARIAZIONE = "Variazione";
 const ARTICOLO_IN_CARRELLO = "Articolo_in_carrello";
+const FORMA_DI_PAGAMENTO = "Forma_di_pagamento";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
