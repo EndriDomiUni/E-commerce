@@ -99,7 +99,7 @@
                     ?>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block ml-auto" type="submit">Continua</button>
+                <button class="btn btn-primary btn-lg btn-block ml-auto" type="submit" name="checkout">Continua</button>
             </form>
         </div>
     </div>

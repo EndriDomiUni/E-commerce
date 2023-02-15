@@ -135,7 +135,7 @@ class Session extends Dbh
             $params[NUMERO_CARTA],
             $params[DATA_SCADENZA],
             $params[CVV],
-            $params[TIPO_DI_PAGAMENTO],
+            $params[TIPO_DI_PAGAMENTO] ?? 1,
             $this->getCurrentUser()[ID],
             $params[STATUS]);
         return UtilsFunctions::checkResponse($res) ? $res : null;
@@ -280,6 +280,20 @@ class Session extends Dbh
         return CARRELLO_UNSET;
     }
 
+    public function getTotalOfArticlesInCart() {
+        $total = 0.00;
+        $articlesInCart = $this->loadArticlesInCart($this->getCurrentUser()[CARRELLO_ID]);
+        foreach ($articlesInCart as $articleInCart) {
+            $articleId = $articleInCart[ARTICOLO_ID];
+            $whereArticle = "Id = " . $articleId;
+            $article = $this->getRecord(ARTICOLO, $whereArticle);
+            if ($article !== null) {
+                $total = $total + floatval($article[PREZZO]);
+            }
+        }
+        return $total;
+    }
+
     public function loadProductInWishlist(): array|int|string|null
     {
         $collectionUserId = $this->getCurrentUser()[RACCOLTA_ID];
@@ -340,5 +354,33 @@ class Session extends Dbh
         return UtilsFunctions::checkResponse($res) ? $res : 0;
     }
 
+    public function addOrder($params): int
+    {
+        $paymentData = $this->getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " .$this->getCurrentUser()[ID]);
+        if ($paymentData !== null) {
+            $query = "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+        VALUES (?, ?, ?, ?, ?)";
+            $res = parent::insertData($query,
+                $params[DATA_ORDINE],
+                $params[TOTALE_ORDINE],
+                STATUS_INTACT_DATA,
+                1,
+                $paymentData[ID]);
+            return UtilsFunctions::checkResponse($res) ? $res : 0;
+        }
+        return 0;
+    }
 
+    public function removeArticlesInCart() {
+        parent::deleteRecord(ARTICOLO_IN_CARRELLO, "Utente_id = " . $this->getCurrentUser()[ID]);
+    }
+
+    public function loadOrders() {
+        $paymentData = $this->getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " .$this->getCurrentUser()[ID]);
+        if ($paymentData !== null) {
+            $where = "Forma_di_pag_id = " . $paymentData[ID];
+            $query = "SELECT * FROM Ordine WHERE $where";
+            return parent::execute($query);
+        }
+    }
 }

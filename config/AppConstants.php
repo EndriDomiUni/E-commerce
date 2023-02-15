@@ -126,3 +126,5 @@ const VALORE = "Valore";
 const QUANTITA = "Quantità";
 const WHISLIST = 1;
 const WHISLIST_STRING = "whislist";
+const TOTALE_ORDINE = "Tot_ordine";
+const DATA_ORDINE = "Data_ordine";

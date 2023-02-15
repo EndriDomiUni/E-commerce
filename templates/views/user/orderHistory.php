@@ -26,16 +26,23 @@
     <?php
 
     // per ogni ordine ottieni dati
-
-    echo '<tr>
-        <td>#101</td>
-        <td>01/01/2021</td>
-        <td>$100</td>
-        <td>Delivered</td>
-        <td>
-          <a href="#" class="btn btn-primary">Visualizza Dettagli</a>
-        </td>
-      </tr>';
+    if (isset($_SESSION[ID])) {
+        $session = new Session($_SESSION[ID]);
+        $orders = $session->loadOrders();
+        if (!empty($orders)) {
+            echo '<tr>
+                <td>' . $orders[ID] . '</td>
+                <td>' . $orders[DATA_ORDINE] . '</td>
+                <td>' . $orders[TOTALE_ORDINE] . '</td>
+                <td>Pagato</td>
+                <td>
+                  <a href="#" class="btn btn-primary">Visualizza Dettagli</a>
+                </td>
+              </tr>';
+        }
+    } else {
+        header("Location: login.php");
+    }
     ?>
     </tbody>
   </table>
