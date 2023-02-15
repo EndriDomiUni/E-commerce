@@ -11,8 +11,10 @@
     $products = $dbh->getProducts();
     $productsCounter = 0;
     if (is_array($products)) {
-        echo '<div class="row">';
         foreach ($products as $product) {
+            if ($productsCounter === 0) {
+                echo '<div class="row">';
+            }
             $productsCounter += 1;
             if ($productsCounter > 3){
                 echo '<div class="row">';
@@ -115,10 +117,10 @@
                 }
             }
             if ($productsCounter === 3){
-                echo '</row>';
+                echo '</div>';
             }
         }
-        echo '</div>';
+       // echo '</div>';
     }
     ?>
     </section></div>
