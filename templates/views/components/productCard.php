@@ -1,6 +1,6 @@
 <div class="container">
 <section>
-    <?php
+<?php
 
 
     // These two lines are used for debugging
@@ -9,10 +9,15 @@
 
     $dbh = new Dbh();
     $products = $dbh->getProducts();
-
+    $productsCounter = 0;
     if (is_array($products)) {
         echo '<div class="row">';
         foreach ($products as $product) {
+            $productsCounter += 1;
+            if ($productsCounter > 3){
+                echo '<div class="row">';
+                $productsCounter = 1;
+            }
             echo '<div class="col">
                     <form method="post">';
             $whereProductId = "`Id` = " . $product[ID];
@@ -26,7 +31,7 @@
                 && $currentProductDescription !== null && $currentProductPrice !== null) {
                 if (!isset($_SESSION[ID])) {
                     echo ' 
-                             <div class="card mb-3" style="max-width: 540px; min-width: 250px">
+                             <div class="card mb-3" style="max-width: 540px; min-width: 250px; width: 400px">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                             <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image">
@@ -109,15 +114,18 @@
                     drawCardFooter($product[ID], $session);
                 }
             }
+            if ($productsCounter === 3){
+                echo '</row>';
+            }
         }
         echo '</div>';
     }
     ?>
-</section></div>
+    </section></div>
 
-<?php
-function drawCardFooter($productId, $session): void
-{
+    <?php
+    function drawCardFooter($productId, $session): void
+    {
     echo '
                     </div>
                     </div>
@@ -166,8 +174,8 @@ function drawCardFooter($productId, $session): void
                 </form>
             </div>
             ';
+        }
     }
-}
 
 ?>
 
