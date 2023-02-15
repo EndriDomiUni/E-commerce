@@ -3,7 +3,7 @@
 
 <!-- Sales Report Section -->
 <div class="container my-5">
-    <h2 class="text-center">Sales Report</h2>
+    <h2 class="text-center">Report vendite</h2>
     <div class="row">
         <!-- Sales Chart -->
         <div id="myChart" style="max-width:700px; height:400px">
@@ -18,7 +18,7 @@
                         [110,10],[120,11],[130,14],[140,14],[150,15]
                     ]);
                     let options = {
-                        title: 'House Prices vs Size',
+                        title: 'Vendite',
                         hAxis: {title: 'Time'},
                         vAxis: {title: 'Amount'},
                         legend: 'none'
@@ -33,21 +33,21 @@
         <div class="col-md-4">
             <!-- Today's Orders -->
             <div class="card my-3">
-                <div class="card-header">Today's Orders</div>
+                <div class="card-header">Ordini odierni</div>
                 <div class="card-body">
                     <h5 class="card-title">10</h5>
                 </div>
             </div>
             <!-- Current Month Orders -->
             <div class="card my-3">
-                <div class="card-header">Current Month Orders</div>
+                <div class="card-header">Ordini mensili</div>
                 <div class="card-body">
                     <h5 class="card-title">100</h5>
                 </div>
             </div>
             <!-- Total Orders -->
             <div class="card my-3">
-                <div class="card-header">Total Orders</div>
+                <div class="card-header">Ordini totali</div>
                 <div class="card-body">
                     <h5 class="card-title">1000</h5>
                 </div>
@@ -56,9 +56,9 @@
     </div>
     <!-- Total Money -->
     <div class="card my-3">
-        <div class="card-header">Total Money</div>
+        <div class="card-header">Soldi totali</div>
         <div class="card-body">
-            <h5 class="card-title">$10000</h5>
+            <h5 class="card-title"><?php echo EURO;?> 10000</h5>
         </div>
     </div>
 </div>
