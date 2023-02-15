@@ -24,7 +24,7 @@ if (isset($_SESSION["Id"])) {
     try {
         $session = new Session($_SESSION["Id"]);
         if ($title === "Dashboard" || $title === "Insert product" || $title === "Manage products" ||
-            $title === "Warehouse" || $title === "Configurazione articolo") {
+            $title === "Warehouse" || $title === "Configurazione articolo" || $title === "Edit product" ) {
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
 
@@ -68,7 +68,7 @@ if (isset($_SESSION["Id"])) {
 
                 echo '<li>
                                             <a href="./manageProducts.php" class="nav-link link-dark ';
-                if ($title === "Manage products"){
+                if ($title === "Manage products" || $title === "Edit product"){
                     echo 'active';
                 }
                 else {
