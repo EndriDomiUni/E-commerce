@@ -1,3 +1,4 @@
+<div class="container">
 <section>
     <?php
 
@@ -25,7 +26,7 @@
                 && $currentProductDescription !== null && $currentProductPrice !== null) {
                 if (!isset($_SESSION[ID])) {
                     echo ' 
-                             <div class="card mb-3" style="max-width: 540px;">
+                             <div class="card mb-3" style="max-width: 540px; min-width: 250px">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                             <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image">
@@ -112,7 +113,7 @@
         echo '</div>';
     }
     ?>
-</section>
+</section></div>
 
 <?php
 function drawCardFooter($productId, $session): void

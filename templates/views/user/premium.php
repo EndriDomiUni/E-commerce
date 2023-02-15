@@ -20,13 +20,10 @@
                             </h1>
                             
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>10 users included</li>
-                                <li>2 GB of storage</li>
-                                <li>Email support</li>
-                                <li>Help center access</li>
+                                <li>Supporto email</li>
+                                <li>Assistenza 9:00-13:00 & 14:00-18:00</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-outline-primary" name="btn-base">Sign up
-                                for free
+                            <button type="button" class="w-100 btn btn-lg btn-outline-primary" name="btn-base">Piano default
                             </button>
                         </div>
                     </div>
@@ -40,12 +37,11 @@
                             <h1 class="card-title pricing-card-title">15 <?php echo EURO?> <small class="text-muted fw-light">/mo</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>20 users included</li>
-                                <li>10 GB of storage</li>
-                                <li>Priority email support</li>
-                                <li>Help center access</li>
+                                <li>Spedizioni Gratuite</li>
+                                <li>Supporto prioritario email</li>
+                                <li>Assistenza h24</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-primary" name="btn-user-pro">Get started
+                            <button type="button" class="w-100 btn btn-lg btn-primary" name="btn-user-pro">Vai
                             </button>
                         </div>
                     </div>
@@ -53,19 +49,18 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm border-primary">
                         <div class="card-header py-3 text-bg-primary border-primary">
-                            <h4 class="my-0 fw-normal">Enterprise</h4>
+                            <h4 class="my-0 fw-normal">Azienda</h4>
                         </div>
                         <div class="card-body">
                             <h1 class="card-title pricing-card-title">29 <?php echo EURO?> <small class="text-muted fw-light">/mo</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>30 users included</li>
-                                <li>15 GB of storage</li>
-                                <li>Phone and email support</li>
-                                <li>Help center access</li>
+                                <li>Spedizioni Gratuite</li>
+                                <li>Priorità supporto email</li>
+                                <li>Articoli in magazzino gratuiti</li>
+                                <li>Assistenza 24h</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-primary" name="btn-seller-pro">Contact
-                                us
+                            <button type="button" class="w-100 btn btn-lg btn-primary" name="btn-seller-pro">Contattaci
                             </button>
                         </div>
                     </div>

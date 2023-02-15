@@ -39,43 +39,18 @@ Funzionalità richieste:
 </section>
 
 <section id="intro">
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-        </ol>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="<?php echo IMG?>/intro01.jpg" class="d-block w-100" alt="image1">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Caption 1</h5>
-                    <p>Description 1</p>
-                </div>
+                <img src="<?php echo IMG; ?> /intro01.jpg" class="d-block w-100" alt="img-intro01">
             </div>
             <div class="carousel-item">
-                <img src="image2.jpg" class="d-block w-100" alt="image2">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Caption 2</h5>
-                    <p>Description 2</p>
-                </div>
+                <img src="<?php echo IMG; ?> /intro02.jpg" class="d-block w-100" alt="img-intro02">
             </div>
             <div class="carousel-item">
-                <img src="image3.jpg" class="d-block w-100" alt="image3">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Caption 3</h5>
-                    <p>Description 3</p>
-                </div>
+                <img src="<?php echo IMG; ?> /intro03.jpg" class="d-block w-100" alt="img-intro03">
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
 </section>
 
