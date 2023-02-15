@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 15, 2023 alle 10:18
--- Versione del server: 10.4.27-MariaDB
--- Versione PHP: 8.1.12
+-- Creato il: Feb 15, 2023 alle 11:01
+-- Versione del server: 10.4.25-MariaDB
+-- Versione PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,6 @@ USE `e-commerce`;
 -- Struttura della tabella `Articolo`
 --
 
-DROP TABLE IF EXISTS `Articolo`;
 CREATE TABLE IF NOT EXISTS `Articolo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Prezzo` varchar(100) NOT NULL,
@@ -40,21 +39,19 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo`
 --
 
 INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `Timestamp`) VALUES
-(1, '0', 5, 1, 0, '2023-02-04 10:00:34'),
 (2, '15', 22, 2, 1, '2023-02-12 23:32:58'),
 (3, '15', 22, 2, 1, '2023-02-12 23:32:58'),
 (12, '15', 22, 3, 1, '2023-02-13 00:07:25'),
 (13, '15', 22, 3, 1, '2023-02-13 00:07:25'),
 (14, '15', 22, 3, 1, '2023-02-13 00:10:48'),
 (15, '15', 22, 3, 1, '2023-02-13 00:10:48'),
-(16, '15', 22, 7, 1, '2023-02-13 00:13:00'),
 (17, '15', 22, 3, 1, '2023-02-13 00:13:00'),
 (18, '25', 5, 8, 1, '2023-02-13 22:13:52'),
 (19, '25', 5, 8, 1, '2023-02-13 22:13:52'),
@@ -67,7 +64,6 @@ INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `T
 -- Struttura della tabella `Articolo_in_carrello`
 --
 
-DROP TABLE IF EXISTS `Articolo_in_carrello`;
 CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Quantità` int(11) NOT NULL,
@@ -78,14 +74,13 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_carrello`
 --
 
 INSERT INTO `Articolo_in_carrello` (`Id`, `Quantità`, `Carrello_id`, `Articolo_id`, `Status`, `Timestamp`) VALUES
-(2, 1, 175, 1, 0, '2023-02-05 16:13:59'),
 (4, 1, 538, 13, 1, '2023-02-13 18:21:11'),
 (5, 1, 538, 13, 1, '2023-02-13 20:31:01'),
 (6, 1, 538, 13, 1, '2023-02-13 20:31:40'),
@@ -101,7 +96,6 @@ INSERT INTO `Articolo_in_carrello` (`Id`, `Quantità`, `Carrello_id`, `Articolo_
 -- Struttura della tabella `Articolo_in_magazzino`
 --
 
-DROP TABLE IF EXISTS `Articolo_in_magazzino`;
 CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tassa` decimal(10,0) NOT NULL,
@@ -114,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Magazzino_id` (`Magazzino_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_magazzino`
@@ -130,7 +124,6 @@ INSERT INTO `Articolo_in_magazzino` (`Id`, `Tassa`, `Data_inizio`, `Data_fine`, 
 -- Struttura della tabella `Carrello`
 --
 
-DROP TABLE IF EXISTS `Carrello`;
 CREATE TABLE IF NOT EXISTS `Carrello` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Utente_id` int(11) NOT NULL,
@@ -138,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=542 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=542 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Carrello`
@@ -693,7 +686,6 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 -- Struttura della tabella `Categoria`
 --
 
-DROP TABLE IF EXISTS `Categoria`;
 CREATE TABLE IF NOT EXISTS `Categoria` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
@@ -701,7 +693,7 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Categoria`
@@ -719,7 +711,6 @@ INSERT INTO `Categoria` (`Id`, `Nome`, `Descrizione`, `Status`, `Timestamp`) VAL
 -- Struttura della tabella `Claim`
 --
 
-DROP TABLE IF EXISTS `Claim`;
 CREATE TABLE IF NOT EXISTS `Claim` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(50) NOT NULL,
@@ -727,7 +718,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Claim`
@@ -770,7 +761,6 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 -- Struttura della tabella `Configurazione_variazione`
 --
 
-DROP TABLE IF EXISTS `Configurazione_variazione`;
 CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Articolo_id` int(11) NOT NULL,
@@ -780,7 +770,7 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   PRIMARY KEY (`Id`),
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Configurazione_variazione`
@@ -804,7 +794,6 @@ INSERT INTO `Configurazione_variazione` (`Id`, `Articolo_id`, `Opzio_variazione_
 -- Struttura della tabella `Dettaglio_ordine`
 --
 
-DROP TABLE IF EXISTS `Dettaglio_ordine`;
 CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tipo` int(11) NOT NULL,
@@ -815,7 +804,7 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_in_carr_id` (`Articolo_in_carr_id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -823,7 +812,6 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
 -- Struttura della tabella `Dimensione`
 --
 
-DROP TABLE IF EXISTS `Dimensione`;
 CREATE TABLE IF NOT EXISTS `Dimensione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Dim_X` varchar(100) NOT NULL,
@@ -831,7 +819,7 @@ CREATE TABLE IF NOT EXISTS `Dimensione` (
   `Dim_Z` varchar(100) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Dimensione`
@@ -847,7 +835,6 @@ INSERT INTO `Dimensione` (`Id`, `Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) VALUES
 -- Struttura della tabella `Forma_di_pagamento`
 --
 
-DROP TABLE IF EXISTS `Forma_di_pagamento`;
 CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Circuito` varchar(20) NOT NULL,
@@ -860,7 +847,7 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Forma_di_pagamento`
@@ -877,7 +864,6 @@ INSERT INTO `Forma_di_pagamento` (`Id`, `Circuito`, `Numero_carta`, `Data_scaden
 -- Struttura della tabella `Indirizzo`
 --
 
-DROP TABLE IF EXISTS `Indirizzo`;
 CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Via` varchar(100) NOT NULL,
@@ -887,7 +873,7 @@ CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Status` int(4) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Indirizzo`
@@ -905,7 +891,6 @@ INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`,
 -- Struttura della tabella `Magazzino`
 --
 
-DROP TABLE IF EXISTS `Magazzino`;
 CREATE TABLE IF NOT EXISTS `Magazzino` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Metri_cubi` double NOT NULL,
@@ -914,7 +899,7 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Magazzino`
@@ -930,7 +915,6 @@ INSERT INTO `Magazzino` (`Id`, `Metri_cubi`, `Indirizzo_id`, `Status`, `Timestam
 -- Struttura della tabella `Opzione_variazione`
 --
 
-DROP TABLE IF EXISTS `Opzione_variazione`;
 CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Valore` varchar(300) NOT NULL,
@@ -939,7 +923,7 @@ CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Variazione_id` (`Variazione_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Opzione_variazione`
@@ -971,7 +955,6 @@ INSERT INTO `Opzione_variazione` (`Id`, `Valore`, `Variazione_id`, `Status`, `Ti
 -- Struttura della tabella `Ordine`
 --
 
-DROP TABLE IF EXISTS `Ordine`;
 CREATE TABLE IF NOT EXISTS `Ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Data_ordine` date NOT NULL,
@@ -982,7 +965,7 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Forma_di_pag_id` (`Forma_di_pag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Ordine`
@@ -999,7 +982,6 @@ INSERT INTO `Ordine` (`Id`, `Data_ordine`, `Tot_ordine`, `Status`, `Metodo_di_sp
 -- Struttura della tabella `Prodotto`
 --
 
-DROP TABLE IF EXISTS `Prodotto`;
 CREATE TABLE IF NOT EXISTS `Prodotto` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
@@ -1012,20 +994,15 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   PRIMARY KEY (`Id`),
   KEY `Dim_id` (`Dim_id`),
   KEY `Categoria_id` (`Categoria_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Prodotto`
 --
 
 INSERT INTO `Prodotto` (`Id`, `Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Categoria_id`, `Status`, `Timestamp`) VALUES
-(1, 'name_unset', 'desc_unset', 'img_unset', 2, 1, 0, '2023-02-04 09:55:55'),
 (2, 'KeShoes', 'Scarpe comode, allenamento', '81621oAc4wL.jpeg', 3, 3, 1, '2023-02-12 23:24:13'),
 (3, 'Basic t-shirt', 'Maglietta essenziale', '1489021968081376512-1539072890.jpeg', 3, 2, 1, '2023-02-12 23:45:30'),
-(4, 'Basic t-shirt', 'Maglietta essenziale', '1489021968081376512-1539072890.jpeg', 3, 2, 1, '2023-02-12 23:50:15'),
-(5, 'Basic t-shirt', 'Maglietta essenziale', '1489021968081376512-1539072890.jpeg', 3, 2, 1, '2023-02-12 23:52:01'),
-(6, 'Basic t-shirt', 'Maglietta essenziale', '1489021968081376512-1539072890.jpeg', 3, 2, 1, '2023-02-12 23:52:55'),
-(7, 'Basic t-shirt', 'Maglietta essenziale', '1489021968081376512-1539072890.jpeg', 3, 2, 1, '2023-02-12 23:55:06'),
 (8, 'Felpa vintage', 'Felpa vintage', '5f5f613100f220db988b47d6-2355604996.jpeg', 3, 4, 1, '2023-02-13 22:13:15'),
 (9, 'Ciabatte estive', 'Ciabatte comode', 'ciabatte_rosse.jpeg', 3, 3, 1, '2023-02-13 22:16:51');
 
@@ -1035,7 +1012,6 @@ INSERT INTO `Prodotto` (`Id`, `Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Cate
 -- Struttura della tabella `Prodotto_in_raccolta`
 --
 
-DROP TABLE IF EXISTS `Prodotto_in_raccolta`;
 CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Raccolta_id` int(11) NOT NULL,
@@ -1045,14 +1021,13 @@ CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Raccolta_id` (`Raccolta_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Prodotto_in_raccolta`
 --
 
 INSERT INTO `Prodotto_in_raccolta` (`Id`, `Raccolta_id`, `Prodotto_id`, `Status`, `Timestamp`) VALUES
-(1, 1, 1, 0, '2023-02-10 15:49:37'),
 (2, 15, 3, 1, '2023-02-13 20:53:50'),
 (3, 15, 3, 1, '2023-02-13 20:56:11'),
 (4, 15, 2, 1, '2023-02-13 20:56:15'),
@@ -1064,7 +1039,6 @@ INSERT INTO `Prodotto_in_raccolta` (`Id`, `Raccolta_id`, `Prodotto_id`, `Status`
 -- Struttura della tabella `Raccolta`
 --
 
-DROP TABLE IF EXISTS `Raccolta`;
 CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tipo_raccolta` int(5) NOT NULL,
@@ -1074,7 +1048,7 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Raccolta`
@@ -1105,7 +1079,6 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 -- Struttura della tabella `Recensione`
 --
 
-DROP TABLE IF EXISTS `Recensione`;
 CREATE TABLE IF NOT EXISTS `Recensione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Valutazione` int(5) NOT NULL,
@@ -1117,7 +1090,7 @@ CREATE TABLE IF NOT EXISTS `Recensione` (
   PRIMARY KEY (`Id`),
   KEY `Dettaglio_ordine_id` (`Dettaglio_ordine_id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1125,7 +1098,6 @@ CREATE TABLE IF NOT EXISTS `Recensione` (
 -- Struttura della tabella `Utente`
 --
 
-DROP TABLE IF EXISTS `Utente`;
 CREATE TABLE IF NOT EXISTS `Utente` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
@@ -1139,7 +1111,7 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Utente`
@@ -1181,7 +1153,6 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, 
 -- Struttura della tabella `Variazione`
 --
 
-DROP TABLE IF EXISTS `Variazione`;
 CREATE TABLE IF NOT EXISTS `Variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(300) NOT NULL,
@@ -1190,7 +1161,7 @@ CREATE TABLE IF NOT EXISTS `Variazione` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Categoria_id` (`Categoria_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Variazione`
