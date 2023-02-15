@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 15, 2023 alle 12:02
+-- Creato il: Feb 15, 2023 alle 13:38
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo`
@@ -66,7 +66,8 @@ INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `T
 (28, '30', 5, 15, 1, '2023-02-15 10:33:58'),
 (29, '12', 5, 16, 1, '2023-02-15 10:37:56'),
 (30, '70', 5, 17, 1, '2023-02-15 10:40:20'),
-(31, '21', 5, 18, 1, '2023-02-15 10:43:28');
+(31, '21', 5, 18, 1, '2023-02-15 10:43:28'),
+(32, '40', 22, 2, 1, '2023-02-15 12:28:31');
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Magazzino_id` (`Magazzino_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_magazzino`
@@ -136,7 +137,8 @@ INSERT INTO `Articolo_in_magazzino` (`Id`, `Tassa`, `Data_inizio`, `Data_fine`, 
 (17, '3', '2023-02-15', '2024-12-31', 28, 2, 1, '2023-02-15 10:33:58'),
 (18, '3', '2023-02-15', '2024-12-31', 29, 2, 1, '2023-02-15 10:37:56'),
 (19, '3', '2023-02-15', '2024-12-31', 30, 2, 1, '2023-02-15 10:40:20'),
-(20, '3', '2023-02-15', '2024-12-31', 31, 2, 1, '2023-02-15 10:43:29');
+(20, '3', '2023-02-15', '2024-12-31', 31, 2, 1, '2023-02-15 10:43:29'),
+(21, '3', '2023-02-15', '2024-12-31', 32, 2, 1, '2023-02-15 12:28:31');
 
 -- --------------------------------------------------------
 
@@ -694,7 +696,6 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (534, 24, 0, '2023-02-13 16:05:57'),
 (535, 25, 0, '2023-02-13 16:18:05'),
 (536, 26, 0, '2023-02-13 16:25:18'),
-(537, 27, 0, '2023-02-13 17:56:08'),
 (538, 28, 0, '2023-02-13 18:15:18'),
 (539, 29, 0, '2023-02-13 20:35:11'),
 (540, 30, 0, '2023-02-14 16:39:13'),
@@ -793,7 +794,7 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   PRIMARY KEY (`Id`),
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Configurazione_variazione`
@@ -829,7 +830,9 @@ INSERT INTO `Configurazione_variazione` (`Id`, `Articolo_id`, `Opzio_variazione_
 (27, 30, 8, 1, '2023-02-15 10:40:20'),
 (28, 30, 18, 1, '2023-02-15 10:40:20'),
 (29, 31, 21, 1, '2023-02-15 10:43:29'),
-(30, 31, 23, 1, '2023-02-15 10:43:29');
+(30, 31, 23, 1, '2023-02-15 10:43:29'),
+(31, 32, 8, 1, '2023-02-15 12:28:31'),
+(32, 32, 17, 1, '2023-02-15 12:28:31');
 
 -- --------------------------------------------------------
 
