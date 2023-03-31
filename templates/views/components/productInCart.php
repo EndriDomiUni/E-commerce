@@ -34,6 +34,20 @@
                                                     <h5 class="card-title">' . $product[NOME] . '</h5>
                                                     <p class="card-text">' . $product[DESCRIZIONE] . '</p>
                                                     <p class="card-text">' . $value[QUANTITA] . '</p> <!-- da aggiungere due pulsanti -->
+                                                    ';
+
+                                            $articleConfigurations = $session->getArticleConfigurations($article[ID]);
+
+                                            foreach ($articleConfigurations as $articleConfiguration){
+
+                                                $whereOptionId = '`Id` = ' . $articleConfiguration[OPZIONE_ID];
+                                                $optionVariation = $session->getRecord(OPZIONE_VARIAZIONE, $whereOptionId);
+                                                $whereVariationId = '`Id` = ' . $optionVariation[VARIAZIONE_ID];
+                                                $variation = $session->getRecord(VARIAZIONE, $whereVariationId);
+                                                echo '<p class="card-text">' . $variation[NOME] . '</p>';
+                                                echo '<p class="card-text">' . $optionVariation[VALORE] . '</p>';
+                                            }
+                                            echo '
                                                     <p class="card-text"> Prezzo:' . $article[PREZZO] . '</p>
                                                 </div>
                                             </div>';

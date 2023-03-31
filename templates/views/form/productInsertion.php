@@ -1,4 +1,51 @@
-<!-- Questa sarà la pagina Dashboard del seller 
+<style>
+    .container {
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 50px;
+    }
+
+    label {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #333;
+    }
+
+    input, textarea {
+        font-size: 1.2em;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .btn-primary {
+        background-color: #333;
+        color: #fff;
+        font-size: 1.2em;
+        padding: 15px;
+        border-radius: 50px;
+        border: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background-color: #fff;
+        color: #333;
+        cursor: pointer;
+    }
+
+    <!-- Questa sarà la pagina Dashboard del seller
 
 Funzionalità richieste:
     .1 : inserimento prodotti
@@ -10,8 +57,8 @@ Funzionalità richieste:
 
 <!-- Inserimento prodotti -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<section class="form-addProduct w-100 m-auto">
-    <div class="container">
+/*<section class="form-addProduct w-100 m-auto">*/
+    <div class="container my-5">
         <?php if (isset($error)){
             //echo "<div class='alert alert-warning' role='alert'>";
             // echo  $error;
@@ -90,4 +137,4 @@ Funzionalità richieste:
 
         </form>
     </div>
-</section>
+/*</section>*/

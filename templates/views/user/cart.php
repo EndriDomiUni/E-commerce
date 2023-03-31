@@ -28,8 +28,11 @@ require_once "UIHelper.php";
                         $whereProduct = "Id = " . $article[PRODOTTO_ID];
                         $product = $session->getRecord(PRODOTTO, $whereProduct);
 
-                        $finalAmount = $finalAmount + floatval($article[PREZZO]);
-                        echo '<div class="row">
+                        $finalAmount = $finalAmount + floatval($article[PREZZO]) * $articleInCart[QUANTITA];
+
+                        echo '
+                <div class="container py-5 ">
+                    <div class="row mt-2 mb-2">
                         <div class="col-md-2">
                             <img
                                     src="' . UPLOADS . '/' . $product[IMMAGINE] . '"
@@ -38,20 +41,50 @@ require_once "UIHelper.php";
                             />
                         </div>
                         <div class="col-md-4">
-                            <h4>' . $product[NOME] . '</h4>
-                            <p>' . $product[DESCRIZIONE] . '</p>
-                        </div>
-                        <div class="col-md-2">
-                            <h4>' . EURO . ' ' . $article[PREZZO] . '</h4>
+                            <h3>' . $product[NOME] . '</h3>
+                            <p>' . $product[DESCRIZIONE] . '</p>';
+
+                        $articleConfigurations = $session->getArticleConfigurations($article[ID]);
+
+                        foreach ($articleConfigurations as $articleConfiguration) {
+                            $whereOptionId = '`Id` = ' . $articleConfiguration[OPZIONE_ID];
+                            $optionVariation = $session->getRecord(OPZIONE_VARIAZIONE, $whereOptionId);
+                            $whereVariationId = '`Id` = ' . $optionVariation[VARIAZIONE_ID];
+                            $variation = $session->getRecord(VARIAZIONE, $whereVariationId);
+                            echo '
+                            <h5>' . $variation[NOME] . '</h5>
+                            <p>' . $optionVariation[VALORE] . '</p>';
+                        }
+                            echo '
                         </div>
                         <div class="col-md-2">
                             <h4>Quantity</h4>
-                            <input type="number" class="form-control" value="1" />
+                            <p>' . $articleInCart[QUANTITA] . '</p>
                         </div>
                         <div class="col-md-2">
                             <h4>' . EURO . ' ' . $article[PREZZO] . '</h4>
                         </div>
-                    </div>';
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col"></div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Seleziona tipologia ordine</option>
+                                <option value="1">Standard</option>
+                                <option value="2">Mensile</option>
+                                <option value="3">Trimestrale</option>
+                                <option value="4">Annuale</option>
+                                <option value="5">Pagamento a rate</option>
+                            </select>
+                        </div>
+                        <div class="col"></div>
+                    </div>    
+                    <div class="row mt-2">
+                        <hr>
+                    </div>
+                </div>        
+            ';
+
                     }
                 }
             }
