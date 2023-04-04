@@ -11,7 +11,6 @@ require_once("./assets/js/script.php");
 
 
 <body>
-
 <!-- ======================= Header START -->
 <header class="">
     <?php require("./templates/views/utils/navbar.php"); ?>
@@ -27,9 +26,7 @@ if (isset($_SESSION["Id"])) {
             $title === "Warehouse" || $title === "Configurazione articolo" || $title === "Edit product" ) {
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
-
                 echo '<div class="row">';
-
                 echo '<div class="sidebar col-3">
                                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="max-width: 250px;">
                                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -43,8 +40,6 @@ if (isset($_SESSION["Id"])) {
                 if ($title === "Dashboard"){
                     echo 'active';
                 }
-                else {
-                }
                 echo ' showContent" >';
                 echo'
                                                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
@@ -55,8 +50,6 @@ if (isset($_SESSION["Id"])) {
                                             <a href="./productInsertion.php" class="nav-link link-white ';
                 if ($title === "Insert product"){
                     echo 'active';
-                }
-                else {
                 }
                 echo ' showContent" >';
                 echo'
@@ -70,8 +63,6 @@ if (isset($_SESSION["Id"])) {
                                             <a href="./manageProducts.php" class="nav-link link-dark ';
                 if ($title === "Manage products" || $title === "Edit product"){
                     echo 'active';
-                }
-                else {
                 }
                 echo ' showContent" >';
                 echo'
@@ -89,8 +80,6 @@ if (isset($_SESSION["Id"])) {
                 echo $mainContent;
                 echo '      </div>
                         </div>';
-
-
             }
         } else {
             echo $mainContent;
