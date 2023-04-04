@@ -23,6 +23,8 @@
                             <p class="mb-0">Tipo utente: ' . $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]). '</p>
                             <p class="mb-0">Cellulare: (123) 456-7890</p>
                         ';
+                    } else {
+
                     }
                     ?>
                 </div>
