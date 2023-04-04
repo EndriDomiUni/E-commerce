@@ -22,7 +22,7 @@ if (isset($error)){
                         $categoryId = $session->getProductCategory($_SESSION[PRODOTTO_ID]);
                         if ($categoryId  === null && !is_int($categoryId)){
                             //errore
-                            echo 'qualcosa è andato storto: categoryId: </br>';
+                            echo 'Qualcosa è andato storto: categoryId: </br>';
                             var_dump($categoryId);
                         }
                     } else {
@@ -81,6 +81,11 @@ if (isset($error)){
                 }
                     ?>
                 </select>
+            </div>
+            <!--Qauntità-->
+            <div class="mb-3">
+                    <label for="quantity">Quantità</label>
+                    <input class="form-control" type="number" name="quantity" id="quantity" required />
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit" name="article-btn-insert">Inserisci Articolo</button>
         </form>

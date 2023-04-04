@@ -44,7 +44,7 @@
         color: #333;
         cursor: pointer;
     }
-
+</style>
     <!-- Questa sarà la pagina Dashboard del seller
 
 Funzionalità richieste:
@@ -57,7 +57,7 @@ Funzionalità richieste:
 
 <!-- Inserimento prodotti -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-/*<section class="form-addProduct w-100 m-auto">*/
+<section class="form-addProduct w-100 m-auto">
     <div class="container my-5">
         <?php if (isset($error)){
             //echo "<div class='alert alert-warning' role='alert'>";
@@ -137,4 +137,4 @@ Funzionalità richieste:
 
         </form>
     </div>
-/*</section>*/
+</section>

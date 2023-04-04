@@ -24,7 +24,8 @@ if (isset($_SESSION["Id"])) {
     try {
         $session = new Session($_SESSION["Id"]);
         if ($title === "Dashboard" || $title === "Insert product" || $title === "Manage products" ||
-            $title === "Warehouse" || $title === "Configurazione articolo" || $title === "Edit product" ) {
+            $title === "Warehouse" || $title === "Configure article" || $title === "Edit product" ||
+            $title === "Manage warehouse") {
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
 
@@ -79,6 +80,21 @@ if (isset($_SESSION["Id"])) {
                                                 Modifica prodotto
                                             </a>
                                         </li>';
+                /*
+                if ($title === "Manage warehouse" || $title === "Edit product"){
+                    echo 'active';
+                }
+                else {
+                }
+                echo ' showContent" >';
+                echo'
+                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                                                Modifica prodotto
+                                            </a>
+                                        </li>';
+                */
+
+
                 echo '                                           
                                     </ul>
                                     <hr>

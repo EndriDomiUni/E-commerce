@@ -128,3 +128,4 @@ const WHISLIST = 1;
 const WHISLIST_STRING = "whislist";
 const TOTALE_ORDINE = "Tot_ordine";
 const DATA_ORDINE = "Data_ordine";
+const METRI_CUBI = "Metri_cubi";

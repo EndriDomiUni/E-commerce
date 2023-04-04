@@ -9,6 +9,6 @@ require_once("./script/addArticle.script.php");
 ob_start();
 require './templates/views/form/selectVariations.php';
 $mainContent = ob_get_clean();
-$title = "Configurazione articolo";
+$title = "Configure article";
 require_once("./templates/base.php");
 

@@ -10,6 +10,7 @@ $session = new Session($_SESSION[ID]);
 
 if (isset($_POST['article-btn-insert']))
 {
+    //TODO: aggiungere quantità(giò inserito nel template), modificare addArticle($params)
     $params = array(
         PREZZO => filter_var($_POST['article-price'], FILTER_SANITIZE_SPECIAL_CHARS),
         UTENTE_ID => $session->getCurrentUser()[ID],
