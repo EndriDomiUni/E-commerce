@@ -442,7 +442,8 @@ class Session extends Dbh
         }
     }
 
-    public function loadOrderDetails($orderId) {
+    public function loadOrderDetails($orderId): array|int|string
+    {
         $where = "Ordine_id = " . $orderId;
         $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
         return parent::execute($query);
