@@ -16,7 +16,12 @@ class Session extends Dbh
         $this->init();
     }
 
-    private function init()
+    /**
+     * Init current user
+     *
+     * @return void
+     */
+    private function init(): void
     {
         if ($this->checkSessionId($this->id)) {
             $claimType = $this->getClaimTypeFromId($this->id);
@@ -169,12 +174,6 @@ class Session extends Dbh
         }
     }
 
-    public function generateOrder($params)
-    {
-        // id, Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pagamento
-
-    }
-
     private function associatesUserInSessionAddress($addressId): void
     {
         if (UtilsFunctions::issetSessionId()) {
@@ -183,7 +182,6 @@ class Session extends Dbh
             }
         }
     }
-
 
     private function bindCartWithUser(): int
     {
@@ -381,7 +379,7 @@ class Session extends Dbh
         $paymentData = parent::getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " .$this->getCurrentUser()[ID]);
         if ($paymentData !== null) {
             $query = "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
-        VALUES (?, ?, ?, ?, ?)";
+                 VALUES (?, ?, ?, ?, ?)";
             $res = parent::insertData($query,
                 $params[DATA_ORDINE],
                 $params[TOTALE_ORDINE],
@@ -389,6 +387,44 @@ class Session extends Dbh
                 1,
                 $paymentData[ID]);
             return UtilsFunctions::checkResponse($res) ? $res : 0;
+        }
+        return 0;
+    }
+
+    public function loadArticlesInCartWhere($cartId): string|int|array
+    {
+        if ($this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_DESC
+            || $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_PRO_DESC) {
+
+            $where = "Carrello_id = ". $cartId . " AND Articolo_id != 1";
+            $query = "SELECT Articolo_id FROM Articolo_in_carrello WHERE $where";
+            return parent::execute($query); // should return an array
+        }
+        return CARRELLO_UNSET;
+    }
+
+    public function addSingleItemInOrder($orderId): array|int|string
+    {
+        $responseList = [];
+        $articles = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
+        if (!empty($articles)) {
+            foreach ($articles as $article) {
+
+                $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                    VALUES (?, ?, ?, ?)";
+
+                $res = parent::insertData($query,
+                    ORDER_DETAILS_TYPE_STANDARD, // hardcoded
+                    $article[ARTICOLO_ID],
+                    $orderId,
+                    STATUS_INTACT_DATA
+                );
+
+                if (UtilsFunctions::checkResponse($res)) {
+                    $responseList[] = $res;
+                }
+            }
+            return $responseList;
         }
         return 0;
     }

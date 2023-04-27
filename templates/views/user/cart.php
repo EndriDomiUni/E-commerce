@@ -55,7 +55,7 @@ require_once "UIHelper.php";
                             <h5>' . $variation[NOME] . '</h5>
                             <p>' . $optionVariation[VALORE] . '</p>';
                         }
-                            echo '
+                        echo '
                         </div>
                         <div class="col-md-2">
                             <h4>Quantity</h4>

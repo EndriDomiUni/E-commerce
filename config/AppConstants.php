@@ -96,6 +96,14 @@ const VARIAZIONE_ID = "Variazione_id";
 const MAGAZZINO_ID = "Magazzino_id";
 const RACCOLTA_ID = "Raccolta_id";
 
+
+// ORDER DETAILS
+const ORDER_DETAILS_TYPE_STANDARD = 1; // default
+const ORDER_DETAILS_TYPE_MONTHLY = 2;
+const ORDER_DETAILS_TYPE_QUARTERLY = 3; // trimestrale
+const ORDER_DETAILS_TYPE_YEARLY = 4;
+const ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT = 5;
+
 // FIELD
 const NOME = "Nome";
 const COGNOME = "Cognome";

@@ -78,16 +78,10 @@ class Dbh
         }
     }
 
-    /**
-     * Returns:
-     *      0 if it doesn't exist
-     *      another number if exists
-     */
     private function checkEmail($email): bool
     {
         return count($this->execute("SELECT * FROM `Utente` WHERE `Email` = '$email' ")) == 0;
     }
-
 
     public function getDimensionIdByParameters($dim_x, $dim_y, $dim_z): array
     {
