@@ -441,4 +441,10 @@ class Session extends Dbh
             return parent::execute($query);
         }
     }
+
+    public function loadOrderDetails($orderId) {
+        $where = "Ordine_id = " . $orderId;
+        $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
+        return parent::execute($query);
+    }
 }
