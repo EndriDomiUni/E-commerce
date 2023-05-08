@@ -40,10 +40,10 @@
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                   Visualizza dettagli
                                 </button>';
-                    echo '</td>
-                      </tr>';
 
                     showOrderDetails($session, $order[ID]);
+                    echo '</td>
+                      </tr>';
                 }
             }
         } else {
@@ -66,10 +66,6 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">';
-
-        echo "<br>";
-        echo "current order id: " . $orderId;
-        echo "</br>";
 
         $orderDetails = $session->loadOrderDetails($orderId);
         if (!empty($orderDetails)) {
