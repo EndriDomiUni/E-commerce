@@ -7,7 +7,7 @@ session_start();
 include "./src/classes/Dbh.php";
 
 ob_start();
-require './templates/views/components/warehouseCard.php';
+require './templates/views/components/articleInStock.php';
 $mainContent = ob_get_clean();
-$title = "Warehouses Manager";
+$title = "Articles in stock";
 require_once("./templates/base.php");

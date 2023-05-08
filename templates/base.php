@@ -24,7 +24,7 @@ if (isset($_SESSION["Id"])) {
         $session = new Session($_SESSION["Id"]);
         if ($title === "Dashboard" || $title === "Insert product" || $title === "Manage products" ||
             $title === "Warehouse" || $title === "Configure article" || $title === "Edit product" ||
-            $title === "Manage warehouse") {
+            $title === "Warehouses Manager") {
             $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
             if ($claimType == CLAIM_SELLER_DESC || $claimType === CLAIM_SELLER_PR0_DESC) {
                 echo '<div class="row">';
@@ -42,48 +42,43 @@ if (isset($_SESSION["Id"])) {
                     echo 'active';
                 }
                 echo ' showContent" >';
-                echo'
-                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                echo'                           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                                                 Dashboard
                                             </a>
                                         </li>';
-                echo '<li>
+                echo '                  <li>
                                             <a href="./productInsertion.php" class="nav-link link-white ';
                 if ($title === "Insert product"){
                     echo 'active';
                 }
-                echo ' showContent" >';
-                echo'
-                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                echo ' showContent" />';
+                echo'                           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                                                 Inserisci prodotto
                                             </a>
                                         </li>';
 
 
-                echo '<li>
+                echo '                  <li>
                                             <a href="./manageProducts.php" class="nav-link link-dark ';
                 if ($title === "Manage products" || $title === "Edit product"){
                     echo 'active';
                 }
-                echo ' showContent" >';
-                echo'
-                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                echo ' showContent" />';
+                echo'                           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
                                                 Modifica prodotto
                                             </a>
                                         </li>';
-                /*
-                if ($title === "Manage warehouse" || $title === "Edit product"){
+                echo '                  <li>
+                                            <a href="./warehousesManager.php" class="nav-link link-dark ';
+                if ($title === "Warehouses Manager"){
                     echo 'active';
                 }
-                else {
-                }
-                echo ' showContent" >';
-                echo'
-                                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-                                                Modifica prodotto
+                echo ' showContent" />';
+                echo'                           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                                                Gestisci magazzini
                                             </a>
                                         </li>';
-                */
+
 
 
                 echo '                                           
