@@ -2,7 +2,6 @@
 <section>
 <?php
 
-
     // These two lines are used for debugging
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -12,6 +11,7 @@
     $productsCounter = 0;
     if (is_array($products)) {
         foreach ($products as $product) {
+            $_SESSION[CURRENT_PRODUCT_PAGE_ID] = $product[ID];
             if ($productsCounter === 0) {
                 echo '<div class="row">';
             }
@@ -22,6 +22,7 @@
             }
             echo '<div class="col">
                     <form method="post">';
+
             $whereProductId = "`Id` = " . $product[ID];
             $currentProductImage = $dbh->selectSpecificField(PRODOTTO, IMMAGINE, $whereProductId);
             $currentProductName = $dbh->selectSpecificField(PRODOTTO, NOME, $whereProductId);
@@ -32,43 +33,46 @@
             if ($currentProductImage !== null && $currentProductName !== null
                 && $currentProductDescription !== null && $currentProductPrice !== null) {
                 if (!isset($_SESSION[ID])) {
-                    echo ' 
-                             <div class="card mb-3" style="max-width: 540px; min-width: 250px; width: 400px">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4">
-                                            <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body" name="product-id" value="' . $product[ID] . '">
-                                                <h5 class="card-title" >' . $currentProductName . '</h5>
-                                                <p class="card-text" >' . $currentProductDescription . '</p>
-                                                <div class="card-price">
-                                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
-                                                    <label for="article-quantity" class="form-label">Quantità</label>
-                                                    <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
-                                        </div>
-                                        <div class="card-size">
-                                        ';
+                    echo ' <div class="card mb-3" style="max-width: 540px; min-width: 250px; width: 400px">
+                              <div class="row no-gutters">
+                               <div class="col-md-4">';
+                                echo '<a href="./productPage.php?id='. $product[ID] . '" target="_self">';
+                                echo '<img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image" />';
+                                echo '</a>
+                            </div>
+                            <div class="col-md-8">
+                            <div class="card-body" name="product-id" value="' . $product[ID] . '">
+                                <h5 class="card-title" >' . $currentProductName . '</h5>
+                                <p class="card-text" >' . $currentProductDescription . '</p>
+                                <div class="card-price">
+                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
+                                    <label for="article-quantity" class="form-label">Quantità</label>
+                                    <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
+                            </div>;           
+                            <div class="card-size">
+                            ';
                     drawCardFooter($product[ID], null);
                 } else {
                     $session = new Session($_SESSION[ID]);
                     echo ' 
-                             <div class="card mb-3" style="max-width: 540px;">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4">
-                                            <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title" >' . $currentProductName . '</h5>
-                                                <p class="card-text" >' . $currentProductDescription . '</p>
-                                                <div class="card-price">
-                                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
-                                                    <label for="article-quantity" class="form-label">Quantità</label>
-                                                    <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
-                                                </div>
-                                            <div class="card-size">';
-                    //debug
+                         <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">';
+                                    echo '<a href="./productPage.php?id='. $product[ID] . '" target="_self">';
+                                    echo '<img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image" />';
+                                    echo '</a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title" >' . $currentProductName . '</h5>
+                                <p class="card-text" >' . $currentProductDescription . '</p>
+                                <div class="card-price">
+                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
+                                    <label for="article-quantity" class="form-label">Quantità</label>
+                                    <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
+                                </div>
+                            <div class="card-size">';
+                //debug
                     //echo "product id: ".$product[ID]."</br>";
                     $currentArticles = $session->getArticlesByProductId($product[ID]) != null
                         ? $session->getArticlesByProductId($product[ID]) : "Error get article by product id";
@@ -173,9 +177,9 @@
         }
         echo '              </div>
                     </div>
-                </form>
-            </div>
-            ';
+                    </a>';
+        echo '</form>
+            </div>';
         }
     }
 

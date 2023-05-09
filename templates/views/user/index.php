@@ -34,7 +34,7 @@ Funzionalità richieste:
 <section id="articles">
     <h1 class="text-center">I nostri articoli</h1>
     <?php
-    showAllArticles();
+        showAllArticles();
     ?>
 </section>
 
