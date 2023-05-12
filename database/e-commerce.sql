@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Feb 15, 2023 alle 13:43
+-- Creato il: Mag 12, 2023 alle 18:09
 -- Versione del server: 10.4.27-MariaDB
--- Versione PHP: 8.1.12
+-- Versione PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,6 +41,14 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Articolo`:
+--   `Prodotto_id`
+--       `Prodotto` -> `Id`
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Articolo`
@@ -87,7 +95,15 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Articolo_in_carrello`:
+--   `Carrello_id`
+--       `Carrello` -> `Id`
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Articolo_in_carrello`
@@ -101,7 +117,11 @@ INSERT INTO `Articolo_in_carrello` (`Id`, `Quantità`, `Carrello_id`, `Articolo_
 (8, 1, 539, 13, 1, '2023-02-13 20:39:43'),
 (12, 1, 540, 13, 1, '2023-02-14 16:39:43'),
 (13, 1, 541, 13, 1, '2023-02-14 17:18:49'),
-(14, 1, 541, 19, 1, '2023-02-14 17:49:33');
+(14, 1, 541, 19, 1, '2023-02-14 17:49:33'),
+(21, 1, 543, 13, 1, '2023-04-13 13:52:27'),
+(22, 1, 543, 21, 1, '2023-04-13 13:53:00'),
+(23, 1, 543, 32, 1, '2023-04-25 08:34:12'),
+(24, 1, 544, 23, 1, '2023-04-25 08:44:00');
 
 -- --------------------------------------------------------
 
@@ -123,6 +143,14 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Magazzino_id` (`Magazzino_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Articolo_in_magazzino`:
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--   `Magazzino_id`
+--       `Magazzino` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Articolo_in_magazzino`
@@ -157,7 +185,13 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=543 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=551 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Carrello`:
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Carrello`
@@ -704,7 +738,15 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (539, 29, 0, '2023-02-13 20:35:11'),
 (540, 30, 0, '2023-02-14 16:39:13'),
 (541, 31, 0, '2023-02-14 17:18:38'),
-(542, 32, 0, '2023-02-15 10:44:46');
+(542, 32, 0, '2023-02-15 10:44:46'),
+(543, 33, 0, '2023-03-24 16:33:53'),
+(544, 34, 0, '2023-04-25 08:43:50'),
+(545, 35, 0, '2023-04-25 09:29:04'),
+(546, 36, 0, '2023-04-27 16:21:12'),
+(547, 37, 0, '2023-04-27 16:40:13'),
+(548, 38, 0, '2023-05-05 15:21:28'),
+(549, 39, 0, '2023-05-05 16:20:54'),
+(550, 40, 0, '2023-05-08 13:56:12');
 
 -- --------------------------------------------------------
 
@@ -721,6 +763,10 @@ CREATE TABLE IF NOT EXISTS `Categoria` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Categoria`:
+--
 
 --
 -- Dump dei dati per la tabella `Categoria`
@@ -747,7 +793,11 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Claim`:
+--
 
 --
 -- Dump dei dati per la tabella `Claim`
@@ -783,7 +833,15 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (80, 'user', '0', 0, '2023-02-13 20:35:11'),
 (81, 'user', '0', 0, '2023-02-14 16:39:13'),
 (82, 'user', '0', 0, '2023-02-14 17:18:38'),
-(83, 'user', '0', 0, '2023-02-15 10:44:46');
+(83, 'user', '0', 0, '2023-02-15 10:44:46'),
+(84, 'user', '0', 0, '2023-03-24 16:33:53'),
+(85, 'user', '0', 0, '2023-04-25 08:43:50'),
+(86, 'user', '0', 0, '2023-04-25 09:29:04'),
+(87, 'user', '0', 0, '2023-04-27 16:21:12'),
+(88, 'user', '0', 0, '2023-04-27 16:40:13'),
+(89, 'user', '0', 0, '2023-05-05 15:21:28'),
+(90, 'user', '0', 0, '2023-05-05 16:20:54'),
+(91, 'user', '0', 0, '2023-05-08 13:56:12');
 
 -- --------------------------------------------------------
 
@@ -802,6 +860,14 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`),
   KEY `Articolo_id` (`Articolo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Configurazione_variazione`:
+--   `Opzio_variazione_id`
+--       `Opzione_variazione` -> `Id`
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Configurazione_variazione`
@@ -851,14 +917,49 @@ DROP TABLE IF EXISTS `Dettaglio_ordine`;
 CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tipo` int(11) NOT NULL,
-  `Articolo_in_carr_id` int(11) NOT NULL,
+  `Articolo_id` int(11) NOT NULL,
   `Ordine_id` int(11) NOT NULL,
   `Status` int(11) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
-  KEY `Articolo_in_carr_id` (`Articolo_in_carr_id`),
+  KEY `Articolo_in_carr_id` (`Articolo_id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Dettaglio_ordine`:
+--   `Articolo_id`
+--       `Articolo` -> `Id`
+--   `Ordine_id`
+--       `Ordine` -> `Id`
+--
+
+--
+-- Dump dei dati per la tabella `Dettaglio_ordine`
+--
+
+INSERT INTO `Dettaglio_ordine` (`Id`, `Tipo`, `Articolo_id`, `Ordine_id`, `Status`, `Timestamp`) VALUES
+(1, 1, 21, 5, 0, '2023-04-25 08:34:29'),
+(2, 1, 24, 6, 0, '2023-04-25 08:45:21'),
+(3, 1, 24, 7, 0, '2023-04-25 09:17:26'),
+(4, 1, 32, 11, 0, '2023-04-25 09:32:05'),
+(5, 1, 28, 12, 0, '2023-04-25 09:33:47'),
+(6, 1, 32, 13, 0, '2023-04-25 09:38:24'),
+(7, 1, 13, 13, 0, '2023-04-25 09:38:24'),
+(8, 1, 32, 14, 0, '2023-04-27 16:22:29'),
+(9, 1, 13, 14, 0, '2023-04-27 16:22:29'),
+(10, 1, 19, 15, 0, '2023-04-27 16:27:15'),
+(11, 1, 24, 15, 0, '2023-04-27 16:27:15'),
+(12, 1, 27, 15, 0, '2023-04-27 16:27:15'),
+(13, 1, 32, 16, 0, '2023-04-27 16:41:35'),
+(14, 1, 29, 17, 0, '2023-04-27 16:42:37'),
+(15, 1, 21, 18, 0, '2023-04-27 16:53:54'),
+(16, 1, 13, 19, 0, '2023-05-05 15:26:12'),
+(17, 1, 19, 19, 0, '2023-05-05 15:26:12'),
+(18, 1, 24, 19, 0, '2023-05-05 15:26:12'),
+(19, 1, 21, 20, 0, '2023-05-05 15:28:36'),
+(20, 1, 26, 20, 0, '2023-05-05 15:28:36'),
+(21, 1, 22, 21, 0, '2023-05-06 10:19:18');
 
 -- --------------------------------------------------------
 
@@ -875,6 +976,10 @@ CREATE TABLE IF NOT EXISTS `Dimensione` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Dimensione`:
+--
 
 --
 -- Dump dei dati per la tabella `Dimensione`
@@ -903,7 +1008,13 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Forma_di_pagamento`:
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Forma_di_pagamento`
@@ -912,7 +1023,14 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
 INSERT INTO `Forma_di_pagamento` (`Id`, `Circuito`, `Numero_carta`, `Data_scadenza`, `CVV`, `Tipo_di_pagamento`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (3, 'Unknown', '4444 5555 6666 7777', '2023-02-02', 1, 1, 4, 0, '2023-02-02 14:59:11'),
 (4, 'American Express', '3434 4545 5656 6767', '2023-02-12', 2, 1, 5, 0, '2023-02-02 15:02:01'),
-(5, 'American Express', '3434 3535 3636 3737', '2023-06-29', 20, 1, 17, 0, '2023-02-15 07:34:58');
+(5, 'American Express', '3434 3535 3636 3737', '2023-06-29', 20, 1, 17, 0, '2023-02-15 07:34:58'),
+(6, 'Unknown', '1234 1234 1234 1234', '2023-03-24', 123, 1, 33, 0, '2023-03-24 16:35:15'),
+(7, 'Unknown', '111122223333444', '2023-04-26', 10, 1, 34, 0, '2023-04-25 08:45:06'),
+(8, 'Unknown', '1111222233334444', '2023-04-25', 101, 1, 35, 0, '2023-04-25 09:29:56'),
+(9, 'Unknown', '1111 2222 3333 4444', '2023-04-27', 12, 1, 36, 0, '2023-04-27 16:22:18'),
+(10, 'Unknown', 'wfwefwefwefwfwef', '2023-04-27', 123, 1, 37, 0, '2023-04-27 16:41:09'),
+(11, 'Unknown', '3333 4444 5555 6666', '2023-07-14', 123, 1, 38, 0, '2023-05-05 15:25:49'),
+(12, 'Unknown', 'ytfutf', '2023-05-06', 123, 2, 39, 0, '2023-05-06 10:19:11');
 
 -- --------------------------------------------------------
 
@@ -930,7 +1048,11 @@ CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Status` int(4) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Indirizzo`:
+--
 
 --
 -- Dump dei dati per la tabella `Indirizzo`
@@ -940,7 +1062,14 @@ INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`,
 (1, 'Unset', 0, 'Unset', 0, 0, '2023-01-28 14:15:44'),
 (2, 'Santa Maria Maddalena', 100, 'Rimini', 47900, 0, '2023-02-02 13:52:44'),
 (3, 'Santa Maria Maddalena', 100, 'Rimini', 47900, 0, '2023-02-02 14:00:40'),
-(4, 'Roma', 1, 'Rimini', 47902, 0, '2023-02-15 06:53:30');
+(4, 'Roma', 1, 'Rimini', 47902, 0, '2023-02-15 06:53:30'),
+(5, 'Rossi', 12, 'Spazio', 12345, 0, '2023-03-24 16:34:48'),
+(6, 'Roma', 1, 'Roma', 100, 0, '2023-04-25 08:44:34'),
+(7, 'fsaddfd', 101, 'Roma', 100, 0, '2023-04-25 09:29:41'),
+(8, 'Via Milano', 1, 'Milano', 1234, 0, '2023-04-27 16:22:00'),
+(9, 'dwefd', 1, 'dwef', 11111, 0, '2023-04-27 16:40:55'),
+(10, 'Santa Maria Maddarelna', 17, 'Morciano', 47833, 0, '2023-05-05 15:24:48'),
+(11, 'ffcgc', 123, 'dfc', 12345, 0, '2023-05-06 10:19:00');
 
 -- --------------------------------------------------------
 
@@ -958,6 +1087,12 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Magazzino`:
+--   `Indirizzo_id`
+--       `Indirizzo` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Magazzino`
@@ -982,6 +1117,12 @@ CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   PRIMARY KEY (`Id`),
   KEY `Variazione_id` (`Variazione_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Opzione_variazione`:
+--   `Variazione_id`
+--       `Variazione` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Opzione_variazione`
@@ -1031,7 +1172,13 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Forma_di_pag_id` (`Forma_di_pag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Ordine`:
+--   `Forma_di_pag_id`
+--       `Forma_di_pagamento` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Ordine`
@@ -1040,7 +1187,25 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
 INSERT INTO `Ordine` (`Id`, `Data_ordine`, `Tot_ordine`, `Status`, `Metodo_di_spedizione`, `Forma_di_pag_id`, `Timestamp`) VALUES
 (1, '2023-02-15', '63', 0, 1, 5, '2023-02-15 08:22:49'),
 (2, '2023-02-15', '63', 0, 1, 5, '2023-02-15 08:24:47'),
-(3, '2023-02-15', '63', 0, 1, 5, '2023-02-15 08:24:57');
+(3, '2023-02-15', '63', 0, 1, 5, '2023-02-15 08:24:57'),
+(4, '2023-03-24', '80', 0, 1, 6, '2023-03-24 16:35:27'),
+(5, '2023-04-25', '73', 0, 1, 6, '2023-04-25 08:34:29'),
+(6, '2023-04-25', '22', 0, 1, 7, '2023-04-25 08:45:21'),
+(7, '2023-04-25', '22', 0, 1, 7, '2023-04-25 09:17:26'),
+(8, '2023-04-25', '55', 0, 1, 8, '2023-04-25 09:30:02'),
+(9, '2023-04-25', '55', 0, 1, 8, '2023-04-25 09:31:06'),
+(10, '2023-04-25', '55', 0, 1, 8, '2023-04-25 09:31:37'),
+(11, '2023-04-25', '55', 0, 1, 8, '2023-04-25 09:32:05'),
+(12, '2023-04-25', '43', 0, 1, 8, '2023-04-25 09:33:47'),
+(13, '2023-04-25', '55', 0, 1, 8, '2023-04-25 09:38:24'),
+(14, '2023-04-27', '55', 0, 1, 9, '2023-04-27 16:22:29'),
+(15, '2023-04-27', '92', 0, 1, 9, '2023-04-27 16:27:15'),
+(16, '2023-04-27', '40', 0, 1, 10, '2023-04-27 16:41:35'),
+(17, '2023-04-27', '12', 0, 1, 10, '2023-04-27 16:42:37'),
+(18, '2023-04-27', '18', 0, 1, 10, '2023-04-27 16:53:54'),
+(19, '2023-05-05', '62', 0, 1, 11, '2023-05-05 15:26:12'),
+(20, '2023-05-05', '34', 0, 1, 11, '2023-05-05 15:28:36'),
+(21, '2023-05-06', '13', 0, 1, 12, '2023-05-06 10:19:18');
 
 -- --------------------------------------------------------
 
@@ -1062,6 +1227,14 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   KEY `Dim_id` (`Dim_id`),
   KEY `Categoria_id` (`Categoria_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Prodotto`:
+--   `Dim_id`
+--       `Dimensione` -> `Id`
+--   `Categoria_id`
+--       `Categoria` -> `Id`
+--
 
 --
 -- Dump dei dati per la tabella `Prodotto`
@@ -1100,6 +1273,14 @@ CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELAZIONI PER TABELLA `Prodotto_in_raccolta`:
+--   `Prodotto_id`
+--       `Prodotto` -> `Id`
+--   `Raccolta_id`
+--       `Raccolta` -> `Id`
+--
+
+--
 -- Dump dei dati per la tabella `Prodotto_in_raccolta`
 --
 
@@ -1125,7 +1306,11 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Raccolta`:
+--
 
 --
 -- Dump dei dati per la tabella `Raccolta`
@@ -1148,7 +1333,15 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 (15, 1, 'whislist', 29, 0, '2023-02-13 20:35:11'),
 (16, 1, 'whislist', 30, 0, '2023-02-14 16:39:13'),
 (17, 1, 'whislist', 31, 0, '2023-02-14 17:18:38'),
-(18, 1, 'whislist', 32, 0, '2023-02-15 10:44:46');
+(18, 1, 'whislist', 32, 0, '2023-02-15 10:44:46'),
+(19, 1, 'whislist', 33, 0, '2023-03-24 16:33:53'),
+(20, 1, 'whislist', 34, 0, '2023-04-25 08:43:50'),
+(21, 1, 'whislist', 35, 0, '2023-04-25 09:29:04'),
+(22, 1, 'whislist', 36, 0, '2023-04-27 16:21:12'),
+(23, 1, 'whislist', 37, 0, '2023-04-27 16:40:13'),
+(24, 1, 'whislist', 38, 0, '2023-05-05 15:21:28'),
+(25, 1, 'whislist', 39, 0, '2023-05-05 16:20:54'),
+(26, 1, 'whislist', 40, 0, '2023-05-08 13:56:12');
 
 -- --------------------------------------------------------
 
@@ -1170,6 +1363,14 @@ CREATE TABLE IF NOT EXISTS `Recensione` (
   KEY `Utente_id` (`Utente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- RELAZIONI PER TABELLA `Recensione`:
+--   `Dettaglio_ordine_id`
+--       `Dettaglio_ordine` -> `Id`
+--   `Utente_id`
+--       `Utente` -> `Id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -1190,7 +1391,11 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Utente`:
+--
 
 --
 -- Dump dei dati per la tabella `Utente`
@@ -1224,7 +1429,15 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, 
 (29, 'ale', 'ssandro', 'ale@takeit.com', 'taleit', 80, 1, 0, '2023-02-13 20:35:11'),
 (30, 'Umberto', 'Alarico', 'umberto@takeit.it', 'takeit', 81, 1, 0, '2023-02-14 16:39:13'),
 (31, 'Gigi', 'Buffon', 'gigi@buffon.com', 'takeit', 82, 1, 0, '2023-02-14 17:18:38'),
-(32, 'Endri', 'Domi', 'endri.domi@takeit.it', 'takeit', 83, 1, 0, '2023-02-15 10:44:46');
+(32, 'Endri', 'Domi', 'endri.domi@takeit.it', 'takeit', 83, 1, 0, '2023-02-15 10:44:46'),
+(33, 'Danilo', 'Pianini', 'danilo@pianini.com', 'takeit', 84, 5, 0, '2023-03-24 16:33:53'),
+(34, 'Mirko', 'Banda', 'mirko.banda@takeit.com', 'takeit', 85, 6, 0, '2023-04-25 08:43:50'),
+(35, 'Leo', 'Carbo', 'leocarbo00@takeit.com', 'takeit', 86, 7, 0, '2023-04-25 09:29:04'),
+(36, 'Alessio', 'Riccini', 'alessio.riccini@lasersoft.it', 'lasersoft', 87, 8, 0, '2023-04-27 16:21:12'),
+(37, 'Marco', 'Pannunzio', 'marco.pann@lasersoft.it', 'lasersoft', 88, 9, 0, '2023-04-27 16:40:13'),
+(38, 'Luca', 'Baldassari', 'luca@balda.com', 'takeit', 89, 10, 0, '2023-05-05 15:21:28'),
+(39, 'pino', 'verdi', 'pino@v.com', 'pino', 90, 11, 0, '2023-05-05 16:20:54'),
+(40, 'Admin0', 'admin0', 'admin0@a.com', 'admin', 91, 1, 0, '2023-05-08 13:56:12');
 
 -- --------------------------------------------------------
 
@@ -1242,6 +1455,10 @@ CREATE TABLE IF NOT EXISTS `Variazione` (
   PRIMARY KEY (`Id`),
   KEY `Categoria_id` (`Categoria_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELAZIONI PER TABELLA `Variazione`:
+--
 
 --
 -- Dump dei dati per la tabella `Variazione`
@@ -1300,7 +1517,7 @@ ALTER TABLE `Configurazione_variazione`
 -- Limiti per la tabella `Dettaglio_ordine`
 --
 ALTER TABLE `Dettaglio_ordine`
-  ADD CONSTRAINT `dettaglio_ordine_ibfk_1` FOREIGN KEY (`Articolo_in_carr_id`) REFERENCES `Articolo_in_carrello` (`Id`),
+  ADD CONSTRAINT `dettaglio_ordine_ibfk_1` FOREIGN KEY (`Articolo_id`) REFERENCES `Articolo` (`Id`),
   ADD CONSTRAINT `dettaglio_ordine_ibfk_2` FOREIGN KEY (`Ordine_id`) REFERENCES `Ordine` (`Id`);
 
 --
