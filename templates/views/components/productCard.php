@@ -7,11 +7,12 @@
     ini_set('display_errors', 1);
 
     $dbh = new Dbh();
-    if (isset($_SESSION['sortingMode'])) {
+    /*if (isset($_SESSION['sortingMode'])) {
         $products = $dbh->getProductsWithSortingMode($_SESSION['sortingMode']);
     } else {
         $products = $dbh->getProducts();
-    }
+    }*/
+    $products = $dbh->getProductsWithSortingMode(4);
     $productsCounter = 0;
     if (is_array($products)) {
         foreach ($products as $product) {
