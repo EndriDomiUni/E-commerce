@@ -5,9 +5,10 @@ ini_set('display_errors', 1);
 
 session_start();
 include "./src/classes/Dbh.php";
+require_once("./script/warehouseManager.script.php");
 
 ob_start();
-require './templates/views/form/manageWarehouses.php.php';
+require './templates/views/components/warehouseCard.php';
 $mainContent = ob_get_clean();
-$title = "Warehouse";
+$title = "Warehouses Manager";
 require_once("./templates/base.php");

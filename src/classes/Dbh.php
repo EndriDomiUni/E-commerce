@@ -242,6 +242,20 @@ class Dbh
     }
 
     /**
+     * Get all records
+     * @param string $tableName
+     * @param string $where
+     * @return mixed
+     */
+    public function getAllRecords(string $tableName, string $where): mixed
+    {
+        $response = $this->execute("SELECT * FROM `$tableName` WHERE $where");
+        return !empty($response)
+            ? $response
+            : null;
+    }
+
+    /**
      * Delete record of given table, filtered by where condition
      *
      * @param string $tableName
@@ -436,12 +450,44 @@ class Dbh
         return $products;
     }
 
-    public function getProductCategory($productId)
-    {
+    public function getProductCategory($productId) {
         $query = "`Id` = " . $productId;
         $product = $this->getRecord(PRODOTTO, $query);
         if ($product !== null){
             return $product[CATEGORIA_ID];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get all articles by seller id
+     * @param $sellerId
+     * @return array
+     */
+    public function getArticlesBySellerId($sellerId): array
+    {
+        $query = UTENTE_ID . " = " . $sellerId;
+        $articles = $this->getAllRecords(ARTICOLO, $query);
+        if ($articles !== null){
+            return $articles;
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * Get warehouse's article by article id
+     * @param $articleId
+     * @return mixed|string|null
+     */
+    public function getWarehouseArticle($articleId, $warehouseId): mixed
+    {
+        $query = ARTICOLO_ID . " = " . $articleId . " AND " . MAGAZZINO_ID . " = " . $warehouseId;
+        $warehouseArticle = $this->getRecord(ARTICOLO_IN_MAGAZZINO, $query);
+        //var_dump($warehouseArticle);
+        if ($warehouseArticle !== null){
+            return $warehouseArticle;
         } else {
             return null;
         }

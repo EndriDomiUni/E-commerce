@@ -448,4 +448,46 @@ class Session extends Dbh
         $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
         return parent::execute($query);
     }
+    /**
+     * Get total quantity of articles in stock
+     * @param int $warehouseId
+     * @return int
+     */
+    public function getArticlesInStockQuantity(int $warehouseId): int
+    {
+        $quantity = 0;
+        $articles = parent::getArticlesBySellerId($_SESSION[ID]);
+
+        foreach($articles as $article) {
+            $articleInWarehouse = parent::getWarehouseArticle($article[ID], $warehouseId);
+            if ($articleInWarehouse !== null) {
+                $quantity += $articleInWarehouse[QUANTITA];
+            }
+        }
+        return $quantity;
+    }
+
+    /**
+     * Get all articles in stock of seller in session
+     * @param int $warehouseId
+     * @return array
+     */
+    public function getArticlesInStockByWarehouse(int $warehouseId) : array
+    {
+        $articlesInStock = [];
+        $articles = parent::getArticlesBySellerId($_SESSION[ID]);
+        foreach ($articles as $article) {
+            $articleInWarehouse = parent::getWarehouseArticle($article[ID], $warehouseId);
+            if ($articleInWarehouse !== null) {
+                $articlesInStock[] += $articleInWarehouse;
+            }
+            return $articlesInStock;
+        }
+        return [];
+    }
+
+    public function getArticlesInStockByArticle(int $articleId) : array
+    {
+        return [];
+    }
 }

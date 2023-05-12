@@ -80,6 +80,7 @@ const RACCOLTA = "Raccolta";
 const VARIAZIONE = "Variazione";
 const ARTICOLO_IN_CARRELLO = "Articolo_in_carrello";
 const FORMA_DI_PAGAMENTO = "Forma_di_pagamento";
+const ARTICOLO_IN_MAGAZZINO = "Articolo_in_magazzino";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
