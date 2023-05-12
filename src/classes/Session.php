@@ -409,19 +409,20 @@ class Session extends Dbh
         $articles = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
         if (!empty($articles)) {
             foreach ($articles as $article) {
-
-                $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                for ($i = 0; $i < $article[QUANTITA]; $i++) {
+                    $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
                     VALUES (?, ?, ?, ?)";
 
-                $res = parent::insertData($query,
-                    ORDER_DETAILS_TYPE_STANDARD, // hardcoded
-                    $article[ARTICOLO_ID],
-                    $orderId,
-                    STATUS_INTACT_DATA
-                );
+                    $res = parent::insertData($query,
+                        ORDER_DETAILS_TYPE_STANDARD, // hardcoded
+                        $article[ARTICOLO_ID],
+                        $orderId,
+                        STATUS_INTACT_DATA
+                    );
 
-                if (UtilsFunctions::checkResponse($res)) {
-                    $responseList[] = $res;
+                    if (UtilsFunctions::checkResponse($res)) {
+                        $responseList[] = $res;
+                    }
                 }
             }
             return $responseList;
