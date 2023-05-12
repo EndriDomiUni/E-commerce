@@ -33,9 +33,36 @@ Funzionalità richieste:
 
 <section id="articles">
     <h1 class="text-center">I nostri articoli</h1>
+
+    <div class="container">
+        <div class="sort-component">
+            <label for="sort-select">Ordina per:</label>
+            <select id="sort-select">
+                <option value="0">Predefinito</option>
+                <option value="1">Prezzo: Basso a Alto</option>
+                <option value="2">Prezzo: Alto a Basso</option>
+                <option value="3">Nome: A-Z</option>
+                <option value="4">Nome: Z-A</option>
+            </select>
+        </div>
+    </div>
+    <script>
+        const selectElement = document.getElementById('sort-select');
+        selectElement.addEventListener('change', (event) => {
+            const selectedValue = event.target.value;
+            console.log('Ordina per:', selectedValue);
+            window.location.href = window.location.href+'?selectedValue='+selectedValue;
+        });
+    </script>
+
     <?php
         showAllArticles();
     ?>
+
+    <script>
+        let url= document.location.href;
+        window.history.pushState({}, "", url.split("?")[0]);
+    </script>
 </section>
 
 <section id="intro">

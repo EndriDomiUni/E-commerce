@@ -187,6 +187,7 @@ require_once "UIHelper.php";
                         <li><a class="dropdown-item" href="./account.php">Account</a></li>
                         <li><a class="dropdown-item" href="./address.php">Address</a></li>
                         <li><a class="dropdown-item" href="./cardPayForm.php">Card Pay Form</a></li>
+                        <li><a class="dropdown-item" href="./reviews.php">Reviews</a></li>
                         <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
                         <li>
                             <hr class="dropdown-divider">

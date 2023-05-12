@@ -32,8 +32,8 @@ function showArticlesInCart(): void
 function showAllArticles(): void
 {
     echo ' <div class="row">
-            <div class="col">' . require './templates/views/components/productCard.php'; '</div>
-         </div>';
+        <div class="col">' . require './templates/views/components/productCard.php'; '</div>
+     </div>';
 }
 
 function showAllArticlesInWishlist(): void

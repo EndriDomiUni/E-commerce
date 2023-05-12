@@ -138,3 +138,10 @@ const TOTALE_ORDINE = "Tot_ordine";
 const DATA_ORDINE = "Data_ordine";
 const METRI_CUBI = "Metri_cubi";
 const CURRENT_PRODUCT_PAGE_ID = "";
+
+// SORT MODE
+const SORT_MODE_DEFAULT = 0;
+const SORT_MODE_PRICE_ASC = 1;
+const SORT_MODE_PRICE_DESC = 2;
+const SORT_MODE_NAME_ASC = 3;
+const SORT_MODE_NAME_DESC = 4;

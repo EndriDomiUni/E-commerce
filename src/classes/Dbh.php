@@ -349,6 +349,41 @@ class Dbh
         return $this->execute($query);
     }
 
+    public function getProductsWithSortingMode($sortingMode): array|int|string
+    {
+        $query = "";
+        if (empty($query)) {
+            $sortingMode = SORT_MODE_DEFAULT;
+        }
+        switch ($sortingMode) {
+            case SORT_MODE_DEFAULT:
+                $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
+                break;
+            case SORT_MODE_PRICE_ASC:
+                $query = "SELECT p.*
+                            FROM Prodotto p
+                            JOIN Articolo a ON p.Id = a.Prodotto_id
+                          ORDER BY a.prezzo ASC;";
+                break;
+            case SORT_MODE_PRICE_DESC:
+                $query = "SELECT p.*
+                            FROM Prodotto p
+                            JOIN Articolo a ON p.Id = a.Prodotto_id
+                          ORDER BY a.prezzo DESC;";
+                break;
+            case SORT_MODE_NAME_ASC:
+                $query = "SELECT * FROM `Prodotto` WHERE Id != 1 ORDER BY Nome ASC";
+                break;
+            case SORT_MODE_NAME_DESC:
+                $query = "SELECT * FROM `Prodotto` WHERE Id != 1 ORDER BY Nome DESC";
+                break;
+        }
+        echo '<pre>';
+        echo "query: " . $query . '</br>';
+        echo '</pre>';
+        return $this->execute($query);
+    }
+
     public function getArticlesByProductId($productId): array|int|string
     {
         $query = "SELECT * FROM `".ARTICOLO."` WHERE `".PRODOTTO_ID."` = ".$productId;

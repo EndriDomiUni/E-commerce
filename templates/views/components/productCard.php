@@ -7,11 +7,14 @@
     ini_set('display_errors', 1);
 
     $dbh = new Dbh();
-    $products = $dbh->getProducts();
+    if (isset($_SESSION['sortingMode'])) {
+        $products = $dbh->getProductsWithSortingMode($_SESSION['sortingMode']);
+    } else {
+        $products = $dbh->getProducts();
+    }
     $productsCounter = 0;
     if (is_array($products)) {
         foreach ($products as $product) {
-            $_SESSION[CURRENT_PRODUCT_PAGE_ID] = $product[ID];
             if ($productsCounter === 0) {
                 echo '<div class="row">';
             }
@@ -48,7 +51,7 @@
                                     <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
                                     <label for="article-quantity" class="form-label">Quantità</label>
                                     <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
-                            </div>;           
+                            </div>         
                             <div class="card-size">
                             ';
                     drawCardFooter($product[ID], null);
