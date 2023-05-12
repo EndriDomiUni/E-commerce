@@ -28,13 +28,11 @@ if (isset($_POST['article-btn-insert']))
             //debug
             //echo "articolo id: ".$response."</br>";
             //$session[ARTICOLO_ID] = $response;
-
             $parameters = array(
                 ARTICOLO_ID => $articleIdResponse,
             );
 
             $variations = $session->getVariations();
-
             foreach ($variations as $variation) {
                 $variationTagName = 'variation-id-' . $variation[ID];
                 if (isset($_POST[$variationTagName])) {
@@ -48,7 +46,6 @@ if (isset($_POST['article-btn-insert']))
                     }
                 }
             }
-
         $claimId = $session->getCurrentUser()[CLAIM_ID];
         $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
         $tax = 3;
