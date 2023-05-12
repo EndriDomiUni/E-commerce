@@ -20,7 +20,8 @@ if(isset($_SESSION[ID])) {
         //echo "product id: " . $product[0][ID] . "</br>";
 
         if (isset($_POST[$warehouseTag])) {
-            $articlesInStock = $session->getArticlesInStock($warehouse[ID]);
+
+            $articlesInStock = $session->getArticlesInStockByWarehouse($warehouse[ID]);
             //TODO: gestire creazione card per ogni configurazione articolo
             $_SESSION[MAGAZZINO_ID] = $warehouse[ID];
             header('Location: articlesInStockManager.php');

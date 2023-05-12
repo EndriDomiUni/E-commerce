@@ -472,7 +472,8 @@ class Session extends Dbh
      * @param int $warehouseId
      * @return array
      */
-    public function getArticlesInStock(int $warehouseId) : array{
+    public function getArticlesInStockByWarehouse(int $warehouseId) : array
+    {
         $articlesInStock = [];
         $articles = parent::getArticlesBySellerId($_SESSION[ID]);
         foreach ($articles as $article) {
@@ -482,6 +483,11 @@ class Session extends Dbh
             }
             return $articlesInStock;
         }
+        return [];
+    }
+
+    public function getArticlesInStockByArticle(int $articleId) : array
+    {
         return [];
     }
 }
