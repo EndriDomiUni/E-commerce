@@ -490,4 +490,24 @@ class Session extends Dbh
     {
         return [];
     }
+
+
+    /**
+     * Get
+     * @param $startTime
+     * @param $endTime
+     * @return array
+     */
+    public function getOrdersQuantityInRangeDateTime($startTime, $endTime) : array
+    {
+        $query = 'SELECT COUNT(DISTINCT o.id) AS numero_ordini
+                    FROM Ordine o
+                    JOIN Dettaglio_ordine do ON o.id = do.id_ordine
+                    JOIN Articolo_in_carrello ac ON do.id_articolo_in_carrello = ac.id
+                    JOIN Articolo a ON ac.Articolo_id = a.id
+                    WHERE a.Utente_id = ' . $this->getCurrentUser()[ID] . '
+                      AND o.Data_ordine >= ' . $startTime . '
+                      AND o.Data_ordine <= ' . $endTime;
+        return $this->execute($query);
+    }
 }
