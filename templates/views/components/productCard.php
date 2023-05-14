@@ -7,12 +7,11 @@
     ini_set('display_errors', 1);
 
     $dbh = new Dbh();
-    /*if (isset($_SESSION['sortingMode'])) {
+    if (isset($_SESSION['sortingMode'])) {
         $products = $dbh->getProductsWithSortingMode($_SESSION['sortingMode']);
     } else {
         $products = $dbh->getProducts();
-    }*/
-    $products = $dbh->getProductsWithSortingMode(4);
+    }
     $productsCounter = 0;
     if (is_array($products)) {
         foreach ($products as $product) {
@@ -36,6 +35,7 @@
 
             if ($currentProductImage !== null && $currentProductName !== null
                 && $currentProductDescription !== null && $currentProductPrice !== null) {
+
                 if (!isset($_SESSION[ID])) {
                     echo ' <div class="card mb-3" style="max-width: 540px; min-width: 250px; width: 400px">
                               <div class="row no-gutters">
@@ -56,6 +56,7 @@
                             <div class="card-size">
                             ';
                     drawCardFooter($product[ID], null);
+
                 } else {
                     $session = new Session($_SESSION[ID]);
                     echo ' 
@@ -65,19 +66,18 @@
                                     echo '<a href="./productPage.php?id='. $product[ID] . '" target="_self">';
                                     echo '<img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img" alt="Product Image" />';
                                     echo '</a>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title" >' . $currentProductName . '</h5>
-                                <p class="card-text" >' . $currentProductDescription . '</p>
-                                <div class="card-price">
-                                    <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
-                                    <label for="article-quantity" class="form-label">Quantità</label>
-                                    <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
-                                </div>
-                            <div class="card-size">';
-                //debug
-                    //echo "product id: ".$product[ID]."</br>";
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title" >' . $currentProductName . '</h5>
+                                    <p class="card-text" >' . $currentProductDescription . '</p>
+                                    <div class="card-price">
+                                        <p class="card-text">A partire da: ' . EURO . ' ' . $currentProductPrice . '</p>
+                                        <label for="article-quantity" class="form-label">Quantità</label>
+                                        <input type="number" min="1" class="form-control" id="product-name" name="article-quantity"  />
+                                    </div>
+                                <div class="card-size">';
+
                     $currentArticles = $session->getArticlesByProductId($product[ID]) != null
                         ? $session->getArticlesByProductId($product[ID]) : "Error get article by product id";
 
@@ -87,10 +87,8 @@
                     foreach ($currentArticles as $currentArticle) {
                         $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
                         foreach ($articleConfigurations as $articleConfiguration) {
-                            $option_id = $articleConfiguration[OPZIONE_ID];
 
-                            //debug
-                            //echo "option id: ".$option_id."</br>";
+                            $option_id = $articleConfiguration[OPZIONE_ID];
                             $queryOption = "SELECT * FROM `" . OPZIONE_VARIAZIONE . "` WHERE `" . ID . "` = " . $option_id;
                             $currentOption = $session->execute($queryOption);
 
@@ -176,8 +174,8 @@
             }
         } else {
             echo '<button class="btn btn-outline-secondary ml-auto" type="submit">
-                                <a href="./login.php">Accedi</a>
-                          </button>';
+                       <a href="./login.php">Accedi</a>
+                  </button>';
         }
         echo '              </div>
                     </div>
@@ -186,6 +184,5 @@
             </div>';
         }
     }
-
 ?>
 

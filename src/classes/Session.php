@@ -435,7 +435,7 @@ class Session extends Dbh
     }
 
     public function loadOrders() {
-        $paymentData = parent::getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " .$this->getCurrentUser()[ID]);
+        $paymentData = parent::getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " . $this->getCurrentUser()[ID]);
         if ($paymentData !== null) {
             $where = "Forma_di_pag_id = " . $paymentData[ID];
             $query = "SELECT * FROM Ordine WHERE $where";
@@ -510,5 +510,88 @@ class Session extends Dbh
                       AND o.Data_ordine >= ' . $startTime . '
                       AND o.Data_ordine <= ' . $endTime;
         return $this->execute($query);
+    }
+
+    /**
+     * Set status = delete
+     * @return void
+     */
+    public function deleteCurrentUser(): void
+    {
+        // set ARTICOLO
+        // with status DELETE
+        $claimType = $this->getClaimTypeFromId($this->id);
+        switch ($claimType) {
+            case CLAIM_SELLER_DESC:
+            case CLAIM_SELLER_PR0_DESC:
+                $obtainArticlesOfCurrentUser = parent::getRecord(ARTICOLO, "Utende_id = " . $this->getCurrentUser()[ID]);
+                if (!empty($obtainArticlesOfCurrentUser)) {
+                    foreach ($obtainArticlesOfCurrentUser as $article) {
+
+                        // ARTICOLO_IN_CARRELLO
+                        $articlesInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
+                        if (!empty($articlesInCart)) {
+                            foreach ($articlesInCart as $articleInCartItem) {
+                                parent::updateDateWithWhere(
+                                    ARTICOLO,
+                                    STATUS,
+                                    STATUS_DELETED_DATA,
+                                    "Articolo_id = " . $articleInCartItem[ID]);
+                            }
+                        }
+
+                        // ARTICOLO_IN_MAGAZZINO
+                        $articlesInWarehouses = parent::getRecord(ARTICOLO_IN_MAGAZZINO, "Articolo_id = " . $article[ID]);
+                        if (!empty($articlesInWarehouses)) {
+                            foreach ($articlesInWarehouses as $articlesInWarehouse) {
+                                parent::updateDateWithWhere(
+                                    ARTICOLO,
+                                    STATUS,
+                                    STATUS_DELETED_DATA,
+                                    "Articolo_id = " . $articlesInWarehouse[ID]);
+                            }
+                        }
+
+                        // CONFIGURAZIONE_VARIAZIONE
+                        $configVariations = parent::getRecord(CONFIGURAZIONE_VARIAZIONE, "Articolo_id = " . $article[ID]);
+                        if (!empty($configVariations)) {
+                            foreach ($configVariations as $configVariation) {
+                                parent::updateDateWithWhere(
+                                    ARTICOLO,
+                                    STATUS,
+                                    STATUS_DELETED_DATA,
+                                    "Articolo_id = " . $configVariation[ID]);
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+        parent::updateDateWithWhere(ARTICOLO, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+
+
+        // set ORDINE and DETTAGLIO_ORDINE
+        // with status DELETE
+        $obtainPaymentFormOfCurrentUser = parent::getRecord(FORMA_DI_PAGAMENTO, "Utende_id = " . $this->getCurrentUser()[ID]);
+        if (!empty($obtainPaymentFormOfCurrentUser)) {
+            foreach ($obtainPaymentFormOfCurrentUser as $paymentForm) {
+                $ordersOfCurrentUser = parent::getRecord(ORDINE, "Forma_di_pag_id = " . $paymentForm[ID]);
+                if (!empty($ordersOfCurrentUser)) {
+                    foreach ($ordersOfCurrentUser as $orders) {
+                        parent::updateDateWithWhere(ORDINE, STATUS, STATUS_DELETED_DATA, "Forma_di_pag_id = " . $paymentForm[ID]);
+                        parent::updateDateWithWhere(DETTAGLIO_ORDINE, STATUS, STATUS_DELETED_DATA, "Ordine_id = " . $orders[ID]);
+                    }
+                }
+            }
+        }
+
+        // set CARRELLO, FORMA_DI_PAGAMENTO, RACCOLTA, RECENSIONE, RACCOLTA, UTENTE
+        // with status DELETE
+        parent::updateDateWithWhere(CARRELLO, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(FORMA_DI_PAGAMENTO, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(RACCOLTA, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(RECENSIONE, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(RACCOLTA, STATUS, STATUS_DELETED_DATA, "Id = " . $this->getCurrentUser()[CLAIM_ID]);
+        parent::updateData($this->getCurrentUser()[ID], UTENTE, STATUS, STATUS_DELETED_DATA);
     }
 }

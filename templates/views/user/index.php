@@ -34,15 +34,15 @@ Funzionalità richieste:
 <section id="articles">
     <h1 class="text-center">I nostri articoli</h1>
 
-    <div class="container">
+    <div class="container text-end py-2">
         <div class="sort-component">
             <label for="sort-select">Ordina per:</label>
             <select id="sort-select">
-                <option value="0">Predefinito</option>
-                <option value="1">Prezzo: Basso a Alto</option>
-                <option value="2">Prezzo: Alto a Basso</option>
-                <option value="3">Nome: A-Z</option>
-                <option value="4">Nome: Z-A</option>
+                <option value="0" <?php if (!isset($_SESSION['sortingMode'])) { echo "selected";} ?>>Predefinito</option>
+                <option value="1" <?php if (isset($_SESSION['sortingMode']) && $_SESSION['sortingMode'] == SORT_MODE_PRICE_ASC) { echo "selected";} ?>>Prezzo: Basso a Alto</option>
+                <option value="2" <?php if (isset($_SESSION['sortingMode']) && $_SESSION['sortingMode'] == SORT_MODE_PRICE_DESC) { echo "selected";} ?>>Prezzo: Alto a Basso</option>
+                <option value="3" <?php if (isset($_SESSION['sortingMode']) && $_SESSION['sortingMode'] == SORT_MODE_NAME_ASC) { echo "selected";} ?>>Nome: A-Z</option>
+                <option value="4" <?php if (isset($_SESSION['sortingMode']) && $_SESSION['sortingMode'] == SORT_MODE_NAME_DESC) { echo "selected";} ?>>Nome: Z-A</option>
             </select>
         </div>
     </div>
