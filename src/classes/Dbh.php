@@ -78,42 +78,54 @@ class Dbh
         }
     }
 
+    /**
+     * Check mail validity
+     *
+     * @param $email
+     * @return bool true if ok
+     */
     private function checkEmail($email): bool
     {
         return count($this->execute("SELECT * FROM `Utente` WHERE `Email` = '$email' ")) == 0;
     }
 
+    /**
+     * Get dimension id by x, y, z
+     *
+     * @param $dim_x
+     * @param $dim_y
+     * @param $dim_z
+     * @return array
+     */
     public function getDimensionIdByParameters($dim_x, $dim_y, $dim_z): array
     {
         return $this->execute("SELECT Id FROM `Dimensione` 
             WHERE `Dim_X` = $dim_x AND `Dim_Y` = $dim_y AND `Dim_Z` = $dim_z");
     }
 
+    /**
+     * Get variations by category id
+     *
+     * @param $categoryId
+     * @return array
+     */
     public function getVariationsByCategoryId($categoryId): array
     {
         return $this->execute("SELECT * FROM `Variazione`
             WHERE `Categoria_id` = '$categoryId'");
     }
 
+    /**
+     * Get options by variations id
+     *
+     * @param $variationId
+     * @return array
+     */
     public function getOptionsByVariationId($variationId): array
     {
         return $this->execute("SELECT * FROM `Opzione_variazione`
             WHERE `Variazione_Id` = '$variationId'");
     }
-
-    /**
-     * @param $dim_x
-     * @param $dim_y
-     * @param $dim_z
-     * @return true if it doesn't exit
-     * @return false if it exists
-     */
-    public function checkDimension($dim_x, $dim_y, $dim_z): bool
-    {
-        return count($this->execute("SELECT * FROM `Dimensione` 
-         WHERE `Dim_X` = {$dim_x} AND `Dim_Y` = {$dim_y} AND `Dim_Z` = {$dim_z}")) == 0;
-    }
-
 
     /**
      * It takes an array of parameters, checks if they are all set, then checks if the email is already
@@ -148,6 +160,12 @@ class Dbh
         return null;
     }
 
+    /**
+     * Generate claim for new user
+     *
+     * @param $claimType
+     * @return int
+     */
     private function generateClaim($claimType): int
     {
         $query = "INSERT INTO Claim (Descrizione, Conto, Status) VALUES (?, ?, ?)";
@@ -180,17 +198,30 @@ class Dbh
     }
 
     /**
-     * Update a field in a table with a given value
-     *
      * @param int $id current user -> $_SESSION["Id"];
      * @param string $tableName table name
      * @param string $fieldName table column name to update
-     * @param $toUpdate
+     * @param string $toUpdate
      * @return int|array|null
      */
-    public function updateData(int $id, string $tableName, string $fieldName, $toUpdate): int|array|null
+    public function updateData(int $id, string $tableName, string $fieldName, string $toUpdate): int|array|null
     {
         $where = "`Id` = $id";
+        $res = $this->execute("UPDATE `$tableName` SET $fieldName = '$toUpdate' WHERE $where");
+        return UtilsFunctions::checkResponse($res) ? $res : null;
+    }
+
+    /**
+     * Update a field in a table with a given value
+     *
+     * @param string $tableName
+     * @param string $fieldName
+     * @param string $toUpdate
+     * @param string $where
+     * @return array|int|string|null
+     */
+    public function updateDateWithWhere(string $tableName, string $fieldName, string $toUpdate, string $where): array|int|string|null
+    {
         $res = $this->execute("UPDATE `$tableName` SET $fieldName = '$toUpdate' WHERE $where");
         return UtilsFunctions::checkResponse($res) ? $res : null;
     }
@@ -267,12 +298,22 @@ class Dbh
         $this->execute("DELETE FROM $tableName WHERE $where");
     }
 
+    /**
+     * Get all categories
+     *
+     * @return array
+     */
     public function getCategories() : array
     {
-        $table = "Categoria";
-        return $this->execute("SELECT * FROM $table");
+        return $this->execute("SELECT * FROM Categoria");
     }
 
+    /**
+     * Get product by id
+     *
+     * @param $id
+     * @return array
+     */
     public function getProductById($id) : array
     {
         return $this->execute("SELECT * FROM Prodotto 
@@ -339,34 +380,46 @@ class Dbh
         return $this->execute($query);
     }
 
-    public function loadArticles(): string|int|array
-    {
-        $query = "SELECT * FROM `Articolo`";
-        return $this->execute($query);
-    }
-
+    /**
+     * Get all warehouses
+     *
+     * @return string|int|array
+     */
     public function getWarehouses(): string|int|array
     {
-        $query = "SELECT * FROM `Magazzino`";
-        return $this->execute($query);
+        return $this->execute("SELECT * FROM `Magazzino`");
     }
 
+    /**
+     * Get all variations
+     *
+     * @return string|int|array
+     */
     public function getVariations(): string|int|array
     {
-        $query = "SELECT * FROM `Variazione`";
-        return $this->execute($query);
+        return $this->execute("SELECT * FROM `Variazione`");
     }
 
+    /**
+     * Get all products
+     *
+     * @return array|int|string
+     */
     public function getProducts(): array|int|string
     {
-        $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
-        return $this->execute($query);
+        return $this->execute("SELECT * FROM `Prodotto` WHERE Id != 1");
     }
 
+    /**
+     * Get all products sorted by sortingMode
+     *
+     * @param $sortingMode
+     * @return array|int|string
+     */
     public function getProductsWithSortingMode($sortingMode): array|int|string
     {
         $query = "";
-        if (empty($query)) {
+        if (empty($sortingMode)) {
             $sortingMode = SORT_MODE_DEFAULT;
         }
         switch ($sortingMode) {
@@ -392,27 +445,41 @@ class Dbh
                 $query = "SELECT * FROM `Prodotto` WHERE Id != 1 ORDER BY Nome DESC";
                 break;
         }
-        echo '<pre>';
-        echo "query: " . $query . '</br>';
-        echo '</pre>';
         return $this->execute($query);
     }
 
+    /**
+     * Get articles by product id
+     *
+     * @param $productId
+     * @return array|int|string
+     */
     public function getArticlesByProductId($productId): array|int|string
     {
         $query = "SELECT * FROM `".ARTICOLO."` WHERE `".PRODOTTO_ID."` = ".$productId;
-        //debug
-        //echo "query get article by product: ".$query."</br>";
-
         return $this->execute($query);
     }
 
+    /**
+     * Get articles by product id
+     *
+     * @param $articleId
+     * @return array|int|string
+     */
     public function getArticleConfigurations($articleId): array|int|string
     {
         $query = "SELECT * FROM `".CONFIGURAZIONE_VARIAZIONE."` WHERE `".ARTICOLO_ID."` = ".$articleId;
         return $this->execute($query);
     }
 
+    /**
+     * Add article in cart
+     *
+     * @param $quantity
+     * @param $cartId
+     * @param $articleId
+     * @return array|int|string
+     */
     public function addArticleInCart($quantity, $cartId, $articleId): array|int|string
     {
         $queryInsertArticleInCart = "INSERT INTO `Articolo_in_carrello` (Quantità, Carrello_id, Articolo_id, Status)
@@ -424,6 +491,33 @@ class Dbh
             STATUS_MODIFIED_DATA);
     }
 
+    public function removeArticleInCart($quantity, $cartId, $articleId): array|int|string
+    {
+        $res = 0;
+        $where = "Carrello_id = ' . $cartId . 'AND Articolo_id = " . $articleId;
+        if ($quantity == 1) {
+            $output = $this->execute("DELETE FROM `Articolo_in_carrello` WHERE " . $where);
+            if ($output > 0) {
+                $res = 1;
+            }
+        } else if ($quantity > 1) {
+            $output = $this->updateDateWithWhere(ARTICOLO_IN_CARRELLO, QUANTITA, $quantity-1, $where);
+            if ($output > 0) {
+                $res = 1;
+            }
+        } else {
+            echo "Error";
+        }
+        return $res;
+    }
+
+    /**
+     * Add product in wishlist
+     *
+     * @param $wishlistId
+     * @param $productId
+     * @return array|int|string
+     */
     public function addProductInWishlist($wishlistId, $productId): array|int|string
     {
         $queryInsertProductInWishlist= "INSERT INTO `Prodotto_in_raccolta` (Raccolta_id, Prodotto_id, Status)
@@ -434,12 +528,15 @@ class Dbh
             STATUS_MODIFIED_DATA);
     }
 
+    /**
+     * Get all product by seller
+     *
+     * @param $userId
+     * @return array
+     */
     public function getAllProductsBySeller($userId) : array
     {
         $queryProductsIds = "SELECT DISTINCT `".PRODOTTO_ID."` FROM `".ARTICOLO."` WHERE `".UTENTE_ID."` = ".$userId;
-        //debug
-        //echo "query products ids: ".$queryProductsIds."</br>";
-
         $productIds = $this->execute($queryProductsIds);
         $products = array();
         foreach ($productIds as $productId){
@@ -479,6 +576,7 @@ class Dbh
     /**
      * Get warehouse's article by article id
      * @param $articleId
+     * @param $warehouseId
      * @return mixed|string|null
      */
     public function getWarehouseArticle($articleId, $warehouseId): mixed
