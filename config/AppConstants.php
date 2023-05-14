@@ -67,6 +67,7 @@ const ID_UNSET = 1;
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";
+const RECENSIONE = "Recensione";
 const CARRELLO = "Carrello";
 const CATEGORIA = "Categoria";
 const CLAIM = "Claim";
@@ -81,6 +82,8 @@ const VARIAZIONE = "Variazione";
 const ARTICOLO_IN_CARRELLO = "Articolo_in_carrello";
 const FORMA_DI_PAGAMENTO = "Forma_di_pagamento";
 const ARTICOLO_IN_MAGAZZINO = "Articolo_in_magazzino";
+const ORDINE = "Ordine";
+const DETTAGLIO_ORDINE = "Dettaglio_ordine";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID
@@ -138,7 +141,7 @@ const WHISLIST_STRING = "whislist";
 const TOTALE_ORDINE = "Tot_ordine";
 const DATA_ORDINE = "Data_ordine";
 const METRI_CUBI = "Metri_cubi";
-const CURRENT_PRODUCT_PAGE_ID = "";
+
 
 // SORT MODE
 const SORT_MODE_DEFAULT = 0;
@@ -146,3 +149,11 @@ const SORT_MODE_PRICE_ASC = 1;
 const SORT_MODE_PRICE_DESC = 2;
 const SORT_MODE_NAME_ASC = 3;
 const SORT_MODE_NAME_DESC = 4;
+
+
+// QUANTITY_VALUE
+const QUANTITY_1 = 1;
+const QUANTITY_2 = 2;
+const QUANTITY_3 = 3;
+const QUANTITY_4 = 4;
+const QUANTITY_5 = 5;
