@@ -78,6 +78,16 @@ class Dbh
         }
     }
 
+    public function isInsertSuccessful($tableName, $recordId): bool
+    {
+        $query = "SELECT COUNT(*) AS count FROM $tableName WHERE Id = " . $recordId;
+        $result = $this->execute($query);
+        if ($result && $result['count'] > 0) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Check mail validity
      *

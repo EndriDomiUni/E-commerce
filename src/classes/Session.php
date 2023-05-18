@@ -397,38 +397,34 @@ class Session extends Dbh
             || $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_PRO_DESC) {
 
             $where = "Carrello_id = ". $cartId . " AND Articolo_id != 1";
-            $query = "SELECT Articolo_id FROM Articolo_in_carrello WHERE $where";
+            $query = "SELECT * FROM Articolo_in_carrello WHERE $where";
             return parent::execute($query); // should return an array
         }
         return CARRELLO_UNSET;
     }
 
-    public function addSingleItemInOrder($orderId): array|int|string
+    public function addSingleItemInOrder($orderId): bool
     {
-        $responseList = [];
-        $articles = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
-        if (!empty($articles)) {
-            foreach ($articles as $article) {
-                for ($i = 0; $i < $article[QUANTITA]; $i++) {
-                    $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                    VALUES (?, ?, ?, ?)";
+        $result = false;
+        $articlesInCart = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
+        foreach ($articlesInCart as $article) {
+            $quantity = $article[QUANTITA];
+            $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                VALUES (?, ?, ?, ?)";
 
-                    $res = parent::insertData($query,
-                        ORDER_DETAILS_TYPE_STANDARD, // hardcoded
-                        $article[ARTICOLO_ID],
-                        $orderId,
-                        STATUS_INTACT_DATA
-                    );
-
-                    if (UtilsFunctions::checkResponse($res)) {
-                        $responseList[] = $res;
-                    }
-                }
+            for ($i = 0; $i < $quantity; $i++) {
+                $res = parent::insertData($query,
+                    ORDER_DETAILS_TYPE_STANDARD,
+                    $article[ARTICOLO_ID],
+                    $orderId,
+                    STATUS_INTACT_DATA
+                );
+                $result = parent::isInsertSuccessful(DETTAGLIO_ORDINE, $res);
             }
-            return $responseList;
         }
-        return 0;
+        return $result;
     }
+
 
     public function removeArticlesInCart() {
         parent::deleteRecord(ARTICOLO_IN_CARRELLO, "Carrello_id = " . $this->getCurrentUser()[CARRELLO_ID]);

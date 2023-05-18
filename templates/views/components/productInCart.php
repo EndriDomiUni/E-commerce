@@ -29,11 +29,7 @@
     .card-text {
         margin-bottom: 5px;
     }
-
-    .form-select {
-        width: 70px;
-    }
-
+    
     .card-footer {
         background-color: #f8f8f8;
         padding: 5px;
