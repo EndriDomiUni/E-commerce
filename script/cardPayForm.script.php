@@ -23,7 +23,7 @@ if (UtilsFunctions::issetSessionid()) {
             ];
 
             $response = $session->insertCardPayModInformation($params);
-            UtilsFunctions::checkResponse($response) ? header("Location: index.php") : null;
+            UtilsFunctions::checkResponse($response) ? header("Location: account.php") : null;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
