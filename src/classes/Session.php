@@ -282,11 +282,9 @@ class Session extends Dbh
         $total = 0.00;
         $articlesInCart = $this->loadArticlesInCart($this->getCurrentUser()[CARRELLO_ID]);
         foreach ($articlesInCart as $articleInCart) {
-            $articleId = $articleInCart[ARTICOLO_ID];
-            $whereArticle = "Id = " . $articleId;
-            $article = $this->getRecord(ARTICOLO, $whereArticle);
+            $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCart[ARTICOLO_ID]);
             if ($article !== null) {
-                $total = $total + floatval($article[PREZZO]);
+                $total = $total + (floatval($article[PREZZO]) * $articlesInCart[QUANTITA]);
             }
         }
         return $total;
