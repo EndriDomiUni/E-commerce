@@ -18,19 +18,20 @@ if (isset($_POST["checkout"])) {
         ];
 
         // create order
-        $resp = $session->addOrder($params);
+        $newOrderId = $session->addOrder($params);
 
         // on success
-        if ($resp > 0) {
+        if ($newOrderId > 0) {
 
-            // add order details
-            $session->addSingleItemInOrder($resp);
+            // on success -> add order details
+            if ($session->addSingleItemInOrder($newOrderId)) {
 
-            // clear cart
-            $session->removeArticlesInCart();
+                // clear cart
+                $session->removeArticlesInCart();
 
-            // redirect
-            header("Location: orderHistory.php");
+                // redirect
+                header("Location: orderHistory.php");
+            }
         }
     } else {
         header("Location: login.php");

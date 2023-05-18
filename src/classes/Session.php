@@ -398,45 +398,41 @@ class Session extends Dbh
             || $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]) === CLAIM_USER_PRO_DESC) {
 
             $where = "Carrello_id = ". $cartId . " AND Articolo_id != 1";
-            $query = "SELECT Articolo_id FROM Articolo_in_carrello WHERE $where";
+            $query = "SELECT * FROM Articolo_in_carrello WHERE $where";
             return parent::execute($query); // should return an array
         }
         return CARRELLO_UNSET;
     }
 
-    public function addSingleItemInOrder($orderId): array|int|string
+    public function addSingleItemInOrder($orderId): bool
     {
-        $responseList = [];
-        $articles = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
-        if (!empty($articles)) {
-            foreach ($articles as $article) {
-                for ($i = 0; $i < $article[QUANTITA]; $i++) {
-                    $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                    VALUES (?, ?, ?, ?)";
+        $result = false;
+        $articlesInCart = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
+        foreach ($articlesInCart as $article) {
+            $quantity = $article[QUANTITA];
+            $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                VALUES (?, ?, ?, ?)";
 
-                    $res = parent::insertData($query,
-                        ORDER_DETAILS_TYPE_STANDARD, // hardcoded
-                        $article[ARTICOLO_ID],
-                        $orderId,
-                        STATUS_INTACT_DATA
-                    );
-
-                    if (UtilsFunctions::checkResponse($res)) {
-                        $responseList[] = $res;
-                    }
-                }
+            for ($i = 0; $i < $quantity; $i++) {
+                $res = parent::insertData($query,
+                    ORDER_DETAILS_TYPE_STANDARD,
+                    $article[ARTICOLO_ID],
+                    $orderId,
+                    STATUS_INTACT_DATA
+                );
+                $result = parent::isInsertSuccessful(DETTAGLIO_ORDINE, $res);
             }
-            return $responseList;
         }
-        return 0;
+        return $result;
     }
+
 
     public function removeArticlesInCart() {
         parent::deleteRecord(ARTICOLO_IN_CARRELLO, "Carrello_id = " . $this->getCurrentUser()[CARRELLO_ID]);
     }
 
     public function loadOrders() {
-        $paymentData = parent::getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " .$this->getCurrentUser()[ID]);
+        $paymentData = parent::getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " . $this->getCurrentUser()[ID]);
         if ($paymentData !== null) {
             $where = "Forma_di_pag_id = " . $paymentData[ID];
             $query = "SELECT * FROM Ordine WHERE $where";
@@ -518,5 +514,88 @@ class Session extends Dbh
                       AND o.Data_ordine >= ' . $startTime . '
                       AND o.Data_ordine <= ' . $endTime;
         return $this->execute($query);
+    }
+
+    /**
+     * Set status = delete
+     * @return void
+     */
+    public function deleteCurrentUser(): void
+    {
+        // set ARTICOLO
+        // with status DELETE
+        $claimType = $this->getClaimTypeFromId($this->id);
+        switch ($claimType) {
+            case CLAIM_SELLER_DESC:
+            case CLAIM_SELLER_PR0_DESC:
+                $obtainArticlesOfCurrentUser = parent::getRecord(ARTICOLO, "Utende_id = " . $this->getCurrentUser()[ID]);
+                if (!empty($obtainArticlesOfCurrentUser)) {
+                    foreach ($obtainArticlesOfCurrentUser as $article) {
+
+                        // ARTICOLO_IN_CARRELLO
+                        $articlesInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
+                        if (!empty($articlesInCart)) {
+                            foreach ($articlesInCart as $articleInCartItem) {
+                                parent::updateDateWithWhere(
+                                    ARTICOLO,
+                                    STATUS,
+                                    STATUS_DELETED_DATA,
+                                    "Articolo_id = " . $articleInCartItem[ID]);
+                            }
+                        }
+
+                        // ARTICOLO_IN_MAGAZZINO
+                        $articlesInWarehouses = parent::getRecord(ARTICOLO_IN_MAGAZZINO, "Articolo_id = " . $article[ID]);
+                        if (!empty($articlesInWarehouses)) {
+                            foreach ($articlesInWarehouses as $articlesInWarehouse) {
+                                parent::updateDateWithWhere(
+                                    ARTICOLO,
+                                    STATUS,
+                                    STATUS_DELETED_DATA,
+                                    "Articolo_id = " . $articlesInWarehouse[ID]);
+                            }
+                        }
+
+                        // CONFIGURAZIONE_VARIAZIONE
+                        $configVariations = parent::getRecord(CONFIGURAZIONE_VARIAZIONE, "Articolo_id = " . $article[ID]);
+                        if (!empty($configVariations)) {
+                            foreach ($configVariations as $configVariation) {
+                                parent::updateDateWithWhere(
+                                    ARTICOLO,
+                                    STATUS,
+                                    STATUS_DELETED_DATA,
+                                    "Articolo_id = " . $configVariation[ID]);
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+        parent::updateDateWithWhere(ARTICOLO, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+
+
+        // set ORDINE and DETTAGLIO_ORDINE
+        // with status DELETE
+        $obtainPaymentFormOfCurrentUser = parent::getRecord(FORMA_DI_PAGAMENTO, "Utende_id = " . $this->getCurrentUser()[ID]);
+        if (!empty($obtainPaymentFormOfCurrentUser)) {
+            foreach ($obtainPaymentFormOfCurrentUser as $paymentForm) {
+                $ordersOfCurrentUser = parent::getRecord(ORDINE, "Forma_di_pag_id = " . $paymentForm[ID]);
+                if (!empty($ordersOfCurrentUser)) {
+                    foreach ($ordersOfCurrentUser as $orders) {
+                        parent::updateDateWithWhere(ORDINE, STATUS, STATUS_DELETED_DATA, "Forma_di_pag_id = " . $paymentForm[ID]);
+                        parent::updateDateWithWhere(DETTAGLIO_ORDINE, STATUS, STATUS_DELETED_DATA, "Ordine_id = " . $orders[ID]);
+                    }
+                }
+            }
+        }
+
+        // set CARRELLO, FORMA_DI_PAGAMENTO, RACCOLTA, RECENSIONE, RACCOLTA, UTENTE
+        // with status DELETE
+        parent::updateDateWithWhere(CARRELLO, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(FORMA_DI_PAGAMENTO, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(RACCOLTA, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(RECENSIONE, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
+        parent::updateDateWithWhere(RACCOLTA, STATUS, STATUS_DELETED_DATA, "Id = " . $this->getCurrentUser()[CLAIM_ID]);
+        parent::updateData($this->getCurrentUser()[ID], UTENTE, STATUS, STATUS_DELETED_DATA);
     }
 }

@@ -64,12 +64,12 @@
         <div class="card-header">
             <h3>Elimina Account</h3>
         </div>
-        <form>
+        <form method="post">
             <div class="card-body">
                 <p class="mb-0">L'eliminazione dell'account è permanente e non può essere annullata.</p>
             </div>
             <div class="card-footer d-flex justify-content-end">
-                <button class="btn btn-danger ml-auto">Elimina Account</button>
+                <button class="btn btn-danger ml-auto" type="submit" name="btn-delete">Elimina Account</button>
             </div>
         </form>
     </div>

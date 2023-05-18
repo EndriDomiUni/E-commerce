@@ -182,13 +182,18 @@ require_once "UIHelper.php";
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end ">
-                        <li><a class="dropdown-item" href="./login.php">Log in</a></li>
-                        <li><a class="dropdown-item" href="./register.php">Sign up</a></li>
-                        <li><a class="dropdown-item" href="./account.php">Account</a></li>
-                        <li><a class="dropdown-item" href="./address.php">Address</a></li>
-                        <li><a class="dropdown-item" href="./cardPayForm.php">Card Pay Form</a></li>
-                        <li><a class="dropdown-item" href="./reviews.php">Reviews</a></li>
-                        <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+                        <?php
+                            if (isset($_SESSION[ID])) {
+                               echo '<li><a class="dropdown-item" href="./account.php">Account</a></li>';
+                               echo '<li><a class="dropdown-item" href="./cardPayForm.php">Forma di pagamento</a></li>';
+                               echo '<li><a class="dropdown-item" href="./address.php">Indirizzo</a></li>';
+                            } else {
+                                echo '<li><a class="dropdown-item" href="./login.php">Accedi</a></li>';
+                                echo '<li><a class="dropdown-item" href="./register.php">Registrati</a></li>';
+                            }
+                        ?>
+                        <li><a class="dropdown-item" href="./reviews.php">Recensioni</a></li>
+                        <li><a class="dropdown-item" href="./logout.php">Esci</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -212,7 +217,6 @@ require_once "UIHelper.php";
                 <!-- end user -->
             </ul>
             <!-- menu right end -->
-
         </div>
     </div>
 </nav>
@@ -223,10 +227,12 @@ require_once "UIHelper.php";
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body"  style="overflow-y:auto">
-        <?php
-            showArticlesInCart();
-        ?>
-        <a class="btn btn-outline-secondary" href="./cart.php">Vai al carello</a>
+
+        <?php showArticlesInCart(); ?>
+
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-secondary text-end" href="./cart.php">Vai al carello</a>
+        </div>
     </div>
 </div>
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
@@ -235,9 +241,11 @@ require_once "UIHelper.php";
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <?php
-            showAllArticlesInWishlist();
-        ?>
-        <a class="btn btn-outline-secondary" href="./wishlist.php">Vai alla Wishlist</a>
+
+        <?php showAllArticlesInWishlist(); ?>
+
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-secondary text-end" href="./wishlist.php">Vai alla Wishlist</a>
+        </div>
     </div>
 </div>
