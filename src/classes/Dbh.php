@@ -481,15 +481,10 @@ class Dbh
      * @param $articleId
      * @return mixed|string|null
      */
-    public function getWarehouseArticle($articleId, $warehouseId): mixed
+    public function getWarehouseArticle($articleId, $warehouseId): array
     {
         $query = ARTICOLO_ID . " = " . $articleId . " AND " . MAGAZZINO_ID . " = " . $warehouseId;
         $warehouseArticle = $this->getRecord(ARTICOLO_IN_MAGAZZINO, $query);
-        //var_dump($warehouseArticle);
-        if ($warehouseArticle !== null){
-            return $warehouseArticle;
-        } else {
-            return null;
-        }
+        return $warehouseArticle ?? [];
     }
 }

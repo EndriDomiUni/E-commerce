@@ -55,6 +55,7 @@ if (isset($_POST['article-btn-insert']))
 
         $warehouseArticleParams = [
             TAX => $tax,
+            QUANTITA => filter_var($_POST['quantity'], FILTER_SANITIZE_SPECIAL_CHARS),
             DATA_INIZIO => date("Y-m-d"),
             DATA_FINE => SCADENZA,
             ARTICOLO_ID => $articleIdResponse,
@@ -63,9 +64,6 @@ if (isset($_POST['article-btn-insert']))
 
             $warehouseArticleResponse = $session->addWarehouseArticle($warehouseArticleParams);
             if ($warehouseArticleResponse) {
-                //debug
-                //echo "Articolo in magazzino: " . $warehouseArticleResponse . "</br>";
-
                 header("Location: dashboard.php");
             } else {
                 echo "Errore inserimento articolo in magazzino </br>";

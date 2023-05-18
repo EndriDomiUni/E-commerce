@@ -338,12 +338,13 @@ class Session extends Dbh
 
     public function addWarehouseArticle($params) : int
     {
-        $query = "INSERT INTO Articolo_in_magazzino (Tassa, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
-            VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO Articolo_in_magazzino (Tassa, Quantità, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status )
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
         //echo "sono qui";
 
         $res = parent::insertData($query,
             $params[TAX],
+            $params[QUANTITA],
             $params[DATA_INIZIO],
             $params[DATA_FINE],
             $params[ARTICOLO_ID],
@@ -443,12 +444,14 @@ class Session extends Dbh
         }
     }
 
+
     public function loadOrderDetails($orderId): array|int|string
     {
         $where = "Ordine_id = " . $orderId;
         $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
         return parent::execute($query);
     }
+
     /**
      * Get total quantity of articles in stock
      * @param int $warehouseId
@@ -461,7 +464,8 @@ class Session extends Dbh
 
         foreach($articles as $article) {
             $articleInWarehouse = parent::getWarehouseArticle($article[ID], $warehouseId);
-            if ($articleInWarehouse !== null) {
+            if (count($articleInWarehouse) > 0) {
+                //var_dump($articleInWarehouse);
                 $quantity += $articleInWarehouse[QUANTITA];
             }
         }
@@ -479,9 +483,13 @@ class Session extends Dbh
         $articles = parent::getArticlesBySellerId($_SESSION[ID]);
         foreach ($articles as $article) {
             $articleInWarehouse = parent::getWarehouseArticle($article[ID], $warehouseId);
-            if ($articleInWarehouse !== null) {
-                $articlesInStock[] += $articleInWarehouse;
+
+            if (count($articleInWarehouse) > 0) {
+
+                //var_dump($articleInWarehouse);
+                $articlesInStock[] = $articleInWarehouse;
             }
+
             return $articlesInStock;
         }
         return [];

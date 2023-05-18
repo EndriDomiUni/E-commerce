@@ -8,12 +8,12 @@ require_once "./src/classes/Session.php";
 
 $session = new Session($_SESSION[ID]);
 $articlesInStock = $session->getArticlesInStockByWarehouse($_SESSION[MAGAZZINO_ID]);
+
 $products = $session->getAllProductsBySeller($session->getCurrentUser()[ID]);
 
 foreach ($products as $product)
 {
     //TODO: controllare da qui
-
     $articles = $session->getArticlesByProductId($product[0][ID]);
     $articlesQuantity = 0;
     foreach ($articles as $article)
@@ -22,6 +22,8 @@ foreach ($products as $product)
         {
             if ($articleInStock[ARTICOLO_ID] == $article[ID])
             {
+                var_dump($articleInStock);
+
                 $articlesQuantity += $articleInStock[QUANTITA];
             }
         }
