@@ -244,7 +244,7 @@ require_once "UIHelper.php";
 
         <?php showAllArticlesInWishlist(); ?>
 
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end py-8">
             <a class="btn btn-outline-secondary text-end" href="./wishlist.php">Vai alla Wishlist</a>
         </div>
     </div>
