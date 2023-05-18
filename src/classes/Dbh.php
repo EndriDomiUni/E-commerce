@@ -437,16 +437,16 @@ class Dbh
                 $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
                 break;
             case SORT_MODE_PRICE_ASC:
-                $query = "SELECT p.*
+                $query = "SELECT DISTINCT p.*
                             FROM Prodotto p
                             JOIN Articolo a ON p.Id = a.Prodotto_id
-                          ORDER BY a.prezzo ASC;";
+                          ORDER BY a.prezzo ASC";
                 break;
             case SORT_MODE_PRICE_DESC:
-                $query = "SELECT p.*
+                $query = "SELECT DISTINCT p.*
                             FROM Prodotto p
                             JOIN Articolo a ON p.Id = a.Prodotto_id
-                          ORDER BY a.prezzo DESC;";
+                          ORDER BY a.prezzo DESC";
                 break;
             case SORT_MODE_NAME_ASC:
                 $query = "SELECT * FROM `Prodotto` WHERE Id != 1 ORDER BY Nome ASC";
