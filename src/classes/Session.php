@@ -284,7 +284,7 @@ class Session extends Dbh
         foreach ($articlesInCart as $articleInCart) {
             $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCart[ARTICOLO_ID]);
             if ($article !== null) {
-                $total = $total + (floatval($article[PREZZO]) * $articlesInCart[QUANTITA]);
+                $total = $total + (floatval($article[PREZZO] * $articleInCart[QUANTITA]));
             }
         }
         return $total;

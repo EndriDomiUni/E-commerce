@@ -82,7 +82,9 @@ class Dbh
     {
         $query = "SELECT COUNT(*) AS count FROM $tableName WHERE Id = " . $recordId;
         $result = $this->execute($query);
-        if ($result && $result['count'] > 0) {
+
+        var_dump($result);
+        if ($result && $result[0]['count'] > 0) {
             return true;
         }
         return false;
@@ -501,24 +503,9 @@ class Dbh
             STATUS_MODIFIED_DATA);
     }
 
-    public function removeArticleInCart($quantity, $cartId, $articleId): array|int|string
+    public function removeArticleInCart($articleInCartId): array|int|string
     {
-        $res = 0;
-        $where = "Carrello_id = ' . $cartId . 'AND Articolo_id = " . $articleId;
-        if ($quantity == 1) {
-            $output = $this->execute("DELETE FROM `Articolo_in_carrello` WHERE " . $where);
-            if ($output > 0) {
-                $res = 1;
-            }
-        } else if ($quantity > 1) {
-            $output = $this->updateDateWithWhere(ARTICOLO_IN_CARRELLO, QUANTITA, $quantity-1, $where);
-            if ($output > 0) {
-                $res = 1;
-            }
-        } else {
-            echo "Error";
-        }
-        return $res;
+        return $this->execute("DELETE FROM `Articolo_in_carrello` WHERE " . " Id = " . $articleInCartId);
     }
 
     /**
@@ -599,5 +586,9 @@ class Dbh
         } else {
             return null;
         }
+    }
+
+    public function getProductsByName($productName) {
+        return $this->getRecord(PRODOTTO, "Nome = " . $productName);
     }
 }

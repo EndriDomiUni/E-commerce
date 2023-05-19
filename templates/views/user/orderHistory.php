@@ -62,15 +62,15 @@
                                 $whereProductId = "Id = " . $article[PRODOTTO_ID];
                                 $product = $session->getRecord(PRODOTTO, $whereProductId);
                                 if ($product !== null) {
-                                    echo '<div class="card">
-                                          <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img-top" alt="Product Image">
-                                          <div class="card-body">
-                                            <h5 class="card-title">' . $product[NOME] . '</h5>
-                                            <p class="card-text">' . $product[DESCRIZIONE] . '</p>
-                                            <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
-                                            <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
-                                         class="btn btn-primary text-end">Portami al prodotto</a>
-                                          </div>
+                                    echo '<div class="card my-2">
+                                              <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img-top" alt="Product Image" height="200px" width="200px">
+                                              <div class="card-body">
+                                                <h5 class="card-title">' . $product[NOME] . '</h5>
+                                                <p class="card-text">' . $product[DESCRIZIONE] . '</p>
+                                                <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
+                                                <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
+                                                     class="btn btn-primary text-end">Portami al prodotto</a>
+                                              </div>
                                         </div>';
                                 }
                             }

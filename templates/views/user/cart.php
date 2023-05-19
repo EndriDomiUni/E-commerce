@@ -65,7 +65,7 @@ require_once "UIHelper.php";
                         echo '
                         </div>
                         <div class="col-md-2">
-                            <h4>Quantità: ' . $articleInCart[QUANTITA] . ' </h4>
+                            <h4>Quantità:  </h4>
                             <select class="form-select" aria-label="Default select example">                             
                                 <option  selected value="1">1</option>
                                 <option value="2">2</option>

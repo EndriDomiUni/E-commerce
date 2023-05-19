@@ -13,6 +13,7 @@ function showArticlesInCart(): void
 {
     if (isset($_SESSION["Id"])) {
         $session = new Session($_SESSION["Id"]);
+        require("./script/productCartManager.script.php");
         require './templates/views/components/productInCart.php';
     } else {
         echo '<div class="col">
