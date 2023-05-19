@@ -11,13 +11,11 @@ if (isset($_SESSION[ID])) {
     $articlesInCarts = $session->loadArticlesInCart($session->getCurrentUser()[CARRELLO_ID]);
     foreach ($articlesInCarts as $article) {
 
-        // on click
+        // start remove on click
         if (isset($_POST['btn-remove-'. $article[ID] . '-from-cart'])) {
-
-            // start remove
             $session->removeArticleInCart($article[ID]);
-            // header("Location: index.php");
-        } else {
+        }
+        else {
            echo  $article[ID];
         }
     }

@@ -284,6 +284,7 @@ class Dbh
             : null;
     }
 
+
     /**
      * Get all records
      * @param string $tableName
@@ -588,7 +589,21 @@ class Dbh
         }
     }
 
-    public function getProductsByName($productName) {
-        return $this->getRecord(PRODOTTO, "Nome = " . $productName);
+    public function getProductsByName($productName): array|int|string
+    {
+        $query = "SELECT * FROM Prodotto WHERE Nome LIKE '%" . $productName . "%'";
+        return $this->execute($query);
+    }
+
+    public function getProductByNameAndPriority($productName) {
+        $query = "SELECT *, 
+                    CASE Claim.Descrizione WHEN `seller_pro` THEN 1 ELSE 0 as alias
+                    FROM Prodotto
+                    JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id
+                    JOIN Utente ON Utente.Id = Articolo.Utente_id
+                    JOIN Claim ON Claim.Id = Utente.Claim_id
+                    WHERE Prodotto.Nome LIKE '%" . $productName . "%'
+                    ORDER BY Nome DESC, alias";
+        return $this->execute($query);
     }
 }

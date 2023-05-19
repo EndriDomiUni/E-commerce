@@ -42,17 +42,17 @@ const ERROR_STR = "error";
 const CLAIM_GUEST_DESC = "guest";
 const CLAIM_USER_DESC = "user";
 const CLAIM_SELLER_DESC = "seller";
-
 const CLAIM_USER_PRO_DESC = "user_pro";
 const CLAIM_SELLER_PR0_DESC = "seller_pro";
+
 
 // STATUS --------------------------------------------------------------
 const INACTIVE = 0;
 const ACTIVE = 1;
-
 const STATUS_INTACT_DATA = 0;
 const STATUS_MODIFIED_DATA = 1;
 const STATUS_DELETED_DATA = 2;
+
 
 // UNSET ---------------------------------------------------------------
 const ADDRESS_UNSET = 1;
@@ -64,6 +64,7 @@ const CONFIGURATION_VARIATION_UNSET = 1;
 const CARRELLO_UNSET = 1;
 const RACCOLTA_UNSET = 0;
 const ID_UNSET = 1;
+
 
 // TABLE NAME ----------------------------------------------------------
 const UTENTE = "Utente";

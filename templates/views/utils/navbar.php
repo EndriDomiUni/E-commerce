@@ -69,9 +69,9 @@ require_once "UIHelper.php";
             <!-- end menu left -->
 
             <!-- start search -->
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+            <form class="d-flex" role="search" method="post">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn btn-outline-primary" type="submit" name="btn-search">Search</button>
             </form>
             <!-- end search -->
 
