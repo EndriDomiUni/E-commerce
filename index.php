@@ -17,3 +17,4 @@ require_once("./templates/views/user/index.php");
 $mainContent = ob_get_clean();
 $title = "Homepage";
 require_once("./templates/base.php");
+$_GET['id'] = "";

@@ -26,12 +26,12 @@ ini_set('display_errors', 1);
     <?php
         if (isset($_GET['id'])) {
             $dbh = new Dbh();
-            $reviewsFromProduct = $dbh->getReviewsFromProductId($_GET['id']);
+            // $reviewsFromProduct = $dbh->getReviewsFromProductId($_GET['id']);
+            $reviewsFromProduct = [];
 
             if (!empty($reviewsFromProduct)) {
                 foreach ($reviewsFromProduct as $review) {
                     $user = $dbh->getRecord(UTENTE, "Id = " . $review[UTENTE_ID]);
-
                     echo '
                 <div class="row">
                     <div class="col-md-6">
