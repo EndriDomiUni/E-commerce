@@ -613,7 +613,16 @@ class Dbh
                     JOIN Claim ON Claim.Id = Utente.Claim_id 
                     WHERE Prodotto.Nome LIKE '%" . $productName . "%' 
                     ORDER BY alias DESC, 'Nome' DESC;";
+        return $this->execute($query);
+    }
 
+    public function getReviewsFromProductId($productId): array|int|string
+    {
+        $query = "SELECT Prodotto.Id as Id 
+                    FROM Recensione, Prodotto 
+                    JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id
+                    JOIN Dettaglio_ordine ON Articolo.Id = Dettaglio_ordine.Articolo_id
+                    WHERE Prodotto.Id = " . $productId;
         return $this->execute($query);
     }
 }

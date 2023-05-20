@@ -70,6 +70,10 @@
                                                 <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
                                                 <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
                                                      class="btn btn-primary text-end">Portami al prodotto</a>
+                                                <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
+                                                     class="btn btn-primary text-end">Effettua il reso</a>    
+                                                <a href="./addProductReview.php?id=' . $product[ID] . '&orderDetailId=' . $orderDetail[ID] . '" target="_self" 
+                                                     class="btn btn-primary text-end">Aggiungi recensione</a>    
                                               </div>
                                         </div>';
                                 }
@@ -82,7 +86,6 @@
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
                                           </div>
                                         </div>
                                       </div>

@@ -1,3 +1,12 @@
+<?php
+
+// These two lines are used for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+?>
+
+
 <style>
     .avatar {
         width: 50px;
@@ -11,30 +20,51 @@
     }
 </style>
 
-<div class="container">
+<div class="container my-5">
     <h1>Recensioni del Prodotto</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="avatar">A</div>
-                        <h5 class="card-title ml-2">Nome Utente</h5>
-                    </div>
-                    <div class="card-text">
-                          <span class="star-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                          </span>
-                        <p class="mb-0">Descrizione della recensione.</p>
-                        <small class="text-muted">Scritta il 12 maggio 2023, 14:30</small>
+
+    <?php
+        if (isset($_GET['id'])) {
+            $dbh = new Dbh();
+            $reviewsFromProduct = $dbh->getReviewsFromProductId($_GET['id']);
+
+            if (!empty($reviewsFromProduct)) {
+                foreach ($reviewsFromProduct as $review) {
+                   echo "reviews user id: " . $review[UTENTE_ID];
+                   $user = [NOME => ""];
+                   var_dump($review);
+                    echo '
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card py-1">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="avatar">'. substr($user[NOME], 0, 1) .'</div>
+                                    <h5 class="card-title ml-2 mx-1">' . $user[NOME] . '</h5>
+                                </div>
+                                <div class="card-text">
+                                      <span class="star-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                      </span>
+                                    <p class="mb-0">' . $review[COMMENTO] . '</p>
+                                    <small class="text-muted">Scritta il: ' . $review['Timestamp'] . '</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Aggiungi altre recensioni qui -->
-    </div>
+                ';
+                }
+            } else {
+                echo '<div>Non esiste ancora nessuna recensione per questo prodotto.</div>';
+            }
+
+        } else {
+            echo '<div>Non esiste ancora nessuna recensione per questo prodotto.</div>';
+        }
+    ?>
 </div>

@@ -15,8 +15,5 @@ if (isset($_SESSION[ID])) {
         if (isset($_POST['btn-remove-'. $article[ID] . '-from-cart'])) {
             $session->removeArticleInCart($article[ID]);
         }
-        else {
-           echo  $article[ID];
-        }
     }
 }

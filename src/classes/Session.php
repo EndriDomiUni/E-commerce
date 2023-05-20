@@ -588,4 +588,18 @@ class Session extends Dbh
         parent::updateDateWithWhere(RACCOLTA, STATUS, STATUS_DELETED_DATA, "Id = " . $this->getCurrentUser()[CLAIM_ID]);
         parent::updateData($this->getCurrentUser()[ID], UTENTE, STATUS, STATUS_DELETED_DATA);
     }
+
+    public function addReview($orderDetailsId, $params): int|array|string
+    {
+        $queryInsertReview = "INSERT INTO `Recensione` (Valutazione, Commento, Dettaglio_ordine_id, Utente_id, Status)
+                                VALUES (?, ?, ?, ?, ?) ";
+        $res = $this->insertData($queryInsertReview,
+            $params[VALUTAZIONE],
+            $params[COMMENTO],
+            $orderDetailsId,
+            $this->getCurrentUser()[ID],
+            STATUS_INTACT_DATA);
+        var_dump($res);
+        return $res;
+    }
 }

@@ -100,6 +100,7 @@ const CATEGORIA_ID = "Categoria_id";
 const VARIAZIONE_ID = "Variazione_id";
 const MAGAZZINO_ID = "Magazzino_id";
 const RACCOLTA_ID = "Raccolta_id";
+const DETTAGLIO_ORDINE_ID = "Dettaglio_ordine_id";
 
 
 // ORDER DETAILS
@@ -142,6 +143,8 @@ const WHISLIST_STRING = "whislist";
 const TOTALE_ORDINE = "Tot_ordine";
 const DATA_ORDINE = "Data_ordine";
 const METRI_CUBI = "Metri_cubi";
+const VALUTAZIONE = "Valutazione";
+const COMMENTO = "Commento";
 
 
 // SORT MODE
