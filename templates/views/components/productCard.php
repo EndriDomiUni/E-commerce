@@ -37,7 +37,7 @@
                 && $currentProductDescription !== null && $currentProductPrice !== null) {
 
                 if (!isset($_SESSION[ID])) {
-                    echo ' <div class="card mb-3" style="max-width: 540px; min-width: 250px; width: 400px">
+                    echo ' <div class="card mb-3">
                               <div class="row no-gutters">
                                <div class="col-md-4">';
                                 echo '<a href="./productPage.php?id='. $product[ID] . '" target="_self">';

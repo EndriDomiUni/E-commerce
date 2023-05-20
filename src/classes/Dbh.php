@@ -595,15 +595,23 @@ class Dbh
         return $this->execute($query);
     }
 
-    public function getProductByNameAndPriority($productName) {
-        $query = "SELECT *, 
-                    CASE Claim.Descrizione WHEN `seller_pro` THEN 1 ELSE 0 as alias
-                    FROM Prodotto
-                    JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id
-                    JOIN Utente ON Utente.Id = Articolo.Utente_id
-                    JOIN Claim ON Claim.Id = Utente.Claim_id
-                    WHERE Prodotto.Nome LIKE '%" . $productName . "%'
-                    ORDER BY Nome DESC, alias";
+    public function getProductByNameAndPriority($productName): array|int|string
+    {
+        $query = "SELECT Prodotto.Id as Id, 
+                    Prodotto.Immagine as Immagine, 
+                    Prodotto.Descrizione as Descrizione, 
+		            Prodotto.Nome as Nome,
+                    CASE Claim.Descrizione 
+                    WHEN 'seller_pro' THEN 1 
+                        ELSE 0 END 
+                        as alias 
+                    FROM Prodotto 
+                    JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id 
+                    JOIN Utente ON Utente.Id = Articolo.Utente_id 
+                    JOIN Claim ON Claim.Id = Utente.Claim_id 
+                    WHERE Prodotto.Nome LIKE '%" . $productName . "%' 
+                    ORDER BY alias DESC, 'Nome' DESC;";
+
         return $this->execute($query);
     }
 }

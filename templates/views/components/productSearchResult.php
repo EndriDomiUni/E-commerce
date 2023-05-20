@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container my-2">
     <section>
         <?php
 
@@ -12,7 +12,8 @@
             $dbh = new Dbh();
 
             // get prod by name
-            $products = $dbh->getProductsByName($_SESSION['search']);
+            $products = $dbh->getProductByNameAndPriority($_SESSION['search']);
+
             $productsCounter = 0;
             foreach ($products as $product) {
                 if ($productsCounter === 0) {
@@ -37,7 +38,7 @@
                     && $currentProductDescription !== null && $currentProductPrice !== null) {
 
                     if (!isset($_SESSION[ID])) {
-                        echo ' <div class="card mb-3" style="max-width: 540px; min-width: 250px; width: 400px">
+                        echo ' <div class="card mb-3"">
                               <div class="row no-gutters">
                                <div class="col-md-4">';
                         echo '<a href="./productPage.php?id='. $product[ID] . '" target="_self">';
