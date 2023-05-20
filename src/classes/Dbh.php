@@ -618,7 +618,7 @@ class Dbh
 
     public function getReviewsFromProductId($productId): array|int|string
     {
-        $query = "SELECT Prodotto.Id as Id 
+        $query = "SELECT *
                     FROM Recensione, Prodotto 
                     JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id
                     JOIN Dettaglio_ordine ON Articolo.Id = Dettaglio_ordine.Articolo_id

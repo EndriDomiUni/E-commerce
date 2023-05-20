@@ -30,9 +30,8 @@ ini_set('display_errors', 1);
 
             if (!empty($reviewsFromProduct)) {
                 foreach ($reviewsFromProduct as $review) {
-                   echo "reviews user id: " . $review[UTENTE_ID];
-                   $user = [NOME => ""];
-                   var_dump($review);
+                    $user = $dbh->getRecord(UTENTE, "Id = " . $review[UTENTE_ID]);
+
                     echo '
                 <div class="row">
                     <div class="col-md-6">
