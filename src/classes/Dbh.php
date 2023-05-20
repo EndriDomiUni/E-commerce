@@ -202,9 +202,11 @@ class Dbh
             } else {
                 $email = $params[EMAIL];
                 $pass = $params[PASSWORD];
-                $where = "Email = '$email' AND Password = '$pass'";
+                $where = "Email = '$email' AND Password = '$pass' AND Status != 2";
                 $response = $this->execute("SELECT * FROM `Utente` WHERE $where");
-                return UtilsFunctions::checkResponse($response[0][ID]) ? $response[0][ID] : null;
+                return !empty($response) && UtilsFunctions::checkResponse($response[0][ID])
+                    ? $response[0][ID]
+                    : null;
             }
         }
     }
