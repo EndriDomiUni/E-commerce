@@ -1,4 +1,4 @@
-<section class="container my-5">
+<div class="container my-5">
     <?php
 
     // queste due linee fungono da debugger
@@ -21,10 +21,10 @@
                 <div class="card mb-3 center-block d-flex justify-content-center" style="max-width: 540px;">
                     <!--<div class="row no-gutters">-->
                         <div class="card-body">
-                            <h5 class="card-title">' . $address[CITTA] . '</h5>
+                            <h5 class="card-title"><strong>' . $address[CITTA] . '</strong></h5>
                             <h6 class="card-subtitle">' . $address[VIA] . ', ' . $address[NUMERO_CIVICO] . '</h6>
                             <p class="card-text">Dimensione metri cubi: ' . $warehouse[METRI_CUBI] . '</p>
-                            <p class="card-text">Numero articoli: ' . $articlesQuantity . '</p>
+                            <p class="card-text"><strong>Giacenze articoli: ' . $articlesQuantity . '</strong></p>
                         </div>
                         <div class="card-footer d-flex justify-content-end">
                             <style>
@@ -63,4 +63,4 @@
                 ';
     }
     ?>
-</section>
+</div>

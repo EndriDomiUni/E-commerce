@@ -479,16 +479,12 @@ class Session extends Dbh
         $articles = parent::getArticlesBySellerId($_SESSION[ID]);
         foreach ($articles as $article) {
             $articleInWarehouse = parent::getWarehouseArticle($article[ID], $warehouseId);
-
             if (count($articleInWarehouse) > 0) {
-
                 //var_dump($articleInWarehouse);
                 $articlesInStock[] = $articleInWarehouse;
             }
-
-            return $articlesInStock;
         }
-        return [];
+        return $articlesInStock;
     }
 
     public function getArticlesInStockByArticle(int $articleId) : array
@@ -514,6 +510,13 @@ class Session extends Dbh
                       AND o.Data_ordine >= ' . $startTime . '
                       AND o.Data_ordine <= ' . $endTime;
         return $this->execute($query);
+    }
+
+
+    public function getOptionById() : array
+    {
+        $query = "";
+        return [];
     }
 
     /**

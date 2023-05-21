@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Mag 18, 2023 alle 16:41
+-- Creato il: Mag 21, 2023 alle 10:45
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `Articolo` (
   PRIMARY KEY (`Id`),
   KEY `Prodotto_id` (`Prodotto_id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo`
@@ -74,7 +74,15 @@ INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `T
 (36, '1', 41, 20, 1, '2023-05-18 14:33:38'),
 (37, '1', 41, 20, 1, '2023-05-18 14:34:53'),
 (38, '1', 41, 20, 1, '2023-05-18 14:36:32'),
-(39, '15', 41, 20, 1, '2023-05-18 14:39:00');
+(39, '15', 41, 20, 1, '2023-05-18 14:39:00'),
+(40, '15', 41, 20, 1, '2023-05-18 14:41:49'),
+(41, '12', 41, 20, 1, '2023-05-18 14:41:59'),
+(42, '12', 41, 21, 1, '2023-05-18 14:43:54'),
+(43, '12', 41, 21, 1, '2023-05-18 14:45:39'),
+(44, '15', 41, 19, 1, '2023-05-18 15:34:54'),
+(45, '20', 41, 19, 1, '2023-05-19 14:16:27'),
+(46, '15', 41, 22, 1, '2023-05-19 14:19:00'),
+(47, '10', 44, 23, 1, '2023-05-19 16:34:36');
 
 -- --------------------------------------------------------
 
@@ -92,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_carrello`
@@ -132,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Magazzino_id` (`Magazzino_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Articolo_in_magazzino`
@@ -152,7 +160,12 @@ INSERT INTO `Articolo_in_magazzino` (`Id`, `Tassa`, `Quantità`, `Data_inizio`, 
 (19, '3', 0, '2023-02-15', '2024-12-31', 30, 2, 1, '2023-02-15 10:40:20'),
 (20, '3', 0, '2023-02-15', '2024-12-31', 31, 2, 1, '2023-02-15 10:43:29'),
 (21, '3', 0, '2023-02-15', '2024-12-31', 32, 2, 1, '2023-02-15 12:28:31'),
-(22, '3', 0, '2023-05-18', '2024-12-31', 33, 2, 1, '2023-05-18 14:09:35');
+(22, '3', 0, '2023-05-18', '2024-12-31', 33, 2, 1, '2023-05-18 14:09:35'),
+(23, '3', 123, '2023-05-18', '2024-12-31', 43, 2, 1, '2023-05-18 14:45:40'),
+(24, '3', 50, '2023-05-18', '2024-12-31', 44, 2, 1, '2023-05-18 15:34:54'),
+(25, '3', 20, '2023-05-19', '2024-12-31', 45, 2, 1, '2023-05-19 14:16:27'),
+(26, '3', 120, '2023-05-19', '2024-12-31', 46, 3, 1, '2023-05-19 14:19:00'),
+(27, '0', 100, '2023-05-19', '2024-12-31', 47, 3, 1, '2023-05-19 16:34:36');
 
 -- --------------------------------------------------------
 
@@ -167,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `Carrello` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=553 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=555 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Carrello`
@@ -724,7 +737,9 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 (549, 39, 0, '2023-05-05 16:20:54'),
 (550, 40, 0, '2023-05-08 13:56:12'),
 (551, 41, 0, '2023-05-18 14:08:26'),
-(552, 42, 0, '2023-05-18 14:28:56');
+(552, 42, 0, '2023-05-18 14:28:56'),
+(553, 43, 0, '2023-05-18 15:37:45'),
+(554, 44, 0, '2023-05-19 16:33:00');
 
 -- --------------------------------------------------------
 
@@ -765,7 +780,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
   `Status` int(5) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Claim`
@@ -811,7 +826,9 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (90, 'user', '0', 0, '2023-05-05 16:20:54'),
 (91, 'user', '0', 0, '2023-05-08 13:56:12'),
 (92, 'seller', '0', 0, '2023-05-18 14:08:26'),
-(93, 'user', '0', 0, '2023-05-18 14:28:56');
+(93, 'user', '0', 0, '2023-05-18 14:28:56'),
+(94, 'user', '0', 0, '2023-05-18 15:37:45'),
+(95, 'seller_pro', '0', 0, '2023-05-19 16:33:00');
 
 -- --------------------------------------------------------
 
@@ -828,7 +845,7 @@ CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   PRIMARY KEY (`Id`),
   KEY `Opzio_variazione_id` (`Opzio_variazione_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Configurazione_variazione`
@@ -880,7 +897,23 @@ INSERT INTO `Configurazione_variazione` (`Id`, `Articolo_id`, `Opzio_variazione_
 (43, 38, 10, 1, '2023-05-18 14:36:32'),
 (44, 38, 13, 1, '2023-05-18 14:36:32'),
 (45, 39, 10, 1, '2023-05-18 14:39:00'),
-(46, 39, 13, 1, '2023-05-18 14:39:00');
+(46, 39, 13, 1, '2023-05-18 14:39:00'),
+(47, 40, 10, 1, '2023-05-18 14:41:49'),
+(48, 40, 13, 1, '2023-05-18 14:41:49'),
+(49, 41, 10, 1, '2023-05-18 14:41:59'),
+(50, 41, 13, 1, '2023-05-18 14:41:59'),
+(51, 42, 2, 1, '2023-05-18 14:43:54'),
+(52, 42, 5, 1, '2023-05-18 14:43:54'),
+(53, 43, 2, 1, '2023-05-18 14:45:40'),
+(54, 43, 5, 1, '2023-05-18 14:45:40'),
+(55, 44, 2, 1, '2023-05-18 15:34:54'),
+(56, 44, 6, 1, '2023-05-18 15:34:54'),
+(57, 45, 2, 1, '2023-05-19 14:16:27'),
+(58, 45, 5, 1, '2023-05-19 14:16:27'),
+(59, 46, 20, 1, '2023-05-19 14:19:00'),
+(60, 46, 23, 1, '2023-05-19 14:19:00'),
+(61, 47, 10, 1, '2023-05-19 16:34:36'),
+(62, 47, 13, 1, '2023-05-19 16:34:36');
 
 -- --------------------------------------------------------
 
@@ -898,7 +931,7 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_in_carr_id` (`Articolo_id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Dettaglio_ordine`
@@ -925,7 +958,18 @@ INSERT INTO `Dettaglio_ordine` (`Id`, `Tipo`, `Articolo_id`, `Ordine_id`, `Statu
 (18, 1, 24, 19, 0, '2023-05-05 15:26:12'),
 (19, 1, 21, 20, 0, '2023-05-05 15:28:36'),
 (20, 1, 26, 20, 0, '2023-05-05 15:28:36'),
-(21, 1, 22, 21, 0, '2023-05-06 10:19:18');
+(21, 1, 22, 21, 0, '2023-05-06 10:19:18'),
+(22, 1, 13, 23, 0, '2023-05-18 15:41:51'),
+(23, 1, 13, 24, 0, '2023-05-18 15:43:17'),
+(24, 1, 32, 25, 0, '2023-05-18 15:45:33'),
+(25, 1, 19, 26, 0, '2023-05-18 15:46:57'),
+(26, 1, 19, 26, 0, '2023-05-18 15:46:57'),
+(27, 1, 19, 26, 0, '2023-05-18 15:46:57'),
+(28, 1, 21, 27, 0, '2023-05-18 15:47:36'),
+(29, 1, 34, 28, 0, '2023-05-18 15:49:09'),
+(30, 1, 34, 28, 0, '2023-05-18 15:49:09'),
+(31, 1, 34, 28, 0, '2023-05-18 15:49:09'),
+(32, 1, 34, 28, 0, '2023-05-18 15:49:09');
 
 -- --------------------------------------------------------
 
@@ -969,7 +1013,7 @@ CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Forma_di_pagamento`
@@ -985,7 +1029,8 @@ INSERT INTO `Forma_di_pagamento` (`Id`, `Circuito`, `Numero_carta`, `Data_scaden
 (9, 'Unknown', '1111 2222 3333 4444', '2023-04-27', 12, 1, 36, 0, '2023-04-27 16:22:18'),
 (10, 'Unknown', 'wfwefwefwefwfwef', '2023-04-27', 123, 1, 37, 0, '2023-04-27 16:41:09'),
 (11, 'Unknown', '3333 4444 5555 6666', '2023-07-14', 123, 1, 38, 0, '2023-05-05 15:25:49'),
-(12, 'Unknown', 'ytfutf', '2023-05-06', 123, 2, 39, 0, '2023-05-06 10:19:11');
+(12, 'Unknown', 'ytfutf', '2023-05-06', 123, 2, 39, 0, '2023-05-06 10:19:11'),
+(13, 'Unknown', '1234567890987654', '2000-12-12', 123, 1, 43, 0, '2023-05-18 15:41:03');
 
 -- --------------------------------------------------------
 
@@ -1002,7 +1047,7 @@ CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Status` int(4) NOT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Indirizzo`
@@ -1019,7 +1064,8 @@ INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`,
 (8, 'Via Milano', 1, 'Milano', 1234, 0, '2023-04-27 16:22:00'),
 (9, 'dwefd', 1, 'dwef', 11111, 0, '2023-04-27 16:40:55'),
 (10, 'Santa Maria Maddarelna', 17, 'Morciano', 47833, 0, '2023-05-05 15:24:48'),
-(11, 'ffcgc', 123, 'dfc', 12345, 0, '2023-05-06 10:19:00');
+(11, 'ffcgc', 123, 'dfc', 12345, 0, '2023-05-06 10:19:00'),
+(12, 'pesaresi', 12, 'Rimini', 47920, 0, '2023-05-18 15:40:21');
 
 -- --------------------------------------------------------
 
@@ -1035,14 +1081,15 @@ CREATE TABLE IF NOT EXISTS `Magazzino` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Magazzino`
 --
 
 INSERT INTO `Magazzino` (`Id`, `Metri_cubi`, `Indirizzo_id`, `Status`, `Timestamp`) VALUES
-(2, 750, 2, 1, '2023-02-12 23:25:50');
+(2, 750, 2, 1, '2023-02-12 23:25:50'),
+(3, 1000, 4, 1, '2023-05-19 14:17:53');
 
 -- --------------------------------------------------------
 
@@ -1107,7 +1154,7 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Forma_di_pag_id` (`Forma_di_pag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Ordine`
@@ -1135,7 +1182,13 @@ INSERT INTO `Ordine` (`Id`, `Data_ordine`, `Tot_ordine`, `Status`, `Metodo_di_sp
 (19, '2023-05-05', '62', 0, 1, 11, '2023-05-05 15:26:12'),
 (20, '2023-05-05', '34', 0, 1, 11, '2023-05-05 15:28:36'),
 (21, '2023-05-06', '13', 0, 1, 12, '2023-05-06 10:19:18'),
-(22, '2023-05-12', '80', 0, 1, 12, '2023-05-12 16:32:26');
+(22, '2023-05-12', '80', 0, 1, 12, '2023-05-12 16:32:26'),
+(23, '2023-05-18', '15', 0, 1, 13, '2023-05-18 15:41:51'),
+(24, '2023-05-18', '15', 0, 1, 13, '2023-05-18 15:43:17'),
+(25, '2023-05-18', '40', 0, 1, 13, '2023-05-18 15:45:33'),
+(26, '2023-05-18', '25', 0, 1, 13, '2023-05-18 15:46:57'),
+(27, '2023-05-18', '18', 0, 1, 13, '2023-05-18 15:47:36'),
+(28, '2023-05-18', '1', 0, 1, 13, '2023-05-18 15:49:09');
 
 -- --------------------------------------------------------
 
@@ -1155,7 +1208,7 @@ CREATE TABLE IF NOT EXISTS `Prodotto` (
   PRIMARY KEY (`Id`),
   KEY `Dim_id` (`Dim_id`),
   KEY `Categoria_id` (`Categoria_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Prodotto`
@@ -1175,7 +1228,10 @@ INSERT INTO `Prodotto` (`Id`, `Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Cate
 (17, 'Geox U15BYA', 'Scarpe Sportive per Uomo in tessuto blu', 'scarpe_03.jpeg', 3, 3, 1, '2023-02-15 10:40:01'),
 (18, 'Fila - Cappello da pescatore', 'Fascia interna in twill di cotone', 'cappello_03.jpeg', 3, 5, 1, '2023-02-15 10:43:10'),
 (19, 'test01-name', 'test01-desc', 'ammoBox.png', 3, 2, 1, '2023-05-18 14:09:16'),
-(20, 'test02-name', 'test02-desc', 'felpa_03.jpeg', 3, 4, 1, '2023-05-18 14:25:06');
+(20, 'test02-name', 'test02-desc', 'felpa_03.jpeg', 3, 4, 1, '2023-05-18 14:25:06'),
+(21, 'test03-name', 'test03-desc', 'maglia_nera.png', 3, 2, 1, '2023-05-18 14:43:46'),
+(22, 'test04-name', 'test04-desc', 'cappello_02.jpeg', 3, 5, 1, '2023-05-19 14:18:41'),
+(23, 'felpa-test', 'felpa-test', 'felpa_02.jpeg', 3, 4, 1, '2023-05-19 16:34:26');
 
 -- --------------------------------------------------------
 
@@ -1219,7 +1275,7 @@ CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Utente_id` (`Utente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Raccolta`
@@ -1252,7 +1308,9 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 (25, 1, 'whislist', 39, 0, '2023-05-05 16:20:54'),
 (26, 1, 'whislist', 40, 0, '2023-05-08 13:56:12'),
 (27, 1, 'whislist', 41, 0, '2023-05-18 14:08:26'),
-(28, 1, 'whislist', 42, 0, '2023-05-18 14:28:56');
+(28, 1, 'whislist', 42, 0, '2023-05-18 14:28:56'),
+(29, 1, 'whislist', 43, 0, '2023-05-18 15:37:45'),
+(30, 1, 'whislist', 44, 0, '2023-05-19 16:33:00');
 
 -- --------------------------------------------------------
 
@@ -1292,7 +1350,7 @@ CREATE TABLE IF NOT EXISTS `Utente` (
   PRIMARY KEY (`Id`),
   KEY `Indirizzo_id` (`Indirizzo_id`),
   KEY `Claim_id` (`Claim_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Utente`
@@ -1336,7 +1394,9 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, 
 (39, 'pino', 'verdi', 'pino@v.com', 'pino', 90, 11, 0, '2023-05-05 16:20:54'),
 (40, 'Admin0', 'admin0', 'admin0@a.com', 'admin', 91, 1, 0, '2023-05-08 13:56:12'),
 (41, 'alberto', 'clari', 'clari@takeit.it', 'takeit', 92, 1, 0, '2023-05-18 14:08:26'),
-(42, 'roberto', 'pari', 'pari@takeit.it', 'takeit', 93, 1, 0, '2023-05-18 14:28:56');
+(42, 'roberto', 'pari', 'pari@takeit.it', 'takeit', 93, 1, 0, '2023-05-18 14:28:56'),
+(43, 'marco', 'pesa', 'pesa@takeit.it', 'takiet', 94, 12, 0, '2023-05-18 15:37:45'),
+(44, 'test01', 'test01', 'test01@takeit.it', 'takeit', 95, 1, 0, '2023-05-19 16:33:00');
 
 -- --------------------------------------------------------
 
