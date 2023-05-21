@@ -69,9 +69,9 @@ require_once "UIHelper.php";
             <!-- end menu left -->
 
             <!-- start search -->
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
+            <form class="d-flex" role="search" method="post">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn btn-outline-primary" type="submit" name="btn-search">Search</button>
             </form>
             <!-- end search -->
 
@@ -94,7 +94,7 @@ require_once "UIHelper.php";
                                     <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
                                 </svg>
                                 <div class="nav-caption-item">
-                                    <p>Order history</p>
+                                    <p>Storico Ordini</p>
                                 </div>
                             </a>
                          </li>';
@@ -244,7 +244,7 @@ require_once "UIHelper.php";
 
         <?php showAllArticlesInWishlist(); ?>
 
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end py-8">
             <a class="btn btn-outline-secondary text-end" href="./wishlist.php">Vai alla Wishlist</a>
         </div>
     </div>

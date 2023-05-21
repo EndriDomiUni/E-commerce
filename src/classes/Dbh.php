@@ -82,7 +82,9 @@ class Dbh
     {
         $query = "SELECT COUNT(*) AS count FROM $tableName WHERE Id = " . $recordId;
         $result = $this->execute($query);
-        if ($result && $result['count'] > 0) {
+
+        var_dump($result);
+        if ($result && $result[0]['count'] > 0) {
             return true;
         }
         return false;
@@ -200,9 +202,11 @@ class Dbh
             } else {
                 $email = $params[EMAIL];
                 $pass = $params[PASSWORD];
-                $where = "Email = '$email' AND Password = '$pass'";
+                $where = "Email = '$email' AND Password = '$pass' AND Status != 2";
                 $response = $this->execute("SELECT * FROM `Utente` WHERE $where");
-                return UtilsFunctions::checkResponse($response[0][ID]) ? $response[0][ID] : null;
+                return !empty($response) && UtilsFunctions::checkResponse($response[0][ID])
+                    ? $response[0][ID]
+                    : null;
             }
         }
     }
@@ -281,6 +285,7 @@ class Dbh
             ? $response[0]
             : null;
     }
+
 
     /**
      * Get all records
@@ -437,16 +442,16 @@ class Dbh
                 $query = "SELECT * FROM `Prodotto` WHERE Id != 1";
                 break;
             case SORT_MODE_PRICE_ASC:
-                $query = "SELECT p.*
+                $query = "SELECT DISTINCT p.*
                             FROM Prodotto p
                             JOIN Articolo a ON p.Id = a.Prodotto_id
-                          ORDER BY a.prezzo ASC;";
+                          ORDER BY a.prezzo ASC";
                 break;
             case SORT_MODE_PRICE_DESC:
-                $query = "SELECT p.*
+                $query = "SELECT DISTINCT p.*
                             FROM Prodotto p
                             JOIN Articolo a ON p.Id = a.Prodotto_id
-                          ORDER BY a.prezzo DESC;";
+                          ORDER BY a.prezzo DESC";
                 break;
             case SORT_MODE_NAME_ASC:
                 $query = "SELECT * FROM `Prodotto` WHERE Id != 1 ORDER BY Nome ASC";
@@ -501,24 +506,9 @@ class Dbh
             STATUS_MODIFIED_DATA);
     }
 
-    public function removeArticleInCart($quantity, $cartId, $articleId): array|int|string
+    public function removeArticleInCart($articleInCartId): array|int|string
     {
-        $res = 0;
-        $where = "Carrello_id = ' . $cartId . 'AND Articolo_id = " . $articleId;
-        if ($quantity == 1) {
-            $output = $this->execute("DELETE FROM `Articolo_in_carrello` WHERE " . $where);
-            if ($output > 0) {
-                $res = 1;
-            }
-        } else if ($quantity > 1) {
-            $output = $this->updateDateWithWhere(ARTICOLO_IN_CARRELLO, QUANTITA, $quantity-1, $where);
-            if ($output > 0) {
-                $res = 1;
-            }
-        } else {
-            echo "Error";
-        }
-        return $res;
+        return $this->execute("DELETE FROM `Articolo_in_carrello` WHERE " . " Id = " . $articleInCartId);
     }
 
     /**
@@ -594,5 +584,40 @@ class Dbh
         $query = ARTICOLO_ID . " = " . $articleId . " AND " . MAGAZZINO_ID . " = " . $warehouseId;
         $warehouseArticle = $this->getRecord(ARTICOLO_IN_MAGAZZINO, $query);
         return $warehouseArticle ?? [];
+    }
+
+    public function getProductsByName($productName): array|int|string
+    {
+        $query = "SELECT * FROM Prodotto WHERE Nome LIKE '%" . $productName . "%'";
+        return $this->execute($query);
+    }
+
+    public function getProductByNameAndPriority($productName): array|int|string
+    {
+        $query = "SELECT Prodotto.Id as Id, 
+                    Prodotto.Immagine as Immagine, 
+                    Prodotto.Descrizione as Descrizione, 
+		            Prodotto.Nome as Nome,
+                    CASE Claim.Descrizione 
+                    WHEN 'seller_pro' THEN 1 
+                        ELSE 0 END 
+                        as alias 
+                    FROM Prodotto 
+                    JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id 
+                    JOIN Utente ON Utente.Id = Articolo.Utente_id 
+                    JOIN Claim ON Claim.Id = Utente.Claim_id 
+                    WHERE Prodotto.Nome LIKE '%" . $productName . "%' 
+                    ORDER BY alias DESC, 'Nome' DESC;";
+        return $this->execute($query);
+    }
+
+    public function getReviewsFromProductId($productId): array|int|string
+    {
+        $query = "SELECT *
+                    FROM Recensione, Prodotto 
+                    JOIN Articolo ON Prodotto.Id = Articolo.Prodotto_id
+                    JOIN Dettaglio_ordine ON Articolo.Id = Dettaglio_ordine.Articolo_id
+                    WHERE Prodotto.Id = " . $productId;
+        return $this->execute($query);
     }
 }

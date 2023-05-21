@@ -125,7 +125,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-footer">
-                                                    <button type="button" class="btn btn-primary btn-sm float-end" type="submit" name="btn-remove-'. $product[ID] . '-from-cart">Rimuovi dal carrello</button>
+                                                    <button class="btn btn-primary btn-sm float-end" 
+                                                    type="submit" name="btn-remove-'. $value[ID] . '-from-cart">Rimuovi dal carrello</button>
                                                 </div>
                                             </div>
                                             </form>';

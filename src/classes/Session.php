@@ -282,11 +282,9 @@ class Session extends Dbh
         $total = 0.00;
         $articlesInCart = $this->loadArticlesInCart($this->getCurrentUser()[CARRELLO_ID]);
         foreach ($articlesInCart as $articleInCart) {
-            $articleId = $articleInCart[ARTICOLO_ID];
-            $whereArticle = "Id = " . $articleId;
-            $article = $this->getRecord(ARTICOLO, $whereArticle);
+            $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCart[ARTICOLO_ID]);
             if ($article !== null) {
-                $total = $total + floatval($article[PREZZO]);
+                $total = $total + (floatval($article[PREZZO] * $articleInCart[QUANTITA]));
             }
         }
         return $total;
@@ -600,5 +598,19 @@ class Session extends Dbh
         parent::updateDateWithWhere(RECENSIONE, STATUS, STATUS_DELETED_DATA, "Utende_id = " . $this->getCurrentUser()[ID]);
         parent::updateDateWithWhere(RACCOLTA, STATUS, STATUS_DELETED_DATA, "Id = " . $this->getCurrentUser()[CLAIM_ID]);
         parent::updateData($this->getCurrentUser()[ID], UTENTE, STATUS, STATUS_DELETED_DATA);
+    }
+
+    public function addReview($orderDetailsId, $params): int|array|string
+    {
+        $queryInsertReview = "INSERT INTO `Recensione` (Valutazione, Commento, Dettaglio_ordine_id, Utente_id, Status)
+                                VALUES (?, ?, ?, ?, ?) ";
+        $res = $this->insertData($queryInsertReview,
+            $params[VALUTAZIONE],
+            $params[COMMENTO],
+            $orderDetailsId,
+            $this->getCurrentUser()[ID],
+            STATUS_INTACT_DATA);
+        var_dump($res);
+        return $res;
     }
 }
