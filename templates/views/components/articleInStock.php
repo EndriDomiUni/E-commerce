@@ -29,8 +29,9 @@ foreach ($products as $product)
     }
     if ($articlesQuantity > 0)
     {
+        echo '<div class="container my-5 ">';
+
         echo '
-  <div class="container my-5 ">
     <div class="card">
       <div class="row">
         <div class="col-md-6">
@@ -56,9 +57,9 @@ foreach ($products as $product)
       </div>
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary" name="move-button">Move</button>
-          <button class="btn btn-primary" name="edit-quantity-button" data-toggle="modal" data-target="#myModal' . $product[0][ID] . '">Edit Quantity</button>
-          <button class="btn btn-danger">Remove Article</button>
+          <button type="submit" class="btn btn-primary" name="move-button">Move</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal' . $product[0][ID] . '">Edit Quantity</button>
+          <button type="submit" class="btn btn-danger">Remove Article</button>
         </div>
       </div>
       <!-- Modal -->
@@ -67,9 +68,6 @@ foreach ($products as $product)
            <div class="modal-content">
              <div class="modal-header">
                <h5 class="modal-title" id="myModalTitle">' . $product[0][NOME] . '</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-               </button>
              </div>
              <div class="modal-body">
                <div class="form-group">
@@ -77,18 +75,40 @@ foreach ($products as $product)
                  <select class="form-control" id="selectOption">';
         foreach ($articles as $article)
         {
+            $mapConfigurations = [];
             $articleConfigurations = $session->getArticleConfigurations($article[ID]);
-            foreach ($articleConfigurations as $articleConfiguration)
-            {
+            foreach ($articleConfigurations as $articleConfiguration) {
                 $option = $session->getOptionById($articleConfiguration[OPZIONE_ID]);
                 $variation = $session->getVariationById($option[VARIAZIONE_ID]);
+                $configuration = [ $variation[NOME] => $option[VALORE] ];
+                $mapConfigurations[] = $configuration;
             }
+            echo '<option value="';
+            for ($i = 0; $i < count($mapConfigurations); $i++) {
+
+                if ($i > 0) {
+                    echo '-';
+                }
+
+                $variationName = array_keys($mapConfigurations[$i])[0];
+                $optionValue = array_values($mapConfigurations[$i])[0];
+                echo $optionValue;
+            }
+            echo '">';
+            for ($i = 0; $i < count($mapConfigurations); $i++) {
+                /*
+                if ($i > 0) {
+                    echo ' - ';
+                }
+                */
+                $variationName = array_keys($mapConfigurations[$i])[0];
+                $optionValue = array_values($mapConfigurations[$i])[0];
+                echo $variationName . ' ' . $optionValue;
+            }
+            echo '</option>';
         }
-        echo '               
-                   <option value="opzione1">Opzione 1</option>
-                   <option value="opzione2">Opzione 2</option>
-                   <option value="opzione3">Opzione 3</option>
-                 </select>
+        echo ' 
+               </select>
                </div>
                <div class="form-group">
                  <label for="quantityInput">Quantità</label>
@@ -96,22 +116,15 @@ foreach ($products as $product)
                </div>
              </div>
              <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-               <button type="button" class="btn btn-primary">Conferma</button>
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+               <button type="submit" class="btn btn-primary">Conferma</button>
              </div>
            </div>
         </div>
       <div>
-        
-        <!-- Trigger del Modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-          Apri Modal
-        </button>
-      
     </div>
-  </div>
 ';
     }
-
+    echo '</div>';
 
 }

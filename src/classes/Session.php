@@ -510,12 +510,44 @@ class Session extends Dbh
         return $this->execute($query);
     }
 
-
-    public function getOptionById() : array
+    /**
+     * Get option by id
+     * @param $optionId
+     * @return array
+     */
+    public function getOptionById($optionId) : array
     {
-        $query = "";
-        return [];
+        $query = "Id = " . $optionId;
+        $record = $this->getRecord(OPZIONE_VARIAZIONE, $query);
+
+        if ($record != null)
+        {
+            return $record;
+        }
+        else{
+            return [];
+        }
     }
+
+    /**
+     * Get variation by id
+     * @param $variationId
+     * @return array
+     */
+    public function getVariationById($variationId) : array
+    {
+        $query = "Id = " . $variationId;
+        $record = $this->getRecord(OPZIONE_VARIAZIONE, $query);
+
+        if ($record != null)
+        {
+            return $record;
+        }
+        else{
+            return [];
+        }
+    }
+
 
     /**
      * Set status = delete
