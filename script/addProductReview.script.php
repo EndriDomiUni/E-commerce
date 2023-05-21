@@ -18,7 +18,8 @@ if (isset($_SESSION[ID])) {
                 // get params
                 $params = [
                     VALUTAZIONE => filter_var($_POST['evaluation'], FILTER_SANITIZE_SPECIAL_CHARS),
-                    COMMENTO => filter_var($_POST['comment'], FILTER_SANITIZE_SPECIAL_CHARS)
+                    COMMENTO => filter_var($_POST['comment'], FILTER_SANITIZE_SPECIAL_CHARS),
+                    PRODOTTO_ID => $_GET['id']
                 ];
 
                 $session->addReview($_GET['orderDetailId'], $params);
