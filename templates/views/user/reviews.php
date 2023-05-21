@@ -26,8 +26,8 @@ ini_set('display_errors', 1);
     <?php
         if (isset($_GET['id'])) {
             $dbh = new Dbh();
-            // $reviewsFromProduct = $dbh->getReviewsFromProductId($_GET['id']);
-            $reviewsFromProduct = [];
+            $reviewsFromProduct = $dbh->getReviewsFromProductId($_GET['id']);
+
 
             if (!empty($reviewsFromProduct)) {
                 foreach ($reviewsFromProduct as $review) {

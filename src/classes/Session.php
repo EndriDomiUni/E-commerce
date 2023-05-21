@@ -602,13 +602,14 @@ class Session extends Dbh
 
     public function addReview($orderDetailsId, $params): int|array|string
     {
-        $queryInsertReview = "INSERT INTO `Recensione` (Valutazione, Commento, Dettaglio_ordine_id, Utente_id, Status)
-                                VALUES (?, ?, ?, ?, ?) ";
+        $queryInsertReview = "INSERT INTO `Recensione` (Valutazione, Commento, Dettaglio_ordine_id, Utente_id, Prodotto_id, Status)
+                                VALUES (?, ?, ?, ?, ?, ?) ";
         $res = $this->insertData($queryInsertReview,
             $params[VALUTAZIONE],
             $params[COMMENTO],
             $orderDetailsId,
             $this->getCurrentUser()[ID],
+            $params[PRODOTTO_ID],
             STATUS_INTACT_DATA);
         var_dump($res);
         return $res;
