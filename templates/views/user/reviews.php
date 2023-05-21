@@ -62,7 +62,9 @@ ini_set('display_errors', 1);
             }
 
         } else {
+            echo '<div class="container my-3 rounded" style="background-color: white;">';
             echo '<div>Non esiste ancora nessuna recensione per questo prodotto.</div>';
+            echo '</div>';
         }
     ?>
 </div>

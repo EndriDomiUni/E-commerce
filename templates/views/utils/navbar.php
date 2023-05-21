@@ -192,7 +192,6 @@ require_once "UIHelper.php";
                                 echo '<li><a class="dropdown-item" href="./register.php">Registrati</a></li>';
                             }
                         ?>
-                        <li><a class="dropdown-item" href="./reviews.php">Recensioni</a></li>
                         <li><a class="dropdown-item" href="./logout.php">Esci</a></li>
                         <li>
                             <hr class="dropdown-divider">
