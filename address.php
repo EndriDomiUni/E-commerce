@@ -1,7 +1,8 @@
 <?php
 
 session_start();
-include("./src/classes/Dbh.php");
+
+require_once ("mandatory.php");
 require_once("./script/address.script.php");
 
 ob_start();

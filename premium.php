@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 
 session_start();
 
-include("./src/classes/Dbh.php");
+require_once ("mandatory.php");
 require_once("./script/premium.script.php");
 
 ob_start();

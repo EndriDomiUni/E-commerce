@@ -441,7 +441,7 @@ class Session extends Dbh
 
     public function loadOrderDetails($orderId): array|int|string
     {
-        $where = "Ordine_id = " . $orderId . " AND Status != " . ORDER_STATUS_GIVE_BACK;
+        $where = "Ordine_id = " . $orderId;
         $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
         return parent::execute($query);
     }

@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include("./src/classes/Dbh.php");
+require_once ("mandatory.php");
 require_once("./script/cardPayForm.script.php");
 
 ob_start();

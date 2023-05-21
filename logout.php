@@ -4,7 +4,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include("./src/classes/Dbh.php");
+require_once ("mandatory.php");
 
 session_start();
 setcookie(session_name(), '', 100);

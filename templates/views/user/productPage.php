@@ -11,7 +11,7 @@ ini_set('display_errors', 1);
         $dbh = new Dbh();
         $product = $dbh->getRecord(PRODOTTO, "Id = " . $_GET['id']);
         if (!empty($product)) {
-            echo '<div class="container">
+            echo '<div class="container rounded my-3">
                         <form method="post">
                             <div class="row">
                             <div class="col-md-6">
@@ -45,12 +45,13 @@ ini_set('display_errors', 1);
                                     <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
                                 </svg>
                                 Compra ora
-                            </button>';
+                            </button>
+                            </form>';
                             echo '<section>';
                                 require './templates/views/user/reviews.php';
                             echo '<section>
                         </div>
-                        </form>
+                        
                 </div>';
         }
     } else {

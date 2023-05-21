@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
-include "./src/classes/Dbh.php";
+require_once ("mandatory.php");
 
 ob_start();
 require './templates/views/user/dashboard.php';
