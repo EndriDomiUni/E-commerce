@@ -1,8 +1,8 @@
 <section>
     <div class="container">
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal">Premium</h1>
-            <p class="fs-5 text-muted">Sbloccate offerte e sconti esclusivi con l'abbonamento Premium di Take-it.
+            <h1 class="display-4 fw-normal" style="color: white;">Premium</h1>
+            <p class="fs-5" style="color: #E8E9F0;">Sbloccate offerte e sconti esclusivi con l'abbonamento Premium di Take-it.
                 Approfittate della spedizione gratuita e più veloce e del servizio clienti prioritario per ogni acquisto.
                 Migliora la tua esperienza di acquisto e unisciti alla comunità VIP di Take-it oggi stesso!
             </p>
@@ -31,7 +31,7 @@
             <?php
                 if (isset($_SESSION[ID])) {
                     $session = new Session($_SESSION[ID]);
-                    $claimType = $session->getClaimTypeFromId($_SESSION[ID]);
+                    $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
                     switch ($claimType) {
                         case CLAIM_USER_DESC:
                         case CLAIM_USER_PRO_DESC:

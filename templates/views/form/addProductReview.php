@@ -9,13 +9,13 @@
                         $dbh = new Dbh();
                         $product = $dbh->getRecord(PRODOTTO, "Id = " . $_GET['id']);
                         echo '
-                        <div class="card">
+                       <div class="card">
                           <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img-top img-fluid" alt="Product Image">
                           <div class="card-body">
                             <h5 class="card-title">' . $product[NOME] . '</h5>
                             <p class="card-text">' . $product[DESCRIZIONE] . '</p>
                           </div>
-                        </div>
+                        </div> 
                         ';
                     }
                 ?>

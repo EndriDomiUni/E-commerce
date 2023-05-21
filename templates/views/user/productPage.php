@@ -17,7 +17,7 @@ ini_set('display_errors', 1);
                             <div class="col-md-6">
                                 <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" alt="Product Image" class="img-fluid">
                             </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="background: white;">
                             <h2>' . $product[NOME] . '</h2>
                             <p>' . $product[DESCRIZIONE] . '</p>
                             <ul>

@@ -1,6 +1,6 @@
 
 <div class="container mt-5">
-    <h1 class="text-center">Dettagli account</h1>
+    <h1 class="text-center" style="color: white;">Dettagli account</h1>
 
     <!-- User Data Section -->
     <div class="card mt-5">

@@ -1,8 +1,4 @@
 <style>
-    body {
-        background-color: #f2f2f2;
-    }
-
     h2 {
         margin-bottom: 30px;
         color: #333;
@@ -10,15 +6,15 @@
 </style>
 
 <div class="container mt-5">
-    <h2 class="text-center">Storico ordini</h2>
+    <h2 class="text-center" style="color: white;">Storico ordini</h2>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Ordine ID</th>
-            <th>Data</th>
-            <th>Totale</th>
-            <th>Status</th>
-            <th>Dettagli</th>
+            <th style="color: white;">Ordine ID</th>
+            <th style="color: white;">Data</th>
+            <th style="color: white;">Totale</th>
+            <th style="color: white;">Status</th>
+            <th style="color: white;">Dettagli</th>
         </tr>
         </thead>
         <tbody>
@@ -33,10 +29,10 @@
                 foreach ($orders as $order) {
                     $orderId = $order[ID];
                     echo '<tr>
-                                <td>' . $index++ . '</td>
-                                <td>' . $order[DATA_ORDINE] . '</td>
-                                <td>' . $order[TOTALE_ORDINE] . '</td>
-                                <td>Pagato</td>
+                                <td style="color: white;">' . $index++ . '</td>
+                                <td style="color: white;">' . $order[DATA_ORDINE] . '</td>
+                                <td style="color: white;">' . $order[TOTALE_ORDINE] . '</td>
+                                <td style="color: white;">Pagato</td>
                                 <td>
                                   <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal' . $orderId . '">
@@ -68,12 +64,24 @@
                                                 <h5 class="card-title">' . $product[NOME] . '</h5>
                                                 <p class="card-text">' . $product[DESCRIZIONE] . '</p>
                                                 <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
-                                                <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
-                                                     class="btn btn-primary text-end">Portami al prodotto</a>
-                                                <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
-                                                     class="btn btn-primary text-end">Effettua il reso</a>    
-                                                <a href="./addProductReview.php?id=' . $product[ID] . '&orderDetailId=' . $orderDetail[ID] . '" target="_self" 
-                                                     class="btn btn-primary text-end">Aggiungi recensione</a>    
+                                                
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <!-- redirect to preduct page -->
+                                                        <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
+                                                             class="btn btn-primary text-end">Portami al prodotto</a>
+                                                    </div>
+                                                    <div class="col">
+                                                        <!-- give back -->
+                                                        <a href="./giveBackProduct.php?orderDetailId=' . $orderDetail[ID] . '" target="_self" 
+                                                             class="btn btn-primary text-end">Effettua il reso</a> 
+                                                    </div>
+                                                    <div class="col">
+                                                        <!-- reviews -->     
+                                                        <a href="./addProductReview.php?id=' . $product[ID] . '&orderDetailId=' . $orderDetail[ID] . '" target="_self" 
+                                                             class="btn btn-primary text-end">Aggiungi recensione</a>
+                                                    </div>
+                                                </div>    
                                               </div>
                                         </div>';
                                 }

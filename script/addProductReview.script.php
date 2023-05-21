@@ -28,8 +28,5 @@ if (isset($_SESSION[ID])) {
                 echo $e->getMessage();
             }
         }
-
-    } else {
-        echo "non settati";
     }
 }

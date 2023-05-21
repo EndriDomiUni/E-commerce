@@ -15,6 +15,7 @@ if (isset($_POST["checkout"])) {
         $params = [
             TOTALE_ORDINE => ($session->getTotalOfArticlesInCart()),
             DATA_ORDINE => date("Y/m/d"),
+
         ];
 
         // create order

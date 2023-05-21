@@ -222,13 +222,18 @@ require_once "UIHelper.php";
 </nav>
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="overflow-y: auto">
-    <div class="offcanvas-header">
+    <div class="offcanvas-header text-center">
         <h5 class="offcanvas-title" id="offcanvasRightLabel">Carrello</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body"  style="overflow-y:auto">
 
         <?php showArticlesInCart(); ?>
+
+        <!-- divider -->
+        <div class="row mt-2 my-2">
+            <hr>
+        </div>
 
         <div class="d-flex justify-content-end">
             <a class="btn btn-outline-secondary text-end" href="./cart.php">Vai al carello</a>

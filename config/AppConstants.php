@@ -108,7 +108,9 @@ const ORDER_DETAILS_TYPE_STANDARD = 1; // default
 const ORDER_DETAILS_TYPE_MONTHLY = 2;
 const ORDER_DETAILS_TYPE_QUARTERLY = 3; // trimestrale
 const ORDER_DETAILS_TYPE_YEARLY = 4;
-const ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT = 5;
+const ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT = 5; // rate
+
+
 
 // FIELD
 const NOME = "Nome";
@@ -127,6 +129,7 @@ const DATA_SCADENZA = "Data_scadenza";
 const CVV = "CVV";
 const TIPO_DI_PAGAMENTO = "Tipo_di_pagamento";
 const DESCRIZIONE = "Descrizione";
+const MOTIVO = "Motivo";
 const IMMAGINE = "Immagine";
 const DIMENSIONE_X_PRODOTTO = "Dimensione_x";
 const DIMENSIONE_Y_PRODOTTO = "Dimensione_y";
@@ -154,10 +157,7 @@ const SORT_MODE_PRICE_DESC = 2;
 const SORT_MODE_NAME_ASC = 3;
 const SORT_MODE_NAME_DESC = 4;
 
-
-// QUANTITY_VALUE
-const QUANTITY_1 = 1;
-const QUANTITY_2 = 2;
-const QUANTITY_3 = 3;
-const QUANTITY_4 = 4;
-const QUANTITY_5 = 5;
+// ORDER STATUS
+const ORDER_STATUS_PAID = 0;
+const ORDER_STATUS_PENDING = 1;
+const ORDER_STATUS_GIVE_BACK = 4;

@@ -28,7 +28,6 @@ ini_set('display_errors', 1);
             $dbh = new Dbh();
             $reviewsFromProduct = $dbh->getReviewsFromProductId($_GET['id']);
 
-
             if (!empty($reviewsFromProduct)) {
                 foreach ($reviewsFromProduct as $review) {
                     $user = $dbh->getRecord(UTENTE, "Id = " . $review[UTENTE_ID]);

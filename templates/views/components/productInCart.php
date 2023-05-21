@@ -95,7 +95,7 @@
                                                     <div class="col-md-8">
                                                         <div class="card-body">
                                                             <div class="d-flex justify-content-center">
-                                                                <h5 class="card-title">' . $product[NOME] . '</h5>
+                                                                <h5 class="card-title"><strong>' . $product[NOME] . '</strong></h5>
                                                             </div>
                                                             <p class="card-text">' . $product[DESCRIZIONE] . '</p> ';
 
@@ -106,12 +106,16 @@
                                             $optionVariation = $session->getRecord(OPZIONE_VARIAZIONE, $whereOptionId);
                                             $whereVariationId = '`Id` = ' . $optionVariation[VARIAZIONE_ID];
                                             $variation = $session->getRecord(VARIAZIONE, $whereVariationId);
-                                            echo            '<p class="card-text">' . $variation[NOME] . '</p>
-                                                            <p class="card-text">' . $optionVariation[VALORE] . '</p>';
+                                            echo '
+                                                <div class="row">
+                                                    <div class="col"><p class="card-text"> - <strong>' . $variation[NOME] . '</strong></p></div>
+                                                    <div class="col"><p class="card-text">' . $optionVariation[VALORE] . '</p></div>
+                                                </div>
+                                            ';
                                         }
 
                                         echo            '
-                                                            <p class="card-text">Quantità: ' . $value[QUANTITA] . '
+                                                            <p class="card-text"> - <strong>Quantità: </strong>' . $value[QUANTITA] . '
                                                                 <select class="form-select" aria-label="Quantità">
                                                                     <option>1</option>
                                                                     <option>2</option>
@@ -120,7 +124,7 @@
                                                                     <option>5</option>
                                                                 </select>
                                                             </p>
-                                                            <p class="card-text"><strong>Prezzo:</strong> $ ' . $article[PREZZO] . '</p>
+                                                            <p class="card-text"> - <strong>Prezzo: </strong> $ ' . $article[PREZZO] . '</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,7 +137,9 @@
                                     }
                                 }
                         }
-                    }
+                    } else {
+                            echo '<div>Non ci sono articoli nel carrello. Aggiungine uno!</div>';
+                        }
                 }
                 break;
         }

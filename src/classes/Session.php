@@ -441,7 +441,7 @@ class Session extends Dbh
 
     public function loadOrderDetails($orderId): array|int|string
     {
-        $where = "Ordine_id = " . $orderId;
+        $where = "Ordine_id = " . $orderId . " AND Status != " . ORDER_STATUS_GIVE_BACK;
         $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
         return parent::execute($query);
     }
@@ -636,14 +636,24 @@ class Session extends Dbh
     {
         $queryInsertReview = "INSERT INTO `Recensione` (Valutazione, Commento, Dettaglio_ordine_id, Utente_id, Prodotto_id, Status)
                                 VALUES (?, ?, ?, ?, ?, ?) ";
-        $res = $this->insertData($queryInsertReview,
+        return $this->insertData($queryInsertReview,
             $params[VALUTAZIONE],
             $params[COMMENTO],
             $orderDetailsId,
             $this->getCurrentUser()[ID],
             $params[PRODOTTO_ID],
             STATUS_INTACT_DATA);
-        var_dump($res);
-        return $res;
+    }
+
+    public function addArticleGiveBack($orderDetailId, $params): int|array|string
+    {
+        $queryInsertArticleGiveBack = "INSERT INTO `Reso` (Dettaglio_ordine_id, Motivo, Descrizione, Status)
+                                    VALUES (?, ?, ?, ?)";
+        return $this->insertData($queryInsertArticleGiveBack,
+            $orderDetailId,
+            $params[MOTIVO],
+            $params[DESCRIZIONE],
+            STATUS_INTACT_DATA
+        );
     }
 }

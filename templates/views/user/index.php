@@ -14,29 +14,31 @@ Funzionalità richieste:
 <?php
     if (!isset($_SESSION["Id"])) {
         echo '<section id="intro">
-                <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-                    <div class="col-md-5 p-lg-5 mx-auto my-5">
-                        <h1 class="display-4 fw-normal">
+                <div class="container-xxl my-3">
+                    <div class="position-relative overflow-hidden p-3 p-md-5 text-center bg-light">
+                    <div class="col-md-8 mx-auto my-5">
+                        <h1 class="display-5 fw-normal">
                             Take-it
                         </h1>
                         <p class="lead fw-normal">Benvenuto in take-it, il tuo sportello unico per tutte le tue esigenze di acquisto.</p>
                         <p class="lead fw-normal">Con un ampia selezione di prodotti a prezzi imbattibili, ti aiutiamo a trovare facilmente quello che stai cercando.</p>
                         <p class="lead fw-normal">La nostra spedizione veloce e affidabile garantisce che i tuoi ordini arrivino puntuali, ogni volta. Acquista con noi oggi e porta tutto a casa con take-it!</p>
-                        <a class="btn btn-outline-secondary" href="./login.php">Accedi</a>
+                        <a class="btn btn-outline-secondary btn-lg" href="./login.php">Accedi</a>
                     </div>
                     <div class="product-device shadow-sm d-none d-md-block"></div>
                     <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+                </div>
                 </div>
             </section>';
     }
 ?>
 
 <section id="articles">
-    <h1 class="text-center">I nostri articoli</h1>
+    <h1 class="text-center" style="color: white;">I nostri articoli</h1>
 
     <div class="container text-end py-2">
         <div class="sort-component">
-            <label for="sort-select">Ordina per:</label>
+            <label for="sort-select" style="color: white;">Ordina per:</label>
             <select id="sort-select">
                 <option value="0" <?php if (!isset($_SESSION['sortingMode'])) { echo "selected";} ?>>Predefinito</option>
                 <option value="1" <?php if (isset($_SESSION['sortingMode']) && $_SESSION['sortingMode'] == SORT_MODE_PRICE_ASC) { echo "selected";} ?>>Prezzo: Basso a Alto</option>
@@ -135,7 +137,7 @@ Funzionalità richieste:
     </style>
 
     <div class="container review-section">
-        <h2 class="text-center">Recensioni - TakeIt</h2>
+        <h2 class="text-center" style="color: white;">Recensioni - TakeIt</h2>
 
         <div class="row">
             <div class="col-md-6">

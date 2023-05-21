@@ -4,7 +4,7 @@
         <div class="col"></div>
         <div class="col">
             <section class="form-signin w-100 m-auto">
-                <div class="container text-center">
+                <div class="container text-center my-3 rounded" style="background: white;">
 
                     <img src="<?php echo IMG; ?>/logo.svg" width="100" height="100" alt="Logo">
                     <div class="signin-intro">

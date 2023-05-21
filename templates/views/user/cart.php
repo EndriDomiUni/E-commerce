@@ -8,7 +8,7 @@ require_once "UIHelper.php";
 
 <!-- Shopping Cart Section -->
 <div class="container my-5">
-    <h2 class="text-center">Shopping Cart</h2>
+    <h2 class="text-center" style="color: white;">Shopping Cart</h2>
     <!-- Cart Item -->
     <?php
     if (isset($_SESSION[ID])) {
@@ -30,22 +30,21 @@ require_once "UIHelper.php";
 
                         $finalAmount = $finalAmount + floatval($article[PREZZO]) * $articleInCart[QUANTITA];
 
-                        echo '
-                <div class="container py-5 ">
-                    <div class="row mt-2 mb-2">
-                        <div class="col-md-2">
-                            <img
-                                    src="' . UPLOADS . '/' . $product[IMMAGINE] . '"
-                                    alt="Product Image"
-                                    class="img-fluid"
-                            />
-                        </div>
-                        <div class="col-md-4">
-                            <h3>' . $product[NOME] . '</h3>
-                            <p>' . $product[DESCRIZIONE] . '</p>';
+                        echo ' <div class="container">
+                                <div class="card">
+                                    <div class="row mt-2 mb-2">
+                                        <div class="col-md-2">
+                                            <img
+                                                    src="' . UPLOADS . '/' . $product[IMMAGINE] . '"
+                                                    alt="Product Image"
+                                                    class="img-fluid"
+                                            />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h3>' . $product[NOME] . '</h3>
+                                            <p>' . $product[DESCRIZIONE] . '</p>';
 
                         $articleConfigurations = $session->getArticleConfigurations($article[ID]);
-
                         foreach ($articleConfigurations as $articleConfiguration) {
                             $whereOptionId = '`Id` = ' . $articleConfiguration[OPZIONE_ID];
                             $optionVariation = $session->getRecord(OPZIONE_VARIAZIONE, $whereOptionId);
@@ -89,10 +88,11 @@ require_once "UIHelper.php";
                             <h4>' . EURO . ' ' . $article[PREZZO] . '</h4>
                         </div>
                     </div>
+                    </div>
                     
                     <!-- divider -->
                     <div class="row mt-2">
-                        <hr>
+                        <hr style="color: white;">
                     </div>
                 </div>        
             ';
@@ -104,7 +104,7 @@ require_once "UIHelper.php";
                             <div class="row mt-3">
                                 <div class="col-md-10"></div>
                                 <div class="col-md-2">
-                                    <h4>Cart Total: ' . EURO . ' ' . $finalAmount . ' </h4>
+                                    <h4 style="color: white;">Cart Total: ' . EURO . ' ' . $finalAmount . ' </h4>
                                 </div>
                             </div>';
             echo '
@@ -116,7 +116,21 @@ require_once "UIHelper.php";
                             </div>';
             echo '</form>';
         } else {
-            echo '<div>Non ci sono articoli in carrello! <a class="btn btn-outline-secondary" href="./index.php">Aggiungine uno!</a></div>';
+            echo '<div class="container rounded my-3" style="background-color: white;">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" height="96" viewBox="0 96 960 960" width="96">
+                        <path d="M640 604h-35l-59-60h85l126-228H316l-60-60h529q26 0 38 21.5t-2 46.5L680 
+                        580q-6 11-15 17.5t-25 6.5ZM286.788 975Q257 975 236 953.788q-21-21.213-21-51Q215 
+                        873 236.212 852q21.213-21 51-21Q317 831 338 852.212q21 21.213 21 51Q359 933 337.788 
+                        954q-21.213 21-51 21ZM851 1021 595 767H277q-38 0-56-27.5t1-59.5l70-117-86-187L46 
+                        216l43-43 805 805-43 43ZM535 707 434 603h-95l-63 104h259Zm96-163h-85 
+                        85Zm57 431q-29 0-50.5-21.212-21.5-21.213-21.5-51Q616 873 637.5 852q21.5-21 50.5-21t50.5 
+                        21.212q21.5 21.213 21.5 51Q760 933 738.5 954 717 975 688 975Z"/>
+                    </svg>
+
+                    Non ci sono articoli in carrello! 
+                        <a class="btn btn-outline-secondary" href="./index.php">Aggiungine uno!</a>
+                  </div>';
         }
 
     } else {
