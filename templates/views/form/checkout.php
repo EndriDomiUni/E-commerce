@@ -13,6 +13,7 @@
             <ul class="list-group mb-3">
                 <?php
                 if (isset($_SESSION["Id"])) {
+                    echo '<form method="post">';
                     $session = new Session($_SESSION["Id"]);
                     $finalAmount = 0.00;
                     $articlesInCart = $session->loadArticlesInCart($session->getCurrentUser()[CARRELLO_ID]);
@@ -26,12 +27,20 @@
                                     $whereProductId = "Id = " . $article[PRODOTTO_ID];
                                     $product = $session->getRecord(PRODOTTO, $whereProductId);
                                     if ($product !== null) {
+
                                         echo '<li class="list-group-item d-flex justify-content-between lh-condensed">
                                                     <div>
                                                         <h6 class="my-0">' . $product[NOME] . '</h6>
                                                         <small class="text-muted">' . $product[DESCRIZIONE] . '</small>
                                                     </div>
                                                     <span class="text-muted">' . EURO . ' ' . $article[PREZZO] . '</span>
+                                                    <select class="form-select" aria-label="Default select example" id="order-detail-type'. $value[ID] .'" name="order-detail-type'. $value[ID] .'" style="width: 120px;">
+                                                        <option value="1">Standard</option>
+                                                        <option value="2">Mensile</option>
+                                                        <option value="3">Trimestrale</option>
+                                                        <option value="4">Annuale</option>
+                                                        <option value="5">A rate</option>
+                                                    </select>
                                                 </li>';
                                     }
                                 }
@@ -51,7 +60,6 @@
         <div class="col-md-8 order-md-1">
             <div class="container rounded" style="background: white;">
                 <h4 class="mb-3">Informazioni spedizone</h4>
-                <form method="post">
                     <?php
                     if (isset($_SESSION[ID])) {
                         $session = new Session($_SESSION[ID]);

@@ -52,6 +52,8 @@ const ACTIVE = 1;
 const STATUS_INTACT_DATA = 0;
 const STATUS_MODIFIED_DATA = 1;
 const STATUS_DELETED_DATA = 2;
+const STATUS_PENDING_DATA = 3;
+
 
 
 // UNSET ---------------------------------------------------------------
@@ -156,6 +158,7 @@ const SORT_MODE_PRICE_ASC = 1;
 const SORT_MODE_PRICE_DESC = 2;
 const SORT_MODE_NAME_ASC = 3;
 const SORT_MODE_NAME_DESC = 4;
+
 
 // ORDER STATUS
 const ORDER_STATUS_PAID = 0;

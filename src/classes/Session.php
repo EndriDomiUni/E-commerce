@@ -402,7 +402,7 @@ class Session extends Dbh
         return CARRELLO_UNSET;
     }
 
-    public function addSingleItemInOrder($orderId): bool
+    public function addSingleItemInOrder($orderId, $orderTypeList): bool
     {
         $result = false;
         $articlesInCart = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
@@ -416,11 +416,35 @@ class Session extends Dbh
                     ORDER_DETAILS_TYPE_STANDARD,
                     $article[ARTICOLO_ID],
                     $orderId,
-                    STATUS_INTACT_DATA
+                    STATUS_PENDING_DATA
                 );
                 $result = parent::isInsertSuccessful(DETTAGLIO_ORDINE, $res);
             }
         }
+        return $result;
+    }
+
+    public function addNewOrderDetails($orderId, $orderTypeList): bool
+    {
+        $result = false;
+        $articlesInCart = $this->loadArticlesInCart($this->getCurrentUser()[CARRELLO_ID]);
+
+        for ($i = 0; $i < count($articlesInCart); $i++) {
+            $quantity = $articlesInCart[$i][QUANTITA];
+            $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                VALUES (?, ?, ?, ?)";
+
+            for ($j = 0; $j < $quantity; $j++) {
+                $res = parent::insertData($query,
+                    $orderTypeList[$j],
+                    intval($articlesInCart[$i][ARTICOLO_ID]),
+                    $orderId,
+                    STATUS_PENDING_DATA
+                );
+                $result = parent::isInsertSuccessful(DETTAGLIO_ORDINE, $res);
+            }
+        }
+
         return $result;
     }
 

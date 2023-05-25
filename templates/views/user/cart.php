@@ -18,6 +18,7 @@ require_once "UIHelper.php";
         $finalAmount = 0.00;
         if (is_array($articlesInCart) && !empty($articlesInCart)) {
             echo '<form method="post">';
+
             foreach ($articlesInCart as $articleInCart) {
                 $articleId = $articleInCart[ARTICOLO_ID];
                 $whereArticle = "Id = " . $articleId;
@@ -66,23 +67,14 @@ require_once "UIHelper.php";
                         <div class="col-md-2">
                             <h4>Quantità:  </h4>
                             <select class="form-select" aria-label="Default select example">                             
-                                <option  selected value="1">1</option>
+                                <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <h4>Tipologia ordine</h4>
-                                <select class="form-select" aria-label="Default select example">                             
-                                    <option  selected value="1">Standard</option>
-                                    <option value="2">Mensile</option>
-                                    <option value="3">Trimestrale</option>
-                                    <option value="4">Annuale</option>
-                                    <option value="5">Pagamento a rate</option>
-                                </select>
-                            </div>
+                          
                         <div class="col-md-2">
                             <h4>Prezzo:</h4>
                             <h4>' . EURO . ' ' . $article[PREZZO] . '</h4>
@@ -96,7 +88,6 @@ require_once "UIHelper.php";
                     </div>
                 </div>        
             ';
-
                     }
                 }
             }
