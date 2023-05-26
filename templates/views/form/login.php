@@ -6,7 +6,7 @@
         <div class="col-sm">
             <div class="container text-center">
                 <section class="form-signin w-100 m-auto">
-                    <div class="container my-3 rounded" style="background: white;">
+                    <div class="container my-3" style="background: white;">
                         <form method="post">
                             <img src="<?php echo IMG; ?>/logo.svg" width="100" height="100" alt="Logo">
                             <div class="signin-intro">

@@ -110,7 +110,7 @@
                 </div>
             </div>
             <div class="card-footer d-flex justify-content-end">
-                <a class="btn btn-primary ml-auto" href="./address.php">Modifica</a>
+                <button class="btn btn-primary ml-auto" name="btn-address">Modifica</button>
             </div>
         </form>
     </div>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex justify-content-end">
-                    <a class="btn btn-primary ml-auto" href="./cardPayForm.php">Modifica</a>
+                    <a class="btn btn-primary ml-auto" href="./address.php">Modifica</a>
                 </div>
             </div>
     </div>
