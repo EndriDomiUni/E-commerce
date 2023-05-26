@@ -548,6 +548,45 @@ class Session extends Dbh
         }
     }
 
+    public function AddArticleInStockQuantity ($articleInStockId, $quantity) : void
+    {
+        var_dump($articleInStockId);
+        echo "<br>";
+        parent::updateDateWithWhere(ARTICOLO_IN_MAGAZZINO, QUANTITA, $quantity,
+            ID . ' = ' . $articleInStockId[ID]);
+    }
+
+    public function GetWarehousesExpectParam($warehouseId) : array
+    {
+        $queryCondition = ID . ' = ' . $warehouseId;
+        return parent::getAllRecords(MAGAZZINO, $queryCondition);
+    }
+
+//    public function getArticleIdByConfigurationsAndProduct($productId, $optionsVariation) : int
+//    {
+//        $ArticleIdFound = null;
+//        $query = 'SELECT
+//                        DISTINCT a.Id
+//                    FROM
+//                        Articolo a
+//                    JOIN Configurazione_variazione cv ON
+//                        a.Id = cv.Articolo_id
+//                    JOIN Opzione_variazione ov ON
+//                        cv.Opzio_variazione_id = ov.Id
+//                    WHERE
+//                        a.Prodotto_id = 24 AND(';
+//        for ($i = 0; $i < count($optionsVariation); $i++) {
+//            if ($i != 0) {
+//                $query = $query . ' OR ';
+//            }
+//            $query = $query . 'ov.Valore = ' . $optionsVariation[$i][VALORE];
+//        }
+//
+//                           // ov.Valore = ' . ' OR ov.Valore = Nero
+//                        //)';
+//
+//    }
+
 
     /**
      * Set status = delete
