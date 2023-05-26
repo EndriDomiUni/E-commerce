@@ -85,6 +85,7 @@ const FORMA_DI_PAGAMENTO = "Forma_di_pagamento";
 const ARTICOLO_IN_MAGAZZINO = "Articolo_in_magazzino";
 const ORDINE = "Ordine";
 const DETTAGLIO_ORDINE = "Dettaglio_ordine";
+const MAGAZZINO = "Magazzino";
 
 // TABLE COLUMN NAME ---------------------------------------------------
 // ID

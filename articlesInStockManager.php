@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 
 session_start();
 require_once ("mandatory.php");
+require_once ("./script/manageArticleInStock.script.php");
 
 ob_start();
 require './templates/views/components/articleInStock.php';
