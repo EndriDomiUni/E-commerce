@@ -32,7 +32,7 @@
                                 <td style="color: white;">' . $index++ . '</td>
                                 <td style="color: white;">' . $order[DATA_ORDINE] . '</td>
                                 <td style="color: white;">' . $order[TOTALE_ORDINE] . ' ' . EURO . '</td>
-                                <td style="color: white;">Pagato</td>
+                                <td style="color: white;">' . $session->getDescriptionOrderStatus($order[STATUS]) . '</td>
                                 <td>
                                   <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal' . $orderId . '">
@@ -58,23 +58,13 @@
                                 $whereProductId = "Id = " . $article[PRODOTTO_ID];
                                 $product = $session->getRecord(PRODOTTO, $whereProductId);
                                 if ($product !== null) {
-                                    $orderDetailStatus = "";
-                                    switch ($orderDetail[STATUS]) {
-                                        default:
-                                        case ORDER_STATUS_PAID:
-                                            $orderDetailStatus = "Pagato";
-                                            break;
-                                        case ORDER_STATUS_GIVE_BACK:
-                                            $orderDetailStatus = "Reso effettuato";
-                                            break;
-                                    }
                                     echo '<div class="card my-2">
                                               <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img-top" alt="Product Image" height="200px" width="200px">
                                               <div class="card-body">
                                                 <h5 class="card-title">' . $product[NOME] . '</h5>
                                                 <p class="card-text">' . $product[DESCRIZIONE] . '</p>
                                                 <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
-                                                <p class="card-text"> Status: ' . $orderDetailStatus . '</p>
+                                                <p class="card-text"> Status: ' . $session->getDescriptionOrderDetailStatus($orderDetail[STATUS]) . '</p>
                                                 
                                                 <div class="row">
                                                     <div class="col">

@@ -33,6 +33,12 @@ if (isset($_POST["checkout"])) {
             // on success -> add order details
             if ($session->addNewOrderDetails($newOrderId, $orderTypeList)) {
 
+                // manage order details
+                $session->manageOrderDetails($newOrderId);
+
+                // notify sale
+                $session->notifyNewSale($newOrderId);
+
                 // clear cart
                 $session->removeArticlesInCart();
 
@@ -40,7 +46,6 @@ if (isset($_POST["checkout"])) {
                 header("Location: orderHistory.php");
             }
         }
-
     } else {
         header("Location: login.php");
     }

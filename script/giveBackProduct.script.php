@@ -36,6 +36,5 @@ if (isset($_SESSION[ID])) {
                 echo $e->getMessage();
             }
         }
-
     }
 }

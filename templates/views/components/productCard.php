@@ -85,39 +85,45 @@
                     $options = [];
 
                     foreach ($currentArticles as $currentArticle) {
-                        $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
-                        foreach ($articleConfigurations as $articleConfiguration) {
 
-                            $option_id = $articleConfiguration[OPZIONE_ID];
-                            $queryOption = "SELECT * FROM `" . OPZIONE_VARIAZIONE . "` WHERE `" . ID . "` = " . $option_id;
-                            $currentOption = $session->execute($queryOption);
+                        if ($session->getQuantityArticlesInStockByArticle($currentArticle[ID]) > 0) {
+                            $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
+                            foreach ($articleConfigurations as $articleConfiguration) {
 
-                            if ($currentProductPrice == null) {
-                                $currentProductPrice = (int)$currentArticle[PREZZO];
-                            }
+                                $option_id = $articleConfiguration[OPZIONE_ID];
+                                $queryOption = "SELECT * FROM `" . OPZIONE_VARIAZIONE . "` WHERE `" . ID . "` = " . $option_id;
+                                $currentOption = $session->execute($queryOption);
 
-                            $queryGetVariation = "SELECT * FROM `" . VARIAZIONE . "` WHERE `" . ID . "` = " . $currentOption[0][VARIAZIONE_ID];
-                            $currentVariation = $session->execute($queryGetVariation);
+                                if ($currentProductPrice == null) {
+                                    $currentProductPrice = (int)$currentArticle[PREZZO];
+                                }
 
-                            if (!in_array($currentVariation[0], $variations)) {
-                                $variations[$currentVariation[0][ID]] = $currentVariation[0];
-                            }
-                            if (!in_array($currentOption, $options)) {
-                                $currentOption[0][VARIAZIONE_ID];
-                                $options[$currentOption[0][ID]] = $currentOption[0];
+                                $queryGetVariation = "SELECT * FROM `" . VARIAZIONE . "` WHERE `" . ID . "` = " . $currentOption[0][VARIAZIONE_ID];
+                                $currentVariation = $session->execute($queryGetVariation);
+
+                                if (!in_array($currentVariation[0], $variations)) {
+                                    $variations[$currentVariation[0][ID]] = $currentVariation[0];
+                                }
+                                if (!in_array($currentOption, $options)) {
+                                    $currentOption[0][VARIAZIONE_ID];
+                                    $options[$currentOption[0][ID]] = $currentOption[0];
+                                }
                             }
                         }
+
                     }
-                    foreach ($variations as $variation) {
-                        echo '<label for="product-variation-' . $variation[ID] . '">' . $variation[NOME] . '</label>';
-                        echo '<select class="form-select" id="product-variation-' . $variation[ID] . '"  name="product-variation-' . $variation[ID] . '" aria-label="Default select example">';
-                        echo '<option value="">--Seleziona opzione--</option>';
-                        foreach ($options as $option) {
-                            if ($option[VARIAZIONE_ID] === $variation[ID]) {
-                                echo '<option value="' . $option[ID] . '">' . $option[VALORE] . '</option>';
+                    if (!empty($variations) && !empty($variation)) {
+                        foreach ($variations as $variation) {
+                            echo '<label for="product-variation-' . $variation[ID] . '">' . $variation[NOME] . '</label>';
+                            echo '<select class="form-select" id="product-variation-' . $variation[ID] . '"  name="product-variation-' . $variation[ID] . '" aria-label="Default select example">';
+                            echo '<option value="">--Seleziona opzione--</option>';
+                            foreach ($options as $option) {
+                                if ($option[VARIAZIONE_ID] === $variation[ID]) {
+                                    echo '<option value="' . $option[ID] . '">' . $option[VALORE] . '</option>';
+                                }
                             }
+                            echo '</select>';
                         }
-                        echo '</select>';
                     }
                     drawCardFooter($product[ID], $session);
                 }

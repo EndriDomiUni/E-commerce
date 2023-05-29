@@ -117,19 +117,6 @@ class Session extends Dbh
         return null;
     }
 
-    /**
-     * returns current product while insertion new product
-     * @return array|int
-     */
-    public function getCurrentProduct(): array|int
-    {
-        return parent::getProductById($_SESSION[PRODOTTO_ID]);
-    }
-
-    public function __toString(): string
-    {
-        return $this->getCurrentUser();
-    }
 
     public function insertCardPayModInformation($params): array|int|string|null
     {
@@ -259,12 +246,6 @@ class Session extends Dbh
         return false;
     }
 
-    public function loadArticlesByUserId($userId): array|int|string
-    {
-        $where = "Utente_id = $userId";
-        $query = "SELECT * FROM `Articolo` WHERE $where";
-        return parent::execute($query); // should return an array
-    }
 
     public function loadArticlesInCart($cartId): string|int|array
     {
@@ -284,10 +265,45 @@ class Session extends Dbh
         foreach ($articlesInCart as $articleInCart) {
             $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCart[ARTICOLO_ID]);
             if ($article !== null) {
-                $total = $total + (floatval($article[PREZZO] * $articleInCart[QUANTITA]));
+
+                $claimType = $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]);
+
+                // is discounted?
+                if ($this->isDiscountArticle($article[ID]) || $claimType === CLAIM_USER_PRO_DESC) {
+                    $total = $total + (floatval($article[PREZZO] * $articleInCart[QUANTITA]) * 0.85); // 15% di sconto
+                } else {
+                    $total = $total + (floatval($article[PREZZO] * $articleInCart[QUANTITA]));
+                }
             }
         }
         return $total;
+    }
+
+    public function getDescriptionOrderStatus($orderStatus): string
+    {
+        switch ($orderStatus) {
+            default:
+                return "Sospeso";
+            case ORDER_STATUS_PAID:
+                return "Pagato";
+            case ORDER_STATUS_PENDING:
+                return "In attesa";
+
+        }
+    }
+
+    public function getDescriptionOrderDetailStatus($orderStatus): string
+    {
+        switch ($orderStatus) {
+            default:
+                return "Sospeso";
+            case ORDER_STATUS_PAID:
+                return "Pagato";
+            case ORDER_STATUS_PENDING:
+                return "In attesa";
+            case ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT:
+                return "A rate";
+        }
     }
 
     public function loadProductInWishlist(): array|int|string|null
@@ -382,7 +398,7 @@ class Session extends Dbh
             $res = parent::insertData($query,
                 $params[DATA_ORDINE],
                 $params[TOTALE_ORDINE],
-                STATUS_INTACT_DATA,
+                ORDER_STATUS_PENDING,
                 1,
                 $paymentData[ID]);
             return UtilsFunctions::checkResponse($res) ? $res : 0;
@@ -402,27 +418,6 @@ class Session extends Dbh
         return CARRELLO_UNSET;
     }
 
-    public function addSingleItemInOrder($orderId, $orderTypeList): bool
-    {
-        $result = false;
-        $articlesInCart = $this->loadArticlesInCartWhere($this->getCurrentUser()[CARRELLO_ID]);
-        foreach ($articlesInCart as $article) {
-            $quantity = $article[QUANTITA];
-            $query = "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                VALUES (?, ?, ?, ?)";
-
-            for ($i = 0; $i < $quantity; $i++) {
-                $res = parent::insertData($query,
-                    ORDER_DETAILS_TYPE_STANDARD,
-                    $article[ARTICOLO_ID],
-                    $orderId,
-                    STATUS_PENDING_DATA
-                );
-                $result = parent::isInsertSuccessful(DETTAGLIO_ORDINE, $res);
-            }
-        }
-        return $result;
-    }
 
     public function addNewOrderDetails($orderId, $orderTypeList): bool
     {
@@ -437,17 +432,246 @@ class Session extends Dbh
             for ($j = 0; $j < $quantity; $j++) {
                 $res = parent::insertData($query,
                     $orderTypeList[$j],
-                    intval($articlesInCart[$i][ARTICOLO_ID]),
+                    $articlesInCart[$i][ARTICOLO_ID],
                     $orderId,
-                    STATUS_PENDING_DATA
+                    ORDER_DETAIL_STATUS_PENDING_DATA
                 );
                 $result = parent::isInsertSuccessful(DETTAGLIO_ORDINE, $res);
             }
         }
-
         return $result;
     }
 
+
+    public function manageOrderDetails($orderId) {
+
+        // original order
+        $originalOrder = parent::getRecord(ORDINE, "Id = " . $orderId);
+
+        // load orders detail
+        $orderDetails = $this->loadOrderDetails($orderId);
+        foreach ($orderDetails as $orderDetail) {
+            switch ($orderDetail[TIPO]) {
+
+                // STANDARD -> set order to status PAID
+                //          -> set order detail to status PAID
+                case ORDER_DETAILS_TYPE_STANDARD:
+                    parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
+                    parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+                    break;
+
+                // MONTHLY -> set order to status PAID
+                //         -> set order detail to status PAID for the first
+                //         -> generate new order
+                //         -> generate new orderDetail  with status ORDER_STATUS_PENDING
+                case ORDER_DETAILS_TYPE_MONTHLY:
+                    // update status
+                    parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
+                    parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+
+                    // create new order
+                    $newDate = strtotime('+1 month', $originalOrder[DATA_ORDINE]);
+                    $newOrderId = parent::insertData(
+                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+                                VALUES (?, ?, ?, ?, ?)",
+                        $newDate,
+                        $originalOrder[TOTALE_ORDINE], // TODO: conto sbagliato!!!!!! e tutti sotto
+                        ORDER_STATUS_PENDING,
+                        1,
+                        $originalOrder[FORMA_DI_PAG_ID]);
+
+                    // create new order detail
+                    parent::insertData(
+                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                                VALUES (?, ?, ?, ?)",
+                                $orderDetail[TIPO],
+                        $orderDetail[ARTICOLO_ID],
+                        $newOrderId,
+                        ORDER_STATUS_PENDING
+                    );
+                    break;
+
+                // QUARTERLY -> set order detail to status PAID for the first
+                //           -> generate new order
+                //           -> generate new orderDetail  with status ORDER_STATUS_PENDING
+                case ORDER_DETAILS_TYPE_QUARTERLY:
+                    // update status
+                    parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+
+                    // create new order
+                    $newDate = strtotime('+3 month', $originalOrder[DATA_ORDINE]);
+                    $newOrderId = parent::insertData(
+                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+                                VALUES (?, ?, ?, ?, ?)",
+                        $newDate,
+                        $originalOrder[TOTALE_ORDINE], // TODO: conto sbagliato!!!!!! e tutti sotto
+                        ORDER_STATUS_PENDING,
+                        1,
+                        $originalOrder[FORMA_DI_PAG_ID]);
+
+                    // create new order detail
+                    parent::insertData(
+                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                                VALUES (?, ?, ?, ?)",
+                        $orderDetail[TIPO],
+                        $orderDetail[ARTICOLO_ID],
+                        $newOrderId,
+                        ORDER_STATUS_PENDING
+                    );
+                    break;
+
+                // YEARLY -> set order detail to status PAID for the first
+                //           -> generate new order
+                //           -> generate new orderDetail  with status ORDER_STATUS_PENDING
+                case ORDER_DETAILS_TYPE_YEARLY:
+                    // update status
+                    parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+
+                    // create new order
+                    $newDate = strtotime('+12 month', $originalOrder[DATA_ORDINE]);
+                    $newOrderId = parent::insertData(
+                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+                                VALUES (?, ?, ?, ?, ?)",
+                        $newDate,
+                        $originalOrder[TOTALE_ORDINE], // TODO: conto sbagliato!!!!!! e tutti sotto
+                        ORDER_STATUS_PENDING,
+                        1,
+                        $originalOrder[FORMA_DI_PAG_ID]);
+
+                    // create new order detail
+                    parent::insertData(
+                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                                VALUES (?, ?, ?, ?)",
+                        $orderDetail[TIPO],
+                        $orderDetail[ARTICOLO_ID],
+                        $newOrderId,
+                        ORDER_STATUS_PENDING
+                    );
+                    break;
+
+                // INSTALLMENT_PAYMENT ->
+                //                     ->
+                //                     ->
+                case ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT:
+
+                    // update status
+                    parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
+                    parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+
+                    // get article
+                    $article = parent::getRecord(ARTICOLO, "Id = " . $orderDetails[ARTICOLO_ID]);
+
+                    // get article in cart
+                    $articleInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
+
+                    $installment = $article[PREZZO]/3 * $articleInCart[QUANTITA];
+                    $newTotal = floatval($originalOrder[TOTALE_ORDINE] - ($article[PREZZO] + $installment));
+
+                    // update total of order
+                    parent::updateData($orderId,
+                        ORDINE,
+                        TOTALE_ORDINE,
+                        $newTotal);
+
+                    // --------------
+                    // create new order 2
+                    $newDate = strtotime('+1 month', $originalOrder[DATA_ORDINE]);
+                    $newOrderId2 = parent::insertData(
+                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+                                VALUES (?, ?, ?, ?, ?)",
+                        $newDate,
+                        $newTotal,
+                        ORDER_STATUS_PENDING,
+                        1,
+                        $originalOrder[FORMA_DI_PAG_ID]);
+
+                    // create new order detail
+                    parent::insertData(
+                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                                VALUES (?, ?, ?, ?)",
+                        $orderDetail[TIPO],
+                        $orderDetail[ARTICOLO_ID],
+                        $newOrderId2,
+                        ORDER_STATUS_PENDING
+                    );
+
+                    // ----------------
+                    // create new order 3
+                    $newDate = strtotime('+1 month', $originalOrder[DATA_ORDINE]);
+                    $newOrderId3 = parent::insertData(
+                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+                                VALUES (?, ?, ?, ?, ?)",
+                        $newDate,
+                        $newTotal,
+                        ORDER_STATUS_PENDING,
+                        1,
+                        $originalOrder[FORMA_DI_PAG_ID]);
+
+                    // create new order detail
+                    parent::insertData(
+                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                                VALUES (?, ?, ?, ?)",
+                        $orderDetail[TIPO],
+                        $orderDetail[ARTICOLO_ID],
+                        $newOrderId3,
+                        ORDER_STATUS_PENDING
+                    );
+                    break;
+            }
+        }
+    }
+
+    public function notifyNewSale($orderId) {
+
+        // get order details
+        $orderDetails = $this->loadOrderDetails($orderId);
+        foreach ($orderDetails as $orderDetail) {
+
+            // update quantity
+            $articleInStock = $this->getArticlesInStockByArticle($orderDetail[ARTICOLO_ID]);
+            if (!empty($articleInStock)) {
+
+
+                // if is one article
+                if (isset($articleInStock[ID])) { // strano controllo
+                    $this->updateQtyArticleInStock($articleInStock[ID], max($articleInStock[QUANTITA] - 1, 0));
+                } else {
+                    // more than one
+                    $firstArticleInStock = $articleInStock[0];
+                    $this->updateQtyArticleInStock($firstArticleInStock[ID], max($firstArticleInStock[QUANTITA] - 1, 0));
+                }
+
+                // get article
+                $article = parent::getRecord(ARTICOLO, "Id = " . $orderDetail[ARTICOLO_ID]);
+
+                // get article in cart
+                $articleInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
+
+                // get claim of seller
+                $seller = parent::getRecord(UTENTE, "Id = " . $article[UTENTE_ID]);
+                $sellerClaim = parent::getRecord(CLAIM, "Id = " . $seller[CLAIM_ID]);
+
+                // update amount seller
+                if ($orderDetail[TIPO] !== ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT) {
+                    parent::updateData($sellerClaim[ID],
+                        CLAIM,
+                        CONTO,
+                        floatval($article[PREZZO] * $articleInCart[QUANTITA]));
+                } else {
+                    parent::updateData($sellerClaim[ID],
+                        CLAIM,
+                        CONTO,
+                        floatval($article[PREZZO]/3 * $articleInCart[QUANTITA]));
+                }
+            } else {
+                echo 'Non è stato trovato nessun articolo';
+            }
+        }
+    }
+
+    private function updateQtyArticleInStock($articleInStockId, $newQuantity){
+        parent::updateData($articleInStockId, ARTICOLO_IN_MAGAZZINO, QUANTITA, $newQuantity);
+    }
 
     public function removeArticlesInCart() {
         parent::deleteRecord(ARTICOLO_IN_CARRELLO, "Carrello_id = " . $this->getCurrentUser()[CARRELLO_ID]);
@@ -490,6 +714,8 @@ class Session extends Dbh
         return $quantity;
     }
 
+
+
     /**
      * Get all articles in stock of seller in session
      * @param int $warehouseId
@@ -509,9 +735,13 @@ class Session extends Dbh
         return $articlesInStock;
     }
 
+    /**
+     * @param int $articleId
+     * @return array articles in stock by article id
+     */
     public function getArticlesInStockByArticle(int $articleId) : array
     {
-        return [];
+        return parent::getRecord(ARTICOLO_IN_MAGAZZINO, "Articolo_id = " . $articleId);
     }
 
 
@@ -519,20 +749,40 @@ class Session extends Dbh
      * Get
      * @param $startTime
      * @param $endTime
-     * @return array
+     * @return int
      */
-    public function getOrdersQuantityInRangeDateTime($startTime, $endTime) : array
+    public function getOrdersQuantityInRangeDateTime($startTime, $endTime) : int
     {
-        $query = 'SELECT COUNT(DISTINCT o.id) AS numero_ordini
+        $query = 'SELECT COUNT(DISTINCT o.Id) AS numero_ordini
                     FROM Ordine o
-                    JOIN Dettaglio_ordine do ON o.id = do.id_ordine
-                    JOIN Articolo_in_carrello ac ON do.id_articolo_in_carrello = ac.id
-                    JOIN Articolo a ON ac.Articolo_id = a.id
+                    JOIN Dettaglio_ordine do ON o.Id = do.Ordine_id
+                    JOIN Articolo_in_carrello ac ON do.Articolo_id = ac.Articolo_id
+                    JOIN Articolo a ON ac.Articolo_id = a.Id
                     WHERE a.Utente_id = ' . $this->getCurrentUser()[ID] . '
                       AND o.Data_ordine >= ' . $startTime . '
                       AND o.Data_ordine <= ' . $endTime;
-        return $this->execute($query);
+        $res = $this->execute($query);
+        return $res[0]['numero_ordini'];
     }
+
+    /**
+     *
+     *
+     * @return int
+     */
+    public function getOrdersQuantity() : int
+    {
+        $query = 'SELECT COUNT(DISTINCT o.Id) AS numero_ordini
+                    FROM Ordine o
+                    JOIN Dettaglio_ordine do ON o.Id = do.Ordine_id
+                    JOIN Articolo_in_carrello ac ON do.Articolo_id = ac.Articolo_id
+                    JOIN Articolo a ON ac.Articolo_id = a.Id
+                    WHERE a.Utente_id = ' . $this->getCurrentUser()[ID];
+        $res = $this->execute($query);
+        return $res[0]['numero_ordini'];
+    }
+
+
 
     /**
      * Get option by id
@@ -571,6 +821,25 @@ class Session extends Dbh
             return [];
         }
     }
+
+    public function getNumberOrderOfArticleForCurrentUser($articleId): int
+    {
+        $res = parent::execute("SELECT COUNT(*) AS numero_ordini
+                                    FROM Ordine o
+                                    JOIN Dettaglio_ordine d_o ON o.Id = d_o.Ordine_id
+                                    WHERE d_o.Articolo_id = " . $articleId . " 
+                                        AND o.Id IN (
+                                            SELECT Id
+                                            FROM Forma_di_pagamento
+                                            WHERE Utente_id = ". $this->getCurrentUser()[ID] . ")");
+        return $res[0]['numero_ordini'];
+    }
+
+    public function isDiscountArticle($articleId): bool
+    {
+        return $this->getNumberOrderOfArticleForCurrentUser($articleId) > 3;
+    }
+
 
 
     /**
@@ -656,6 +925,11 @@ class Session extends Dbh
         parent::updateData($this->getCurrentUser()[ID], UTENTE, STATUS, STATUS_DELETED_DATA);
     }
 
+    /**
+     * @param $orderDetailsId
+     * @param $params
+     * @return int|array|string new record in RECENSIONE
+     */
     public function addReview($orderDetailsId, $params): int|array|string
     {
         $queryInsertReview = "INSERT INTO `Recensione` (Valutazione, Commento, Dettaglio_ordine_id, Utente_id, Prodotto_id, Status)
@@ -669,6 +943,11 @@ class Session extends Dbh
             STATUS_INTACT_DATA);
     }
 
+    /**
+     * @param $orderDetailId
+     * @param $params
+     * @return int|array|string new record in RESO
+     */
     public function addArticleGiveBack($orderDetailId, $params): int|array|string
     {
         $queryInsertArticleGiveBack = "INSERT INTO `Reso` (Dettaglio_ordine_id, Motivo, Descrizione, Status)
@@ -679,5 +958,49 @@ class Session extends Dbh
             $params[DESCRIZIONE],
             STATUS_INTACT_DATA
         );
+    }
+
+    public function getWarehouseTax($warehouseId) {
+
+        // get warehouse & tax
+        $warehouse = parent::getRecord(MAGAZZINO, "Id = " . $warehouseId);
+
+        // get qty
+        $quantity = $this->getArticlesInStockQuantity($warehouseId);
+
+        // switch by claim
+        $claimType = $this->getClaimTypeFromId($this->getCurrentUser()[CLAIM_ID]);
+        switch ($claimType) {
+            case CLAIM_SELLER_DESC:
+                return $quantity * $warehouse[TASSA];
+
+            case CLAIM_SELLER_PR0_DESC:
+                return $quantity * $warehouse[TASSA]/2;
+        }
+    }
+
+    public function getAllWarehouseTax(): float
+    {
+        $total = 0.0;
+        $warehousesId = parent::execute("SELECT Id FROM Magazzino");
+        for ($i = 0; $i < count($warehousesId); $i++) {
+            $id = $warehousesId[$i][ID];
+            $total += floatval($this->getWarehouseTax($id));
+        }
+        return $total;
+    }
+
+    public function getQuantityArticlesInStockByArticle($articleId): int
+    {
+        $total = 0;
+        // $articlesInStock = parent::getRecord(ARTICOLO_IN_MAGAZZINO, "Articolo_id = ". $articleId);
+        $articlesInStock = parent::execute("SELECT * FROM Articolo_in_magazzino WHERE Articolo_id = " . $articleId);
+
+        if (!empty($articlesInStock)) {
+            foreach ($articlesInStock as $articleInStock) {
+                $total += $articleInStock[QUANTITA];
+            }
+        }
+        return $total;
     }
 }
