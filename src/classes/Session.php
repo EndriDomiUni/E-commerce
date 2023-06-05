@@ -1105,4 +1105,17 @@ class Session extends Dbh
         return $total;
     }
 
+    /**
+     * Check quantity to update
+     * @param $articleInStockQuantity
+     * @param $quantityToUpdate
+     * @return bool
+     */
+    public function checkArticleInStockQuantity($articleInStockQuantity, $quantityToUpdate) : bool
+    {
+        if ($articleInStockQuantity >= $quantityToUpdate) {
+            return true;
+        }
+        return false;
+    }
 }

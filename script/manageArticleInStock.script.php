@@ -54,33 +54,38 @@ if (isset($_SESSION[ID])) {
                 //se esiste articolo in magazzino aggiorna quantità
                 //altrimenti inserire nuovo record
                 $articleInStock = $session->getWarehouseArticle($articleId, $warehouseId);
-                if (!empty($articleInStock)) {
-                    //TODO: aggiungere controllo sulla quantità
-                    //update origin article in stock quantity
-                    $articleInStockOrigin = $session->getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . ' = ' . $articleId
-                        . ' AND ' . MAGAZZINO_ID . ' = ' . $_SESSION[MAGAZZINO_ID]);
+                $articleInStockOrigin = $session->getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . ' = ' . $articleId
+                    . ' AND ' . MAGAZZINO_ID . ' = ' . $_SESSION[MAGAZZINO_ID]);
+                if ($session->checkArticleInStockQuantity((int)$articleInStockOrigin[QUANTITA], (int)$quantityToEdit)) {
                     $originArticleInStockQuantityToUpdate = (int)$articleInStockOrigin[QUANTITA] - (int)$quantityToEdit;
-                    $session->updateQuantityArticleInStock($originArticleInStockQuantityToUpdate, $articleInStockOrigin[ID]);
 
-                    //update destination article in stock quantity
-                    $session->updateQuantityArticleInStock($quantityToEdit, $articleInStock[ID]);
-                    header ("Location: warehousesManager.php");
-                }
-                else {
-                    //TODO: togliere tassa e data fine dal db
-                    $res = $session->insertArticleInStock($quantityToEdit, $articleId, $warehouseId);
-                    $result = $session->isInsertSuccessful(ARTICOLO_IN_MAGAZZINO, $res);
-                    if ($result) {
+                    if (!empty($articleInStock)) {
                         //update origin article in stock quantity
-                        $articleInStockOrigin = $session->getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . ' = ' . $articleId
-                            . ' AND ' . MAGAZZINO_ID . ' = ' . $_SESSION[MAGAZZINO_ID]);
-                        $originArticleInStockQuantityToUpdate = (int)$articleInStockOrigin[QUANTITA] - (int)$quantityToEdit;
-                        $session->updateQuantityArticleInStock($quantityToEdit, $articleInStockOrigin[ID]);
-                        header ("Location: articlesInStockManager.php");
-                    } else {
-                        var_dump("Errore nello spostamento dell'articolo in magazzino");
+                        $session->updateQuantityArticleInStock($originArticleInStockQuantityToUpdate, $articleInStockOrigin[ID]);
+
+                        //update destination article in stock quantity
+                        $session->updateQuantityArticleInStock($quantityToEdit, $articleInStock[ID]);
+                        header ("Location: warehousesManager.php");
+                    }
+                    else {
+                        //TODO: togliere tassa e data fine dal db
+                        $res = $session->insertArticleInStock($quantityToEdit, $articleId, $warehouseId);
+                        $result = $session->isInsertSuccessful(ARTICOLO_IN_MAGAZZINO, $res);
+                        if ($result) {
+                            //update origin article in stock quantity
+                            $session->updateQuantityArticleInStock($quantityToEdit, $articleInStockOrigin[ID]);
+                            header ("Location: articlesInStockManager.php");
+                        } else {
+                            var_dump("Errore nello spostamento dell'articolo in magazzino");
+                        }
                     }
                 }
+                else
+                {
+                    //Error quantity: impossible operation
+                    header("Location: warehousesManager.php");
+                }
+
             }
         } elseif ((isset($_POST['remove-button-' . $product[0][ID]]))) {
             //TODO: completare delete
