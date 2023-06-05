@@ -13,7 +13,6 @@ $products = $session->getAllProductsBySeller($session->getCurrentUser()[ID]);
 
 foreach ($products as $product)
 {
-    //TODO: controllare da qui
     $articles = $session->getArticlesByProductId($product[0][ID]);
     $articlesQuantity = 0;
     foreach ($articles as $article)
@@ -29,9 +28,10 @@ foreach ($products as $product)
     }
     if ($articlesQuantity > 0)
     {
-        echo '<div class="container my-5 ">';
-
         echo '
+
+<div class="container my-5 ">
+        
     <div class="card">
       <div class="row">
         <div class="col-md-6">
@@ -57,74 +57,114 @@ foreach ($products as $product)
       </div>
       <div class="row">
         <div class="col">
-          <button type="submit" class="btn btn-primary" name="move-button">Move</button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal' . $product[0][ID] . '">Edit Quantity</button>
+          <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1-' . $product[0][ID] . '">Move</button>
+          <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2-' . $product[0][ID] . '">Edit Quantity</button>
           <button type="submit" class="btn btn-danger">Remove Article</button>
         </div>
       </div>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal' . $product[0][ID] . '" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h5 class="modal-title" id="myModalTitle">' . $product[0][NOME] . '</h5>
-             </div>
-             <div class="modal-body">
-               <div class="form-group">
-                 <label for="selectOption">Opzione</label>
-                 <select class="form-control" id="selectOption">';
-        foreach ($articles as $article)
-        {
-            $mapConfigurations = [];
-            $articleConfigurations = $session->getArticleConfigurations($article[ID]);
-            foreach ($articleConfigurations as $articleConfiguration) {
-                $option = $session->getOptionById($articleConfiguration[OPZIONE_ID]);
-                $variation = $session->getVariationById($option[VARIAZIONE_ID]);
-                $configuration = [ $variation[NOME] => $option[VALORE] ];
-                $mapConfigurations[] = $configuration;
-            }
-            echo '<option value="';
-            for ($i = 0; $i < count($mapConfigurations); $i++) {
-
-                if ($i > 0) {
-                    echo '-';
-                }
-
-                $variationName = array_keys($mapConfigurations[$i])[0];
-                $optionValue = array_values($mapConfigurations[$i])[0];
-                echo $optionValue;
-            }
-            echo '">';
-            for ($i = 0; $i < count($mapConfigurations); $i++) {
-                /*
-                if ($i > 0) {
-                    echo ' - ';
-                }
-                */
-                $variationName = array_keys($mapConfigurations[$i])[0];
-                $optionValue = array_values($mapConfigurations[$i])[0];
-                echo $variationName . ' ' . $optionValue;
-            }
-            echo '</option>';
-        }
+      
+        <!-- Modal Move Article in stock -->
+        
+        <div class="modal fade" name="myModal1-' . $product[0][ID] . '" id="myModal1-' . $product[0][ID] . '" tabindex="-1"
+            aria-labelledby="myModal1Title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModal1Title">' . $product[0][NOME] . '</h5>
+                    </div>
+                    <form method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="selectOptionVariation1">Opzione</label>    
+                                <select class="form-control" id="selectOptionVariation1" name="article-configurations-select1-' . $product[0][ID] .'">';
+        generateOptionsVariation($session, $articles);
         echo ' 
-               </select>
-               </div>
-               <div class="form-group">
-                 <label for="quantityInput">Quantità</label>
-                 <input type="number" class="form-control" id="quantityInput">
-               </div>
-             </div>
-             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-               <button type="submit" class="btn btn-primary">Conferma</button>
-             </div>
-           </div>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectWarehouse">Opzione</label>    
+                                <select class="form-control" id="selectWarehouse" name="warehouse-select1-' . $product[0][ID] .'">';
+        generateWarehouseOptions($session);
+        echo ' 
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantityInput1">Quantità</label>
+                                <input type="number" class="form-control" id="quantityInput1" name="quantity-input1-' . $product[0][ID] . '">
+                            </div>
+                         </div>  
+                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                            <button type="submit"  class="btn btn-primary" id="move-' . $product[0][ID] . '"
+                                name="move-' . $product[0][ID] . '">Conferma</button>
+                        </div>      
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
         </div>
-      <div>
+        <!-- End Modal Move Article in stock -->
+        
+        <!-- Modal Edit quantity -->
+
+        <div class="modal fade" name="myModal2-' . $product[0][ID] . '" id="myModal2-' . $product[0][ID] . '" tabindex="-1"
+            aria-labelledby="myModal2Title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModal2Title">' . $product[0][NOME] . '</h5>
+                    </div>
+                    <form method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="selectOption2">Opzione</label>
+                                <select class="form-control" id="selectOption2" name="article-configurations-select2-' . $product[0][ID] .'">';
+        generateOptionsVariation($session, $articles);
+
+        echo '
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantityInput2">Quantità</label>
+                                <input type="number" class="form-control" id="quantityInput2" name="quantity-input2-' . $product[0][ID] . '">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                            <button type="submit"  class="btn btn-primary" id="edit-quantity-' . $product[0][ID] . '"
+                                name="edit-quantity-' . $product[0][ID] . '">Conferma</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal edit -->
     </div>
 ';
     }
     echo '</div>';
 
 }
+
+
+function generateOptionsVariation(Session $session, $articles) : void
+{
+    foreach ($articles as $article)
+    {
+        $mapConfigurations = getMapArticleConfigurations($session, $article[ID]);
+        echo '<option value="' . $article[ID] . '">';
+        for ($i = 0; $i < count($mapConfigurations); $i++) {
+
+            if ($i > 0) {
+                echo ' ';
+            }
+
+            //$variationName = array_keys($mapConfigurations[$i])[0];
+            $optionValue = array_values($mapConfigurations[$i])[0];
+            echo   $optionValue;
+        }
+        echo '</option>';
+    }
+}
+

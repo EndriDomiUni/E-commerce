@@ -461,6 +461,7 @@ class Session extends Dbh
             if (count($articleInWarehouse) > 0) {
                 //var_dump($articleInWarehouse);
                 $quantity += $articleInWarehouse[QUANTITA];
+
             }
         }
         return $quantity;
@@ -485,9 +486,14 @@ class Session extends Dbh
         return $articlesInStock;
     }
 
+    /**
+     * Get articles in stock by articleId
+     * @param int $articleId
+     * @return array
+     */
     public function getArticlesInStockByArticle(int $articleId) : array
     {
-        return [];
+        return parent::getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . ' = ' . $articleId);
     }
 
 
@@ -548,7 +554,7 @@ class Session extends Dbh
         }
     }
 
-    public function AddArticleInStockQuantity ($articleInStockId, $quantity) : void
+    public function addArticleInStockQuantity ($articleInStockId, $quantity) : void
     {
         var_dump($articleInStockId);
         echo "<br>";
@@ -556,10 +562,24 @@ class Session extends Dbh
             ID . ' = ' . $articleInStockId[ID]);
     }
 
-    public function GetWarehousesExpectParam($warehouseId) : array
+    public function getWarehousesExpectParam($warehouseId) : array
     {
-        $queryCondition = ID . ' = ' . $warehouseId;
-        return parent::getAllRecords(MAGAZZINO, $queryCondition);
+        $queryCondition = ID . ' != ' . $warehouseId;
+        $warehouses = parent::getRecord(MAGAZZINO, $queryCondition);
+        if (!empty($warehouses)) {
+            return $warehouses;
+        }
+        return [];
+    }
+
+    /**
+     * Get address by id
+     * @param $addressId
+     * @return array
+     */
+    public function getAddress($addressId) : array
+    {
+        return parent::getRecord(INDIRIZZO, 'Id = ' . $addressId);
     }
 
 //    public function getArticleIdByConfigurationsAndProduct($productId, $optionsVariation) : int
@@ -694,5 +714,48 @@ class Session extends Dbh
             $params[DESCRIZIONE],
             STATUS_INTACT_DATA
         );
+    }
+
+    /**
+     * Insert article in stock
+     * @param $quantityToEdit
+     * @param $articleId
+     * @param $warehouseId
+     * @return bool
+     */
+    public function insertArticleInStock($quantityToEdit, $articleId, $warehouseId) : bool
+    {
+        $query = 'INSERT INTO Articolo_in_magazzino (Tassa, Quantità, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status)
+                                VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $res = parent::insertData($query,
+            STANDARD_TAX,
+            $quantityToEdit,
+            date('Y-m-d H:i:s'),
+            date('Y-m-d H:i:s'),
+            $articleId,
+            $warehouseId,
+            STATUS_INTACT_DATA
+        );
+        $result = parent::isInsertSuccessful(ARTICOLO_IN_MAGAZZINO, $res);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Update article in stock quantity
+     * @param $quantityToEdit
+     * @param $articleInStockId
+     * @return void
+     */
+    public function updateQuantityArticleInStock($quantityToUpdate, $articleInStockId)  : void
+    {
+        $articleInStockToUpdate = parent::getRecord(ARTICOLO_IN_MAGAZZINO, ID . ' = ' . $articleInStockId);
+        parent::updateData($articleInStockId, ARTICOLO_IN_MAGAZZINO, QUANTITA, $quantityToUpdate);
+    }
+
+    public function deleteArticleInStock($articleInStockId) {
+        parent:$this->deleteRecord(ARTICOLO_IN_MAGAZZINO, ID . ' = ' . $articleInStockId);
     }
 }

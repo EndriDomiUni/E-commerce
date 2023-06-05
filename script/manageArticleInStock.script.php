@@ -32,22 +32,60 @@ if (isset($_SESSION[ID])) {
             }
 
         }
+
         $buttonName = 'edit-quantity-' . $product[0][ID];
         if (isset($_POST[$buttonName])) {
-            $quantityToEdit = filter_var($_POST['quantity-input-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
-            $articleId = filter_var($_POST['article-configurations-select-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
+
+            $quantityToEdit = filter_var($_POST['quantity-input2-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
+            $articleId = filter_var($_POST['article-configurations-select2-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
             if (isset($quantityToEdit) && isset($articleId)) {
                 $articleInStockId = $session->getWarehouseArticle($articleId, $_SESSION[MAGAZZINO_ID]);
                 $quantityToUpdate = $quantityToEdit + $session->selectSpecificField(ARTICOLO_IN_MAGAZZINO,
                         QUANTITA, 'ID = ' . $articleInStockId[ID]);
-                $session->AddArticleInStockQuantity($articleInStockId, $quantityToUpdate);
+                $session->addArticleInStockQuantity($articleInStockId, $quantityToUpdate);
                 header('Location: articlesInStockManager.php');
 
             }
-        }
-        elseif ((isset($_POST['move-button-' . $product[0][ID]]))) {
-            //TODO: move articles in stock to another warehouse
+        } elseif ((isset($_POST['move-' . $product[0][ID]]))) {
+            $quantityToEdit = filter_var($_POST['quantity-input1-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
+            $articleId = filter_var($_POST['article-configurations-select1-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
+            $warehouseId = filter_var($_POST['warehouse-select1-' . $product[0][ID]]);
+            if (isset($quantityToEdit) && isset($articleId) && isset($warehouseId)) {
+                //se esiste articolo in magazzino aggiorna quantità
+                //altrimenti inserire nuovo record
+                $articleInStock = $session->getWarehouseArticle($articleId, $warehouseId);
+                if (!empty($articleInStock)) {
+                    //TODO: aggiungere controllo sulla quantità
+                    //update origin article in stock quantity
+                    $articleInStockOrigin = $session->getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . ' = ' . $articleId
+                        . ' AND ' . MAGAZZINO_ID . ' = ' . $_SESSION[MAGAZZINO_ID]);
+                    $originArticleInStockQuantityToUpdate = (int)$articleInStockOrigin[QUANTITA] - (int)$quantityToEdit;
+                    $session->updateQuantityArticleInStock($originArticleInStockQuantityToUpdate, $articleInStockOrigin[ID]);
+
+                    //update destination article in stock quantity
+                    $session->updateQuantityArticleInStock($quantityToEdit, $articleInStock[ID]);
+                    header ("Location: warehousesManager.php");
+                }
+                else {
+                    //TODO: togliere tassa e data fine dal db
+                    $res = $session->insertArticleInStock($quantityToEdit, $articleId, $warehouseId);
+                    $result = $session->isInsertSuccessful(ARTICOLO_IN_MAGAZZINO, $res);
+                    if ($result) {
+                        //update origin article in stock quantity
+                        $articleInStockOrigin = $session->getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . ' = ' . $articleId
+                            . ' AND ' . MAGAZZINO_ID . ' = ' . $_SESSION[MAGAZZINO_ID]);
+                        $originArticleInStockQuantityToUpdate = (int)$articleInStockOrigin[QUANTITA] - (int)$quantityToEdit;
+                        $session->updateQuantityArticleInStock($quantityToEdit, $articleInStockOrigin[ID]);
+                        header ("Location: articlesInStockManager.php");
+                    } else {
+                        var_dump("Errore nello spostamento dell'articolo in magazzino");
+                    }
+                }
+            }
         } elseif ((isset($_POST['remove-button-' . $product[0][ID]]))) {
+            $session->deleteArticleInStock()
+            header ("Location: warehousesManager.php");
+
             //TODO: remove articles in stock
         }
     }
@@ -72,34 +110,29 @@ function getMapArticleConfigurations(Session $session, $articleId): array
     return $mapConfigurations;
 }
 
-
-function generateOptionsVariation($session, $articles) : void
+function generateWarehouseOptions(Session $session) : void
 {
-    foreach ($articles as $article)
-    {
-        $mapConfigurations = getMapArticleConfigurations($session, $article[ID]);
-        echo '<option value="' . $article[ID] . '">';
-        for ($i = 0; $i < count($mapConfigurations); $i++) {
 
-            if ($i > 0) {
-                echo ' ';
-            }
-
-            //$variationName = array_keys($mapConfigurations[$i])[0];
-            $optionValue = array_values($mapConfigurations[$i])[0];
-            echo   $optionValue;
+    //$warehouses = $session->getWarehousesExpectParam($_SESSION[MAGAZZINO_ID]);
+    $warehouses = $session->getRecord(MAGAZZINO, 'Id != ' . $_SESSION[MAGAZZINO_ID]);
+    if (!empty($warehouses)) {
+        if (isset($warehouses[ID]))
+        {
+            $warehouseAddress = $session->getAddress(addressId: $warehouses[INDIRIZZO_ID]);
+            echo '<option value="' . $warehouses[ID] . '">';
+            echo $warehouseAddress[CITTA] . ': ' . $warehouseAddress[VIA] . ' - ' . $warehouseAddress[NUMERO_CIVICO];
+            echo '</option>';
         }
-        echo '</option>';
-    }
-}
+        else {
+            foreach ($warehouses as $warehouse)
+            {
+                $warehouseAddress = $session->getAddress(addressId: $warehouse);
+                echo '<option value="' . $warehouses[0]. '">';
+                echo $warehouseAddress[CITTA] . ': ' . $warehouseAddress[VIA] . ' - ' . $warehouseAddress[NUMERO_CIVICO];
+                echo '</option>';
+            }
+        }
 
-function generateWarehouseOptions($session) : void
-{
-    $warehouses = $session->GetWarehousesExpectParam($_SESSION[MAGAZZINO_ID]);
-    foreach ($warehouses as $warehouse)
-    {
-        echo '<option value="' . $warehouse[ID] . '">';
-        echo $warehouse[CITTA] . ' ' . $warehouse[INDIRIZZO];
-        echo '</option>';
     }
+
 }
