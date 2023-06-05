@@ -82,8 +82,6 @@ class Dbh
     {
         $query = "SELECT COUNT(*) AS count FROM $tableName WHERE Id = " . $recordId;
         $result = $this->execute($query);
-
-        var_dump($result);
         if ($result && $result[0]['count'] > 0) {
             return true;
         }
@@ -212,7 +210,7 @@ class Dbh
     }
 
     /**
-     * @param int $id current user -> $_SESSION["Id"];
+     * @param int $id record
      * @param string $tableName table name
      * @param string $fieldName table column name to update
      * @param string $toUpdate

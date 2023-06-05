@@ -1,64 +1,133 @@
 <script src="https://www.gstatic.com/charts/loader.js">
 </script>
 
-<!-- Sales Report Section -->
-<div class="container my-5">
-    <h2 class="text-center">Report vendite</h2>
-    <div class="row">
-        <!-- Sales Chart -->
-        <div id="myChart" style="max-width:700px; height:400px">
-            <script type="text/javascript">
-                google.charts.load('current',{packages:['corechart']});
-                google.charts.setOnLoadCallback(drawChart);
 
-                function drawChart() {
-                    let data = google.visualization.arrayToDataTable([
-                        ['Price', 'Size'],
-                        [50,7],[60,8],[70,8],[80,9],[90,9],[100,9],
-                        [110,10],[120,11],[130,14],[140,14],[150,15]
-                    ]);
-                    let options = {
-                        title: 'Vendite',
-                        hAxis: {title: 'Time'},
-                        vAxis: {title: 'Amount'},
-                        legend: 'none'
-                    };
-                    let chart = new google.visualization.LineChart(document.getElementById('myChart'));
-                    chart.draw(data, options);
-                }
-            </script>
-        </div>
+<?php
+    if (isset($_SESSION[ID])) {
+        $session = new Session($_SESSION[ID]);
 
-        <!-- Order Statistics -->
-        <div class="col-md-4">
-            <!-- Today's Orders -->
-            <div class="card my-3">
-                <div class="card-header">Ordini odierni</div>
-                <div class="card-body">
-                    <h5 class="card-title">10</h5>
-                </div>
-            </div>
-            <!-- Current Month Orders -->
-            <div class="card my-3">
-                <div class="card-header">Ordini mensili</div>
-                <div class="card-body">
-                    <h5 class="card-title">100</h5>
-                </div>
-            </div>
-            <!-- Total Orders -->
-            <div class="card my-3">
-                <div class="card-header">Ordini totali</div>
-                <div class="card-body">
-                    <h5 class="card-title">1000</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Total Money -->
-    <div class="card my-3">
-        <div class="card-header">Soldi totali</div>
-        <div class="card-body">
-            <h5 class="card-title"><?php echo EURO;?> 10000</h5>
-        </div>
-    </div>
-</div>
+        // open container my-5
+        echo '<div class="container my-5">';
+
+            // title
+            echo '<h2 class="text-center" style="color: white">Report vendite</h2>';
+
+            // open row
+            echo '<div class="row">';
+
+                // sales report section
+                echo '<div id="myChart" style="max-width:700px; height:400px">
+                        <script type="text/javascript">
+                            google.charts.load("current",{packages:["corechart"]});
+                            google.charts.setOnLoadCallback(drawChart);
+            
+                            function drawChart() {
+                                let data = google.visualization.arrayToDataTable([
+                                    ["Price", "Size"],
+                                    [50,7],[60,8],[70,8],[80,9],[90,9],[100,9],
+                                    [110,10],[120,11],[130,14],[140,14],[150,15]
+                                ]);
+                                let options = {
+                                    title: "Vendite",
+                                    hAxis: {title: "Time"},
+                                    vAxis: {title: "Amount"},
+                                    legend: "none"
+                                };
+                                let chart = new google.visualization.LineChart(document.getElementById("myChart"));
+                                chart.draw(data, options);
+                            }
+                        </script>
+                    </div>';
+
+                // order statistics -> open col-md-4
+                echo '<div class="col-md-4">';
+
+                    // get datetime now & yesterday
+                    $datetimeNow = new DateTime();
+                    $yesterday = $datetimeNow->modify('-1 day');
+
+                    // get as string
+                    $nowStr = $datetimeNow->format('Y-m-d H:i:s');
+                    $yesterdayStr = $yesterday->format('Y-m-d H:i:s');
+
+                    // today's order number
+                    $todayOrdersQty = $session->getOrdersQuantityInRangeDateTime(strtotime($nowStr), strtotime($yesterdayStr));
+
+                    // Today's order
+                    echo '<div class="card my-3">
+                            <div class="card-header">Ordini odierni</div>
+                            <div class="card-body">
+                                <h5 class="card-title">'. $todayOrdersQty .'</h5>
+                            </div>
+                        </div>';
+
+                    // get month
+                    $oneMonthAgo = $datetimeNow->modify('-30 day');
+
+                    // get as string
+                    $oneMonthAgoStr = $oneMonthAgo->format('Y-m-d H:i:s');
+
+                    // month's order number
+                    $monthOrderQty = $session->getOrdersQuantityInRangeDateTime(strtotime($nowStr), strtotime($oneMonthAgoStr));
+
+                    // Current Month Orders
+                    echo '<div class="card my-3">
+                            <div class="card-header">Ordini mensili</div>
+                            <div class="card-body">
+                                <h5 class="card-title">'. $monthOrderQty .'</h5>
+                            </div>
+                        </div>';
+
+                    // get all orders
+                    $allOrders = $session->getOrdersQuantity();
+
+                    // Total Orders
+                    echo ' <div class="card my-3">
+                            <div class="card-header">Ordini totali</div>
+                            <div class="card-body">
+                                <h5 class="card-title">'. $allOrders .'</h5>
+                            </div>
+                        </div>';
+
+                // order statistics -> close col-md-4
+                echo '</div>';
+
+                // Money balance without tax
+                echo '  <div class="card my-3">
+                            <div class="card-header">Soldi totali senza tasse magazzino</div>
+                            <div class="card-body">
+                                <h5 class="card-title">'. EURO . '</h5>
+                            </div>
+                        </div>';
+
+                $tax = $session->getAllWarehouseTax();
+
+                // Warehouse tax
+                echo ' <div class="card my-3">
+                        <div class="card-header">Spese di magazzino per metro cubo</div>
+                        <div class="card-body">
+                            <h5 class="card-title">'. EURO . ' ' . $tax . '</h5>
+                        </div>
+                    </div>';
+
+                // Money balance without tax
+                echo '  <div class="card my-3">
+                            <div class="card-header">Soldi totali dopo le tasse</div>
+                            <div class="card-body">
+                                <h5 class="card-title">'. EURO . '</h5>
+                            </div>
+                        </div>';
+
+            // close row
+            echo '</div>';
+
+        // close container my-5
+        echo '</div>';
+    } else {
+        echo '<div>Non sembri essere loggato <a href="./login.php">Accedi</a>!</div>';
+    }
+?>
+
+
+
+

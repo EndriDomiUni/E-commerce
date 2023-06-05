@@ -52,6 +52,11 @@ const ACTIVE = 1;
 const STATUS_INTACT_DATA = 0;
 const STATUS_MODIFIED_DATA = 1;
 const STATUS_DELETED_DATA = 2;
+/**
+ * Ogni dettaglio ordine, viene generato con questo stato
+ */
+const ORDER_DETAIL_STATUS_PENDING_DATA = 3;
+
 
 
 // UNSET ---------------------------------------------------------------
@@ -72,6 +77,8 @@ const RECENSIONE = "Recensione";
 const CARRELLO = "Carrello";
 const CATEGORIA = "Categoria";
 const CLAIM = "Claim";
+const MAGAZZINO = "Magazzino";
+
 const PRODOTTO = "Prodotto";
 const ARTICOLO = "Articolo";
 const INDIRIZZO = "Indirizzo";
@@ -95,6 +102,7 @@ const INDIRIZZO_ID = "Indirizzo_id";
 const UTENTE_ID = "Utente_id";
 const PRODOTTO_ID = "Prodotto_id";
 const ARTICOLO_ID = "Articolo_id";
+const ORDINE_ID = "Ordine_id";
 const OPZIONE_ID = "Opzio_variazione_id";
 const CLAIM_ID = "Claim_id";
 const CATEGORIA_ID = "Categoria_id";
@@ -102,6 +110,7 @@ const VARIAZIONE_ID = "Variazione_id";
 const MAGAZZINO_ID = "Magazzino_id";
 const RACCOLTA_ID = "Raccolta_id";
 const DETTAGLIO_ORDINE_ID = "Dettaglio_ordine_id";
+const FORMA_DI_PAG_ID = "Forma_di_pag_id";
 
 
 // ORDER DETAILS
@@ -128,6 +137,7 @@ const CIRCUITO = "Circuito";
 const NUMERO_CARTA = "Numero_carta";
 const DATA_SCADENZA = "Data_scadenza";
 const CVV = "CVV";
+const TASSA = "Tassa";
 const TIPO_DI_PAGAMENTO = "Tipo_di_pagamento";
 const DESCRIZIONE = "Descrizione";
 const MOTIVO = "Motivo";
@@ -149,7 +159,8 @@ const DATA_ORDINE = "Data_ordine";
 const METRI_CUBI = "Metri_cubi";
 const VALUTAZIONE = "Valutazione";
 const COMMENTO = "Commento";
-
+const TIPO = "Tipo";
+const CONTO = "Conto";
 
 // SORT MODE
 const SORT_MODE_DEFAULT = 0;
@@ -157,6 +168,7 @@ const SORT_MODE_PRICE_ASC = 1;
 const SORT_MODE_PRICE_DESC = 2;
 const SORT_MODE_NAME_ASC = 3;
 const SORT_MODE_NAME_DESC = 4;
+
 
 // ORDER STATUS
 const ORDER_STATUS_PAID = 0;
