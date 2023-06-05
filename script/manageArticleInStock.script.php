@@ -83,7 +83,8 @@ if (isset($_SESSION[ID])) {
                 }
             }
         } elseif ((isset($_POST['remove-button-' . $product[0][ID]]))) {
-            $session->deleteArticleInStock()
+            //TODO: completare delete
+            $session->deleteArticleInStock();
             header ("Location: warehousesManager.php");
 
             //TODO: remove articles in stock
