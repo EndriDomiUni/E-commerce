@@ -33,6 +33,7 @@
                     $session = new Session($_SESSION[ID]);
                     $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
                     switch ($claimType) {
+                        default:
                         case CLAIM_USER_DESC:
                         case CLAIM_USER_PRO_DESC:
                             // for user
