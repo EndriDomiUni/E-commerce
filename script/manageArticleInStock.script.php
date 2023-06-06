@@ -87,9 +87,11 @@ if (isset($_SESSION[ID])) {
                 }
 
             }
-        } elseif ((isset($_POST['remove-button-' . $product[0][ID]]))) {
+        } elseif ((isset($_POST['remove-' . $product[0][ID]]))) {
             //TODO: completare delete
-            $session->deleteArticleInStock();
+            $articleId = filter_var($_POST['article-configurations-select3-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
+            $articleInStock = $session->getWarehouseArticle($articleId, $_SESSION[MAGAZZINO_ID]);
+            $session->deleteArticleInStock($articleInStock[ID]);
             header ("Location: warehousesManager.php");
 
             //TODO: remove articles in stock

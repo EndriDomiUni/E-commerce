@@ -59,7 +59,7 @@ foreach ($products as $product)
         <div class="col">
           <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1-' . $product[0][ID] . '">Move</button>
           <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2-' . $product[0][ID] . '">Edit Quantity</button>
-          <button type="submit" class="btn btn-danger">Remove Article</button>
+          <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal3-' . $product[0][ID] . '">Remove Article</button>
         </div>
       </div>
       
@@ -140,6 +140,35 @@ foreach ($products as $product)
             </div>
         </div>
         <!-- End Modal edit -->
+        
+        <!-- Modal remove -->
+        <div class="modal fade" name="myModal23-' . $product[0][ID] . '" id="myModal3-' . $product[0][ID] . '" tabindex="-1"
+            aria-labelledby="myModal2Title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModal3Title">' . $product[0][NOME] . '</h5>
+                    </div>
+                    <form method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="selectOption3">Opzione</label>
+                                <select class="form-control" id="selectOption3" name="article-configurations-select3-' . $product[0][ID] .'">';
+        generateOptionsVariation($session, $articles);
+
+        echo '
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                            <button type="submit"  class="btn btn-primary" id="remove-' . $product[0][ID] . '"
+                                name="remove-' . $product[0][ID] . '">Conferma</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 ';
     }
