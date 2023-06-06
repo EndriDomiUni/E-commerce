@@ -37,13 +37,13 @@ if (isset($_POST["checkout"])) {
                 $session->manageOrderDetails($newOrderId);
 
                 // notify sale
-                // $session->notifyNewSale($newOrderId);
+                $session->notifyNewSale($newOrderId);
 
                 // clear cart
-                // $session->removeArticlesInCart();
+                $session->removeArticlesInCart();
 
                 // redirect
-                // header("Location: orderHistory.php");
+                header("Location: orderHistory.php");
             }
         }
     } else {

@@ -40,7 +40,6 @@ foreach ($products as $product) {
                 }
             }
 
-
             // get opt & variation
             $variations = $dbh->getVariations();
             $optionsSelected = array();
