@@ -389,6 +389,12 @@ class Session extends Dbh
         }
     }
 
+    /**
+     * Create new order from params
+     *
+     * @param $params
+     * @return int
+     */
     public function addOrder($params): int
     {
         $paymentData = parent::getRecord(FORMA_DI_PAGAMENTO, "Utente_id = " .$this->getCurrentUser()[ID]);
@@ -419,6 +425,13 @@ class Session extends Dbh
     }
 
 
+    /**
+     * Create new order details also considers the quantity
+     *
+     * @param $orderId
+     * @param $orderTypeList
+     * @return bool
+     */
     public function addNewOrderDetails($orderId, $orderTypeList): bool
     {
         $result = false;
@@ -442,6 +455,69 @@ class Session extends Dbh
         return $result;
     }
 
+    /**
+     * Set status to paid
+     *
+     * @param $orderId
+     * @param $orderDetailId
+     * @return void
+     */
+    private function setOrderAndOrderDetailToStatusPaid($orderId, $orderDetailId): void
+    {
+        parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
+        parent::updateData($orderDetailId, DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+    }
+
+    /**
+     * Return new order id
+     *
+     * @param $dateTime string if empty, creates based on $orderDate
+     * @param $orderDate
+     * @param $totalOrder
+     * @param $status
+     * @param $formOfPaymentId
+     * @return array|int|string
+     */
+    private function createNewOrder(string $dateTime, $orderDate, $totalOrder, $status, $formOfPaymentId): array|int|string
+    {
+        $startDate = strtotime($orderDate);
+        $newDate = date('Y-m-d', strtotime($dateTime, $startDate));
+        return parent::insertData("INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
+                                VALUES (?, ?, ?, ?, ?)",
+            $newDate,
+            $totalOrder,
+            $status,
+            1,
+            $formOfPaymentId);
+    }
+
+    /**
+     *
+     *
+     * @param $type
+     * @param $articleId
+     * @param $orderId
+     * @param $status
+     * @return void
+     */
+    private function createNewOrderDetail($type, $articleId, $orderId, $status): void
+    {
+        parent::insertData("INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
+                                VALUES (?, ?, ?, ?)",
+            $type,
+            $articleId,
+            $orderId,
+            $status);
+    }
+
+    private function updateOrderStatusToPaid($orderId) {
+        $orderDetails = $this->loadOrderDetails($orderId);
+        foreach ($orderDetails as $orderDetail) {
+            if ($orderDetail[STATUS] === ORDER_STATUS_PAID) {
+                parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
+            }
+        }
+    }
 
     public function manageOrderDetails($orderId) {
 
@@ -451,13 +527,18 @@ class Session extends Dbh
         // load orders detail
         $orderDetails = $this->loadOrderDetails($orderId);
         foreach ($orderDetails as $orderDetail) {
+
+            // get article & article in cart
+            $article = parent::getRecord(ARTICOLO, "Id = " . $orderDetail[ARTICOLO_ID]);
+            $articleInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
+
+            // check type of order details
             switch ($orderDetail[TIPO]) {
 
                 // STANDARD -> set order to status PAID
                 //          -> set order detail to status PAID
                 case ORDER_DETAILS_TYPE_STANDARD:
-                    parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
-                    parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+                    $this->setOrderAndOrderDetailToStatusPaid($orderId, $orderDetail[ID]);
                     break;
 
                 // MONTHLY -> set order to status PAID
@@ -465,59 +546,46 @@ class Session extends Dbh
                 //         -> generate new order
                 //         -> generate new orderDetail  with status ORDER_STATUS_PENDING
                 case ORDER_DETAILS_TYPE_MONTHLY:
+
                     // update status
-                    parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
 
+                    // get total
+                    $totalOrder = $article[PREZZO] * $articleInCart[QUANTITA]; // TODO: conto sbagliato!!!!!! e tutti sotto
+
                     // create new order
-                    $newDate = strtotime('+1 month', $originalOrder[DATA_ORDINE]);
-                    $newOrderId = parent::insertData(
-                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
-                                VALUES (?, ?, ?, ?, ?)",
-                        $newDate,
-                        $originalOrder[TOTALE_ORDINE], // TODO: conto sbagliato!!!!!! e tutti sotto
+                    $newOrderId = $this->createNewOrder(
+                        '+1 month',
+                        $originalOrder[DATA_ORDINE],
+                        $totalOrder,
                         ORDER_STATUS_PENDING,
-                        1,
                         $originalOrder[FORMA_DI_PAG_ID]);
 
-                    // create new order detail
-                    parent::insertData(
-                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                                VALUES (?, ?, ?, ?)",
-                                $orderDetail[TIPO],
-                        $orderDetail[ARTICOLO_ID],
-                        $newOrderId,
-                        ORDER_STATUS_PENDING
-                    );
+                    // create new order detail with status pending
+                    $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
                     break;
 
                 // QUARTERLY -> set order detail to status PAID for the first
                 //           -> generate new order
                 //           -> generate new orderDetail  with status ORDER_STATUS_PENDING
                 case ORDER_DETAILS_TYPE_QUARTERLY:
+
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
 
+                    // get total
+                    $totalOrder = $article[PREZZO] * $articleInCart[QUANTITA]; // TODO: conto sbagliato!!!!!! e tutti sotto
+
                     // create new order
-                    $newDate = strtotime('+3 month', $originalOrder[DATA_ORDINE]);
-                    $newOrderId = parent::insertData(
-                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
-                                VALUES (?, ?, ?, ?, ?)",
-                        $newDate,
-                        $originalOrder[TOTALE_ORDINE], // TODO: conto sbagliato!!!!!! e tutti sotto
+                    $newOrderId = $this->createNewOrder(
+                        '+3 month',
+                        $originalOrder[DATA_ORDINE],
+                        $totalOrder,
                         ORDER_STATUS_PENDING,
-                        1,
                         $originalOrder[FORMA_DI_PAG_ID]);
 
-                    // create new order detail
-                    parent::insertData(
-                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                                VALUES (?, ?, ?, ?)",
-                        $orderDetail[TIPO],
-                        $orderDetail[ARTICOLO_ID],
-                        $newOrderId,
-                        ORDER_STATUS_PENDING
-                    );
+                    // create new order detail with status pending
+                    $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
                     break;
 
                 // YEARLY -> set order detail to status PAID for the first
@@ -527,26 +595,19 @@ class Session extends Dbh
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
 
+                    // get total
+                    $totalOrder = $article[PREZZO] * $articleInCart[QUANTITA]; // TODO: conto sbagliato!!!!!! e tutti sotto
+
                     // create new order
-                    $newDate = strtotime('+12 month', $originalOrder[DATA_ORDINE]);
-                    $newOrderId = parent::insertData(
-                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
-                                VALUES (?, ?, ?, ?, ?)",
-                        $newDate,
-                        $originalOrder[TOTALE_ORDINE], // TODO: conto sbagliato!!!!!! e tutti sotto
+                    $newOrderId = $this->createNewOrder(
+                        '+12 month',
+                        $originalOrder[DATA_ORDINE],
+                        $totalOrder,
                         ORDER_STATUS_PENDING,
-                        1,
                         $originalOrder[FORMA_DI_PAG_ID]);
 
-                    // create new order detail
-                    parent::insertData(
-                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                                VALUES (?, ?, ?, ?)",
-                        $orderDetail[TIPO],
-                        $orderDetail[ARTICOLO_ID],
-                        $newOrderId,
-                        ORDER_STATUS_PENDING
-                    );
+                    // create new order detail with status pending
+                    $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
                     break;
 
                 // INSTALLMENT_PAYMENT ->
@@ -554,71 +615,69 @@ class Session extends Dbh
                 //                     ->
                 case ORDER_DETAILS_TYPE_INSTALLMENT_PAYMENT:
 
-                    // update status
-                    parent::updateData($orderId, ORDINE, STATUS, ORDER_STATUS_PAID);
+                    // update status -> (1/3)
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
 
-                    // get article
-                    $article = parent::getRecord(ARTICOLO, "Id = " . $orderDetails[ARTICOLO_ID]);
-
-                    // get article in cart
-                    $articleInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
-
+                    // get installment by article price and article qty
                     $installment = $article[PREZZO]/3 * $articleInCart[QUANTITA];
-                    $newTotal = floatval($originalOrder[TOTALE_ORDINE] - ($article[PREZZO] + $installment));
+                    $newTotal = floatval($originalOrder[TOTALE_ORDINE] - $article[PREZZO] + $installment); // da verificare sconto
 
-                    // update total of order
+                    echo '<pre>';
+                        echo "install: " . $installment . "</br>";
+                        echo "tot: " . $originalOrder[TOTALE_ORDINE] . "</br>";
+                        echo "art price " . $article[PREZZO] . "</br>";
+                        echo "new tot: " .$newTotal. "</br>";
+                    echo '<pre>';
+
+                    // carrello: 15r, 18r, 10n
+                    // rata = 5
+                    // new tot:
+                    //  -> 1
+                    //       43 - 15 + 5  = 33
+                    //  -> 2
+                    //       33 - 18 + 6 = 21
+
+                    // update total of order -> set new price
                     parent::updateData($orderId,
                         ORDINE,
                         TOTALE_ORDINE,
                         $newTotal);
+                    $originalOrder[TOTALE_ORDINE] = $newTotal;
 
                     // --------------
-                    // create new order 2
-                    $newDate = strtotime('+1 month', $originalOrder[DATA_ORDINE]);
-                    $newOrderId2 = parent::insertData(
-                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
-                                VALUES (?, ?, ?, ?, ?)",
-                        $newDate,
-                        $newTotal,
+                    // create new order 2 -> (2/3)
+                    $newOrderId = $this->createNewOrder(
+                        '+1 month',
+                        $originalOrder[DATA_ORDINE],
+                        $installment,
                         ORDER_STATUS_PENDING,
-                        1,
                         $originalOrder[FORMA_DI_PAG_ID]);
 
-                    // create new order detail
-                    parent::insertData(
-                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                                VALUES (?, ?, ?, ?)",
-                        $orderDetail[TIPO],
-                        $orderDetail[ARTICOLO_ID],
-                        $newOrderId2,
-                        ORDER_STATUS_PENDING
-                    );
+                    // carrello: 15, 18
+                    // rata = 15/3 * 1 => 5
+                    // new tot: 33 - (15 - 5) = 23 - 18 = 5
+
+                    // create new order detail with status pending
+                    $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
 
                     // ----------------
-                    // create new order 3
-                    $newDate = strtotime('+1 month', $originalOrder[DATA_ORDINE]);
-                    $newOrderId3 = parent::insertData(
-                        "INSERT INTO Ordine (Data_ordine, Tot_ordine, Status, Metodo_di_spedizione, Forma_di_pag_id)
-                                VALUES (?, ?, ?, ?, ?)",
-                        $newDate,
-                        $newTotal,
+                    // create new order 3 -> (3/3)
+                    $newOrderId2 = $this->createNewOrder(
+                        '+2 month',
+                        $originalOrder[DATA_ORDINE],
+                        $installment,
                         ORDER_STATUS_PENDING,
-                        1,
                         $originalOrder[FORMA_DI_PAG_ID]);
 
                     // create new order detail
-                    parent::insertData(
-                        "INSERT INTO Dettaglio_ordine (Tipo, Articolo_id, Ordine_id, Status)
-                                VALUES (?, ?, ?, ?)",
-                        $orderDetail[TIPO],
-                        $orderDetail[ARTICOLO_ID],
-                        $newOrderId3,
-                        ORDER_STATUS_PENDING
-                    );
+                    // create new order detail with status pending
+                    $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId2, ORDER_STATUS_PENDING);
                     break;
             }
         }
+
+        // update order details status
+        $this->updateOrderStatusToPaid($orderId);
     }
 
     public function notifyNewSale($orderId) {
@@ -629,8 +688,7 @@ class Session extends Dbh
 
             // update quantity
             $articleInStock = $this->getArticlesInStockByArticle($orderDetail[ARTICOLO_ID]);
-            if (!empty($articleInStock)) {
-
+            if (isset($articleInStock) && !empty($articleInStock)) {
 
                 // if is one article
                 if (isset($articleInStock[ID])) { // strano controllo
@@ -641,10 +699,8 @@ class Session extends Dbh
                     $this->updateQtyArticleInStock($firstArticleInStock[ID], max($firstArticleInStock[QUANTITA] - 1, 0));
                 }
 
-                // get article
+                // get article & article in cart
                 $article = parent::getRecord(ARTICOLO, "Id = " . $orderDetail[ARTICOLO_ID]);
-
-                // get article in cart
                 $articleInCart = parent::getRecord(ARTICOLO_IN_CARRELLO, "Articolo_id = " . $article[ID]);
 
                 // get claim of seller
@@ -739,9 +795,9 @@ class Session extends Dbh
     /**
      * Get articles in stock by article id
      * @param int $articleId
-     * @return array articles in stock by article id
+     * @return array|null articles in stock by article id
      */
-    public function getArticlesInStockByArticle(int $articleId) : array
+    public function getArticlesInStockByArticle(int $articleId) : array|null
     {
         return parent::getRecord(ARTICOLO_IN_MAGAZZINO, ARTICOLO_ID . " = " . $articleId);
     }

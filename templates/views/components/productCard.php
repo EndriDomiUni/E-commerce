@@ -85,9 +85,11 @@
                     $options = [];
 
                     foreach ($currentArticles as $currentArticle) {
-
+                        // TODO: discuterne
+                        // se ci sono mostro tutti
                         if ($session->getQuantityArticlesInStockByArticle($currentArticle[ID]) > 0) {
                             $articleConfigurations = $session->getArticleConfigurations($currentArticle[ID]);
+
                             foreach ($articleConfigurations as $articleConfiguration) {
 
                                 $option_id = $articleConfiguration[OPZIONE_ID];
@@ -109,9 +111,11 @@
                                     $options[$currentOption[0][ID]] = $currentOption[0];
                                 }
                             }
+                        } else {
+                            // mostro solo configurazione "standard"
                         }
-
                     }
+
                     if (!empty($variations) && !empty($variation)) {
                         foreach ($variations as $variation) {
                             echo '<label for="product-variation-' . $variation[ID] . '">' . $variation[NOME] . '</label>';
@@ -124,6 +128,8 @@
                             }
                             echo '</select>';
                         }
+                    } else {
+                        echo 'sono qui';
                     }
                     drawCardFooter($product[ID], $session);
                 }
