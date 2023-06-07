@@ -128,9 +128,9 @@
                             }
                             echo '</select>';
                         }
-                    } else {
-                        echo 'sono qui';
                     }
+
+
                     drawCardFooter($product[ID], $session);
                 }
             }

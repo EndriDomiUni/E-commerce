@@ -627,21 +627,6 @@ class Session extends Dbh
                     $installment = $article[PREZZO]/3 * $articleInCart[QUANTITA];
                     $newTotal = floatval($originalOrder[TOTALE_ORDINE] - $article[PREZZO] + $installment); // da verificare sconto
 
-                    echo '<pre>';
-                        echo "install: " . $installment . "</br>";
-                        echo "tot: " . $originalOrder[TOTALE_ORDINE] . "</br>";
-                        echo "art price " . $article[PREZZO] . "</br>";
-                        echo "new tot: " .$newTotal. "</br>";
-                    echo '<pre>';
-
-                    // carrello: 15r, 18r, 10n
-                    // rata = 5
-                    // new tot:
-                    //  -> 1
-                    //       43 - 15 + 5  = 33
-                    //  -> 2
-                    //       33 - 18 + 6 = 21
-
                     // update total of order -> set new price
                     parent::updateData($orderId,
                         ORDINE,
