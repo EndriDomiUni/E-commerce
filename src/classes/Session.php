@@ -150,15 +150,20 @@ class Session extends Dbh
     public function changeClaim($params)
     {
         if (UtilsFunctions::issetSessionId()) {
-            parent::updateData($this->getCurrentUser()[ID],
-                UTENTE,
-                CLAIM_ID,
-                $params[CLAIM_ID]);
-            parent::updateData($this->getCurrentUser()[ID],
-                UTENTE,
+            parent::updateData($this->getCurrentUser()[CLAIM_ID],
+            CLAIM,
+            CLAIM_TYPE,
+                $params[CLAIM_TYPE]);
+            parent::updateData($this->getCurrentUser()[CLAIM_ID],
+                CLAIM,
                 STATUS,
                 $params[STATUS]);
         }
+    }
+
+    public function hasFormOfPayment($userId): bool
+    {
+        return !empty(parent::execute("SELECT * FROM Forma_di_pagamento WHERE Utente_id = " . $userId));
     }
 
     private function associatesUserInSessionAddress($addressId): void

@@ -84,6 +84,7 @@ require_once "UIHelper.php";
                         $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
 
                 switch ($claimType) {
+
                     case CLAIM_USER_DESC:
                     case CLAIM_USER_PRO_DESC:
                         // order history

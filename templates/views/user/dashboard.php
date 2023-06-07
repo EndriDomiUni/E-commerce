@@ -5,12 +5,13 @@
 <?php
     if (isset($_SESSION[ID])) {
         $session = new Session($_SESSION[ID]);
+        $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
 
         // open container my-5
-        echo '<div class="container my-5">';
+        echo '<div class="container my-5" id="sectionToDownload">';
 
             // title
-            echo '<h2 class="text-center" style="color: white">Report vendite</h2>';
+            echo '<h2 class="text-center" style="color: black">Report vendite</h2>';
 
             // open row
             echo '<div class="row">';
@@ -123,6 +124,15 @@
 
         // close container my-5
         echo '</div>';
+
+        // open container
+        echo "<div class='container'>";
+            if ($claimType === CLAIM_SELLER_PR0_DESC) {
+                echo "<button onclick='downloadSectionAsPdf()' class='btn btn-primary'>Scarica come PDF</button>";
+            }
+        // close container
+        echo "</div>";
+
     } else {
         echo '<div>Non sembri essere loggato <a href="./login.php">Accedi</a>!</div>';
     }
