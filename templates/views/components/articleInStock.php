@@ -75,7 +75,7 @@ foreach ($products as $product)
                     <form method="post">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="selectOptionVariation1">Opzione</label>    
+              OPZIONE_VARIAZIONE                  <label for="selectOptionVariation1">Opzione</label>    
                                 <select class="form-control" id="selectOptionVariation1" name="article-configurations-select1-' . $product[0][ID] .'">';
         generateOptionsVariation($session, $articles);
         echo ' 
