@@ -39,12 +39,23 @@ if (isset($_SESSION[ID])) {
             $quantityToEdit = filter_var($_POST['quantity-input2-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
             $articleId = filter_var($_POST['article-configurations-select2-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
             if (isset($quantityToEdit) && isset($articleId)) {
-                $articleInStockId = $session->getWarehouseArticle($articleId, $_SESSION[MAGAZZINO_ID]);
-                $quantityToUpdate = $quantityToEdit + $session->selectSpecificField(ARTICOLO_IN_MAGAZZINO,
-                        QUANTITA, 'ID = ' . $articleInStockId[ID]);
-                $session->addArticleInStockQuantity($articleInStockId, $quantityToUpdate);
-                header('Location: articlesInStockManager.php');
-
+                $articleInStock = $session->getWarehouseArticle($articleId, $_SESSION[MAGAZZINO_ID]);
+                if (!empty($articleInStock)) {
+                    $quantityToUpdate = $quantityToEdit + $session->selectSpecificField(ARTICOLO_IN_MAGAZZINO,
+                            QUANTITA, 'ID = ' . $articleInStock[ID]);
+                    $session->addArticleInStockQuantity($articleInStock, $quantityToUpdate);
+                    header ("Location: articlesInStockManager.php");
+                }
+                else
+                {
+                    $res = $session->insertArticleInStock($quantityToEdit, $articleId, $_SESSION[MAGAZZINO_ID]);
+                    $result = $session->isInsertSuccessful(ARTICOLO_IN_MAGAZZINO, $res);
+                    if ($result) {
+                        header ("Location: articlesInStockManager.php");
+                    } else {
+                        var_dump("Errore nell'inserimento dell'articolo in magazzino");
+                    }
+                }
             }
         } elseif ((isset($_POST['move-' . $product[0][ID]]))) {
             $quantityToEdit = filter_var($_POST['quantity-input1-' . $product[0][ID]], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -68,7 +79,6 @@ if (isset($_SESSION[ID])) {
                         header ("Location: warehousesManager.php");
                     }
                     else {
-                        //TODO: togliere tassa e data fine dal db
                         $res = $session->insertArticleInStock($quantityToEdit, $articleId, $warehouseId);
                         $result = $session->isInsertSuccessful(ARTICOLO_IN_MAGAZZINO, $res);
                         if ($result) {

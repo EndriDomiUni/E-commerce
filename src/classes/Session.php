@@ -882,8 +882,6 @@ class Session extends Dbh
 
     public function addArticleInStockQuantity ($articleInStockId, $quantity) : void
     {
-        var_dump($articleInStockId);
-        echo "<br>";
         parent::updateDateWithWhere(ARTICOLO_IN_MAGAZZINO, QUANTITA, $quantity,
             ID . ' = ' . $articleInStockId[ID]);
     }
@@ -1077,13 +1075,10 @@ class Session extends Dbh
      */
     public function insertArticleInStock($quantityToEdit, $articleId, $warehouseId) : bool
     {
-        $query = 'INSERT INTO Articolo_in_magazzino (Tassa, Quantità, Data_inizio, Data_fine, Articolo_id, Magazzino_id, Status)
-                                VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $query = 'INSERT INTO Articolo_in_magazzino (Quantità, Articolo_id, Magazzino_id, Status)
+                                VALUES (?, ?, ?, ?)';
         $res = parent::insertData($query,
-            STANDARD_TAX,
             $quantityToEdit,
-            date('Y-m-d H:i:s'),
-            date('Y-m-d H:i:s'),
             $articleId,
             $warehouseId,
             STATUS_INTACT_DATA
