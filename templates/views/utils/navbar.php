@@ -68,10 +68,30 @@ require_once "UIHelper.php";
             </ul>
             <!-- end menu left -->
 
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categorie
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                    <?php
+                        $dbh = new Dbh();
+                        $categories = $dbh->getCategories();
+                        // all
+                        echo '<li><a class="dropdown-item" href="./index.php">Tutto</a></li>';
+
+                        foreach ($categories as $category) {
+                            echo '<li><a class="dropdown-item" href="./index.php?byCategoryId= '.$category[ID] .'">' . $category[NOME] . '</a></li>';
+                        }
+                    ?>
+                </ul>
+            </div>
+
+            <div class="ms-2"></div>
+
             <!-- start search -->
             <form class="d-flex" role="search" method="post">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                <button class="btn btn-outline-primary" type="submit" name="btn-search">Search</button>
+                <input class="form-control me-2" type="search" placeholder="Ricerca prodotto" aria-label="Search" name="search">
+                <button class="btn btn-outline-primary" type="submit" name="btn-search">Cerca</button>
             </form>
             <!-- end search -->
 

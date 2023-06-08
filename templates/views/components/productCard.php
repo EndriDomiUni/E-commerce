@@ -7,7 +7,9 @@
     ini_set('display_errors', 1);
 
     $dbh = new Dbh();
-    if (isset($_SESSION['sortingMode'])) {
+    if (isset($_GET['byCategoryId'])) {
+        $products = $dbh->getProductsByCategoryId($_GET['byCategoryId']);
+    } else if (isset($_SESSION['sortingMode'])) {
         $products = $dbh->getProductsWithSortingMode($_SESSION['sortingMode']);
     } else {
         $products = $dbh->getProducts();

@@ -318,7 +318,7 @@ class Dbh
      */
     public function getCategories() : array
     {
-        return $this->execute("SELECT * FROM Categoria");
+        return $this->execute("SELECT * FROM Categoria WHERE Id != 1");
     }
 
     /**
@@ -421,6 +421,11 @@ class Dbh
     public function getProducts(): array|int|string
     {
         return $this->execute("SELECT * FROM `Prodotto` WHERE Id != 1");
+    }
+
+    public function getProductsByCategoryId($categoryId): array|int|string
+    {
+        return $this->execute("SELECT * FROM `Prodotto` WHERE Id != 1" . " AND Categoria_id = " . $categoryId);
     }
 
     /**
