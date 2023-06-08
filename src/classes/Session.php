@@ -524,6 +524,29 @@ class Session extends Dbh
         }
     }
 
+    private function createInvoice($orderDetailsId, $taxable, $tot, $status) {
+        $query = "INSERT INTO Fattura (Dettaglio_ordine_id, Imponibile, Totale, Status) VALUES (?, ?, ?, ?)";
+        parent::execute($query,
+            $orderDetailsId,
+            $taxable,
+            $tot,
+            $status);
+    }
+
+    private function getTaxable($total) {
+        // iva 22%
+        return $total * 78/100;
+    }
+
+    private function getNewDiscountedPrice($articleInCartId) {
+        $articleInCart = $this->getRecord(ARTICOLO_IN_CARRELLO, "Id = " . $articleInCartId);
+        $article = $this->getRecord(ARTICOLO, "Articolo_id = " . $articleInCart[ARTICOLO_ID]);
+        if ($this->isDiscountArticle($article[ID])) {
+            return ($article[PREZZO] * 0.85); // 15% di sconto
+        }
+        return $article[PREZZO];
+    }
+
     public function manageOrderDetails($orderId) {
 
         // original order
@@ -544,6 +567,10 @@ class Session extends Dbh
                 //          -> set order detail to status PAID
                 case ORDER_DETAILS_TYPE_STANDARD:
                     $this->setOrderAndOrderDetailToStatusPaid($orderId, $orderDetail[ID]);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PAID);
                     break;
 
                 // MONTHLY -> set order to status PAID
@@ -554,6 +581,10 @@ class Session extends Dbh
 
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PAID);
 
                     // get total
                     $totalOrder = $article[PREZZO] * $articleInCart[QUANTITA]; // TODO: conto sbagliato!!!!!! e tutti sotto
@@ -568,6 +599,10 @@ class Session extends Dbh
 
                     // create new order detail with status pending
                     $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PENDING);
                     break;
 
                 // QUARTERLY -> set order detail to status PAID for the first
@@ -577,6 +612,10 @@ class Session extends Dbh
 
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                    INVOICE_STATUS_PAID);
 
                     // get total
                     $totalOrder = $article[PREZZO] * $articleInCart[QUANTITA]; // TODO: conto sbagliato!!!!!! e tutti sotto
@@ -591,6 +630,10 @@ class Session extends Dbh
 
                     // create new order detail with status pending
                     $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PENDING);
                     break;
 
                 // YEARLY -> set order detail to status PAID for the first
@@ -599,6 +642,10 @@ class Session extends Dbh
                 case ORDER_DETAILS_TYPE_YEARLY:
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PAID);
 
                     // get total
                     $totalOrder = $article[PREZZO] * $articleInCart[QUANTITA]; // TODO: conto sbagliato!!!!!! e tutti sotto
@@ -613,6 +660,10 @@ class Session extends Dbh
 
                     // create new order detail with status pending
                     $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable( $this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PENDING);
                     break;
 
                 // INSTALLMENT_PAYMENT ->
@@ -622,6 +673,10 @@ class Session extends Dbh
 
                     // update status -> (1/3)
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
+                    $this->createInvoice($orderDetail[ID],
+                        $this->getTaxable( $this->getNewDiscountedPrice($article[PREZZO])),
+                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        INVOICE_STATUS_PAID);
 
                     // get installment by article price and article qty
                     $installment = $article[PREZZO]/3 * $articleInCart[QUANTITA];
@@ -935,7 +990,7 @@ class Session extends Dbh
 
     public function isDiscountArticle($articleId): bool
     {
-        return $this->getNumberOrderOfArticleForCurrentUser($articleId) > 3;
+        return $this->getNumberOrderOfArticleForCurrentUser($articleId) > 2;
     }
 
     /**
