@@ -539,8 +539,10 @@ class Session extends Dbh
     }
 
     private function getNewDiscountedPrice($articleInCartId) {
+        var_dump($articleInCartId);
+
         $articleInCart = $this->getRecord(ARTICOLO_IN_CARRELLO, "Id = " . $articleInCartId);
-        $article = $this->getRecord(ARTICOLO, "Articolo_id = " . $articleInCart[ARTICOLO_ID]);
+        $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCart[ARTICOLO_ID]);
         if ($this->isDiscountArticle($article[ID])) {
             return ($article[PREZZO] * 0.85); // 15% di sconto
         }
@@ -568,8 +570,8 @@ class Session extends Dbh
                 case ORDER_DETAILS_TYPE_STANDARD:
                     $this->setOrderAndOrderDetailToStatusPaid($orderId, $orderDetail[ID]);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable($this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PAID);
                     break;
 
@@ -582,8 +584,8 @@ class Session extends Dbh
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable($this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PAID);
 
                     // get total
@@ -600,8 +602,8 @@ class Session extends Dbh
                     // create new order detail with status pending
                     $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable($this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PENDING);
                     break;
 
@@ -613,8 +615,8 @@ class Session extends Dbh
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable($this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                     INVOICE_STATUS_PAID);
 
                     // get total
@@ -631,8 +633,8 @@ class Session extends Dbh
                     // create new order detail with status pending
                     $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable($this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PENDING);
                     break;
 
@@ -643,8 +645,8 @@ class Session extends Dbh
                     // update status
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable($this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable($this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PAID);
 
                     // get total
@@ -661,8 +663,8 @@ class Session extends Dbh
                     // create new order detail with status pending
                     $this->createNewOrderDetail($orderDetail[TIPO], $orderDetail[ARTICOLO_ID], $newOrderId, ORDER_STATUS_PENDING);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable( $this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable( $this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PENDING);
                     break;
 
@@ -674,8 +676,8 @@ class Session extends Dbh
                     // update status -> (1/3)
                     parent::updateData($orderDetail[ID], DETTAGLIO_ORDINE, STATUS, ORDER_STATUS_PAID);
                     $this->createInvoice($orderDetail[ID],
-                        $this->getTaxable( $this->getNewDiscountedPrice($article[PREZZO])),
-                        $this->getNewDiscountedPrice($article[PREZZO]),
+                        $this->getTaxable( $this->getNewDiscountedPrice($article[ID])),
+                        $this->getNewDiscountedPrice($article[ID]),
                         INVOICE_STATUS_PAID);
 
                     // get installment by article price and article qty
