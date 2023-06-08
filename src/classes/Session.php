@@ -789,6 +789,15 @@ class Session extends Dbh
         }
     }
 
+    public function loadInvoices(): array|int|string
+    {
+        return parent::execute("SELECT f.* 
+                FROM Fattura f
+                JOIN Dettaglio_ordine do ON f.Dettaglio_ordine_id = do.Id
+                JOIN Articolo a ON do.Articolo_id = a.Id
+                WHERE a.Utente_id = " . $this->getCurrentUser()[ID]);
+    }
+
 
     public function loadOrderDetails($orderId): array|int|string
     {
