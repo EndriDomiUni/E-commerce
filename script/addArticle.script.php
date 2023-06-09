@@ -38,7 +38,7 @@ if (isset($_POST['article-btn-insert']))
                     $result = $session->addConfigurationArticle($parameters);
 
                     if ($result > 0) {
-                        echo "configuration variation: ".$result."</br>";
+                        //echo "configuration variation: ".$result."</br>";
                     } else {
                         echo "Errore inserimento configuration variation</br>";
                     }
@@ -56,7 +56,7 @@ if (isset($_POST['article-btn-insert']))
 
             $warehouseArticleResponse = $session->insertArticleInStock($quantity, $articleIdResponse, $warehouseId);
             if ($warehouseArticleResponse) {
-                //header("Location: dashboard.php");
+                header("Location: dashboard.php");
             } else {
                 echo "Errore inserimento articolo in magazzino </br>";
             }

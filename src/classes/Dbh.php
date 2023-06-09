@@ -318,7 +318,7 @@ class Dbh
      */
     public function getCategories() : array
     {
-        return $this->execute("SELECT * FROM Categoria WHERE Id != 1");
+        return $this->execute("SELECT * FROM Categoria");
     }
 
     /**

@@ -222,7 +222,7 @@ class Session extends Dbh
             $dim_y = $params[DIMENSIONE_Y_PRODOTTO];
             $dim_z = $params[DIMENSIONE_Z_PRODOTTO];
             $getDimensionIdCondition = "`Dim_X` = {$dim_x} AND `Dim_Y` = {$dim_y} AND `Dim_Z` = {$dim_z}";
-            $dimensionId = parent::getRecord(DIMENSIONE,$getDimensionIdCondition )[ID] != null ?
+            $dimensionId = parent::getRecord(DIMENSIONE,$getDimensionIdCondition ) != null ?
                 parent::getRecord(DIMENSIONE,$getDimensionIdCondition )[ID] : null;
 
             if ($dimensionId === null ) {
@@ -541,8 +541,8 @@ class Session extends Dbh
     private function getNewDiscountedPrice($articleInCartId) {
         var_dump($articleInCartId);
 
-        $articleInCart = $this->getRecord(ARTICOLO_IN_CARRELLO, "Id = " . $articleInCartId);
-        $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCart[ARTICOLO_ID]);
+        //$articleInCart = $this->getRecord(ARTICOLO_IN_CARRELLO, "Id = " . $articleInCartId);
+        $article = $this->getRecord(ARTICOLO, "Id = " . $articleInCartId);
         if ($this->isDiscountArticle($article[ID])) {
             return ($article[PREZZO] * 0.85); // 15% di sconto
         }
@@ -798,13 +798,31 @@ class Session extends Dbh
                 WHERE a.Utente_id = " . $this->getCurrentUser()[ID]);
     }
 
-
+    /**
+     * Load order details by order id
+     * @param $orderId
+     * @return array|int|string
+     */
     public function loadOrderDetails($orderId): array|int|string
     {
         $where = "Ordine_id = " . $orderId;
         $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
         return parent::execute($query);
     }
+
+    /**
+     * Get order detail by id
+     * @param $orderDetailId
+     * @return array|int|string
+     */
+    public function getOrderDetail($orderDetailId): array|int|string
+    {
+        $where = "Id = " . $orderDetailId;
+        $query = "SELECT * FROM Dettaglio_ordine WHERE $where";
+        return parent::execute($query);
+    }
+
+
 
     /**
      * Get total quantity of articles in stock

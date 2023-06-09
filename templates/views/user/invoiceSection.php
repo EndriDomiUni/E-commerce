@@ -57,43 +57,41 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                       </div>
                                       <div class="modal-body">';
-                            $orderDetails = $session->loadOrderDetails($invoice["Dettaglio_ordine_id"]);
-                            if (!empty($orderDetails)) {
-                                foreach ($orderDetails as $orderDetail) {
-                                    $whereArticleId = "Id = " . $orderDetail[ARTICOLO_ID];
-                                    $article = $session->getRecord(ARTICOLO, $whereArticleId);
-                                    if ($article !== null) {
-                                        $whereProductId = "Id = " . $article[PRODOTTO_ID];
-                                        $product = $session->getRecord(PRODOTTO, $whereProductId);
-                                        if ($product !== null) {
-                                            echo '<div class="card my-2">
-                                              <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img-top" alt="Product Image" height="200px" width="200px">
-                                              <div class="card-body">
-                                                <h5 class="card-title">' . $product[NOME] . '</h5>
-                                                <p class="card-text">' . $product[DESCRIZIONE] . '</p>
-                                                <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
-                                                <p class="card-text"> Status: ' . $session->getDescriptionOrderDetailStatus($orderDetail[STATUS]) . '</p>
-                                                
-                                                <div class="row">
-                                                    <div class="col d-flex justify-content-end">
-                                                        <!-- redirect to preduct page -->
-                                                        <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
-                                                             class="btn btn-primary text-center">Portami al prodotto</a>
-                                                    </div>
-                                                    <div class="col d-flex justify-content-end">
-                                                        <!-- give back -->
-                                                        <a href="./giveBackProduct.php?orderDetailId=' . $orderDetail[ID] . '" target="_self" 
-                                                             class="btn btn-primary text-center">Effettua il reso</a> 
-                                                    </div>
-                                                    <div class="col d-flex justify-content-end">
-                                                        <!-- reviews -->     
-                                                        <a href="./addProductReview.php?id=' . $product[ID] . '&orderDetailId=' . $orderDetail[ID] . '" target="_self" 
-                                                             class="btn btn-primary text-center">Aggiungi recensione</a>
-                                                    </div>
-                                                </div>    
-                                              </div>                                           
-                                        </div>';
-                                        }
+                            $orderDetail = $session->getOrderDetail($invoice["Dettaglio_ordine_id"]);
+                            if (!empty($orderDetail)) {
+                                $whereArticleId = "Id = " . $orderDetail[0][ARTICOLO_ID];
+                                $article = $session->getRecord(ARTICOLO, $whereArticleId);
+                                if ($article !== null) {
+                                    $whereProductId = "Id = " . $article[PRODOTTO_ID];
+                                    $product = $session->getRecord(PRODOTTO, $whereProductId);
+                                    if ($product !== null) {
+                                        echo '<div class="card my-2">
+                                          <img src="' . UPLOADS . '/' . $product[IMMAGINE] . '" class="card-img-top" alt="Product Image" height="200px" width="200px">
+                                          <div class="card-body">
+                                            <h5 class="card-title">' . $product[NOME] . '</h5>
+                                            <p class="card-text">' . $product[DESCRIZIONE] . '</p>
+                                            <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
+                                            <p class="card-text"> Status: ' . $session->getDescriptionOrderDetailStatus($orderDetail[STATUS]) . '</p>
+                                            
+                                            <div class="row">
+                                                <div class="col d-flex justify-content-end">
+                                                    <!-- redirect to preduct page -->
+                                                    <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
+                                                         class="btn btn-primary text-center">Portami al prodotto</a>
+                                                </div>
+                                                <div class="col d-flex justify-content-end">
+                                                    <!-- give back -->
+                                                    <a href="./giveBackProduct.php?orderDetailId=' . $orderDetail[ID] . '" target="_self" 
+                                                         class="btn btn-primary text-center">Effettua il reso</a> 
+                                                </div>
+                                                <div class="col d-flex justify-content-end">
+                                                    <!-- reviews -->     
+                                                    <a href="./addProductReview.php?id=' . $product[ID] . '&orderDetailId=' . $orderDetail[ID] . '" target="_self" 
+                                                         class="btn btn-primary text-center">Aggiungi recensione</a>
+                                                </div>
+                                            </div>    
+                                          </div>                                           
+                                    </div>';
                                     }
                                 }
                             } else {
