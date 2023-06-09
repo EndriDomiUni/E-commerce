@@ -118,7 +118,7 @@
                         }
                     }
 
-                    if (!empty($variations) && !empty($variation)) {
+                    if (!empty($variations) && !empty($options)) {
                         foreach ($variations as $variation) {
                             echo '<label for="product-variation-' . $variation[ID] . '">' . $variation[NOME] . '</label>';
                             echo '<select class="form-select" id="product-variation-' . $variation[ID] . '"  name="product-variation-' . $variation[ID] . '" aria-label="Default select example">';
