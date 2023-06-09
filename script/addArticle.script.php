@@ -23,11 +23,8 @@ if (isset($_POST['article-btn-insert']))
     try
     {
         $articleIdResponse = $session->addArticle($params);
-        if($articleIdResponse)
+        if($articleIdResponse > 0)
         {
-            //debug
-            //echo "articolo id: ".$response."</br>";
-            //$session[ARTICOLO_ID] = $response;
             $parameters = array(
                 ARTICOLO_ID => $articleIdResponse,
             );
@@ -39,8 +36,9 @@ if (isset($_POST['article-btn-insert']))
                     $variationIdSelect = $_POST[$variationTagName];
                     $parameters = [ARTICOLO_ID => $articleIdResponse, OPZIONE_ID => $variationIdSelect];
                     $result = $session->addConfigurationArticle($parameters);
-                    if ($result) {
-                        //echo "configuration variation: ".$result."</br>";
+
+                    if ($result > 0) {
+                        echo "configuration variation: ".$result."</br>";
                     } else {
                         echo "Errore inserimento configuration variation</br>";
                     }
@@ -48,23 +46,17 @@ if (isset($_POST['article-btn-insert']))
             }
         $claimId = $session->getCurrentUser()[CLAIM_ID];
         $claimType = $session->getClaimTypeFromId($session->getCurrentUser()[CLAIM_ID]);
-        $tax = 3;
         if ($claimType == CLAIM_SELLER_PR0_DESC){
             $tax = 0;
         }
 
-        $warehouseArticleParams = [
-            TAX => $tax,
-            QUANTITA => filter_var($_POST['quantity'], FILTER_SANITIZE_SPECIAL_CHARS),
-            DATA_INIZIO => date("Y-m-d"),
-            DATA_FINE => SCADENZA,
-            ARTICOLO_ID => $articleIdResponse,
-            MAGAZZINO_ID => filter_var($_POST['warehouse-id'], FILTER_SANITIZE_SPECIAL_CHARS)
-            ];
+        $quantity = filter_var($_POST['quantity'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $warehouseId = filter_var($_POST['warehouse-id'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $warehouseArticleResponse = $session->addWarehouseArticle($warehouseArticleParams);
+
+            $warehouseArticleResponse = $session->insertArticleInStock($quantity, $articleIdResponse, $warehouseId);
             if ($warehouseArticleResponse) {
-                header("Location: dashboard.php");
+                //header("Location: dashboard.php");
             } else {
                 echo "Errore inserimento articolo in magazzino </br>";
             }
