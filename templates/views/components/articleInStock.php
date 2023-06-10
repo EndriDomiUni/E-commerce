@@ -45,7 +45,7 @@ foreach ($products as $product)
           </div>
           <div class="row">
             <div class="col">
-              <p>' . $product[0][NOME] . '</p>
+              <p>' . $product[0][DESCRIZIONE] . '</p>
             </div>
           </div>
           <div class="row">
