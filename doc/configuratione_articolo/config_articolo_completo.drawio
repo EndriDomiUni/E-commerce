@@ -125,13 +125,13 @@
                     <mxGeometry x="143.75" y="995" width="101.25" height="65" as="geometry"/>
                 </mxCell>
                 <mxCell id="39" value="(0, N)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="101.25" y="877.5" width="50" height="30" as="geometry"/>
+                    <mxGeometry x="101.25" y="850" width="50" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="Articolo" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=15;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-                    <mxGeometry x="15.629999999999995" y="767.5" width="170" height="110" as="geometry"/>
+                    <mxGeometry x="15.63" y="767.5" width="170" height="82.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="45" value="+ PK: Id&#10;+ Nome&#10;+ Descrizione&#10;+ Immagine&#10;+ Status" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="44" vertex="1">
-                    <mxGeometry y="30" width="170" height="80" as="geometry"/>
+                <mxCell id="45" value="+ PK: Id&#10;+ Prezzo&#10;+ Status" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;" parent="44" vertex="1">
+                    <mxGeometry y="30" width="170" height="52.5" as="geometry"/>
                 </mxCell>
                 <mxCell id="46" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="47" target="44" edge="1">
                     <mxGeometry relative="1" as="geometry">
