@@ -52,13 +52,13 @@
                     $yesterdayStr = $yesterday->format('Y-m-d H:i:s');
 
                     // today's order number
-                    $todayOrdersQty = $session->getOrdersQuantityInRangeDateTime(strtotime($nowStr), strtotime($yesterdayStr));
+                    $todaySales = $session->getNumberOfDailyOrders();
 
                     // Today's order
                     echo '<div class="card my-3">
-                            <div class="card-header">Ordini odierni</div>
+                            <div class="card-header">Vendite odierne</div>
                             <div class="card-body">
-                                <h5 class="card-title">'. $todayOrdersQty .'</h5>
+                                <h5 class="card-title">'. $todaySales .'</h5>
                             </div>
                         </div>';
 
@@ -73,7 +73,7 @@
 
                     // Current Month Orders
                     echo '<div class="card my-3">
-                            <div class="card-header">Ordini mensili</div>
+                            <div class="card-header">Vendite mensili</div>
                             <div class="card-body">
                                 <h5 class="card-title">'. $monthOrderQty .'</h5>
                             </div>
@@ -84,7 +84,7 @@
 
                     // Total Orders
                     echo ' <div class="card my-3">
-                            <div class="card-header">Ordini totali</div>
+                            <div class="card-header">Vendite totali</div>
                             <div class="card-body">
                                 <h5 class="card-title">'. $allOrders .'</h5>
                             </div>

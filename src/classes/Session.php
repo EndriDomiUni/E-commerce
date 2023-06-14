@@ -448,8 +448,9 @@ class Session extends Dbh
                 VALUES (?, ?, ?, ?)";
 
             for ($j = 0; $j < $quantity; $j++) {
+                var_dump($orderTypeList[$j]);
                 $res = parent::insertData($query,
-                    $orderTypeList[$j],
+                    $orderTypeList[$j] !== null ? $orderTypeList[$j] : $orderTypeList[$j-1],
                     $articlesInCart[$i][ARTICOLO_ID],
                     $orderId,
                     ORDER_DETAIL_STATUS_PENDING_DATA
@@ -737,6 +738,7 @@ class Session extends Dbh
             $articleInStock = $this->getArticlesInStockByArticle($orderDetail[ARTICOLO_ID]);
             if (isset($articleInStock) && !empty($articleInStock)) {
 
+                //TODO: add refill quantity on article if user (seller) is Pro
                 // if is one article
                 if (isset($articleInStock[ID])) { // strano controllo
                     $this->updateQtyArticleInStock($articleInStock[ID], max($articleInStock[QUANTITA] - 1, 0));
@@ -745,6 +747,7 @@ class Session extends Dbh
                     $firstArticleInStock = $articleInStock[0];
                     $this->updateQtyArticleInStock($firstArticleInStock[ID], max($firstArticleInStock[QUANTITA] - 1, 0));
                 }
+
 
                 // get article & article in cart
                 $article = parent::getRecord(ARTICOLO, "Id = " . $orderDetail[ARTICOLO_ID]);
@@ -885,16 +888,55 @@ class Session extends Dbh
      */
     public function getOrdersQuantityInRangeDateTime($startTime, $endTime) : int
     {
+
+        $query = 'SELECT SUM(Fattura.Totale) AS numero_ordini
+                    FROM Utente
+                    JOIN Articolo ON Utente.Id = Articolo.Utente_id
+                    JOIN Dettaglio_ordine ON 
+                    Articolo.Id = Dettaglio_ordine.Articolo_id
+                    JOIN Fattura 
+                    ON Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
+                    WHERE Utente.Id = ' . $this->getCurrentUser()[ID] .'
+                    AND Fattura.Timestamp > ' . $startTime . ' AND 
+                    Fattura.Timestamp < ' . $endTime . '
+                    ORDER BY Fattura.Timestamp DESC
+                    LIMIT 1';
+        /*
         $query = 'SELECT COUNT(DISTINCT o.Id) AS numero_ordini
                     FROM Ordine o
                     JOIN Dettaglio_ordine do ON o.Id = do.Ordine_id
-                    JOIN Articolo_in_carrello ac ON do.Articolo_id = ac.Articolo_id
-                    JOIN Articolo a ON ac.Articolo_id = a.Id
+                    JOIN Articolo a ON do.Articolo_id = a.Articolo_id
                     WHERE a.Utente_id = ' . $this->getCurrentUser()[ID] . '
                       AND o.Data_ordine >= ' . $startTime . '
                       AND o.Data_ordine <= ' . $endTime;
+        */
         $res = $this->execute($query);
-        return $res[0]['numero_ordini'];
+        return !empty($res) && $res[0]['numero_ordini'] != null
+            ? $res[0]['numero_ordini'] : 0;
+    }
+
+
+    /**
+     * Get daily orders' number
+     * @return array
+     */
+    public function getNumberOfDailyOrders() : int
+    {
+        $query2 = 'SELECT DATE(Fattura.Timestamp) AS data_fattura,
+                     COUNT(Fattura.Totale) AS fatturato_giornaliero
+                    FROM Utente
+                    JOIN Articolo ON Utente.Id = Articolo.Utente_id
+                    JOIN Dettaglio_ordine ON 
+                    Articolo.Id = Dettaglio_ordine.Articolo_id
+                    JOIN Fattura ON 
+                    Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
+                    WHERE Utente.Id =' . $this->getCurrentUser()[ID] . '
+                    GROUP BY DATE(Fattura.Timestamp)
+                    ORDER BY data_fattura DESC
+                    LIMIT 1';
+        $res = $this->execute($query2);
+        return !empty($res) && $res[0]["fatturato_giornaliero"] != null
+            ? $res[0]["fatturato_giornaliero"] : 0;
     }
 
     /**
@@ -904,14 +946,19 @@ class Session extends Dbh
      */
     public function getOrdersQuantity() : int
     {
-        $query = 'SELECT COUNT(DISTINCT o.Id) AS numero_ordini
-                    FROM Ordine o
-                    JOIN Dettaglio_ordine do ON o.Id = do.Ordine_id
-                    JOIN Articolo_in_carrello ac ON do.Articolo_id = ac.Articolo_id
-                    JOIN Articolo a ON ac.Articolo_id = a.Id
-                    WHERE a.Utente_id = ' . $this->getCurrentUser()[ID];
+        $query = 'SELECT DATE(Fattura.Timestamp) AS data_fattura,
+                     COUNT(Fattura.Totale) AS fatturato_giornaliero
+                    FROM Utente
+                    JOIN Articolo ON Utente.Id = Articolo.Utente_id
+                    JOIN Dettaglio_ordine ON 
+                    Articolo.Id = Dettaglio_ordine.Articolo_id
+                    JOIN Fattura ON 
+                    Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
+                    WHERE Utente.Id =' . $this->getCurrentUser()[ID];
         $res = $this->execute($query);
-        return $res[0]['numero_ordini'];
+
+        return !empty($res) && $res[0]["fatturato_giornaliero"] != null
+            ? $res[0]["fatturato_giornaliero"] : 0;
     }
 
 
