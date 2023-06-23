@@ -6,7 +6,7 @@
 </style>
 
 <div class="container  rounded mt-5">
-    <h2 class="text-center" style="color: white;">Storico ordini</h2>
+    <h2 class="text-center" style="color: white;">Fatture</h2>
     <table class="table table-striped">
         <thead>
         <tr>

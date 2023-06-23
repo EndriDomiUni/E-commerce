@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 14, 2023 alle 10:18
+-- Creato il: Giu 23, 2023 alle 17:11
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -29,7 +29,6 @@ USE `e-commerce`;
 -- Struttura della tabella `Articolo`
 --
 
-DROP TABLE IF EXISTS `Articolo`;
 CREATE TABLE IF NOT EXISTS `Articolo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Prezzo` varchar(100) NOT NULL,
@@ -71,7 +70,6 @@ INSERT INTO `Articolo` (`Id`, `Prezzo`, `Utente_id`, `Prodotto_id`, `Status`, `T
 -- Struttura della tabella `Articolo_in_carrello`
 --
 
-DROP TABLE IF EXISTS `Articolo_in_carrello`;
 CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Quantità` int(11) NOT NULL,
@@ -82,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
   PRIMARY KEY (`Id`),
   KEY `Carrello_id` (`Carrello_id`),
   KEY `Articolo_id` (`Articolo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90,7 +88,6 @@ CREATE TABLE IF NOT EXISTS `Articolo_in_carrello` (
 -- Struttura della tabella `Articolo_in_magazzino`
 --
 
-DROP TABLE IF EXISTS `Articolo_in_magazzino`;
 CREATE TABLE IF NOT EXISTS `Articolo_in_magazzino` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Quantità` int(30) UNSIGNED NOT NULL,
@@ -111,7 +108,7 @@ INSERT INTO `Articolo_in_magazzino` (`Id`, `Quantità`, `Articolo_id`, `Magazzin
 (38, 97, 57, 1, 0, '2023-06-09 16:39:46'),
 (39, 100, 58, 1, 0, '2023-06-10 12:49:07'),
 (40, 100, 59, 2, 0, '2023-06-10 12:51:04'),
-(41, 100, 60, 1, 0, '2023-06-10 12:52:34'),
+(41, 97, 60, 1, 0, '2023-06-10 12:52:34'),
 (42, 99, 61, 2, 0, '2023-06-10 12:54:20'),
 (43, 100, 62, 1, 0, '2023-06-10 12:55:49'),
 (44, 100, 63, 1, 0, '2023-06-10 12:57:49'),
@@ -132,7 +129,6 @@ INSERT INTO `Articolo_in_magazzino` (`Id`, `Quantità`, `Articolo_id`, `Magazzin
 -- Struttura della tabella `Carrello`
 --
 
-DROP TABLE IF EXISTS `Carrello`;
 CREATE TABLE IF NOT EXISTS `Carrello` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Utente_id` int(11) NOT NULL,
@@ -159,7 +155,6 @@ INSERT INTO `Carrello` (`Id`, `Utente_id`, `Status`, `Timestamp`) VALUES
 -- Struttura della tabella `Categoria`
 --
 
-DROP TABLE IF EXISTS `Categoria`;
 CREATE TABLE IF NOT EXISTS `Categoria` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
@@ -186,7 +181,6 @@ INSERT INTO `Categoria` (`Id`, `Nome`, `Descrizione`, `Status`, `Timestamp`) VAL
 -- Struttura della tabella `Claim`
 --
 
-DROP TABLE IF EXISTS `Claim`;
 CREATE TABLE IF NOT EXISTS `Claim` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Descrizione` varchar(50) NOT NULL,
@@ -203,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `Claim` (
 INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 (104, 'user', '0', 0, '2023-06-09 15:46:30'),
 (105, 'user', '0', 0, '2023-06-09 15:47:57'),
-(106, 'seller', '42', 0, '2023-06-09 15:50:09'),
+(106, 'seller', '40', 0, '2023-06-09 15:50:09'),
 (107, 'seller', '80', 0, '2023-06-11 15:30:02'),
 (108, 'user', '0', 0, '2023-06-11 16:30:13'),
 (109, 'user', '0', 0, '2023-06-11 16:32:28');
@@ -214,7 +208,6 @@ INSERT INTO `Claim` (`Id`, `Descrizione`, `Conto`, `Status`, `Timestamp`) VALUES
 -- Struttura della tabella `Configurazione_variazione`
 --
 
-DROP TABLE IF EXISTS `Configurazione_variazione`;
 CREATE TABLE IF NOT EXISTS `Configurazione_variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Articolo_id` int(11) NOT NULL,
@@ -266,7 +259,6 @@ INSERT INTO `Configurazione_variazione` (`Id`, `Articolo_id`, `Opzio_variazione_
 -- Struttura della tabella `Dettaglio_ordine`
 --
 
-DROP TABLE IF EXISTS `Dettaglio_ordine`;
 CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tipo` int(11) NOT NULL,
@@ -277,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `Dettaglio_ordine` (
   PRIMARY KEY (`Id`),
   KEY `Articolo_id` (`Articolo_id`),
   KEY `Ordine_id` (`Ordine_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Dettaglio_ordine`
@@ -303,7 +295,10 @@ INSERT INTO `Dettaglio_ordine` (`Id`, `Tipo`, `Articolo_id`, `Ordine_id`, `Statu
 (50, 1, 66, 44, 0, '2023-06-11 16:42:57'),
 (51, 1, 73, 45, 0, '2023-06-11 16:46:18'),
 (52, 1, 73, 46, 0, '2023-06-11 16:47:25'),
-(53, 1, 72, 47, 0, '2023-06-11 16:48:03');
+(53, 1, 72, 47, 0, '2023-06-11 16:48:03'),
+(54, 1, 60, 48, 0, '2023-06-23 14:55:37'),
+(55, 1, 60, 49, 0, '2023-06-23 15:04:49'),
+(56, 1, 60, 50, 0, '2023-06-23 15:06:33');
 
 -- --------------------------------------------------------
 
@@ -311,7 +306,6 @@ INSERT INTO `Dettaglio_ordine` (`Id`, `Tipo`, `Articolo_id`, `Ordine_id`, `Statu
 -- Struttura della tabella `Dimensione`
 --
 
-DROP TABLE IF EXISTS `Dimensione`;
 CREATE TABLE IF NOT EXISTS `Dimensione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Dim_X` varchar(100) NOT NULL,
@@ -334,7 +328,6 @@ INSERT INTO `Dimensione` (`Id`, `Dim_X`, `Dim_Y`, `Dim_Z`, `Timestamp`) VALUES
 -- Struttura della tabella `Fattura`
 --
 
-DROP TABLE IF EXISTS `Fattura`;
 CREATE TABLE IF NOT EXISTS `Fattura` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Dettaglio_ordine_id` int(11) NOT NULL,
@@ -344,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `Fattura` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Dettaglio_ordine_id` (`Dettaglio_ordine_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Fattura`
@@ -365,7 +358,10 @@ INSERT INTO `Fattura` (`Id`, `Dettaglio_ordine_id`, `Imponibile`, `Totale`, `Sta
 (12, 50, '17', '22', 0, '2023-06-11 16:42:57'),
 (13, 51, '62', '80', 0, '2023-06-11 16:46:18'),
 (14, 52, '62', '80', 0, '2023-06-11 16:47:25'),
-(15, 53, '33', '42', 0, '2023-06-11 16:48:03');
+(15, 53, '33', '42', 0, '2023-06-11 16:48:03'),
+(16, 54, '31', '40', 0, '0000-00-00 00:00:00'),
+(17, 55, '31', '40', 0, '2023-06-23 15:04:49'),
+(18, 56, '31', '40', 0, '2023-06-23 15:06:33');
 
 -- --------------------------------------------------------
 
@@ -373,7 +369,6 @@ INSERT INTO `Fattura` (`Id`, `Dettaglio_ordine_id`, `Imponibile`, `Totale`, `Sta
 -- Struttura della tabella `Forma_di_pagamento`
 --
 
-DROP TABLE IF EXISTS `Forma_di_pagamento`;
 CREATE TABLE IF NOT EXISTS `Forma_di_pagamento` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Circuito` varchar(20) NOT NULL,
@@ -403,7 +398,6 @@ INSERT INTO `Forma_di_pagamento` (`Id`, `Circuito`, `Numero_carta`, `Data_scaden
 -- Struttura della tabella `Indirizzo`
 --
 
-DROP TABLE IF EXISTS `Indirizzo`;
 CREATE TABLE IF NOT EXISTS `Indirizzo` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Via` varchar(100) NOT NULL,
@@ -433,7 +427,6 @@ INSERT INTO `Indirizzo` (`Id`, `Via`, `Numero_civico`, `Citta`, `CAP`, `Status`,
 -- Struttura della tabella `Magazzino`
 --
 
-DROP TABLE IF EXISTS `Magazzino`;
 CREATE TABLE IF NOT EXISTS `Magazzino` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Metri_cubi` double NOT NULL,
@@ -459,7 +452,6 @@ INSERT INTO `Magazzino` (`Id`, `Metri_cubi`, `Indirizzo_id`, `Tassa`, `Status`, 
 -- Struttura della tabella `Opzione_variazione`
 --
 
-DROP TABLE IF EXISTS `Opzione_variazione`;
 CREATE TABLE IF NOT EXISTS `Opzione_variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Valore` varchar(300) NOT NULL,
@@ -508,7 +500,6 @@ INSERT INTO `Opzione_variazione` (`Id`, `Valore`, `Variazione_id`, `Status`, `Ti
 -- Struttura della tabella `Ordine`
 --
 
-DROP TABLE IF EXISTS `Ordine`;
 CREATE TABLE IF NOT EXISTS `Ordine` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Data_ordine` date NOT NULL,
@@ -519,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `Ordine` (
   `Timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `Forma_di_pag_id` (`Forma_di_pag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dump dei dati per la tabella `Ordine`
@@ -544,7 +535,10 @@ INSERT INTO `Ordine` (`Id`, `Data_ordine`, `Tot_ordine`, `Status`, `Metodo_di_sp
 (44, '2023-06-11', '22', 0, 1, 16, '2023-06-11 16:42:57'),
 (45, '2023-06-11', '80', 0, 1, 16, '2023-06-11 16:46:18'),
 (46, '2023-06-11', '80', 0, 1, 16, '2023-06-11 16:47:25'),
-(47, '2023-06-11', '42', 0, 1, 16, '2023-06-11 16:48:03');
+(47, '2023-06-11', '42', 0, 1, 16, '2023-06-11 16:48:03'),
+(48, '2023-06-23', '40', 0, 1, 14, '2023-06-23 14:55:37'),
+(49, '2023-06-23', '40', 0, 1, 14, '2023-06-23 15:04:49'),
+(50, '2023-06-23', '40', 0, 1, 14, '2023-06-23 15:06:33');
 
 -- --------------------------------------------------------
 
@@ -552,7 +546,6 @@ INSERT INTO `Ordine` (`Id`, `Data_ordine`, `Tot_ordine`, `Status`, `Metodo_di_sp
 -- Struttura della tabella `Prodotto`
 --
 
-DROP TABLE IF EXISTS `Prodotto`;
 CREATE TABLE IF NOT EXISTS `Prodotto` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
@@ -595,7 +588,6 @@ INSERT INTO `Prodotto` (`Id`, `Nome`, `Descrizione`, `Immagine`, `Dim_id`, `Cate
 -- Struttura della tabella `Prodotto_in_raccolta`
 --
 
-DROP TABLE IF EXISTS `Prodotto_in_raccolta`;
 CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Raccolta_id` int(11) NOT NULL,
@@ -613,7 +605,6 @@ CREATE TABLE IF NOT EXISTS `Prodotto_in_raccolta` (
 -- Struttura della tabella `Raccolta`
 --
 
-DROP TABLE IF EXISTS `Raccolta`;
 CREATE TABLE IF NOT EXISTS `Raccolta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Tipo_raccolta` int(5) NOT NULL,
@@ -642,7 +633,6 @@ INSERT INTO `Raccolta` (`Id`, `Tipo_raccolta`, `Titolo`, `Utente_id`, `Status`, 
 -- Struttura della tabella `Recensione`
 --
 
-DROP TABLE IF EXISTS `Recensione`;
 CREATE TABLE IF NOT EXISTS `Recensione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Valutazione` int(5) NOT NULL,
@@ -671,7 +661,6 @@ INSERT INTO `Recensione` (`Id`, `Valutazione`, `Commento`, `Dettaglio_ordine_id`
 -- Struttura della tabella `Reso`
 --
 
-DROP TABLE IF EXISTS `Reso`;
 CREATE TABLE IF NOT EXISTS `Reso` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Dettaglio_ordine_id` int(11) NOT NULL,
@@ -689,7 +678,6 @@ CREATE TABLE IF NOT EXISTS `Reso` (
 -- Struttura della tabella `Utente`
 --
 
-DROP TABLE IF EXISTS `Utente`;
 CREATE TABLE IF NOT EXISTS `Utente` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(50) NOT NULL,
@@ -722,7 +710,6 @@ INSERT INTO `Utente` (`Id`, `Nome`, `Cognome`, `Email`, `Password`, `Claim_id`, 
 -- Struttura della tabella `Variazione`
 --
 
-DROP TABLE IF EXISTS `Variazione`;
 CREATE TABLE IF NOT EXISTS `Variazione` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nome` varchar(300) NOT NULL,
