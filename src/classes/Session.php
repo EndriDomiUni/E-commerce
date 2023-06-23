@@ -888,28 +888,21 @@ class Session extends Dbh
      */
     public function getOrdersQuantityInRangeDateTime($startTime, $endTime) : int
     {
+        $datetimeNow = new DateTime();
+        $nowStr = $datetimeNow->format('Y-m-d H:i:s');
 
-        $query = 'SELECT SUM(Fattura.Totale) AS numero_ordini
+        $oneMonthAgo = $datetimeNow->modify('-30 day');
+        $oneMonthAgoStr = $oneMonthAgo->format('Y-m-d H:i:s');
+
+        $query = 'SELECT 
+                    COUNT(*) AS numero_ordini
                     FROM Utente
                     JOIN Articolo ON Utente.Id = Articolo.Utente_id
-                    JOIN Dettaglio_ordine ON 
-                    Articolo.Id = Dettaglio_ordine.Articolo_id
-                    JOIN Fattura 
-                    ON Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
-                    WHERE Utente.Id = ' . $this->getCurrentUser()[ID] .'
-                    AND Fattura.Timestamp > ' . $startTime . ' AND 
-                    Fattura.Timestamp < ' . $endTime . '
-                    ORDER BY Fattura.Timestamp DESC
-                    LIMIT 1';
-        /*
-        $query = 'SELECT COUNT(DISTINCT o.Id) AS numero_ordini
-                    FROM Ordine o
-                    JOIN Dettaglio_ordine do ON o.Id = do.Ordine_id
-                    JOIN Articolo a ON do.Articolo_id = a.Articolo_id
-                    WHERE a.Utente_id = ' . $this->getCurrentUser()[ID] . '
-                      AND o.Data_ordine >= ' . $startTime . '
-                      AND o.Data_ordine <= ' . $endTime;
-        */
+                    JOIN Dettaglio_ordine ON Articolo.Id = Dettaglio_ordine.Articolo_id
+                    JOIN Fattura ON Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
+                    WHERE Utente.Id = ' . $this->getCurrentUser()[ID] . '
+                    AND Fattura.Timestamp > "' . $oneMonthAgoStr . '"
+                    AND Fattura.Timestamp < "' . $nowStr . '"';
         $res = $this->execute($query);
         return !empty($res) && $res[0]['numero_ordini'] != null
             ? $res[0]['numero_ordini'] : 0;
@@ -946,6 +939,7 @@ class Session extends Dbh
      */
     public function getOrdersQuantity() : int
     {
+
         $query = 'SELECT DATE(Fattura.Timestamp) AS data_fattura,
                      COUNT(Fattura.Totale) AS fatturato_giornaliero
                     FROM Utente
@@ -979,6 +973,31 @@ class Session extends Dbh
         $res = $this->execute($query2);
         return !empty($res) && $res[0]["fatturato_giornaliero"] != null
             ? $res[0]["fatturato_giornaliero"] : 0;
+    }
+
+
+    public function getYearlyTotalInvoices() {
+        $datetimeNow = new DateTime();
+        $nowStr = $datetimeNow->format('Y-m-d H:i:s');
+
+        $oneYearAgo = $datetimeNow->modify('-365 day');
+        $oneYearAgoStr = $oneYearAgo->format('Y-m-d H:i:s');
+        $query2 = 'SELECT DATE(Fattura.Timestamp) AS data_fattura,
+                     SUM(Fattura.Totale) AS fatturato_annuale
+                    FROM Utente
+                    JOIN Articolo ON Utente.Id = Articolo.Utente_id
+                    JOIN Dettaglio_ordine ON 
+                    Articolo.Id = Dettaglio_ordine.Articolo_id
+                    JOIN Fattura ON 
+                    Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
+                    WHERE Utente.Id =' . $this->getCurrentUser()[ID] . '
+                    AND DATE(Fattura.Timestamp) > "' . $oneYearAgoStr . '" AND 
+                    DATE(Fattura.Timestamp) < "' . $nowStr . '"
+                    ORDER BY data_fattura DESC
+                    LIMIT 1';
+        $res = $this->execute($query2);
+        return !empty($res) && $res[0]["fatturato_annuale"] != null
+            ? $res[0]["fatturato_annuale"] : 0;
     }
 
 

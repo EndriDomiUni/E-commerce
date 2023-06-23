@@ -69,7 +69,7 @@
                     $oneMonthAgoStr = $oneMonthAgo->format('Y-m-d H:i:s');
 
                     // month's order number
-                    $monthOrderQty = $session->getOrdersQuantityInRangeDateTime(strtotime($nowStr), strtotime($oneMonthAgoStr));
+                    $monthOrderQty = $session->getOrdersQuantityInRangeDateTime($nowStr, $oneMonthAgoStr);
 
                     // Current Month Orders
                     echo '<div class="card my-3">
@@ -115,7 +115,7 @@
                 echo '  <div class="card my-3">
                             <div class="card-header">Fatturato annuale</div>
                             <div class="card-body">
-                                <h5 class="card-title">'. EURO . ' ' . '</h5>
+                                <h5 class="card-title">'. EURO . ' ' . $session->getYearlyTotalInvoices() . '</h5>
                             </div>
                         </div>';
 
