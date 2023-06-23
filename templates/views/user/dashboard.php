@@ -95,9 +95,9 @@
 
                 // Money balance without tax
                 echo '  <div class="card my-3">
-                            <div class="card-header">Soldi totali senza tasse magazzino</div>
+                            <div class="card-header">Fatturato giornaliero</div>
                             <div class="card-body">
-                                <h5 class="card-title">'. EURO . '</h5>
+                                <h5 class="card-title">'. EURO . ' ' . $session->getDailyTotalInvoices() . '</h5>
                             </div>
                         </div>';
 
@@ -113,9 +113,9 @@
 
                 // Money balance without tax
                 echo '  <div class="card my-3">
-                            <div class="card-header">Soldi totali dopo le tasse</div>
+                            <div class="card-header">Fatturato annuale</div>
                             <div class="card-body">
-                                <h5 class="card-title">'. EURO . '</h5>
+                                <h5 class="card-title">'. EURO . ' ' . '</h5>
                             </div>
                         </div>';
 

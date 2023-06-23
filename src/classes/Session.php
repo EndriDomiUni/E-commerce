@@ -962,6 +962,26 @@ class Session extends Dbh
     }
 
 
+    public function getDailyTotalInvoices() : int
+    {
+        $query2 = 'SELECT DATE(Fattura.Timestamp) AS data_fattura,
+                     SUM(Fattura.Totale) AS fatturato_giornaliero
+                    FROM Utente
+                    JOIN Articolo ON Utente.Id = Articolo.Utente_id
+                    JOIN Dettaglio_ordine ON 
+                    Articolo.Id = Dettaglio_ordine.Articolo_id
+                    JOIN Fattura ON 
+                    Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
+                    WHERE Utente.Id =' . $this->getCurrentUser()[ID] . '
+                    GROUP BY DATE(Fattura.Timestamp)
+                    ORDER BY data_fattura DESC
+                    LIMIT 1';
+        $res = $this->execute($query2);
+        return !empty($res) && $res[0]["fatturato_giornaliero"] != null
+            ? $res[0]["fatturato_giornaliero"] : 0;
+    }
+
+
 
     /**
      * Get option by id
