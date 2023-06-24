@@ -968,6 +968,7 @@ class Session extends Dbh
                     JOIN Fattura ON 
                     Dettaglio_ordine.Id = Fattura.Dettaglio_ordine_id
                     WHERE Utente.Id =' . $this->getCurrentUser()[ID] . '
+                    AND DATE(Fattura.Timestamp) = DATE(NOW())
                     GROUP BY DATE(Fattura.Timestamp)
                     ORDER BY data_fattura DESC
                     LIMIT 1';
