@@ -71,25 +71,7 @@
                                             <h5 class="card-title">' . $product[NOME] . '</h5>
                                             <p class="card-text">' . $product[DESCRIZIONE] . '</p>
                                             <p class="card-text"> Prezzo:' . $article[PREZZO] . ' ' . EURO . '</p>
-                                            <p class="card-text"> Status: ' . $session->getDescriptionOrderDetailStatus($orderDetail[STATUS]) . '</p>
-                                            
-                                            <div class="row">
-                                                <div class="col d-flex justify-content-end">
-                                                    <!-- redirect to preduct page -->
-                                                    <a href="./productPage.php?id=' . $product[ID] . '" target="_self" 
-                                                         class="btn btn-primary text-center">Portami al prodotto</a>
-                                                </div>
-                                                <div class="col d-flex justify-content-end">
-                                                    <!-- give back -->
-                                                    <a href="./giveBackProduct.php?orderDetailId=' . $orderDetail[ID] . '" target="_self" 
-                                                         class="btn btn-primary text-center">Effettua il reso</a> 
-                                                </div>
-                                                <div class="col d-flex justify-content-end">
-                                                    <!-- reviews -->     
-                                                    <a href="./addProductReview.php?id=' . $product[ID] . '&orderDetailId=' . $orderDetail[ID] . '" target="_self" 
-                                                         class="btn btn-primary text-center">Aggiungi recensione</a>
-                                                </div>
-                                            </div>    
+                                            <p class="card-text"> Status: ' . $session->getDescriptionOrderDetailStatus($orderDetail[0][STATUS]) . '</p> 
                                           </div>                                           
                                     </div>';
                                     }
